@@ -23,11 +23,11 @@ func setActionsAvailable(actions: int):
 
 func moveUp():
 	# Code to move the player character up
-	pos.y += 1
+	pos.y -= 1
 
 func moveDown():
 	# Code to move the player character down
-	pos.y -= 1
+	pos.y += 1
 
 func moveLeft():
 	# Code to move the player character left
@@ -40,5 +40,6 @@ func moveRight():
 func draw():
 	# code that converts the Vector2 position data into on-screen coordinates
 	position.x = pos.x*16
-	position.y = pos.y*(-16)
+	position.y = pos.y*16
+	self.z_index = (pos.y + 1)
 	

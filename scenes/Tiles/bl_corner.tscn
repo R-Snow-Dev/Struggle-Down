@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://4l3rhl32e70x"]
+
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_ba1iy"]
+
+[node name="BLCorner" type="Sprite2D"]
+texture = ExtResource("1_ba1iy")
+region_enabled = true
+region_rect = Rect2(64, 32, 16, 16)

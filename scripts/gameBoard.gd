@@ -69,7 +69,7 @@ func checkInputs():
 	
 	# If up is pressed and you have the available resources to do it, move up
 	if Input.is_action_just_pressed("move_up"):
-		if player.pos.y < (height-1) and player.actionsAvailable > 0: # Did the player reach the edge of the map? Does it have actions to spend?
+		if player.pos.y > 0 and player.actionsAvailable > 0: # Did the player reach the edge of the map? Does it have actions to spend?
 			player.actionsAvailable -= 1
 			player.moveUp()
 			# relaods the board once movement is complete
@@ -77,7 +77,7 @@ func checkInputs():
 			
 	# If down is pressed, and you have the available resources to do it, move down
 	if Input.is_action_just_pressed("move_down"):
-		if player.pos.y > 0 and player.actionsAvailable > 0: 
+		if player.pos.y < (height - 1) and player.actionsAvailable > 0: 
 			player.actionsAvailable -= 1
 			player.moveDown()
 			# relaods the board once movement is complete
