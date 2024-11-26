@@ -3,54 +3,53 @@
 [ext_resource type="Texture2D" uid="uid://djdmlq5xbxt6c" path="res://assets/Player_DG (1).png" id="1_83poi"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_i5qes"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ujirk"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpkai"]
 atlas = ExtResource("1_83poi")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lvjjc"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vym6r"]
 atlas = ExtResource("1_83poi")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_c37mf"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_45yxx"]
 atlas = ExtResource("1_83poi")
 region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wjeso"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_clxlj"]
 atlas = ExtResource("1_83poi")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_6lnwc"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_vrbgi"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ujirk")
+"texture": SubResource("AtlasTexture_hpkai")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lvjjc")
+"texture": SubResource("AtlasTexture_vym6r")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_c37mf")
+"texture": SubResource("AtlasTexture_45yxx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wjeso")
+"texture": SubResource("AtlasTexture_clxlj")
 }],
 "loop": true,
-"name": &"default",
-"speed": 2.0
+"name": &"Idle",
+"speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_o3ofs"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_nb3vm"]
+radius = 3.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="Area2D"]
 script = ExtResource("1_i5qes")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_6lnwc")
-autoplay = "default"
-frame_progress = 0.839978
+sprite_frames = SubResource("SpriteFrames_vrbgi")
+animation = &"Idle"
+autoplay = "Idle"
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-scale = Vector2(0.1, 0.1)
-shape = SubResource("CircleShape2D_o3ofs")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_nb3vm")

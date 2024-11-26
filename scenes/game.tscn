@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_8pq1n"]
 [ext_resource type="Script" path="res://scripts/gamecontroller.gd" id="1_dpn51"]
-[ext_resource type="Script" path="res://scenes/node_2d.gd" id="2_df6dj"]
+[ext_resource type="Script" path="res://scripts/node_2d.gd" id="2_df6dj"]
 [ext_resource type="PackedScene" uid="uid://capcytxw6jkrn" path="res://scenes/game_board.tscn" id="2_odveh"]
 [ext_resource type="PackedScene" uid="uid://7j8v5re6vnpc" path="res://scenes/player.tscn" id="5_t54fh"]
 
@@ -86,4 +86,5 @@ layer_2/name = "Foreground"
 position = Vector2(-1, 0)
 
 [node name="Player" parent="Gamecontroller" instance=ExtResource("5_t54fh")]
+unique_name_in_owner = true
 z_index = 1

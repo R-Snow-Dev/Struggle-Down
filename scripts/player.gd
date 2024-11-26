@@ -6,7 +6,7 @@ plater character
 The player character will be carried over in every game board, so there is no reason
 to convert it into a class
 """
-extends CharacterBody2D
+extends Area2D
 
 # Initialises a Vector2 that will store the position data that is represented on the gameboard
 var pos: Vector2

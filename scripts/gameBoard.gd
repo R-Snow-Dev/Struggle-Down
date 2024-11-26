@@ -17,13 +17,12 @@ const board: PackedScene = preload("res://scenes/game_board.tscn")
 
 # Variables that will be defined by the constructor
 var grid = []
-var empty: Object = Object.new()
 var width: int
 var height: int
 var player: Object
 var enemies: Array
 var walls: Array
-
+var door: bool
 
 static func gameBoard(width: int, height: int, player: Object):
 	# Constructor function
@@ -34,6 +33,8 @@ static func gameBoard(width: int, height: int, player: Object):
 	new_board.width = width
 	new_board.height = height
 	new_board.player = player
+	new_board.door = true
+	
 	return new_board
 
 func loadBoard():
@@ -41,7 +42,7 @@ func loadBoard():
 	for i in height:
 		grid.append([])
 		for j in width:
-			grid[i].append(empty)
+			grid[i].append([])
 	
 	# Default the player character to 0,0 if they are out of bounds
 	if player.pos.x > width-1 or player.pos.y > height-1:
@@ -52,51 +53,66 @@ func loadBoard():
 	display()
 
 
-
 func display():
 	# Parses through the 2D array representation and calls each object on the 
 	# board to show themselves in their corresponding locations on-screnn
 	for y in grid:
 		for x in y:
-			if x != empty:
+			if x is Object:
 				x.draw()
 
 
+
 func checkInputs():
-	
+
 	# This function simply checks for each individual input and then correctly handles each case
 	# Definitly not the best way to do this, but it works
 	
 	# If up is pressed and you have the available resources to do it, move up
 	if Input.is_action_just_pressed("move_up"):
-		if player.pos.y > 0 and player.actionsAvailable > 0: # Did the player reach the edge of the map? Does it have actions to spend?
-			player.actionsAvailable -= 1
-			player.moveUp()
-			# relaods the board once movement is complete
-			loadBoard()
+		if player.actionsAvailable > 0: #  Does the player have have actions to spend?
+			if player.pos.y > 0: # Did the player reach the edge of the map?
+				player.actionsAvailable -= 1
+				player.moveUp()
+				# relaods the board once movement is complete
+				loadBoard()
+			elif door == true: # If the player is in a doorway at the top of the map
+				EventBus.changeRooms.emit(Vector2(0,1), "bottom") # change rooms upwards
+				
 			
 	# If down is pressed, and you have the available resources to do it, move down
 	if Input.is_action_just_pressed("move_down"):
-		if player.pos.y < (height - 1) and player.actionsAvailable > 0: 
-			player.actionsAvailable -= 1
-			player.moveDown()
-			# relaods the board once movement is complete
-			loadBoard()
+		if player.actionsAvailable > 0:  #  Does the player have have actions to spend?
+			if player.pos.y < (height - 1): # Did the player reach the edge of the map? 
+				player.actionsAvailable -= 1
+				player.moveDown()
+				# relaods the board once movement is complete
+				loadBoard()
+			elif door == true: # If the player is in a doorway at the bottom of the map
+				EventBus.changeRooms.emit(Vector2(0,-1), "top")# change rooms downwards
+		
 	
 	# etc...
 	if Input.is_action_just_pressed("move_left"):
-		if player.pos.x > 0 and player.actionsAvailable > 0:
-			player.actionsAvailable -= 1
-			player.moveLeft()
-			# relaods the board once movement is complete
-			loadBoard()
+		if player.actionsAvailable > 0: #  Does the player have have actions to spend?
+			if player.pos.x > 0: # Did the player reach the edge of the map?
+				player.actionsAvailable -= 1
+				player.moveLeft()
+				# relaods the board once movement is complete
+				loadBoard()
+			elif door == true: # If the player is in a doorway at the left of the map
+				EventBus.changeRooms.emit(Vector2(-1,0), "right")# change rooms to the left
+			
 	
 	# etc...
 	if Input.is_action_just_pressed("move_right"):
-		if player.pos.x < (width-1) and player.actionsAvailable > 0:
-			player.actionsAvailable -= 1
-			player.moveRight()
-			# relaods the board once movement is complete
-			loadBoard()
+		if player.actionsAvailable > 0: #  Does the player have have actions to spend?
+			if player.pos.x < (width-1): # Did the player reach the edge of the map?
+				player.actionsAvailable -= 1
+				player.moveRight()
+				# relaods the board once movement is complete
+				loadBoard()
+			elif door == true: # If the player is in a doorway at the right of the map
+				EventBus.changeRooms.emit(Vector2(1,0), "left")# change rooms to the right
 	
 	
