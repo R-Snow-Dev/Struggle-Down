@@ -18,7 +18,6 @@ func load():
 	if self.get_child_count() > 0:
 		for i in self.get_children():
 			self.remove_child(i)
-			i.queue_free()
 	for x in grid.x + 2: # Nested loop to generate the tiles
 		for y in grid.y + 2:
 			var t = tile.instantiate() # creates a unique instance of a tile
@@ -45,7 +44,6 @@ func add_doors(x: int, y: int, pathway: Array):
 				t.sprite = preload("res://scenes/Tiles/door_up.tscn") # Sprite for a top facing doorway
 				t.pos = Vector2((grid.y)+2, (int(grid.x)+1)/2)
 				collider.pos = Vector2((grid.y), (int(grid.x)+1)/2)
-				print(t.pos)
 				add_child(t)
 				add_child(collider)
 				
@@ -56,7 +54,6 @@ func add_doors(x: int, y: int, pathway: Array):
 				t.sprite = preload("res://scenes/Tiles/door_down.tscn") # Sprite for a bottom facing doorway
 				t.pos = Vector2(-1, (int(grid.x)+1)/2)
 				collider.pos = Vector2(1, (int(grid.x)+1)/2)
-				print(t.pos)
 				add_child(t)
 				add_child(collider)
 				
@@ -70,7 +67,6 @@ func add_doors(x: int, y: int, pathway: Array):
 				t.sprite = preload("res://scenes/Tiles/door_r.tscn") # Sprite for a right facing doorway
 				t.pos = Vector2((int(grid.y)/2)+1, grid.x)
 				collider.pos = t.pos
-				print(t.pos)
 				add_child(t)
 				add_child(collider)
 			
@@ -81,7 +77,6 @@ func add_doors(x: int, y: int, pathway: Array):
 				t.sprite = preload("res://scenes/Tiles/door_l.tscn") # Sprite for a left facing doorway
 				t.pos = Vector2((int(grid.y)/2)+1, 1)
 				collider.pos = t.pos
-				print(t.pos)
 				add_child(t)
 				add_child(collider)
 				

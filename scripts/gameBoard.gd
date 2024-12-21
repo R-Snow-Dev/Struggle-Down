@@ -17,14 +17,14 @@ const board: PackedScene = preload("res://scenes/game_board.tscn")
 
 # Variables that will be defined by the constructor
 var grid = []
+var fiends: Array
 var width: int
 var height: int
 var player: Object
-var enemies: Array
 var walls: Array
 var door: bool
 
-static func gameBoard(width: int, height: int, player: Object):
+static func gameBoard(width: int, height: int, player: Object, fiends: Array):
 	# Constructor function
 	# param - width: the width of the desired gameboard. Must be positive
 	# param - height: The hight of the desired gameboard. Must be positive.
@@ -34,6 +34,7 @@ static func gameBoard(width: int, height: int, player: Object):
 	new_board.height = height
 	new_board.player = player
 	new_board.door = true
+	new_board.fiends = fiends
 	
 	return new_board
 
@@ -44,10 +45,16 @@ func loadBoard():
 		for j in width:
 			grid[i].append([])
 	
+	# Add enemies to the board
+	if fiends != []:
+		for f in fiends:
+			grid[f[1].y][f[1].x] = f[0]
+	
 	# Default the player character to 0,0 if they are out of bounds
 	if player.pos.x > width-1 or player.pos.y > height-1:
 		player.setPos(Vector2(0,0))
-	else: grid[player.pos.y][player.pos.x] = player
+	else: 
+		grid[player.pos.y][player.pos.x] = player
 	
 	# display all objects to the screen
 	display()

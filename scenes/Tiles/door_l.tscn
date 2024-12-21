@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://brrbrbddtr65b"]
+
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_hf2x7"]
+
+[node name="DoorL" type="Sprite2D"]
+texture = ExtResource("1_hf2x7")
+region_enabled = true
+region_rect = Rect2(48, 32, 16, 16)

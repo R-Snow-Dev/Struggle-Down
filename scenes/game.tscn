@@ -84,6 +84,7 @@ layer_2/name = "Foreground"
 
 [node name="gameBoard" parent="Gamecontroller" instance=ExtResource("2_odveh")]
 position = Vector2(-1, 0)
+rotation = -3.14159
 
 [node name="Player" parent="Gamecontroller" instance=ExtResource("5_t54fh")]
 unique_name_in_owner = true

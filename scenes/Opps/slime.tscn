@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://bdc04xxjf7wrq"]
+
+[ext_resource type="Texture2D" uid="uid://c7l6ilws827p8" path="res://assets/Fiend_A.png" id="1_momjo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aq5ou"]
+atlas = ExtResource("1_momjo")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61ap4"]
+atlas = ExtResource("1_momjo")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ihxyt"]
+atlas = ExtResource("1_momjo")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_71oyt"]
+atlas = ExtResource("1_momjo")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sfb2e"]
+atlas = ExtResource("1_momjo")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_00i4o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aq5ou")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61ap4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ihxyt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_71oyt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sfb2e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Slime" type="AnimatedSprite2D"]
+position = Vector2(0, -1)
+sprite_frames = SubResource("SpriteFrames_00i4o")
+autoplay = "default"
+frame = 1
+frame_progress = 0.0790332
+metadata/_edit_group_ = true

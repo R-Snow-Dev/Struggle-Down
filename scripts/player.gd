@@ -41,5 +41,5 @@ func draw():
 	# code that converts the Vector2 position data into on-screen coordinates
 	position.x = pos.x*16
 	position.y = pos.y*16
-	self.z_index = (pos.y + 1)
+	self.z_index = (pos.y + 2)
 	
