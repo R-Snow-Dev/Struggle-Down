@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7l6ilws827p8"
-path="res://.godot/imported/Fiend_A.png-f5ca1b4f8f26ec2f3939454ea6e0d94b.ctex"
+uid="uid://cdesnnneq8s2"
+path="res://.godot/imported/boot.png-55a70ecd5ccd77de3bbd5ed4bc1fc599.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Fiend_A.png"
-dest_files=["res://.godot/imported/Fiend_A.png-f5ca1b4f8f26ec2f3939454ea6e0d94b.ctex"]
+source_file="res://assets/boot.png"
+dest_files=["res://.godot/imported/boot.png-55a70ecd5ccd77de3bbd5ed4bc1fc599.ctex"]
 
 [params]
 

@@ -1,44 +1,37 @@
-[gd_scene load_steps=8 format=3 uid="uid://bdc04xxjf7wrq"]
+[gd_scene load_steps=7 format=3 uid="uid://bdc04xxjf7wrq"]
 
-[ext_resource type="Texture2D" uid="uid://c7l6ilws827p8" path="res://assets/Fiend_A.png" id="1_momjo"]
+[ext_resource type="Texture2D" uid="uid://dqqo3yug1ex0c" path="res://assets/Fiend_A (1).png" id="1_a8tvx"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_aq5ou"]
-atlas = ExtResource("1_momjo")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_61ap4"]
-atlas = ExtResource("1_momjo")
+[sub_resource type="AtlasTexture" id="AtlasTexture_lsc2u"]
+atlas = ExtResource("1_a8tvx")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ihxyt"]
-atlas = ExtResource("1_momjo")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_71oyt"]
-atlas = ExtResource("1_momjo")
+[sub_resource type="AtlasTexture" id="AtlasTexture_cehsv"]
+atlas = ExtResource("1_a8tvx")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sfb2e"]
-atlas = ExtResource("1_momjo")
+[sub_resource type="AtlasTexture" id="AtlasTexture_3pdjg"]
+atlas = ExtResource("1_a8tvx")
 region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7ccn"]
+atlas = ExtResource("1_a8tvx")
+region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_00i4o"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_aq5ou")
+"texture": SubResource("AtlasTexture_lsc2u")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_61ap4")
+"texture": SubResource("AtlasTexture_cehsv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ihxyt")
+"texture": SubResource("AtlasTexture_3pdjg")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_71oyt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sfb2e")
+"texture": SubResource("AtlasTexture_d7ccn")
 }],
 "loop": true,
 "name": &"default",
@@ -49,6 +42,5 @@ animations = [{
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_00i4o")
 autoplay = "default"
-frame = 1
-frame_progress = 0.0790332
+frame_progress = 0.257061
 metadata/_edit_group_ = true

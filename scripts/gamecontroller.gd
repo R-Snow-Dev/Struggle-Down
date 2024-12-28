@@ -16,8 +16,10 @@ var gridSize = Vector2(11,11)# Dimentions of the current floor
 var boards: Array # 2D array of boards representing the floor map\
 var floorScene = preload("res://scenes/floor.tscn").instantiate()
 var oppControl = preload("res://scenes/opp_controller.tscn").instantiate()
+var player = preload("res://scenes/player.tscn").instantiate()
 var map = preload("res://scenes/map.tscn").instantiate()
 var fiend = preload("res://scenes/Opps/fiend.tscn")
+var wall = preload("res://scenes/Tiles/Wall.tscn")
 var mapPos : Vector2
 var pPos: Vector2
 var rng = RandomNumberGenerator.new()
@@ -43,20 +45,32 @@ func drawBoard():
 	floorScene.load()
 	add_child(floorScene) 
 	# Adding enemies/walls/items to the floor
-	if boards[mapPos.x][mapPos.y][0].fiends != []:
-		for f in boards[mapPos.x][mapPos.y][0].fiends:
+	if boards[mapPos.x][mapPos.y][0].objects != []:
+		for f in boards[mapPos.x][mapPos.y][0].objects:
 			floorScene.add_child(f[0])
 
 	
 
-
+func checkCorners(tile: Array, grid: Array):
+	var cornersOpen = 0
+	if ([tile[0]+1, tile[1]+1] in grid) and ([tile[0]+1, tile[1]] in grid) and ([tile[0], tile[1]+1] in grid):
+		cornersOpen += 1
+	if ([tile[0]-1, tile[1]-1] in grid) and ([tile[0]-1, tile[1]] in grid) and ([tile[0], tile[1]-11] in grid):
+		cornersOpen += 1
+	if ([tile[0]-1, tile[1]+1] in grid) and ([tile[0], tile[1]+1] in grid) and ([tile[0]-1, tile[1]] in grid):
+		cornersOpen += 1
+	if([tile[0]+1, tile[1]-1] in grid) and ([tile[0], tile[1]-1] in grid) and ([tile[0]+1, tile[1]] in grid):
+		cornersOpen += 1
+	return cornersOpen
+	
+	
 func loadObjects(grid: Vector2):
 	# Function that genrates obstacles in a given room. Starts with walls, then fiends, then items
 	# param -  grid: A Vector2 containing the dimensions of the room where the obstacles will be generated
 	# Returns: An array of objects to be added to the floor, along with their positions
 	
 	# The list to be returned
-	var fiends = []
+	var objects = []
 	
 	# Coordinates on the floor that are available to spawn an object
 	var gridCoords = []
@@ -65,7 +79,7 @@ func loadObjects(grid: Vector2):
 	for i in grid.x:
 		for j in grid.y:
 			# Checks to see if the current tile is not a possible door tile
-			if (i == 0 and j == int(grid.y-1)/2) or (i == grid.x-1 and j == int(grid.y-1)/2) or (i == int(grid.x)/2 and j == 0) or (i == int(grid.x)/2 and j == grid.y-1):
+			if (i == 0 and j == int(grid.y-1)/2) or (i == grid.x-1 and j == int(grid.y-1)/2) or (i == int(grid.x-1)/2 and j == 0) or (i == int(grid.x-1)/2 and j == grid.y-1):
 				pass
 			else:
 				gridCoords.append([i,j])
@@ -78,13 +92,27 @@ func loadObjects(grid: Vector2):
 	print(gridCoords)
 	print(availableCoords)
 	
+
+# Iterates throught he available grid coords and adds wall to the game board
+	for i in range(0, availableCoords):
+		if rng.randf() > 0.75: # 75% chance no wall spawns on the currently checked tile
+			var chosenWall = wall.instantiate()
+			var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
+			var cornersOpen = checkCorners([gridCoords[chosen][0], gridCoords[chosen][0]], gridCoords) # Checks to see how many corners the wall will have open 
+			if cornersOpen > 1: # A tile must have at least 2 full corners open for a wall to spawn on it to ensure that no room-spanning walls can cut the player off completely from a required doorway
+				chosenWall.setup((Vector2(gridCoords[chosen][0], gridCoords[chosen][1]))) # Gives the walls their rerspective coordinates
+				objects.append([chosenWall, chosenWall.pos]) # Adds the walls to the list of objects 
+				gridCoords.remove_at(chosen) # removes the wall's coordinates from the pool of possible grid coordinates other objects can be assigned to
+	
+	availableCoords = len(gridCoords) # Updates the amount of grid ccordinates left after the walls are spawned in
+	
 	# Checks all avaialable spawn tiles for a percent chance to spawn a fiend
 	for i in range(0, availableCoords):
 		if rng.randf() > (1.01 - (0.05*sqrt((level*level)+((floor/5)*(floor/5))))): # Chance gets higher as tower level increases
 			var chosenFiend = fiend.instantiate()
 			var chosen = rng.randi_range(0, len(gridCoords) - 1) # Picks an available spawn tiles
 			chosenFiend.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1]), preload("res://scenes/Opps/slime.tscn"), 10) # Adds all relevant information to the newly spawned fiend
-			fiends.append([chosenFiend, chosenFiend.pos]) # Adds the new fiend, along with it's position, to the fiends array, which will be returned at the end
+			objects.append([chosenFiend, chosenFiend.pos]) # Adds the new fiend, along with it's position, to the fiends array, which will be returned at the end
 			# Print info to the console
 			print("Updated")
 			print(gridCoords[chosen])
@@ -93,38 +121,36 @@ func loadObjects(grid: Vector2):
 			print(gridCoords)
 			print("GUG")
 	# Returns the fiends array, containing the instances of the spawned fiends in the room, along with tier positions
-	return fiends
+	return objects
 			
 
 func genMapData(path: Array):
 	# Genrates the map data for each noew floor, including their dimensions, and the obstacles they have
 	# param - path: An array of coordinates correlating to every position of a room on the map
 	
-	var player = %Player # gets the path for the player scene
 	
 	# Repeat this for every room in the map
 	for x in path:
 		# List of fiends is initialised
-		var fiendList: Array
+		var objectList: Array
 		# Checks to see if the floor being generated is the starting floor or not
 		if x != map.startPos: # If it isn't randomly generate unique data for the floor
 			gridSize = Vector2(rng.randi_range(3,11), rng.randi_range(3,11))
-			fiendList = loadObjects(gridSize)
-			print(fiendList)
+			objectList = loadObjects(gridSize)
+			print(objectList)
 		else: # If it is the starting position, generate a 5x5 room with no obstacles
 			gridSize = Vector2(5,5)
-			fiendList = []
-		boards[x.x][x.y].append(gameBoard.gameBoard(gridSize.x, gridSize.y, player, fiendList)) # Appends the genrated board to the "boards" array, representing the floor map
+			objectList = []
+		boards[x.x][x.y].append(gameBoard.gameBoard(gridSize.x, gridSize.y, player, objectList)) # Appends the genrated board to the "boards" array, representing the floor map
 
 # Load the level from the map, and load the first room
 func loadLevel():
-	var player = %Player # gets the path for the player scene
 	add_child(map)
 	mapPos = map.startPos
 	boards = map.mapGrid
 	floorScene.mapPos = mapPos
 	floorScene.path = map.path
-	player.setActionsAvailable(10000) # Sets available actions to a default number
+	player.setActionsAvailable(2) # Sets available actions to a default number
 	# creates the gameboards
 	genMapData(map.path)
 	gridSize = Vector2(boards[mapPos.x][mapPos.y][0].width, boards[mapPos.x][mapPos.y][0].height)
@@ -146,7 +172,7 @@ func _ready() -> void:
 	EventBus.changeRooms.connect(_changeRooms)
 	EventBus.on_door.connect(_on_door)
 	# Excecutes code on startup
-	var player = %Player # gets the path for the player scene
+	add_child(player) # Adds the player to the scene
 	loadLevel() # Loads the level up
 	
 func _on_door(on: bool):
@@ -162,7 +188,6 @@ func _changeRooms(changePos: Vector2, newPos: String):
 	# Param - changePos: A Vector2 recieved from the signal that tells how much the map position will change in both dimensions
 	# Param - newPos: A String recieved from the signal that will be translated into a new starting position for the player in the new room
 	
-	var player = %Player # gets the path for the player scene
 	
 	# Changes the map position by the changePos Vector2
 	mapPos = mapPos + changePos
@@ -183,14 +208,17 @@ func _changeRooms(changePos: Vector2, newPos: String):
 	gridSize = Vector2(boards[mapPos.x][mapPos.y][0].width, boards[mapPos.x][mapPos.y][0].height)
 	
 	player.setPos(pPos) # Sets player position to the newly aquired starting position
-	player.setActionsAvailable(10000) # Sets available actions to a default number
+	player.setActionsAvailable(2) # Sets available actions to a default number
 	floorScene.mapPos = mapPos # gives floorScene the new map position to load new doorways
 	floorScene.grid = gridSize  # Sets floorScene's grid size to the new grid size
 	boards[mapPos.x][mapPos.y][0].loadBoard() # generates the gameboard and displays the objects in it to the screen for the first time
 	drawBoard() # Generates the dungeon floor
 
+
 func _process(delta: float) -> void:
-	# Ececutes code every frame
+	# Executes code every frame
 	boards[mapPos.x][mapPos.y][0].door = door
 	boards[mapPos.x][mapPos.y][0].checkInputs() # checks to see if the user performs an action
+	if player.actionsAvailable == 0:
+		boards[mapPos.x][mapPos.y][0].fiendsTurn()
 	

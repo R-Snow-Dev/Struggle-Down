@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://biv52v6dwqsye"]
+
+[ext_resource type="Texture2D" uid="uid://cdesnnneq8s2" path="res://assets/boot.png" id="1_7otik"]
+
+[node name="DashIcon" type="Sprite2D"]
+texture = ExtResource("1_7otik")

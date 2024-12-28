@@ -20,6 +20,7 @@ func setPos(newPos: Vector2):
 func setActionsAvailable(actions: int):
 	# Function to artificially set the number of available actions for the player
 	actionsAvailable = actions
+	EventBus.actionsReset.emit(actions)
 
 func moveUp():
 	# Code to move the player character up

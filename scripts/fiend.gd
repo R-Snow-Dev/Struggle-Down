@@ -1,4 +1,5 @@
 extends Area2D
+class_name Fiend
 
 var pos: Vector2
 var atk: AttackBehavior
