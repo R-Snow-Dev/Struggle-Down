@@ -19,3 +19,7 @@ signal updateActions(amount: int)
 
 # Signal that resets the action text to the max amount 
 signal actionsReset(amount: int)
+
+signal doneAttacking()
+
+signal fiend_phase(amount: int)

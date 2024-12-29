@@ -1,8 +1,9 @@
-extends Node
+extends Object
 class_name EnemyBehavior
 
+
 	
-func pathFind():
+func pathFind(gameBoard: Array, curPos: Vector2, targetPos: Vector2):
 	pass
 	
 func findFacing():

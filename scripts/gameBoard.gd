@@ -16,7 +16,7 @@ class_name gameBoard
 const board: PackedScene = preload("res://scenes/game_board.tscn")
 
 # Variables that will be defined by the constructor
-var grid = []
+var grid: Array
 var objects: Array
 var width: int
 var height: int
@@ -30,6 +30,7 @@ static func gameBoard(width: int, height: int, player: Object, objects: Array):
 	# param - height: The hight of the desired gameboard. Must be positive.
 	# param - player: Path to the player scene
 	var new_board: gameBoard = board.instantiate() 
+	new_board.grid = []
 	new_board.width = width
 	new_board.height = height
 	new_board.player = player
@@ -37,10 +38,13 @@ static func gameBoard(width: int, height: int, player: Object, objects: Array):
 	new_board.objects = objects
 	
 	return new_board
-
+		
 
 func loadBoard():
 	# Generates the current board as a 2D array based on given data
+	
+	grid = []
+	
 	for i in height:
 		grid.append([])
 		for j in width:
@@ -49,7 +53,7 @@ func loadBoard():
 	# Add enemies to the board
 	if objects != []:
 		for f in objects:
-			grid[f[1].y][f[1].x] = f[0]
+			grid[f.pos.y][f.pos.x] = f
 	
 	# Default the player character to 0,0 if they are out of bounds
 	if player.pos.x > width-1 or player.pos.y > height-1:
@@ -84,6 +88,15 @@ func fiendsTurn():
 				
 	if fien < 1: # If the fiend counter remains at 0, then immediatly return the players actions to them.
 		player.setActionsAvailable(2)
+	else: # If not, call all enemies on the floor to take their actions
+		EventBus.fiend_phase.emit(fien) # Tells the game controller that it is not the enemy's turn to take actions
+		for x in grid:
+			for y in x:
+				if y is Fiend:
+					loadBoard()
+					y.move(grid, player.pos)
+					loadBoard()
+		
 
 func checkInputs():
 
@@ -94,12 +107,12 @@ func checkInputs():
 	if Input.is_action_just_pressed("move_up"):
 		if player.actionsAvailable > 0: #  Does the player have have actions to spend?
 			if player.pos.y > 0: # Did the player reach the edge of the map?
-				if grid[player.pos.y-1][player.pos.x] is not Wall:# Is the player walking into a spawned wall?
-					player.actionsAvailable -= 1
+				if grid[player.pos.y-1][player.pos.x] is not Wall and grid[player.pos.y-1][player.pos.x] is not Fiend:# Is the player walking into a spawned wall or enemy?
 					EventBus.updateActions.emit(-1)
 					player.moveUp()
 					# relaods the board once movement is complete
 					loadBoard()
+					player.actionsAvailable -= 1
 			elif door == true: # If the player is in a doorway at the top of the map
 				EventBus.changeRooms.emit(Vector2(0,1), "bottom") # change rooms upwards
 				
@@ -108,12 +121,12 @@ func checkInputs():
 	if Input.is_action_just_pressed("move_down"):
 		if player.actionsAvailable > 0:  #  Does the player have have actions to spend?
 			if player.pos.y < (height - 1):# Did the player reach the edge of the map? 
-				if grid[player.pos.y+1][player.pos.x] is not Wall: # Is the player walking into a spawned wall?
-					player.actionsAvailable -= 1
+				if grid[player.pos.y+1][player.pos.x] is not Wall and grid[player.pos.y+1][player.pos.x] is not Fiend: # Is the player walking into a spawned wall or enemy?
 					EventBus.updateActions.emit(-1)
 					player.moveDown()
 					# relaods the board once movement is complete
 					loadBoard()
+					player.actionsAvailable -= 1
 			elif door == true: # If the player is in a doorway at the bottom of the map
 				EventBus.changeRooms.emit(Vector2(0,-1), "top")# change rooms downwards
 		
@@ -122,12 +135,12 @@ func checkInputs():
 	if Input.is_action_just_pressed("move_left"):
 		if player.actionsAvailable > 0: #  Does the player have have actions to spend?
 			if player.pos.x > 0: # Did the player reach the edge of the map?
-				if grid[player.pos.y][player.pos.x-1] is not Wall:# Is the player walking into a spawned wall?
-					player.actionsAvailable -= 1
+				if grid[player.pos.y][player.pos.x-1] is not Wall and grid[player.pos.y][player.pos.x-1] is not Fiend:# Is the player walking into a spawned wall or enemy?
 					EventBus.updateActions.emit(-1)
 					player.moveLeft()
 					# relaods the board once movement is complete
 					loadBoard()
+					player.actionsAvailable -= 1
 			elif door == true: # If the player is in a doorway at the left of the map
 				EventBus.changeRooms.emit(Vector2(-1,0), "right")# change rooms to the left
 			
@@ -136,12 +149,12 @@ func checkInputs():
 	if Input.is_action_just_pressed("move_right"):
 		if player.actionsAvailable > 0: #  Does the player have have actions to spend?
 			if player.pos.x < (width-1): # Did the player reach the edge of the map?
-				if grid[player.pos.y][player.pos.x+1] is not Wall: # Is the player walking into a spawned wall?
-					player.actionsAvailable -= 1
+				if grid[player.pos.y][player.pos.x+1] is not Wall and grid[player.pos.y][player.pos.x+1] is not Fiend: # Is the player walking into a spawned wall or enemy?
 					EventBus.updateActions.emit(-1)
 					player.moveRight()
 					# relaods the board once movement is complete
 					loadBoard()
+					player.actionsAvailable -= 1
 			elif door == true: # If the player is in a doorway at the right of the map
 				EventBus.changeRooms.emit(Vector2(1,0), "left")# change rooms to the right
 	

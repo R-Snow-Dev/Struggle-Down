@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://biv52v6dwqsye" path="res://scenes/dash_icon.tscn" id="4_ayvvm"]
 [ext_resource type="FontFile" uid="uid://c741aob7eiqml" path="res://assets/Fonts/timetwist.bold.ttf" id="5_6vamk"]
 [ext_resource type="FontFile" uid="uid://b724no7bnk3ih" path="res://assets/Fonts/timetwist.regular.ttf" id="5_35ief"]
-[ext_resource type="Script" path="res://scenes/actions_available.gd" id="7_jc4k3"]
+[ext_resource type="Script" path="res://scripts/actions_available.gd" id="7_jc4k3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5iqrf"]
 texture = ExtResource("1_8pq1n")

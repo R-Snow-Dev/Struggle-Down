@@ -7,6 +7,7 @@ The player character will be carried over in every game board, so there is no re
 to convert it into a class
 """
 extends Area2D
+class_name Player
 
 # Initialises a Vector2 that will store the position data that is represented on the gameboard
 var pos: Vector2
