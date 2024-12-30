@@ -1,7 +1,7 @@
 extends "res://scripts/Behaviors/EnemyBehavior.gd"
 class_name SlimeAI
 
-func pathFind(gameBoard: Array, curPos: Vector2, targetPos: Vector2):
+func pathFind(gameBoard: Array, curPos: Vector2, targetPos: Vector2, fiend: Object):
 	# Function that determines the best move the slime can make to get closer to the player
 	# param - gameBoard: The grid holding the positions of every object on the floor
 	# param - curPos: The Current position of the slime
@@ -57,7 +57,24 @@ func pathFind(gameBoard: Array, curPos: Vector2, targetPos: Vector2):
 			if curDiff <= smallestDiff: # Set the minMove to the coordinate that has the lowest evaluated difference between target and it's postions
 				smallestDiff = curDiff
 				minMove = x - curPos
+	findFacing(curPos + minMove, targetPos, fiend)
 	return minMove # Return a Vector2() containing either a 1 or -1 in the respective axis of movement, decided by the algorithm
 	
-func findFacing():
-	return "down"
+func findFacing(curPos: Vector2, targetPos: Vector2, fiend: Object):
+	# find the direction the slime should be "facing" so it faces the player
+	# param - curPos: the current position of the slime
+	# param - targetPos: The position of the player
+	# param - fiend: The instance of the slime that is trying to update it's facing direction
+	
+	# If teh difference between the player's y and the slime's y is greter or equal to the differences between their Xs:
+	if abs(curPos.y - targetPos.y) >= abs(curPos.x-targetPos.x):
+		if curPos.y - targetPos.y > 0: # Update to down if the slime is above the player
+			fiend.facing = "down"
+		else:
+			fiend.facing = "up" # Update to up if the slime is below the player
+	# Otherwise:
+	else:
+		if curPos.x - targetPos.x > 0 :
+			fiend.facing = "left" # Update to left if the slime if to the left of the palyer
+		else:
+			fiend.facing = "right"# Update to right if the slime is to the right of the player

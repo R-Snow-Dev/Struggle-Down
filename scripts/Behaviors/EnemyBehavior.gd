@@ -3,9 +3,9 @@ class_name EnemyBehavior
 
 
 	
-func pathFind(gameBoard: Array, curPos: Vector2, targetPos: Vector2):
+func pathFind(gameBoard: Array, curPos: Vector2, targetPos: Vector2, fiend: Object):
 	pass
 	
-func findFacing():
+func findFacing(curPos: Vector2, targetPos: Vector2, fiend: Object):
 	pass
 	

@@ -1,15 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://b7p2cbtefrfm4"]
+[gd_scene load_steps=2 format=3 uid="uid://b7p2cbtefrfm4"]
 
 [ext_resource type="Script" path="res://scripts/fiend.gd" id="1_41aaq"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1cxs1"]
-radius = 4.12311
-
-[node name="Fiend" type="Area2D"]
+[node name="Fiend" type="Node2D"]
 script = ExtResource("1_41aaq")
-
-[node name="Hitbox" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_1cxs1")
 
 [node name="Timer" type="Timer" parent="."]
 

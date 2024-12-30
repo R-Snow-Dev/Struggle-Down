@@ -12,7 +12,19 @@ class_name Player
 # Initialises a Vector2 that will store the position data that is represented on the gameboard
 var pos: Vector2
 var actionsAvailable: int
+var hp: int = 4
+@onready var anim_player: AnimationPlayer = $AnimatedSprite2D/animPlayer
 
+func playDeath():
+	# Plays the death animation upon death
+	anim_player.play("death")
+	
+func broadcatDeath():
+	# Emits the on_death signal after the death animation is completed
+	EventBus.on_death.emit()
+
+func _ready() -> void:
+	EventBus.update_hp.connect(_updateHealth)
 
 func setPos(newPos: Vector2):
 	# Function to artificially change the current position of the player character
@@ -38,6 +50,12 @@ func moveLeft():
 func moveRight():
 	# Code to move the player character right
 	pos.x += 1
+
+func _updateHealth(amount: int):
+	if amount > hp:
+		hp = 0
+	else:
+		hp += amount
 
 func draw():
 	# code that converts the Vector2 position data into on-screen coordinates

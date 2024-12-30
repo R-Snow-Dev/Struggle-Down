@@ -12,8 +12,6 @@ the player can leave and return to disconnected board states
 extends Node2D
 class_name gameBoard
 
-# Preloads the instance of this scene so that it can be used
-const board: PackedScene = preload("res://scenes/game_board.tscn")
 
 # Variables that will be defined by the constructor
 var grid: Array
@@ -24,21 +22,19 @@ var player: Object
 var walls: Array
 var door: bool
 
-static func gameBoard(width: int, height: int, player: Object, objects: Array):
+func _init(w: int, h: int, p: Object, o: Array):
 	# Constructor function
 	# param - width: the width of the desired gameboard. Must be positive
 	# param - height: The hight of the desired gameboard. Must be positive.
 	# param - player: Path to the player scene
-	var new_board: gameBoard = board.instantiate() 
-	new_board.grid = []
-	new_board.width = width
-	new_board.height = height
-	new_board.player = player
-	new_board.door = true
-	new_board.objects = objects
+
+	grid = []
+	width = w
+	height = h
+	player = p
+	door = true
+	objects = o
 	
-	return new_board
-		
 
 func loadBoard():
 	# Generates the current board as a 2D array based on given data
@@ -157,5 +153,7 @@ func checkInputs():
 					player.actionsAvailable -= 1
 			elif door == true: # If the player is in a doorway at the right of the map
 				EventBus.changeRooms.emit(Vector2(1,0), "left")# change rooms to the right
+				
+
 	
 	

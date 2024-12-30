@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dewxt6rsb88dn"]
 
-[ext_resource type="Script" path="res://scenes/Tiles/wall.gd" id="2_37thq"]
+[ext_resource type="Script" path="res://scripts/wall.gd" id="2_37thq"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ppqfl"]
 load_path = "res://.godot/imported/Wall.png-002cd1d8eda8e10be68271b5bde28c8f.ctex"

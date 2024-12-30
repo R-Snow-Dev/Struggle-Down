@@ -20,6 +20,14 @@ signal updateActions(amount: int)
 # Signal that resets the action text to the max amount 
 signal actionsReset(amount: int)
 
+# Signal that is emitted when a fiend has finished it's actions
 signal doneAttacking()
 
+# Tells the dungeon controller that it is the fiend's turn to attack
 signal fiend_phase(amount: int)
+
+# Changes the player's hp and the hp bar when emitted
+signal update_hp(amount:int)
+
+# Emiited upon completion of the player's deth animation
+signal on_death()

@@ -46,6 +46,7 @@ func genPath(start: Vector2, end: Vector2, path: Array):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	EventBus.on_death.connect(_on_death)
 	# Randomly generating a starting point to start the path
 	startPos = Vector2(rng.randi_range(0,mapSize-1), rng.randi_range(0,mapSize-1))
 	
@@ -65,3 +66,6 @@ func _ready() -> void:
 		mapGrid.append([])
 		for x in mapSize:
 			mapGrid[y].append([])
+
+func _on_death():
+	queue_free()

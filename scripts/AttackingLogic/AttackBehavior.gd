@@ -2,12 +2,10 @@ extends Node
 class_name AttackBehavior
 
 var dam: int
-var attacker: PackedScene
 
-func _init(damage: int, atker: PackedScene) -> void:
+func _init(damage: int) -> void:
 	dam = damage
-	attacker = atker
 
-func attack():
+func attack(atker: Object):
 	pass
 	

@@ -218,18 +218,22 @@ func _changeRooms(changePos: Vector2, newPos: String):
 
 func _process(delta: float) -> void:
 	# Executes code every frame
+	
+	# If the player is alive, play the game
 	if player.hp > 0:
 		boards[mapPos.x][mapPos.y][0].door = door
 		boards[mapPos.x][mapPos.y][0].checkInputs() # checks to see if the user performs an action
 		if player.actionsAvailable == 0 and enemiesToMove == 0:
 			boards[mapPos.x][mapPos.y][0].fiendsTurn()
-	else:
+	else: # If he isn't, initiate the detah sequence
 		deathSequence()
 	
 func deathSequence():
+	# Plays the player's death animation upon death
 	player.playDeath()
 	
 func _on_death():
+	# removes the dungeon from the game scene
 	queue_free()
 	
 	
