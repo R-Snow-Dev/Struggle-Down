@@ -31,3 +31,24 @@ signal update_hp(amount:int)
 
 # Emiited upon completion of the player's deth animation
 signal on_death()
+
+# Emits upon the death of a fiend, signalling the fiend to be removed from the board
+signal object_ded(fiend:Object)
+
+# Signal that is emittd whenever a new item is picked up
+signal swap_weapon(Id: int)
+
+# Signal that is emitted whenever the player attacks
+signal attack(weapon: Array)
+
+# signal that is emitted whenever a player is finished attacking
+signal playerDoneAttacking()
+
+# Signal that is emitted whenever the mouse hovers over the attack button
+signal updateAOE(height: int, width: int, pointOfOrigin: String)
+
+# Signal that is emitted whenever the game is paused
+signal pause()
+
+# Signal that is emitted whenever the game is unpaused
+signal unpause()

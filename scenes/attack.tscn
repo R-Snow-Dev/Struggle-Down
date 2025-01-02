@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckyqm55pptwki"]
+
+[ext_resource type="Script" path="res://slash_tip.gd" id="1_5lars"]
+[ext_resource type="Script" path="res://scripts/AttackingLogic/attack.gd" id="1_8w205"]
+
+[node name="Attack" type="Node2D"]
+script = ExtResource("1_8w205")
+
+[node name="SlashTip" type="CPUParticles2D" parent="."]
+z_index = 100
+z_as_relative = false
+rotation = -0.0523599
+emitting = false
+amount = 30
+lifetime = 0.16
+one_shot = true
+explosiveness = 0.5
+emission_shape = 3
+emission_rect_extents = Vector2(1, 1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 400.0
+initial_velocity_max = 400.0
+tangential_accel_min = 100.0
+tangential_accel_max = 100.0
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 3.0
+scale_amount_max = 3.0
+color = Color(0, 0, 0, 1)
+script = ExtResource("1_5lars")
+
+[node name="SlashBase" type="CPUParticles2D" parent="SlashTip"]
+position = Vector2(0, -1)
+emitting = false
+amount = 60
+lifetime = 0.16
+one_shot = true
+explosiveness = 0.5
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 400.0
+initial_velocity_max = 400.0
+tangential_accel_min = 100.0
+tangential_accel_max = 100.0
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.5
+scale_amount_max = 0.5
+
+[connection signal="finished" from="SlashTip" to="." method="_on_slash_tip_finished"]

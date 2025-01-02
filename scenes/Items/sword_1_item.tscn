@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://desvc73m0wj1t"]
+
+[ext_resource type="Texture2D" uid="uid://coupxojyqgo22" path="res://assets/sword1.png" id="1_fsnnb"]
+
+[node name="Sword1Item" type="Sprite2D"]
+texture = ExtResource("1_fsnnb")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)

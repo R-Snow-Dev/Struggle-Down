@@ -13,7 +13,8 @@ class_name Player
 var pos: Vector2
 var actionsAvailable: int
 var hp: int = 4
-@onready var anim_player: AnimationPlayer = $AnimatedSprite2D/animPlayer
+@onready var anim_player: AnimationPlayer = $CollisionShape2D/AnimatedSprite2D/animPlayer
+@onready var attack_origin: Node2D = $AttackOrigin
 
 func playDeath():
 	# Plays the death animation upon death
@@ -25,10 +26,14 @@ func broadcatDeath():
 
 func _ready() -> void:
 	EventBus.update_hp.connect(_updateHealth)
+	EventBus.updateActions.connect(_updateActions)
 
 func setPos(newPos: Vector2):
 	# Function to artificially change the current position of the player character
 	pos = newPos
+
+func _updateActions(amount: int):
+	actionsAvailable += amount
 
 func setActionsAvailable(actions: int):
 	# Function to artificially set the number of available actions for the player
@@ -37,22 +42,26 @@ func setActionsAvailable(actions: int):
 
 func moveUp():
 	# Code to move the player character up
+	attack_origin.rotation_degrees = 0
 	pos.y -= 1
 
 func moveDown():
 	# Code to move the player character down
+	attack_origin.rotation_degrees = 180
 	pos.y += 1
 
 func moveLeft():
 	# Code to move the player character left
+	attack_origin.rotation_degrees = 270
 	pos.x -= 1
 
 func moveRight():
 	# Code to move the player character right
+	attack_origin.rotation_degrees = 90
 	pos.x += 1
 
 func _updateHealth(amount: int):
-	if amount > hp:
+	if amount + hp <= 0:
 		hp = 0
 	else:
 		hp += amount
@@ -62,4 +71,5 @@ func draw():
 	position.x = pos.x*16
 	position.y = pos.y*16
 	self.z_index = (pos.y + 2)
+	
 	

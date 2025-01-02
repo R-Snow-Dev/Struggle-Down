@@ -1,7 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://7j8v5re6vnpc"]
+[gd_scene load_steps=14 format=3 uid="uid://7j8v5re6vnpc"]
 
 [ext_resource type="Texture2D" uid="uid://djdmlq5xbxt6c" path="res://assets/Player_DG (1).png" id="1_83poi"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_i5qes"]
+[ext_resource type="PackedScene" uid="uid://ckyqm55pptwki" path="res://scenes/attack.tscn" id="3_45v0r"]
+[ext_resource type="Script" path="res://scripts/PlayerAttacks/attack_origin.gd" id="3_itcv7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nb3vm"]
+radius = 3.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hpkai"]
 atlas = ExtResource("1_83poi")
@@ -39,12 +44,27 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_8r2rh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D/AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_1cofm"]
 resource_name = "death"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/path = NodePath("CollisionShape2D/AnimatedSprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -68,46 +88,35 @@ tracks/1/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_8r2rh"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hu8rc"]
 _data = {
 "RESET": SubResource("Animation_8r2rh"),
 "death": SubResource("Animation_1cofm")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_nb3vm"]
-radius = 3.0
-
 [node name="Player" type="Area2D"]
 collision_layer = 4
-collision_mask = 2
 script = ExtResource("1_i5qes")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_nb3vm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
 sprite_frames = SubResource("SpriteFrames_vrbgi")
 animation = &"Idle"
 autoplay = "Idle"
 
-[node name="animPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
-root_node = NodePath("../..")
+[node name="animPlayer" type="AnimationPlayer" parent="CollisionShape2D/AnimatedSprite2D"]
+root_node = NodePath("../../..")
 libraries = {
 "": SubResource("AnimationLibrary_hu8rc")
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
-shape = SubResource("CircleShape2D_nb3vm")
+[node name="AttackOrigin" type="Node2D" parent="."]
+script = ExtResource("3_itcv7")
+
+[node name="Attack" parent="AttackOrigin" instance=ExtResource("3_45v0r")]
+position = Vector2(-8, -16)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -6,6 +6,7 @@
 size = Vector2(16, 10)
 
 [node name="doorArea" type="Area2D"]
+collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_2kaqf")
 

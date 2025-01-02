@@ -11,7 +11,7 @@ var sprite: PackedScene # The sprite it will be assigned.
 func _ready() -> void:
 	# Setting its x, y coordinates based off of it's "pos" variable
 	position.x = (pos.y-1)*16
-	position.y = ((pos.x-1)*16) + 8
+	position.y = ((pos.x-1)*16) 
 	
 	# Adding a texture to it's own scene based on the "sprite" variable it was assigned
 	var texture = sprite.instantiate()

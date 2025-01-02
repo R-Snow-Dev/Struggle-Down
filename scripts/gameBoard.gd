@@ -34,7 +34,14 @@ func _init(w: int, h: int, p: Object, o: Array):
 	player = p
 	door = true
 	objects = o
+	EventBus.object_ded.connect(_object_ded)
 	
+
+func _object_ded(object: Object):
+	objects.remove_at(objects.find(object))
+	object.queue_free()
+	checkInputs()
+
 
 func loadBoard():
 	# Generates the current board as a 2D array based on given data
@@ -51,11 +58,8 @@ func loadBoard():
 		for f in objects:
 			grid[f.pos.y][f.pos.x] = f
 	
-	# Default the player character to 0,0 if they are out of bounds
-	if player.pos.x > width-1 or player.pos.y > height-1:
-		player.setPos(Vector2(0,0))
-	else: 
-		grid[player.pos.y][player.pos.x] = player
+	# Default the player character to 0,0 if they are out of bounds 
+	grid[player.pos.y][player.pos.x] = player
 	
 	# display all objects to the screen
 	display()
@@ -74,24 +78,23 @@ func fiendsTurn():
 	# board, the player will emmidiatly regain their actions. If not, every monster will be called to take their turns, and only afterwards does the player
 	# regain the ability to take another action
 	
+	print("yeah")
 	var fien = 0 # default monster count is 0
 	
 	# Iterate through the game board array
-	for x in grid:
-		for y in x:
-			if y is Fiend: # For every fiend on the boars, add 1 to the fiend counter
-				fien += 1
+	for x in objects:
+		if x is Fiend:
+			fien += 1
 				
 	if fien < 1: # If the fiend counter remains at 0, then immediatly return the players actions to them.
 		player.setActionsAvailable(2)
 	else: # If not, call all enemies on the floor to take their actions
 		EventBus.fiend_phase.emit(fien) # Tells the game controller that it is not the enemy's turn to take actions
-		for x in grid:
-			for y in x:
-				if y is Fiend:
-					loadBoard()
-					y.move(grid, player.pos)
-					loadBoard()
+		for y in objects:
+			if y is Fiend:
+				loadBoard()
+				y.move(grid, player.pos)
+				loadBoard()
 		
 
 func checkInputs():
@@ -100,7 +103,9 @@ func checkInputs():
 	# Definitly not the best way to do this, but it works
 	
 	# If up is pressed and you have the available resources to do it, move up
+	
 	if Input.is_action_just_pressed("move_up"):
+		loadBoard()
 		if player.actionsAvailable > 0: #  Does the player have have actions to spend?
 			if player.pos.y > 0: # Did the player reach the edge of the map?
 				if grid[player.pos.y-1][player.pos.x] is not Wall and grid[player.pos.y-1][player.pos.x] is not Fiend:# Is the player walking into a spawned wall or enemy?
@@ -108,13 +113,13 @@ func checkInputs():
 					player.moveUp()
 					# relaods the board once movement is complete
 					loadBoard()
-					player.actionsAvailable -= 1
 			elif door == true: # If the player is in a doorway at the top of the map
 				EventBus.changeRooms.emit(Vector2(0,1), "bottom") # change rooms upwards
 				
 			
 	# If down is pressed, and you have the available resources to do it, move down
 	if Input.is_action_just_pressed("move_down"):
+		loadBoard()
 		if player.actionsAvailable > 0:  #  Does the player have have actions to spend?
 			if player.pos.y < (height - 1):# Did the player reach the edge of the map? 
 				if grid[player.pos.y+1][player.pos.x] is not Wall and grid[player.pos.y+1][player.pos.x] is not Fiend: # Is the player walking into a spawned wall or enemy?
@@ -122,13 +127,13 @@ func checkInputs():
 					player.moveDown()
 					# relaods the board once movement is complete
 					loadBoard()
-					player.actionsAvailable -= 1
 			elif door == true: # If the player is in a doorway at the bottom of the map
 				EventBus.changeRooms.emit(Vector2(0,-1), "top")# change rooms downwards
 		
 	
 	# etc...
 	if Input.is_action_just_pressed("move_left"):
+		loadBoard()
 		if player.actionsAvailable > 0: #  Does the player have have actions to spend?
 			if player.pos.x > 0: # Did the player reach the edge of the map?
 				if grid[player.pos.y][player.pos.x-1] is not Wall and grid[player.pos.y][player.pos.x-1] is not Fiend:# Is the player walking into a spawned wall or enemy?
@@ -136,13 +141,13 @@ func checkInputs():
 					player.moveLeft()
 					# relaods the board once movement is complete
 					loadBoard()
-					player.actionsAvailable -= 1
 			elif door == true: # If the player is in a doorway at the left of the map
 				EventBus.changeRooms.emit(Vector2(-1,0), "right")# change rooms to the left
 			
 	
 	# etc...
 	if Input.is_action_just_pressed("move_right"):
+		loadBoard()
 		if player.actionsAvailable > 0: #  Does the player have have actions to spend?
 			if player.pos.x < (width-1): # Did the player reach the edge of the map?
 				if grid[player.pos.y][player.pos.x+1] is not Wall and grid[player.pos.y][player.pos.x+1] is not Fiend: # Is the player walking into a spawned wall or enemy?
@@ -150,7 +155,6 @@ func checkInputs():
 					player.moveRight()
 					# relaods the board once movement is complete
 					loadBoard()
-					player.actionsAvailable -= 1
 			elif door == true: # If the player is in a doorway at the right of the map
 				EventBus.changeRooms.emit(Vector2(1,0), "left")# change rooms to the right
 				

@@ -18,12 +18,18 @@ func setup(p: Vector2, s: PackedScene, hp: int, b: EnemyBehavior, a: AttackBehav
 	pos = p
 	sprite = s.instantiate()
 	health = hp
+	sprite.health = health
 	brain = b
 	atk = a
 
 	# Adds the sprite to the scene tree, giving the fiend a sprite
+	sprite.position.y -= 4
 	add_child(sprite)
-	
+
+func _process(delta: float) -> void:
+	health = sprite.health
+	if health < 1:
+		EventBus.object_ded.emit(self)
 	
 func checkFacing(targetPos: Vector2):
 	# Function that checks to make sure the way it is facing is toward the player
@@ -71,7 +77,7 @@ func draw():
 	sprite.dam = atk.dam
 	# code that converts the Vector2 position data into on-screen coordinates
 	position.x = pos.x*16
-	position.y = pos.y*16 + 4
+	position.y = pos.y*16
 	self.z_index = (pos.y + 1)
 	
 

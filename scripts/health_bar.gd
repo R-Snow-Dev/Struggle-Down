@@ -9,6 +9,7 @@ var defaultX = -390
 var yPos = 2100
 var curHP: int = 0
 @onready var health_bar_faded: Label = $HealthBarFaded
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
 
@@ -27,10 +28,11 @@ func setHealthBar(totalHP: int):
 	
 func _update_hp(amount: int):
 	# Function taht updates the heath bar upon damage or healing
-	if amount > curHP:
+	if amount + curHP <= 0:
 		curHP = 0
 	else:
 		curHP += amount
+	animation_player.play("shake")
 
 func displayHP():
 	# Creates the amount of hearts depending on how much current HP the player has

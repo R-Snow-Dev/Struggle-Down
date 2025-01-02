@@ -25,7 +25,9 @@ var pPos: Vector2
 var rng = RandomNumberGenerator.new()
 var door: bool
 var enemiesToMove = 0
+var paused = false
 @onready var healthBar = $Node2D/Camera2D/HealthBar
+@onready var node_2d: Node2D = $Node2D
 
 func _fiend_phase(amount: int):
 	# function that sets the amount of fiends taking actions to a variable, to keep track of how many need to move before the player can
@@ -110,6 +112,17 @@ func loadObjects(grid: Vector2):
 	
 	availableCoords = len(gridCoords) # Updates the amount of grid ccordinates left after the walls are spawned in
 	
+	# Iterates throught he available grid coords and adds items to the game board
+	for i in range(0, availableCoords):
+		if rng.randf() > 0.99: # 99% chance no item spawns on the currently checked tile
+			var chosenItem = preload("res://scenes/Items/item.tscn").instantiate()
+			var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
+			chosenItem.setup((Vector2(gridCoords[chosen][0], gridCoords[chosen][1])), 1) # Gives the items their rerspective coordinates and IDs
+			objects.append(chosenItem) # Adds the items to the list of objects 
+			gridCoords.remove_at(chosen) # removes the wall's coordinates from the pool of possible grid coordinates other objects can be assigned to
+	
+	availableCoords = len(gridCoords) # Updates the amount of grid ccordinates left after the items are spawned in
+	
 	# Checks all avaialable spawn tiles for a percent chance to spawn a fiend
 	for i in range(0, availableCoords):
 		if rng.randf() > (1.01 - (0.05*sqrt((level*level)+((floor/5)*(floor/5))))): # Chance gets higher as tower level increases
@@ -138,7 +151,9 @@ func genMapData(path: Array):
 			objectList = loadObjects(gridSize)
 		else: # If it is the starting position, generate a 5x5 room with no obstacles
 			gridSize = Vector2(5,5)
-			objectList = []
+			var startingItem = preload("res://scenes/Items/item.tscn").instantiate()
+			startingItem.setup(Vector2(rng.randi_range(0, gridSize.x-1),rng.randi_range(0, gridSize.y-1)), 1)
+			objectList = [startingItem]
 		
 		boards[x.x][x.y].append(preload("res://scripts/gameBoard.gd").new(gridSize.x, gridSize.y, player, objectList)) # Appends the genrated board to the "boards" array, representing the floor map
 
@@ -169,6 +184,8 @@ func setGrid(grid: Vector2):
 
 func _ready() -> void:
 	# Connect all signals to approprate functions
+	EventBus.pause.connect(_pause)
+	EventBus.unpause.connect(_unpause)
 	EventBus.changeRooms.connect(_changeRooms)
 	EventBus.on_door.connect(_on_door)
 	EventBus.doneAttacking.connect(_doneAttacking)
@@ -221,12 +238,21 @@ func _process(delta: float) -> void:
 	
 	# If the player is alive, play the game
 	if player.hp > 0:
-		boards[mapPos.x][mapPos.y][0].door = door
-		boards[mapPos.x][mapPos.y][0].checkInputs() # checks to see if the user performs an action
-		if player.actionsAvailable == 0 and enemiesToMove == 0:
-			boards[mapPos.x][mapPos.y][0].fiendsTurn()
+		if paused == false: # Id the game is paused, do not play the game
+			boards[mapPos.x][mapPos.y][0].door = door
+			boards[mapPos.x][mapPos.y][0].checkInputs() # checks to see if the user performs an action
+			if player.actionsAvailable == 0 and enemiesToMove == 0:
+				boards[mapPos.x][mapPos.y][0].fiendsTurn()
 	else: # If he isn't, initiate the detah sequence
 		deathSequence()
+
+func _pause():
+	# Function that pauses the game whenever the "paused" signal is emitted
+	paused = true
+	
+func _unpause():
+	# Opposite if the "pause" function
+	paused = false
 	
 func deathSequence():
 	# Plays the player's death animation upon death
