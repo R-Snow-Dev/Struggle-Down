@@ -25,10 +25,11 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if mouseOn:
-		if Input.is_action_just_pressed("select") and gamecontroller.paused == false and gamecontroller.player.actionsAvailable >= allWeapons[ID][6]:
-			EventBus.pause.emit()
-			EventBus.updateActions.emit(-1)
-			EventBus.attack.emit(allWeapons[ID])
+		if ID != 0:
+			if Input.is_action_just_pressed("select") and gamecontroller.paused == false and gamecontroller.player.actionsAvailable >= allWeapons[ID][6]:
+				EventBus.pause.emit()
+				EventBus.updateActions.emit(-1)
+				EventBus.attack.emit(allWeapons[ID])
 
 func _playerDoneAttacking():
 	EventBus.unpause.emit()
@@ -53,6 +54,5 @@ func _on_area_2d_mouse_entered() -> void:
 	mouseOn = true
 
 func _on_area_2d_mouse_exited() -> void:
-	print("No longer Displaying attack range")
 	EventBus.updateAOE.emit(0, 0, allWeapons[1][3])
 	mouseOn = false

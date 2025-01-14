@@ -52,3 +52,7 @@ signal pause()
 
 # Signal that is emitted whenever the game is unpaused
 signal unpause()
+
+signal new_level(curLevel: int, curFloor: int)
+
+signal start()

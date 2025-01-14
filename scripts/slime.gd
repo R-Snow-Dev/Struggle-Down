@@ -21,6 +21,5 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area is Player:# If the slime made contact with the player
 		EventBus.update_hp.emit(dam * -1) # Decrease player HP by the sprites "dam" value
 	elif area is Hurtbox: # If it made contact with something else, that means it has been attacked
-		print("ouch")
 		health -= area.damage
 		

@@ -15,6 +15,7 @@ var actionsAvailable: int
 var hp: int = 4
 @onready var anim_player: AnimationPlayer = $CollisionShape2D/AnimatedSprite2D/animPlayer
 @onready var attack_origin: Node2D = $AttackOrigin
+@onready var animated_sprite_2d: AnimatedSprite2D = $CollisionShape2D/AnimatedSprite2D
 
 func playDeath():
 	# Plays the death animation upon death
@@ -44,21 +45,29 @@ func moveUp():
 	# Code to move the player character up
 	attack_origin.rotation_degrees = 0
 	pos.y -= 1
+	animated_sprite_2d.flip_h = 0
+	animated_sprite_2d.play("IdleU")
 
 func moveDown():
 	# Code to move the player character down
 	attack_origin.rotation_degrees = 180
 	pos.y += 1
+	animated_sprite_2d.flip_h = 0
+	animated_sprite_2d.play("IdleD")
 
 func moveLeft():
 	# Code to move the player character left
 	attack_origin.rotation_degrees = 270
 	pos.x -= 1
+	animated_sprite_2d.flip_h = 1
+	animated_sprite_2d.play("IdleS")
 
 func moveRight():
 	# Code to move the player character right
 	attack_origin.rotation_degrees = 90
 	pos.x += 1
+	animated_sprite_2d.flip_h = 0
+	animated_sprite_2d.play("IdleS")
 
 func _updateHealth(amount: int):
 	if amount + hp <= 0:

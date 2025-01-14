@@ -78,7 +78,6 @@ func fiendsTurn():
 	# board, the player will emmidiatly regain their actions. If not, every monster will be called to take their turns, and only afterwards does the player
 	# regain the ability to take another action
 	
-	print("yeah")
 	var fien = 0 # default monster count is 0
 	
 	# Iterate through the game board array

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ckyqm55pptwki"]
 
-[ext_resource type="Script" path="res://slash_tip.gd" id="1_5lars"]
+[ext_resource type="Script" path="res://scripts/Items/slash_tip.gd" id="1_5lars"]
 [ext_resource type="Script" path="res://scripts/AttackingLogic/attack.gd" id="1_8w205"]
 
 [node name="Attack" type="Node2D"]

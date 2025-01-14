@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://316kyege67i1"]
 
-[ext_resource type="Texture2D" uid="uid://coupxojyqgo22" path="res://assets/sword1.png" id="1_gqv5o"]
+[ext_resource type="Texture2D" uid="uid://cyiqa4828u2sc" path="res://assets/Tileset(1).png" id="1_ygdsg"]
 
 [node name="Sprite2D" type="Sprite2D"]
 position = Vector2(0, -2)
-texture = ExtResource("1_gqv5o")
+texture = ExtResource("1_ygdsg")
 region_enabled = true
-region_rect = Rect2(16, 0, 16, 16)
+region_rect = Rect2(96, 80, 16, 16)

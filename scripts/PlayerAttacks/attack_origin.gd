@@ -37,7 +37,6 @@ func _updateAOE(width: int, height: int, pointOfOrigin: Vector2):
 		for j in range(0, height):
 			var area = preload("res://scenes/AreaOfEffect.tscn").instantiate()
 			area.position.x = position.x + (i*16)
-			print(j)
 			area.position.y = position.y - (j * 16) - 16
 			add_child(area)
 	

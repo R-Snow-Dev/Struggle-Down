@@ -21,6 +21,7 @@ var map = preload("res://scenes/map.tscn").instantiate()
 var fiend = preload("res://scenes/Opps/fiend.tscn")
 var wall = preload("res://scenes/Tiles/Wall.tscn")
 var mapPos : Vector2
+var endPos: Vector2
 var pPos: Vector2
 var rng = RandomNumberGenerator.new()
 var door: bool
@@ -75,7 +76,7 @@ func checkCorners(tile: Array, grid: Array):
 		cornersOpen += 1
 	return cornersOpen
 
-func loadObjects(grid: Vector2):
+func loadObjects(grid: Vector2, mPos: Vector2):
 	# Function that genrates obstacles in a given room. Starts with walls, then fiends, then items
 	# param -  grid: A Vector2 containing the dimensions of the room where the obstacles will be generated
 	# Returns: An array of objects to be added to the floor, along with their positions
@@ -106,11 +107,23 @@ func loadObjects(grid: Vector2):
 			var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
 			var cornersOpen = checkCorners([gridCoords[chosen][0], gridCoords[chosen][0]], gridCoords) # Checks to see how many corners the wall will have open 
 			if cornersOpen > 1: # A tile must have at least 2 full corners open for a wall to spawn on it to ensure that no room-spanning walls can cut the player off completely from a required doorway
-				chosenWall.setup((Vector2(gridCoords[chosen][0], gridCoords[chosen][1]))) # Gives the walls their rerspective coordinates
+				chosenWall.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1])) # Gives the walls their rerspective coordinates
 				objects.append(chosenWall) # Adds the walls to the list of objects 
 				gridCoords.remove_at(chosen) # removes the wall's coordinates from the pool of possible grid coordinates other objects can be assigned to
 	
 	availableCoords = len(gridCoords) # Updates the amount of grid ccordinates left after the walls are spawned in
+	
+	if mPos == endPos:
+		var ladder = preload("res://scenes/Tiles/ladder.tscn").instantiate()
+		if len(objects) > 0:
+			var randomIndex = rng.randi_range(0, len(objects)-1)
+			ladder.setup(objects[randomIndex].pos, level, floor)
+			objects[randomIndex] = ladder
+		else:
+			var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
+			ladder.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1]), level, floor)
+			objects.append(ladder)
+			gridCoords.remove_at(chosen)
 	
 	# Iterates throught he available grid coords and adds items to the game board
 	for i in range(0, availableCoords):
@@ -120,6 +133,8 @@ func loadObjects(grid: Vector2):
 			chosenItem.setup((Vector2(gridCoords[chosen][0], gridCoords[chosen][1])), 1) # Gives the items their rerspective coordinates and IDs
 			objects.append(chosenItem) # Adds the items to the list of objects 
 			gridCoords.remove_at(chosen) # removes the wall's coordinates from the pool of possible grid coordinates other objects can be assigned to
+		
+		
 	
 	availableCoords = len(gridCoords) # Updates the amount of grid ccordinates left after the items are spawned in
 	
@@ -134,6 +149,8 @@ func loadObjects(grid: Vector2):
 			objects.append(chosenFiend) # Adds the new fiend, along with it's position, to the fiends array, which will be returned at the end
 			gridCoords.remove_at(chosen) # Removes the location the fiend spawned at from the gridCoords array, so ot cannot be chosen again
 	# Returns the fiends array, containing the instances of the spawned fiends in the room, along with tier positions
+	
+	
 	return objects
 
 func genMapData(path: Array):
@@ -148,11 +165,15 @@ func genMapData(path: Array):
 		# Checks to see if the floor being generated is the starting floor or not
 		if x != map.startPos: # If it isn't randomly generate unique data for the floor
 			gridSize = Vector2(rng.randi_range(3,11), rng.randi_range(3,11))
-			objectList = loadObjects(gridSize)
+			objectList = loadObjects(gridSize, x)
 		else: # If it is the starting position, generate a 5x5 room with no obstacles
 			gridSize = Vector2(5,5)
 			var startingItem = preload("res://scenes/Items/item.tscn").instantiate()
-			startingItem.setup(Vector2(rng.randi_range(0, gridSize.x-1),rng.randi_range(0, gridSize.y-1)), 1)
+			# Summons a single item into the starting room
+			var firstItemCoords = Vector2(rng.randi_range(0, gridSize.x-1),rng.randi_range(0, gridSize.y-1))
+			while firstItemCoords == pPos:
+				firstItemCoords = Vector2(rng.randi_range(0, gridSize.x-1),rng.randi_range(0, gridSize.y-1))
+			startingItem.setup(firstItemCoords, 1)
 			objectList = [startingItem]
 		
 		boards[x.x][x.y].append(preload("res://scripts/gameBoard.gd").new(gridSize.x, gridSize.y, player, objectList)) # Appends the genrated board to the "boards" array, representing the floor map
@@ -164,6 +185,7 @@ func loadLevel():
 	healthBar.setHealthBar(player.hp)
 	add_child(map)
 	mapPos = map.startPos
+	endPos = map.exitPos
 	boards = map.mapGrid
 	floorScene.mapPos = mapPos
 	floorScene.path = map.path
@@ -191,6 +213,7 @@ func _ready() -> void:
 	EventBus.doneAttacking.connect(_doneAttacking)
 	EventBus.fiend_phase.connect(_fiend_phase)
 	EventBus.on_death.connect(_on_death)
+	EventBus.new_level.connect(_new_level)
 	
 	# Excecutes code on startup
 	loadLevel() # Loads the level up
@@ -251,7 +274,7 @@ func _pause():
 	paused = true
 	
 func _unpause():
-	# Opposite if the "pause" function
+	# Opposite if the "pause" functions
 	paused = false
 	
 func deathSequence():
@@ -260,6 +283,9 @@ func deathSequence():
 	
 func _on_death():
 	# removes the dungeon from the game scene
+	queue_free()
+	
+func _new_level(curLevel: int, curFloor: int):
 	queue_free()
 	
 	

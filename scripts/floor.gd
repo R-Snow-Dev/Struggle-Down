@@ -65,8 +65,8 @@ func add_doors(x: int, y: int, pathway: Array):
 				var t = tile.instantiate()
 				var collider = doorCollider.instantiate()
 				t.sprite = preload("res://scenes/Tiles/door_r.tscn") # Sprite for a right facing doorway
-				t.pos = Vector2((int(grid.y)/2)+1, grid.x)
-				collider.pos = t.pos
+				t.pos = Vector2((int(grid.y)/2)+0.6, grid.x+1.5)
+				collider.pos = Vector2((int(grid.y)/2)+1, grid.x)
 				add_child(t)
 				add_child(collider)
 			
@@ -75,8 +75,8 @@ func add_doors(x: int, y: int, pathway: Array):
 				var t = tile.instantiate()
 				var collider = doorCollider.instantiate()
 				t.sprite = preload("res://scenes/Tiles/door_l.tscn") # Sprite for a left facing doorway
-				t.pos = Vector2((int(grid.y)/2)+1, 1)
-				collider.pos = t.pos
+				t.pos = Vector2((int(grid.y)/2)+0.6, -0.5)
+				collider.pos = Vector2((int(grid.y)/2)+1, 1)
 				add_child(t)
 				add_child(collider)
 				

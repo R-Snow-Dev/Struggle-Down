@@ -28,7 +28,7 @@ func move():
 func draw():
 	# code that converts the Vector2 position data into on-screen coordinates
 	position.x = pos.x*16
-	position.y = pos.y*16 - 8
+	position.y = pos.y*16 - 6
 	self.z_index = (pos.y + 1)
 	
 # Code taht runs upon the player landing on the item object

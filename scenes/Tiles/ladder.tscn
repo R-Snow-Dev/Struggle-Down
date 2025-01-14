@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgbymcogp8o0"]
+
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_57p6h"]
+[ext_resource type="Script" path="res://scripts/ladder.gd" id="2_dnec8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8t1mr"]
+size = Vector2(14, 8)
+
+[node name="ladder" type="Sprite2D"]
+texture = ExtResource("1_57p6h")
+region_enabled = true
+region_rect = Rect2(144, 16, 16, 16)
+script = ExtResource("2_dnec8")
+
+[node name="ladderTrigger" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ladderTrigger"]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_8t1mr")
+
+[connection signal="area_entered" from="ladderTrigger" to="." method="_on_ladder_trigger_area_entered"]
