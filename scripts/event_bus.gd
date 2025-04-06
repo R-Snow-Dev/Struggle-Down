@@ -56,3 +56,7 @@ signal unpause()
 signal new_level(curLevel: int, curFloor: int)
 
 signal start()
+
+signal update_level(level: int)
+
+signal update_floor(floor: int)

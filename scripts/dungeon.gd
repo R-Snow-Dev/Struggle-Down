@@ -11,8 +11,11 @@ var floor = 1
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	EventBus.on_death.connect(_on_death)
+	#gamecontroller.level = level
 	gamecontroller.level = level
+	#gamecontroller.floor = floor
 	gamecontroller.floor = floor
+	gamecontroller.loadLevel()
 	
 func _on_death():
 	# Removes itself from any tree upon death

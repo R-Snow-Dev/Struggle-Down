@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dkqh251ixbss2"]
+[gd_scene load_steps=23 format=3 uid="uid://dkqh251ixbss2"]
 
 [ext_resource type="Script" path="res://scripts/dungeon.gd" id="1_7fvgo"]
 [ext_resource type="Script" path="res://scripts/dungeoncontroller.gd" id="2_ebr4h"]
@@ -10,7 +10,9 @@
 [ext_resource type="Script" path="res://scripts/health_bar_faded.gd" id="7_vdaj5"]
 [ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="8_ak7oc"]
 [ext_resource type="Script" path="res://scripts/actions_available.gd" id="9_imipn"]
+[ext_resource type="Script" path="res://scripts/floor_label.gd" id="12_0ghcg"]
 [ext_resource type="Script" path="res://scripts/PlayerAttacks/weapon_slot.gd" id="12_b0wl4"]
+[ext_resource type="Script" path="res://scripts/level_label.gd" id="13_wbfvy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5iqrf"]
 texture = ExtResource("3_qg7tb")
@@ -249,6 +251,60 @@ script = ExtResource("12_b0wl4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D"]
 shape = SubResource("RectangleShape2D_5uiki")
+
+[node name="Floor" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+offset_left = 467.465
+offset_top = 1220.64
+offset_right = 615.465
+offset_bottom = 1269.64
+rotation = 3.14159
+scale = Vector2(1, 8)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_ak7oc")
+theme_override_font_sizes/font_size = 48
+text = "Floor:"
+horizontal_alignment = 1
+
+[node name="floorLabel" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+offset_left = 409.031
+offset_top = 871.885
+offset_right = 449.031
+offset_bottom = 920.885
+rotation = 3.14159
+scale = Vector2(1, 8)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_ak7oc")
+theme_override_font_sizes/font_size = 48
+text = "0"
+horizontal_alignment = 1
+script = ExtResource("12_0ghcg")
+
+[node name="Level" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+offset_left = 467.464
+offset_top = 1918.14
+offset_right = 615.464
+offset_bottom = 1967.14
+rotation = 3.14159
+scale = Vector2(1, 8)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_ak7oc")
+theme_override_font_sizes/font_size = 48
+text = "Level:"
+horizontal_alignment = 1
+
+[node name="LevelLabel" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+offset_left = 409.031
+offset_top = 1569.39
+offset_right = 449.031
+offset_bottom = 1618.39
+rotation = 3.14159
+scale = Vector2(1, 8)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_ak7oc")
+theme_override_font_sizes/font_size = 48
+text = "0"
+horizontal_alignment = 1
+script = ExtResource("13_wbfvy")
 
 [connection signal="mouse_entered" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_exited"]

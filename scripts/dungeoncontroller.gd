@@ -12,7 +12,7 @@ extends Node
 # Basic data is loaded
 var level = 1 # current level
 var floor = 1# current floor (sub level essentially)
-var gridSize = Vector2(11,11)# Dimentions of the current floor
+var gridSize = Vector2(11,11)# Dimensions of the current floor
 var boards: Array # 2D array of boards representing the floor map\
 var floorScene = preload("res://scenes/floor.tscn").instantiate()
 var oppControl = preload("res://scenes/opp_controller.tscn").instantiate()
@@ -215,9 +215,6 @@ func _ready() -> void:
 	EventBus.on_death.connect(_on_death)
 	EventBus.new_level.connect(_new_level)
 	
-	# Excecutes code on startup
-	loadLevel() # Loads the level up
-	
 func _on_door(on: bool):
 	# Function that recieves a signal from the on_door signal
 	# Param - on: The booelan recieved from the signal
@@ -259,6 +256,8 @@ func _changeRooms(changePos: Vector2, newPos: String):
 func _process(delta: float) -> void:
 	# Executes code every frame
 	
+	EventBus.update_floor.emit(self.floor)
+	EventBus.update_level.emit(self.level)
 	# If the player is alive, play the game
 	if player.hp > 0:
 		if paused == false: # Id the game is paused, do not play the game
