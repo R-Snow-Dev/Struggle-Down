@@ -53,10 +53,10 @@ signal pause()
 # Signal that is emitted whenever the game is unpaused
 signal unpause()
 
-signal new_level(curLevel: int, curFloor: int)
+signal file_select()
+
+signal save_weapon()
+
+signal new_level()
 
 signal start()
-
-signal update_level(level: int)
-
-signal update_floor(floor: int)

@@ -1,11 +1,14 @@
+'''
+Displays the current level on the GUI
+'''
+
 extends Label
 
-var displayedText = str(0)
+@onready var data = SaveController.loadData()
+var displayedText: String
 
 func _ready() -> void:
-	EventBus.update_level.connect(_update_text)
-	self.text = displayedText
+	displayedText = str(data["level"])
 	
-func _update_text(num: int):
-	displayedText = str(num)
+func _process(delta: float) -> void:
 	self.text = displayedText

@@ -8,20 +8,25 @@ extends Node2D
 
 # Constant containing the sprites of every weapon in the game
 var allWeapons: Array
-var ID  = 0
+var ID: int
 var sprite: Node
 var mouseOn = false
+
 @onready var gamecontroller: Node = %Gamecontroller
+@onready var data = SaveController.loadData()
 
 # Connect to necessary signals upon creation
 func _ready() -> void:
 	EventBus.playerDoneAttacking.connect(_playerDoneAttacking)
 	EventBus.swap_weapon.connect(_swap_weapon)
+	EventBus.save_weapon.connect(_save_weapon)
 	# allWeapons format is as follows: The ID of each item represents it's index on the main array. 
 	# Each sub array is divided into index 0-7. 0 is the sprite of the weapon, 1 is it's horizontal rage, 2
 	# is it's vertical range, 3 is it's point of origin where the attack will come from, 5 is the attack type which dtermines the animation 
 	# that plays, 6 is the damage it will deal, and 7 is how many actions it costs to use. All elements must be present for an Item to function correctly
 	allWeapons = [[],[preload("res://scenes/Items/sword_1_item.tscn"), 3,1,Vector2(0,0),"slashing", 5,1]]
+	ID = data["weapon"]
+	_swap_weapon(ID)
 
 func _process(delta: float) -> void:
 	if mouseOn:
@@ -44,9 +49,13 @@ func _swap_weapon(id: int):
 		
 	# Finds the correct sprite node from allWeapons using the ID, then displays it by adding it as a child node
 	ID = id
-	sprite = allWeapons[ID][0].instantiate()
-	add_child(sprite)
+	if ID > 0:
+		sprite = allWeapons[ID][0].instantiate()
+		add_child(sprite)
 	
+func _save_weapon():
+	# Updates the savefile with the current held weapon when going to a new floor
+	SaveController.updateData("weapon", ID)
 
 func _on_area_2d_mouse_entered() -> void:
 	if ID > 0:

@@ -8,7 +8,6 @@ var brain: Object
 var facing: String
 var sprite = Node
 @onready var timer = $Timer
-@onready var step = $slimeyStep
 
 func setup(p: Vector2, s: PackedScene, hp: int, b: EnemyBehavior, a: AttackBehavior):
 	# Function that must be called after creating an instance, so that its characteristics may be given to it

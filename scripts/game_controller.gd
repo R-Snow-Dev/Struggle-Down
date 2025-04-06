@@ -1,5 +1,6 @@
 extends Node2D
 
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -7,6 +8,7 @@ func _ready() -> void:
 	EventBus.on_death.connect(_on_death)
 	EventBus.new_level.connect(_new_level)
 	EventBus.start.connect(_start)
+	EventBus.file_select.connect(_file_select)
 	var titleScreen = preload("res://scenes/title_screen.tscn").instantiate() # In this case, it will be a basic dungeon
 	add_child(titleScreen)
 	
@@ -18,21 +20,34 @@ func _on_death():
 	var titleScreen = preload("res://scenes/title_screen.tscn").instantiate() # In this case, it will be the title screen
 	add_child(titleScreen)
 
-func _new_level(curLevel: int, curFloor: int):
+func _new_level():
 	# Loads another dungeon upon loading a new level, after removing any children that may somehow still be under this node
+	
+	# Gets the current saved data
+	var data = SaveController.loadData()
 	if self.get_child_count() > 0:
 		for i in self.get_children():
 			self.remove_child(i)
 	var dungeon = preload("res://scenes/dungeon.tscn").instantiate() # Once again, this case it will just be a basic dungeon again
 	
 	# If you beat floor 5, move on to the next level, and reset your floors to 1
-	if curFloor > 4:
-		dungeon.floor = 1
-		dungeon.level = curLevel + 1
+	if data["floor"] > 4:
+		SaveController.updateData("floor", 1)
+		SaveController.updateData("level", data["level"] + 1)
 	else: # Otherwise, move onto the next floor
-		dungeon.floor = curFloor + 1
-	
+		SaveController.updateData("floor", data["floor"] + 1)
 	add_child(dungeon)
+
+func _file_select():
+	# Opens the file selection menu upon selecting it from the main menu
+	if self.get_child_count() > 0:
+		for i in self.get_children():
+			self.remove_child(i)
+	var dungeon = preload("res://scenes/file_select.tscn").instantiate() # Loads a new, default level dungeon
+	add_child(dungeon)
+	
+	
+	
 
 func _start():
 	# Loads another dungeon upon loading a new level, after removing any children that may somehow still be under this node

@@ -1,0 +1,615 @@
+[gd_scene load_steps=31 format=4 uid="uid://c72quuqp2q7s5"]
+
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_eurfw"]
+[ext_resource type="Script" path="res://scripts/ButtonScripts/loadfile.gd" id="2_jagsg"]
+[ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="3_6k60x"]
+[ext_resource type="Script" path="res://scripts/ButtonScripts/sub_menu_1.gd" id="4_iqq02"]
+[ext_resource type="Script" path="res://scripts/ButtonScripts/loadFile2.gd" id="4_j4q5x"]
+[ext_resource type="Script" path="res://scripts/ButtonScripts/sub_menu_2.gd" id="6_00nae"]
+[ext_resource type="Script" path="res://scripts/ButtonScripts/sub_menu_3.gd" id="7_nt1ex"]
+[ext_resource type="Script" path="res://scripts/ButtonScripts/loadFile3.gd" id="7_qepnj"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_usi5p"]
+texture = ExtResource("1_eurfw")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_gdyyg"]
+sources/0 = SubResource("TileSetAtlasSource_usi5p")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iyypu"]
+texture = ExtResource("1_eurfw")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_bdhcl"]
+sources/0 = SubResource("TileSetAtlasSource_iyypu")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b4st1"]
+size = Vector2(80, 12.2999)
+
+[sub_resource type="Animation" id="Animation_vfuwa"]
+resource_name = "slideIn"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(2.2, 0.22),
+"update": 0,
+"values": [Vector2(0, -144), Vector2(0, -128)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"show"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_103qo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -128)]
+}
+
+[sub_resource type="Animation" id="Animation_sn14c"]
+resource_name = "slideOut"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(2.2, 0.22),
+"update": 0,
+"values": [Vector2(0, -128), Vector2(0, -144)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"hide"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ryy7j"]
+_data = {
+"RESET": SubResource("Animation_103qo"),
+"slideIn": SubResource("Animation_vfuwa"),
+"slideOut": SubResource("Animation_sn14c")
+}
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k6fll"]
+texture = ExtResource("1_eurfw")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ed706"]
+sources/0 = SubResource("TileSetAtlasSource_k6fll")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dh55y"]
+size = Vector2(224, 32)
+
+[sub_resource type="Animation" id="Animation_wpoym"]
+resource_name = "slideIn"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(2.2, 0.22),
+"update": 0,
+"values": [Vector2(0, -80), Vector2(0, -64)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"show"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_ih1wm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -64)]
+}
+
+[sub_resource type="Animation" id="Animation_kiqpf"]
+resource_name = "slideOut"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(2.2, 0.22),
+"update": 0,
+"values": [Vector2(0, -64), Vector2(0, -80)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"hide"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5j0jh"]
+_data = {
+"RESET": SubResource("Animation_ih1wm"),
+"slideIn": SubResource("Animation_wpoym"),
+"slideOut": SubResource("Animation_kiqpf")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q7tog"]
+size = Vector2(224, 32)
+
+[sub_resource type="Animation" id="Animation_o2a7b"]
+resource_name = "slideOut"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(2.2, 0.22),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -16)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"hide"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_vgq6u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qx3m1"]
+resource_name = "slideIn"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(2.2, 0.22),
+"update": 0,
+"values": [Vector2(0, -16), Vector2(0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"show"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wdom3"]
+_data = {
+"RESET": SubResource("Animation_vgq6u"),
+"slideIn": SubResource("Animation_qx3m1"),
+"slideOut": SubResource("Animation_o2a7b")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_msccw"]
+size = Vector2(224, 32)
+
+[node name="fileSelect" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2.48, 2.679)
+
+[node name="BG" type="TileMapLayer" parent="Camera2D"]
+tile_map_data = PackedByteArray("AADy//n/AAAAAAAAAAAMAPn/AAACAAAAAADy/wYAAAAAAAIAAAAMAAYAAAACAAIAAADy//r/AAAAAAEAAADy//v/AAAAAAEAAADy//z/AAAAAAEAAADy//3/AAAAAAEAAADy//7/AAAAAAEAAADy////AAAAAAEAAADy/wAAAAAAAAEAAADy/wEAAAAAAAEAAADy/wIAAAAAAAEAAADy/wMAAAAAAAEAAADy/wQAAAAAAAEAAADy/wUAAAAAAAEAAAALAPn/AAABAAAAAAAKAPn/AAABAAAAAAAJAPn/AAABAAAAAAAIAPn/AAABAAAAAAAHAPn/AAABAAAAAAAGAPn/AAABAAAAAAAFAPn/AAABAAAAAAAEAPn/AAABAAAAAAADAPn/AAABAAAAAAACAPn/AAABAAAAAAABAPn/AAABAAAAAAAAAPn/AAABAAAAAAD///n/AAABAAAAAAD+//n/AAABAAAAAAD9//n/AAABAAAAAAD8//n/AAABAAAAAAD7//n/AAABAAAAAAD6//n/AAABAAAAAAD5//n/AAABAAAAAAD4//n/AAABAAAAAAD3//n/AAABAAAAAAD2//n/AAABAAAAAAD1//n/AAABAAAAAAD0//n/AAABAAAAAADz//n/AAABAAAAAAAMAPr/AAACAAEAAAAMAPv/AAACAAEAAAAMAPz/AAACAAEAAAAMAP3/AAACAAEAAAAMAP7/AAACAAEAAAAMAP//AAACAAEAAAAMAAAAAAACAAEAAAAMAAEAAAACAAEAAAAMAAIAAAACAAEAAAAMAAMAAAACAAEAAAAMAAQAAAACAAEAAAAMAAUAAAACAAEAAAALAAYAAAABAAIAAAAKAAYAAAABAAIAAAAJAAYAAAABAAIAAAAIAAYAAAABAAIAAAAHAAYAAAABAAIAAAAGAAYAAAABAAIAAAAFAAYAAAABAAIAAAAEAAYAAAABAAIAAAADAAYAAAABAAIAAAACAAYAAAABAAIAAAABAAYAAAABAAIAAAAAAAYAAAABAAIAAAD//wYAAAABAAIAAAD+/wYAAAABAAIAAAD9/wYAAAABAAIAAAD8/wYAAAABAAIAAAD7/wYAAAABAAIAAAD6/wYAAAABAAIAAAD5/wYAAAABAAIAAAD4/wYAAAABAAIAAAD3/wYAAAABAAIAAAD2/wYAAAABAAIAAAD1/wYAAAABAAIAAAD0/wYAAAABAAIAAADz/wYAAAABAAIAAADz//r/AAABAAEAAADz//v/AAABAAEAAADz//z/AAABAAEAAADz//3/AAABAAEAAADz//7/AAABAAEAAADz////AAABAAEAAADz/wAAAAABAAEAAADz/wEAAAABAAEAAADz/wIAAAABAAEAAADz/wMAAAABAAEAAADz/wQAAAABAAEAAADz/wUAAAABAAEAAAD0//r/AAABAAEAAAD0//v/AAABAAEAAAD0//z/AAABAAEAAAD0//3/AAABAAEAAAD0//7/AAABAAEAAAD0////AAABAAEAAAD0/wAAAAABAAEAAAD0/wEAAAABAAEAAAD0/wIAAAABAAEAAAD0/wMAAAABAAEAAAD0/wQAAAABAAEAAAD0/wUAAAABAAEAAAD1//r/AAABAAEAAAD1//v/AAABAAEAAAD1//z/AAABAAEAAAD1//3/AAABAAEAAAD1//7/AAABAAEAAAD1////AAABAAEAAAD1/wAAAAABAAEAAAD1/wEAAAABAAEAAAD1/wIAAAABAAEAAAD1/wMAAAABAAEAAAD1/wQAAAABAAEAAAD1/wUAAAABAAEAAAD2//r/AAABAAEAAAD2//v/AAABAAEAAAD2//z/AAABAAEAAAD2//3/AAABAAEAAAD2//7/AAABAAEAAAD2////AAABAAEAAAD2/wAAAAABAAEAAAD2/wEAAAABAAEAAAD2/wIAAAABAAEAAAD2/wMAAAABAAEAAAD2/wQAAAABAAEAAAD2/wUAAAABAAEAAAD3//r/AAABAAEAAAD3//v/AAABAAEAAAD3//z/AAABAAEAAAD3//3/AAABAAEAAAD3//7/AAABAAEAAAD3////AAABAAEAAAD3/wAAAAABAAEAAAD3/wEAAAABAAEAAAD3/wIAAAABAAEAAAD3/wMAAAABAAEAAAD3/wQAAAABAAEAAAD3/wUAAAABAAEAAAD4//r/AAABAAEAAAD4//v/AAABAAEAAAD4//z/AAABAAEAAAD4//3/AAABAAEAAAD4//7/AAABAAEAAAD4////AAABAAEAAAD4/wAAAAABAAEAAAD4/wEAAAABAAEAAAD4/wIAAAABAAEAAAD4/wMAAAABAAEAAAD4/wQAAAABAAEAAAD4/wUAAAABAAEAAAD5//r/AAABAAEAAAD5//v/AAABAAEAAAD5//z/AAABAAEAAAD5//3/AAABAAEAAAD5//7/AAABAAEAAAD5////AAABAAEAAAD5/wAAAAABAAEAAAD5/wEAAAABAAEAAAD5/wIAAAABAAEAAAD5/wMAAAABAAEAAAD5/wQAAAABAAEAAAD5/wUAAAABAAEAAAD6//r/AAABAAEAAAD6//v/AAABAAEAAAD6//z/AAABAAEAAAD6//3/AAABAAEAAAD6//7/AAABAAEAAAD6////AAABAAEAAAD6/wAAAAABAAEAAAD6/wEAAAABAAEAAAD6/wIAAAABAAEAAAD6/wMAAAABAAEAAAD6/wQAAAABAAEAAAD6/wUAAAABAAEAAAD7//r/AAABAAEAAAD7//v/AAABAAEAAAD7//z/AAABAAEAAAD7//3/AAABAAEAAAD7//7/AAABAAEAAAD7////AAABAAEAAAD7/wAAAAABAAEAAAD7/wEAAAABAAEAAAD7/wIAAAABAAEAAAD7/wMAAAABAAEAAAD7/wQAAAABAAEAAAD7/wUAAAABAAEAAAD8//r/AAABAAEAAAD8//v/AAABAAEAAAD8//z/AAABAAEAAAD8//3/AAABAAEAAAD8//7/AAABAAEAAAD8////AAABAAEAAAD8/wAAAAABAAEAAAD8/wEAAAABAAEAAAD8/wIAAAABAAEAAAD8/wMAAAABAAEAAAD8/wQAAAABAAEAAAD8/wUAAAABAAEAAAD9//r/AAABAAEAAAD9//v/AAABAAEAAAD9//z/AAABAAEAAAD9//3/AAABAAEAAAD9//7/AAABAAEAAAD9////AAABAAEAAAD9/wAAAAABAAEAAAD9/wEAAAABAAEAAAD9/wIAAAABAAEAAAD9/wMAAAABAAEAAAD9/wQAAAABAAEAAAD9/wUAAAABAAEAAAD+//r/AAABAAEAAAD+//v/AAABAAEAAAD+//z/AAABAAEAAAD+//3/AAABAAEAAAD+//7/AAABAAEAAAD+////AAABAAEAAAD+/wAAAAABAAEAAAD+/wEAAAABAAEAAAD+/wIAAAABAAEAAAD+/wMAAAABAAEAAAD+/wQAAAABAAEAAAD+/wUAAAABAAEAAAD///r/AAABAAEAAAD///v/AAABAAEAAAD///z/AAABAAEAAAD///3/AAABAAEAAAD///7/AAABAAEAAAD/////AAABAAEAAAD//wAAAAABAAEAAAD//wEAAAABAAEAAAD//wIAAAABAAEAAAD//wMAAAABAAEAAAD//wQAAAABAAEAAAD//wUAAAABAAEAAAAAAPr/AAABAAEAAAAAAPv/AAABAAEAAAAAAPz/AAABAAEAAAAAAP3/AAABAAEAAAAAAP7/AAABAAEAAAAAAP//AAABAAEAAAAAAAAAAAABAAEAAAAAAAEAAAABAAEAAAAAAAIAAAABAAEAAAAAAAMAAAABAAEAAAAAAAQAAAABAAEAAAAAAAUAAAABAAEAAAABAPr/AAABAAEAAAABAPv/AAABAAEAAAABAPz/AAABAAEAAAABAP3/AAABAAEAAAABAP7/AAABAAEAAAABAP//AAABAAEAAAABAAAAAAABAAEAAAABAAEAAAABAAEAAAABAAIAAAABAAEAAAABAAMAAAABAAEAAAABAAQAAAABAAEAAAABAAUAAAABAAEAAAACAPr/AAABAAEAAAACAPv/AAABAAEAAAACAPz/AAABAAEAAAACAP3/AAABAAEAAAACAP7/AAABAAEAAAACAP//AAABAAEAAAACAAAAAAABAAEAAAACAAEAAAABAAEAAAACAAIAAAABAAEAAAACAAMAAAABAAEAAAACAAQAAAABAAEAAAACAAUAAAABAAEAAAADAPr/AAABAAEAAAADAPv/AAABAAEAAAADAPz/AAABAAEAAAADAP3/AAABAAEAAAADAP7/AAABAAEAAAADAP//AAABAAEAAAADAAAAAAABAAEAAAADAAEAAAABAAEAAAADAAIAAAABAAEAAAADAAMAAAABAAEAAAADAAQAAAABAAEAAAADAAUAAAABAAEAAAAEAPr/AAABAAEAAAAEAPv/AAABAAEAAAAEAPz/AAABAAEAAAAEAP3/AAABAAEAAAAEAP7/AAABAAEAAAAEAP//AAABAAEAAAAEAAAAAAABAAEAAAAEAAEAAAABAAEAAAAEAAIAAAABAAEAAAAEAAMAAAABAAEAAAAEAAQAAAABAAEAAAAEAAUAAAABAAEAAAAFAPr/AAABAAEAAAAFAPv/AAABAAEAAAAFAPz/AAABAAEAAAAFAP3/AAABAAEAAAAFAP7/AAABAAEAAAAFAP//AAABAAEAAAAFAAAAAAABAAEAAAAFAAEAAAABAAEAAAAFAAIAAAABAAEAAAAFAAMAAAABAAEAAAAFAAQAAAABAAEAAAAFAAUAAAABAAEAAAAGAPr/AAABAAEAAAAGAPv/AAABAAEAAAAGAPz/AAABAAEAAAAGAP3/AAABAAEAAAAGAP7/AAABAAEAAAAGAP//AAABAAEAAAAGAAAAAAABAAEAAAAGAAEAAAABAAEAAAAGAAIAAAABAAEAAAAGAAMAAAABAAEAAAAGAAQAAAABAAEAAAAGAAUAAAABAAEAAAAHAPr/AAABAAEAAAAHAPv/AAABAAEAAAAHAPz/AAABAAEAAAAHAP3/AAABAAEAAAAHAP7/AAABAAEAAAAHAP//AAABAAEAAAAHAAAAAAABAAEAAAAHAAEAAAABAAEAAAAHAAIAAAABAAEAAAAHAAMAAAABAAEAAAAHAAQAAAABAAEAAAAHAAUAAAABAAEAAAAIAPr/AAABAAEAAAAIAPv/AAABAAEAAAAIAPz/AAABAAEAAAAIAP3/AAABAAEAAAAIAP7/AAABAAEAAAAIAP//AAABAAEAAAAIAAAAAAABAAEAAAAIAAEAAAABAAEAAAAIAAIAAAABAAEAAAAIAAMAAAABAAEAAAAIAAQAAAABAAEAAAAIAAUAAAABAAEAAAAJAPr/AAABAAEAAAAJAPv/AAABAAEAAAAJAPz/AAABAAEAAAAJAP3/AAABAAEAAAAJAP7/AAABAAEAAAAJAP//AAABAAEAAAAJAAAAAAABAAEAAAAJAAEAAAABAAEAAAAJAAIAAAABAAEAAAAJAAMAAAABAAEAAAAJAAQAAAABAAEAAAAJAAUAAAABAAEAAAAKAPr/AAABAAEAAAAKAPv/AAABAAEAAAAKAPz/AAABAAEAAAAKAP3/AAABAAEAAAAKAP7/AAABAAEAAAAKAP//AAABAAEAAAAKAAAAAAABAAEAAAAKAAEAAAABAAEAAAAKAAIAAAABAAEAAAAKAAMAAAABAAEAAAAKAAQAAAABAAEAAAAKAAUAAAABAAEAAAALAPr/AAABAAEAAAALAPv/AAABAAEAAAALAPz/AAABAAEAAAALAP3/AAABAAEAAAALAP7/AAABAAEAAAALAP//AAABAAEAAAALAAAAAAABAAEAAAALAAEAAAABAAEAAAALAAIAAAABAAEAAAALAAMAAAABAAEAAAALAAQAAAABAAEAAAALAAUAAAABAAEAAADx//j/AAAJAAAAAADy//j/AAAJAAAAAADz//j/AAAJAAAAAAD0//j/AAAJAAAAAAD1//j/AAAJAAAAAAD2//j/AAAJAAAAAAD3//j/AAAJAAAAAAD4//j/AAAJAAAAAAD5//j/AAAJAAAAAAD6//j/AAAJAAAAAAD7//j/AAAJAAAAAAD8//j/AAAJAAAAAAD9//j/AAAJAAAAAAD+//j/AAAJAAAAAAD///j/AAAJAAAAAAAAAPj/AAAJAAAAAAABAPj/AAAJAAAAAAACAPj/AAAJAAAAAAADAPj/AAAJAAAAAAAEAPj/AAAJAAAAAAAFAPj/AAAJAAAAAAAGAPj/AAAJAAAAAAAHAPj/AAAJAAAAAAAIAPj/AAAJAAAAAAAJAPj/AAAJAAAAAAAKAPj/AAAJAAAAAAALAPj/AAAJAAAAAAAMAPj/AAAJAAAAAAANAPj/AAAJAAAAAAANAPn/AAAJAAAAAAANAPr/AAAJAAAAAAANAPv/AAAJAAAAAAANAPz/AAAJAAAAAAANAP3/AAAJAAAAAAANAP7/AAAJAAAAAAANAP//AAAJAAAAAAANAAAAAAAJAAAAAAANAAEAAAAJAAAAAAANAAIAAAAJAAAAAAANAAMAAAAJAAAAAAANAAQAAAAJAAAAAAANAAUAAAAJAAAAAAANAAYAAAAJAAAAAAANAAcAAAAJAAAAAADx/wcAAAAJAAAAAADy/wcAAAAJAAAAAADz/wcAAAAJAAAAAAD0/wcAAAAJAAAAAAD1/wcAAAAJAAAAAAD2/wcAAAAJAAAAAAD3/wcAAAAJAAAAAAD4/wcAAAAJAAAAAAD5/wcAAAAJAAAAAAD6/wcAAAAJAAAAAAD7/wcAAAAJAAAAAAD8/wcAAAAJAAAAAAD9/wcAAAAJAAAAAAD+/wcAAAAJAAAAAAD//wcAAAAJAAAAAAAAAAcAAAAJAAAAAAABAAcAAAAJAAAAAAACAAcAAAAJAAAAAAADAAcAAAAJAAAAAAAEAAcAAAAJAAAAAAAFAAcAAAAJAAAAAAAGAAcAAAAJAAAAAAAHAAcAAAAJAAAAAAAIAAcAAAAJAAAAAAAJAAcAAAAJAAAAAAAKAAcAAAAJAAAAAAALAAcAAAAJAAAAAAAMAAcAAAAJAAAAAADx//n/AAAJAAAAAADx//r/AAAJAAAAAADx//v/AAAJAAAAAADx//z/AAAJAAAAAADx//3/AAAJAAAAAADx//7/AAAJAAAAAADx////AAAJAAAAAADx/wAAAAAJAAAAAADx/wEAAAAJAAAAAADx/wIAAAAJAAAAAADx/wMAAAAJAAAAAADx/wQAAAAJAAAAAADx/wUAAAAJAAAAAADx/wYAAAAJAAAAAAA=")
+tile_set = SubResource("TileSet_gdyyg")
+
+[node name="f1" type="Node2D" parent="Camera2D/BG"]
+script = ExtResource("2_jagsg")
+
+[node name="subMenu" type="TileMapLayer" parent="Camera2D/BG/f1"]
+position = Vector2(0, -128)
+tile_map_data = PackedByteArray("AAD9/wUAAAAAAAcAAAD+/wUAAAABAAcAAAD//wUAAAABAAcAAAAAAAUAAAABAAcAAAABAAUAAAABAAcAAAACAAUAAAACAAcAAAA=")
+tile_set = SubResource("TileSet_bdhcl")
+script = ExtResource("4_iqq02")
+
+[node name="delete" type="Label" parent="Camera2D/BG/f1/subMenu"]
+offset_left = -38.8597
+offset_top = 79.4437
+offset_right = 39.1403
+offset_bottom = 96.4437
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = -1
+theme_override_fonts/font = ExtResource("3_6k60x")
+theme_override_font_sizes/font_size = 16
+text = "Delete File"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="subMenu1Button" type="Area2D" parent="Camera2D/BG/f1/subMenu"]
+position = Vector2(0, 88)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/BG/f1/subMenu/subMenu1Button"]
+shape = SubResource("RectangleShape2D_b4st1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/BG/f1/subMenu"]
+libraries = {
+"": SubResource("AnimationLibrary_ryy7j")
+}
+
+[node name="file1" type="TileMapLayer" parent="Camera2D/BG/f1"]
+position = Vector2(0, -128)
+tile_map_data = PackedByteArray("AAACAAMAAAABAAAAAAD9/wMAAAABAAAAAAD+/wMAAAABAAAAAAD//wMAAAABAAAAAAAAAAMAAAABAAAAAAABAAMAAAABAAAAAAD9/wQAAAABAAIAAAD+/wQAAAABAAIAAAD//wQAAAABAAIAAAAAAAQAAAABAAIAAAABAAQAAAABAAIAAAACAAQAAAABAAIAAAD5/wMAAAAAAAAAAAD6/wMAAAABAAAAAAD7/wMAAAABAAAAAAD8/wMAAAABAAAAAAADAAMAAAABAAAAAAAEAAMAAAABAAAAAAAFAAMAAAABAAAAAAAGAAMAAAACAAAAAAD5/wQAAAAAAAIAAAD6/wQAAAABAAIAAAD7/wQAAAABAAIAAAD8/wQAAAABAAIAAAADAAQAAAABAAIAAAAEAAQAAAABAAIAAAAFAAQAAAABAAIAAAAGAAQAAAACAAIAAAA=")
+tile_set = SubResource("TileSet_ed706")
+
+[node name="NewFile" type="Label" parent="Camera2D/BG/f1/file1"]
+offset_left = -56.0
+offset_top = 48.0
+offset_right = 56.0
+offset_bottom = 81.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_6k60x")
+theme_override_font_sizes/font_size = 32
+text = "New File"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="file1Button" type="Area2D" parent="Camera2D/BG/f1/file1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/BG/f1/file1/file1Button"]
+position = Vector2(0, 64)
+shape = SubResource("RectangleShape2D_dh55y")
+
+[node name="f2" type="Node2D" parent="Camera2D/BG"]
+script = ExtResource("4_j4q5x")
+
+[node name="subMenu" type="TileMapLayer" parent="Camera2D/BG/f2"]
+position = Vector2(0, -64)
+tile_map_data = PackedByteArray("AAD9/wUAAAAAAAcAAAD+/wUAAAABAAcAAAD//wUAAAABAAcAAAAAAAUAAAABAAcAAAABAAUAAAABAAcAAAACAAUAAAACAAcAAAA=")
+tile_set = SubResource("TileSet_bdhcl")
+script = ExtResource("6_00nae")
+
+[node name="delete" type="Label" parent="Camera2D/BG/f2/subMenu"]
+offset_left = -38.8597
+offset_top = 79.4437
+offset_right = 39.1403
+offset_bottom = 96.4437
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = -1
+theme_override_fonts/font = ExtResource("3_6k60x")
+theme_override_font_sizes/font_size = 16
+text = "Delete File"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="subMenu2Button" type="Area2D" parent="Camera2D/BG/f2/subMenu"]
+position = Vector2(0, 88)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/BG/f2/subMenu/subMenu2Button"]
+shape = SubResource("RectangleShape2D_b4st1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/BG/f2/subMenu"]
+libraries = {
+"": SubResource("AnimationLibrary_5j0jh")
+}
+
+[node name="file2" type="TileMapLayer" parent="Camera2D/BG/f2"]
+position = Vector2(0, -64)
+tile_map_data = PackedByteArray("AAACAAMAAAABAAAAAAD9/wMAAAABAAAAAAD+/wMAAAABAAAAAAD//wMAAAABAAAAAAAAAAMAAAABAAAAAAABAAMAAAABAAAAAAD9/wQAAAABAAIAAAD+/wQAAAABAAIAAAD//wQAAAABAAIAAAAAAAQAAAABAAIAAAABAAQAAAABAAIAAAACAAQAAAABAAIAAAD5/wMAAAAAAAAAAAD6/wMAAAABAAAAAAD7/wMAAAABAAAAAAD8/wMAAAABAAAAAAADAAMAAAABAAAAAAAEAAMAAAABAAAAAAAFAAMAAAABAAAAAAAGAAMAAAACAAAAAAD5/wQAAAAAAAIAAAD6/wQAAAABAAIAAAD7/wQAAAABAAIAAAD8/wQAAAABAAIAAAADAAQAAAABAAIAAAAEAAQAAAABAAIAAAAFAAQAAAABAAIAAAAGAAQAAAACAAIAAAA=")
+tile_set = SubResource("TileSet_ed706")
+
+[node name="NewFile" type="Label" parent="Camera2D/BG/f2/file2"]
+offset_left = -56.0
+offset_top = 48.0
+offset_right = 56.0
+offset_bottom = 81.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_6k60x")
+theme_override_font_sizes/font_size = 32
+text = "New File"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="file2Button" type="Area2D" parent="Camera2D/BG/f2/file2"]
+position = Vector2(0, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/BG/f2/file2/file2Button"]
+shape = SubResource("RectangleShape2D_q7tog")
+
+[node name="f3" type="Node2D" parent="Camera2D/BG"]
+script = ExtResource("7_qepnj")
+
+[node name="subMenu" type="TileMapLayer" parent="Camera2D/BG/f3"]
+tile_map_data = PackedByteArray("AAD9/wUAAAAAAAcAAAD+/wUAAAABAAcAAAD//wUAAAABAAcAAAAAAAUAAAABAAcAAAABAAUAAAABAAcAAAACAAUAAAACAAcAAAA=")
+tile_set = SubResource("TileSet_bdhcl")
+script = ExtResource("7_nt1ex")
+
+[node name="delete" type="Label" parent="Camera2D/BG/f3/subMenu"]
+offset_left = -38.8597
+offset_top = 79.4437
+offset_right = 39.1403
+offset_bottom = 96.4437
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = -1
+theme_override_fonts/font = ExtResource("3_6k60x")
+theme_override_font_sizes/font_size = 16
+text = "Delete File"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="subMenu3Button" type="Area2D" parent="Camera2D/BG/f3/subMenu"]
+position = Vector2(0, 88)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/BG/f3/subMenu/subMenu3Button"]
+shape = SubResource("RectangleShape2D_b4st1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/BG/f3/subMenu"]
+libraries = {
+"": SubResource("AnimationLibrary_wdom3")
+}
+
+[node name="file3" type="TileMapLayer" parent="Camera2D/BG/f3"]
+tile_map_data = PackedByteArray("AAACAAMAAAABAAAAAAD9/wMAAAABAAAAAAD+/wMAAAABAAAAAAD//wMAAAABAAAAAAAAAAMAAAABAAAAAAABAAMAAAABAAAAAAD9/wQAAAABAAIAAAD+/wQAAAABAAIAAAD//wQAAAABAAIAAAAAAAQAAAABAAIAAAABAAQAAAABAAIAAAACAAQAAAABAAIAAAD5/wMAAAAAAAAAAAD6/wMAAAABAAAAAAD7/wMAAAABAAAAAAD8/wMAAAABAAAAAAADAAMAAAABAAAAAAAEAAMAAAABAAAAAAAFAAMAAAABAAAAAAAGAAMAAAACAAAAAAD5/wQAAAAAAAIAAAD6/wQAAAABAAIAAAD7/wQAAAABAAIAAAD8/wQAAAABAAIAAAADAAQAAAABAAIAAAAEAAQAAAABAAIAAAAFAAQAAAABAAIAAAAGAAQAAAACAAIAAAA=")
+tile_set = SubResource("TileSet_ed706")
+
+[node name="NewFile" type="Label" parent="Camera2D/BG/f3/file3"]
+offset_left = -56.0
+offset_top = 48.0
+offset_right = 56.0
+offset_bottom = 81.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_6k60x")
+theme_override_font_sizes/font_size = 32
+text = "New File"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="file3Button" type="Area2D" parent="Camera2D/BG/f3/file3"]
+position = Vector2(0, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/BG/f3/file3/file3Button"]
+shape = SubResource("RectangleShape2D_msccw")
+
+[connection signal="mouse_entered" from="Camera2D/BG/f1/subMenu/subMenu1Button" to="Camera2D/BG/f1/subMenu" method="_on_sub_menu_1_button_mouse_entered"]
+[connection signal="mouse_exited" from="Camera2D/BG/f1/subMenu/subMenu1Button" to="Camera2D/BG/f1/subMenu" method="_on_sub_menu_1_button_mouse_exited"]
+[connection signal="mouse_entered" from="Camera2D/BG/f1/file1/file1Button" to="Camera2D/BG/f1" method="_on_file_1_button_mouse_entered"]
+[connection signal="mouse_exited" from="Camera2D/BG/f1/file1/file1Button" to="Camera2D/BG/f1" method="_on_file_1_button_mouse_exited"]
+[connection signal="mouse_entered" from="Camera2D/BG/f2/subMenu/subMenu2Button" to="Camera2D/BG/f2/subMenu" method="_on_sub_menu_2_button_mouse_entered"]
+[connection signal="mouse_exited" from="Camera2D/BG/f2/subMenu/subMenu2Button" to="Camera2D/BG/f2/subMenu" method="_on_sub_menu_2_button_mouse_exited"]
+[connection signal="mouse_entered" from="Camera2D/BG/f2/file2/file2Button" to="Camera2D/BG/f2" method="_on_file_2_button_mouse_entered"]
+[connection signal="mouse_exited" from="Camera2D/BG/f2/file2/file2Button" to="Camera2D/BG/f2" method="_on_file_2_button_mouse_exited"]
+[connection signal="mouse_entered" from="Camera2D/BG/f3/subMenu/subMenu3Button" to="Camera2D/BG/f3/subMenu" method="_on_sub_menu_3_button_mouse_entered"]
+[connection signal="mouse_exited" from="Camera2D/BG/f3/subMenu/subMenu3Button" to="Camera2D/BG/f3/subMenu" method="_on_sub_menu_3_button_mouse_exited"]
+[connection signal="mouse_entered" from="Camera2D/BG/f3/file3/file3Button" to="Camera2D/BG/f3" method="_on_file_3_button_mouse_entered"]
+[connection signal="mouse_exited" from="Camera2D/BG/f3/file3/file3Button" to="Camera2D/BG/f3" method="_on_file_3_button_mouse_exited"]

@@ -13,6 +13,7 @@ var startPos: Vector2 # Starting position in the form of x,y coordinates on the 
 var exitPos: Vector2# Starting position in the form of x,y coordinates on the grid
 var path : Array # An array of Vector2s full of coordinates representing the optimal path between the starting and ending positions
 
+
 func genPath(start: Vector2, end: Vector2, path: Array):
 	# Function that generates the optimal path between points on a 2D array recursively
 	# Param - start: A Vector2 representing the point that we need to find the next best move from
@@ -47,6 +48,11 @@ func genPath(start: Vector2, end: Vector2, path: Array):
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	EventBus.on_death.connect(_on_death)
+
+func gen_points(seed: int):
+	
+	rng.set_seed(seed)
+	
 	# Randomly generating a starting point to start the path
 	startPos = Vector2(rng.randi_range(0,mapSize-1), rng.randi_range(0,mapSize-1))
 	
@@ -66,6 +72,7 @@ func _ready() -> void:
 		mapGrid.append([])
 		for x in mapSize:
 			mapGrid[y].append([])
+	
 
 func _on_death():
 	queue_free()

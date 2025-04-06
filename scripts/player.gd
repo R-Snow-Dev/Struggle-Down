@@ -12,10 +12,10 @@ class_name Player
 # Initialises a Vector2 that will store the position data that is represented on the gameboard
 var pos: Vector2
 var actionsAvailable: int
-var hp: int = 4
 @onready var anim_player: AnimationPlayer = $CollisionShape2D/AnimatedSprite2D/animPlayer
 @onready var attack_origin: Node2D = $AttackOrigin
 @onready var animated_sprite_2d: AnimatedSprite2D = $CollisionShape2D/AnimatedSprite2D
+@onready var data = SaveController.loadData()
 
 func playDeath():
 	# Plays the death animation upon death
@@ -26,7 +26,6 @@ func broadcatDeath():
 	EventBus.on_death.emit()
 
 func _ready() -> void:
-	EventBus.update_hp.connect(_updateHealth)
 	EventBus.updateActions.connect(_updateActions)
 
 func setPos(newPos: Vector2):
@@ -69,11 +68,6 @@ func moveRight():
 	animated_sprite_2d.flip_h = 0
 	animated_sprite_2d.play("IdleS")
 
-func _updateHealth(amount: int):
-	if amount + hp <= 0:
-		hp = 0
-	else:
-		hp += amount
 
 func draw():
 	# code that converts the Vector2 position data into on-screen coordinates

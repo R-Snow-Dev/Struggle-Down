@@ -9,6 +9,9 @@ class_name Ladder
 var pos: Vector2
 var curLevel: int
 var curFloor: int
+var rng = RandomNumberGenerator.new()
+@onready var data = SaveController.loadData()
+
 
 
 func setup(p: Vector2, currentLevel: int, currentFloor: int):
@@ -31,4 +34,6 @@ func draw():
 	self.z_index = (pos.y + 1)
 
 func _on_ladder_trigger_area_entered(area: Area2D) -> void:
-	EventBus.new_level.emit(curLevel, curFloor)
+	EventBus.save_weapon.emit()
+	SaveController.updateData("seed", rng.get_seed())
+	EventBus.new_level.emit()

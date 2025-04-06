@@ -38,7 +38,8 @@ func _init(w: int, h: int, p: Object, o: Array):
 	
 
 func _object_ded(object: Object):
-	objects.remove_at(objects.find(object))
+	var index = objects.find(object)
+	objects.remove_at(index)
 	object.queue_free()
 	checkInputs()
 
