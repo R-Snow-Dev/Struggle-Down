@@ -14,6 +14,7 @@ var mouseOn = false
 
 @onready var gamecontroller: Node = %Gamecontroller
 @onready var data = SaveController.loadData()
+@onready var collider = $Area2D/CollisionShape2D
 
 # Connect to necessary signals upon creation
 func _ready() -> void:
@@ -61,7 +62,12 @@ func _on_area_2d_mouse_entered() -> void:
 	if ID > 0:
 		EventBus.updateAOE.emit(allWeapons[ID][1], allWeapons[ID][2], allWeapons[ID][3])
 	mouseOn = true
+	collider.position.y = 1
+	position.y = -523.134
 
 func _on_area_2d_mouse_exited() -> void:
 	EventBus.updateAOE.emit(0, 0, allWeapons[1][3])
 	mouseOn = false
+	collider.position.y = 0
+	position.y = -543.134
+	

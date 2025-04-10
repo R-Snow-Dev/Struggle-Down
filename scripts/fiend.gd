@@ -24,6 +24,7 @@ func setup(p: Vector2, s: PackedScene, hp: int, b: EnemyBehavior, a: AttackBehav
 	# Adds the sprite to the scene tree, giving the fiend a sprite
 	sprite.position.y -= 4
 	add_child(sprite)
+	return self
 
 func _process(delta: float) -> void:
 	health = sprite.health

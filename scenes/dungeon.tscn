@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dkqh251ixbss2"]
+[gd_scene load_steps=25 format=4 uid="uid://dkqh251ixbss2"]
 
 [ext_resource type="Script" path="res://scripts/dungeon.gd" id="1_7fvgo"]
 [ext_resource type="Script" path="res://scripts/dungeoncontroller.gd" id="2_ebr4h"]
@@ -137,8 +137,60 @@ _data = {
 "RESET": SubResource("Animation_i03ll")
 }
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xw3q6"]
+texture = ExtResource("3_qg7tb")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_qhury"]
+sources/0 = SubResource("TileSetAtlasSource_xw3q6")
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5uiki"]
-size = Vector2(44, 28)
+size = Vector2(44, 28.0057)
 
 [node name="dungeon" type="Node2D"]
 script = ExtResource("1_7fvgo")
@@ -167,6 +219,7 @@ layer_0/tile_data = PackedInt32Array(-786443, 589824, 0, -720907, 589824, 0, -65
 layer_1/name = "Midground"
 layer_1/tile_data = PackedInt32Array(65547, 0, 2, -720885, 0, 0, 65553, 131072, 2, -720879, 131072, 0, -720884, 65536, 0, -720883, 65536, 0, -720882, 65536, 0, -720881, 65536, 0, -720880, 65536, 0, -655343, 131072, 1, -589807, 131072, 1, -524271, 131072, 1, -458735, 131072, 1, -393199, 131072, 1, -327663, 131072, 1, -262127, 131072, 1, -196591, 131072, 1, -131055, 131072, 1, -65519, 131072, 1, 17, 131072, 1, 65552, 65536, 2, 65551, 65536, 2, 65550, 65536, 2, 65549, 65536, 2, 65548, 65536, 2, 11, 0, 1, -65525, 0, 1, -65524, 65536, 1, -131060, 65536, 1, -196596, 65536, 1, -262132, 65536, 1, -327668, 65536, 1, -393204, 65536, 1, -458740, 65536, 1, -524276, 65536, 1, -589812, 65536, 1, -655348, 65536, 1, -655349, 0, 1, -589813, 0, 1, -524277, 0, 1, -458741, 0, 1, -131061, 0, 1, -196597, 0, 1, -262133, 0, 1, -327669, 0, 1, -393205, 0, 1, 12, 65536, 1, 13, 0, 4, 14, 65536, 2, 15, 65536, 4, 16, 65536, 1, -65520, 65536, 1, -131056, 65536, 1, -196592, 65536, 1, -262129, 65536, 3, -327665, 65536, 1, -393201, 65536, 4, -458737, 65536, 3, -524273, 65536, 1, -589809, 65536, 1, -655345, 65536, 1, -655344, 65536, 1, -589808, 65536, 1, -524272, 65536, 1, -458736, 65536, 1, -393200, 65536, 1, -327664, 65536, 1, -262128, 65536, 1, -655346, 65536, 1, -655347, 65536, 1, -589811, 65536, 1, -524275, 65536, 1, -458739, 0, 3, -393203, 0, 4, -393202, 65536, 2, -327666, 65536, 1, -262130, 65536, 0, -196594, 65536, 2, -131058, 65536, 1, -65522, 65536, 0, -65523, 0, 3, -131059, 65536, 1, -196595, 0, 4, -262131, 0, 3, -327667, 65536, 1, -131057, 65536, 1, -65521, 65536, 3, -196593, 65536, 4, -458738, 65536, 0, -524274, 65536, 1, -589810, 65536, 1, 131069, 131072, 2, -655363, 131072, 0, -655369, 0, 0, 131063, 0, 2, 131064, 65536, 2, 131065, 65536, 2, 131066, 65536, 2, 131067, 65536, 2, 131068, 65536, 2, 65533, 131072, 1, -3, 131072, 1, -65539, 131072, 1, -131075, 131072, 1, -131076, 65536, 1, -196612, 65536, 1, -262148, 65536, 1, -262147, 131072, 1, -327683, 131072, 1, -393219, 131072, 1, -458755, 131072, 1, -524291, 131072, 1, -589827, 131072, 1, -196611, 131072, 1, -655364, 65536, 0, -655365, 65536, 0, -655366, 65536, 0, -655367, 65536, 0, -655368, 65536, 0, -589833, 0, 1, -524297, 0, 1, -458761, 0, 1, -393225, 0, 1, -327689, 0, 1, -262153, 0, 1, -196617, 0, 1, -131081, 0, 1, -65545, 0, 1, -9, 0, 1, 65527, 0, 1, -65540, 65536, 1, -4, 65536, 1, 65532, 65536, 1, 65531, 131072, 7, -5, 131072, 5, -6, 65536, 5, -7, 0, 5, -8, 65536, 1, 65528, 65536, 1, 65529, 0, 7, 65530, 65536, 7, -65544, 65536, 1, -131080, 65536, 1, -196616, 65536, 1, -262152, 65536, 1, -327688, 65536, 1, -393224, 65536, 1, -458760, 65536, 1, -524296, 65536, 1, -589832, 65536, 1, -589831, 65536, 1, -589830, 65536, 1, -589829, 65536, 1, -589828, 65536, 1, -524292, 65536, 1, -458756, 65536, 1, -393220, 65536, 1, -327684, 65536, 1, -327685, 65536, 1, -393221, 65536, 1, -458757, 65536, 1, -524293, 65536, 1, -524294, 65536, 1, -524295, 65536, 1, -458759, 65536, 1, -393223, 65536, 1, -327687, 65536, 1, -327686, 65536, 1, -393222, 65536, 1, -458758, 65536, 1, -262150, 65536, 1, -262151, 65536, 1, -196615, 65536, 1, -131079, 65536, 1, -65543, 65536, 1, -65542, 65536, 1, -131078, 65536, 1, -196614, 65536, 1, -196613, 65536, 1, -262149, 65536, 1, -131077, 65536, 1, -65541, 65536, 1)
 layer_2/name = "Foreground"
+layer_2/tile_data = PackedInt32Array(-262131, 0, 3, -262130, 65536, 0, -262129, 65536, 3, -196593, 589824, 0, -196594, 589824, 0, -196595, 589824, 0)
 
 [node name="DashIcon" parent="Gamecontroller/Node2D/Camera2D" instance=ExtResource("4_tj33x")]
 position = Vector2(418.771, -1590)
@@ -241,48 +294,54 @@ libraries = {
 }
 
 [node name="WeaponSlot" type="Node2D" parent="Gamecontroller/Node2D/Camera2D"]
-position = Vector2(-389.554, -523.134)
+position = Vector2(-389.554, -543.134)
 rotation = -3.14157
 scale = Vector2(2.43471, 21.7969)
 skew = -2.24113e-05
 script = ExtResource("12_b0wl4")
 
+[node name="slot" type="TileMapLayer" parent="Gamecontroller/Node2D/Camera2D/WeaponSlot"]
+position = Vector2(-8.00003, 1.32317e-05)
+tile_map_data = PackedByteArray("AAD/////AAAAAAMAAAD//wAAAAAAAAQAAAABAAAAAAABAAQAAAABAP//AAABAAMAAAAAAAAAAAABAAIAAAAAAP//AAABAAAAAAA=")
+tile_set = SubResource("TileSet_qhury")
+
 [node name="Area2D" type="Area2D" parent="Gamecontroller/Node2D/Camera2D/WeaponSlot"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D"]
+position = Vector2(0, 0.00284576)
 shape = SubResource("RectangleShape2D_5uiki")
 
 [node name="Floor" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
-offset_left = 467.465
-offset_top = 1220.64
-offset_right = 615.465
-offset_bottom = 1269.64
+offset_left = 486.942
+offset_top = 1569.39
+offset_right = 634.942
+offset_bottom = 1618.39
 rotation = 3.14159
 scale = Vector2(1, 8)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("8_ak7oc")
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 32
 text = "Floor:"
 horizontal_alignment = 1
 
 [node name="floorLabel" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
-offset_left = 409.031
-offset_top = 871.885
-offset_right = 449.031
-offset_bottom = 920.885
+offset_left = 370.076
+offset_top = 1569.38
+offset_right = 410.076
+offset_bottom = 1618.38
 rotation = 3.14159
 scale = Vector2(1, 8)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("8_ak7oc")
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 32
 text = "0"
 horizontal_alignment = 1
 script = ExtResource("12_0ghcg")
 
 [node name="Level" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
-offset_left = 467.464
+offset_left = 486.942
 offset_top = 1918.14
-offset_right = 615.464
+offset_right = 634.942
 offset_bottom = 1967.14
 rotation = 3.14159
 scale = Vector2(1, 8)
@@ -293,10 +352,10 @@ text = "Level:"
 horizontal_alignment = 1
 
 [node name="LevelLabel" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
-offset_left = 409.031
-offset_top = 1569.39
-offset_right = 449.031
-offset_bottom = 1618.39
+offset_left = 350.598
+offset_top = 1918.13
+offset_right = 390.598
+offset_bottom = 1967.13
 rotation = 3.14159
 scale = Vector2(1, 8)
 theme_override_colors/font_color = Color(0, 0, 0, 1)

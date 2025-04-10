@@ -11,6 +11,7 @@ class_name Player
 
 # Initialises a Vector2 that will store the position data that is represented on the gameboard
 var pos: Vector2
+var prevPos = Vector2(0,0)
 var actionsAvailable: int
 @onready var anim_player: AnimationPlayer = $CollisionShape2D/AnimatedSprite2D/animPlayer
 @onready var attack_origin: Node2D = $AttackOrigin
@@ -30,6 +31,7 @@ func _ready() -> void:
 
 func setPos(newPos: Vector2):
 	# Function to artificially change the current position of the player character
+	prevPos = pos
 	pos = newPos
 
 func _updateActions(amount: int):

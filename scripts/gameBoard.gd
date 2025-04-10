@@ -83,7 +83,7 @@ func fiendsTurn():
 	
 	# Iterate through the game board array
 	for x in objects:
-		if x is Fiend:
+		if x is Fiend or x is Boss:
 			fien += 1
 				
 	if fien < 1: # If the fiend counter remains at 0, then immediatly return the players actions to them.
@@ -91,7 +91,7 @@ func fiendsTurn():
 	else: # If not, call all enemies on the floor to take their actions
 		EventBus.fiend_phase.emit(fien) # Tells the game controller that it is not the enemy's turn to take actions
 		for y in objects:
-			if y is Fiend:
+			if y is Fiend or y is Boss:
 				loadBoard()
 				y.move(grid, player.pos)
 				loadBoard()

@@ -1,0 +1,79 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctsng0vbroeda"]
+
+[ext_resource type="Script" path="res://scripts/bosses/king_slime.gd" id="1_fmfgq"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_th7pa"]
+
+[sub_resource type="Animation" id="Animation_566g7"]
+resource_name = "charge"
+length = 0.4
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"positionShift"
+}, {
+"args": [],
+"method": &"positionShift"
+}, {
+"args": [],
+"method": &"positionShift"
+}, {
+"args": [],
+"method": &"positionShift"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_yw8d3"]
+resource_name = "RESET"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e5sx6"]
+_data = {
+"RESET": SubResource("Animation_yw8d3"),
+"charge": SubResource("Animation_566g7")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m2uyg"]
+size = Vector2(0.875, 0.875)
+
+[node name="kingSlime" type="MeshInstance2D"]
+position = Vector2(0, -4)
+scale = Vector2(32, 32)
+mesh = SubResource("QuadMesh_th7pa")
+script = ExtResource("1_fmfgq")
+
+[node name="atkAnims" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_e5sx6")
+}
+
+[node name="AttackParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 20
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 80.0
+initial_velocity_max = 80.0
+scale_amount_min = 3.0
+scale_amount_max = 3.0
+color = Color(0, 0, 0, 1)
+
+[node name="HitboxKS" type="Area2D" parent="."]
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxKS"]
+shape = SubResource("RectangleShape2D_m2uyg")
+one_way_collision_margin = 0.0
+
+[connection signal="area_entered" from="HitboxKS" to="." method="_on_hitbox_ks_area_entered"]

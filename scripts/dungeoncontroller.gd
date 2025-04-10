@@ -82,77 +82,80 @@ func loadObjects(grid: Vector2, mPos: Vector2):
 	# param -  grid: A Vector2 containing the dimensions of the room where the obstacles will be generated
 	# Returns: An array of objects to be added to the floor, along with their positions
 	
-	rng.set_seed(seed)
-	
 	# The list to be returned
 	var objects = []
 	
 	# Coordinates on the floor that are available to spawn an object
 	var gridCoords = []
+	var DefaultFloors = preload("res://scripts/defaultFloors.gd").new()
+	
+	if data["floor"] == 5 and mPos == endPos:
+		objects = DefaultFloors.kSlime
 	
 	# Adds all open tiles that are not door tiles gridCoords
-	for i in grid.x:
-		for j in grid.y:
-			# Checks to see if the current tile is not a possible door tile
-			if (i == 0 and j == int(grid.y-1)/2) or (i == grid.x-1 and j == int(grid.y-1)/2) or (i == int(grid.x-1)/2 and j == 0) or (i == int(grid.x-1)/2 and j == grid.y-1):
-				pass
-			else:
-				gridCoords.append([i,j])
-				
-	# The length of gridCoords immediatly after all tile coordinates are appended
-	var availableCoords = len(gridCoords)
-	
+	else:
+		for i in grid.x:
+			for j in grid.y:
+				# Checks to see if the current tile is not a possible door tile
+				if (i == 0 and j == int(grid.y-1)/2) or (i == grid.x-1 and j == int(grid.y-1)/2) or (i == int(grid.x-1)/2 and j == 0) or (i == int(grid.x-1)/2 and j == grid.y-1):
+					pass
+				else:
+					gridCoords.append([i,j])
+					
+		# The length of gridCoords immediatly after all tile coordinates are appended
+		var availableCoords = len(gridCoords)
+		
 
-# Iterates throught he available grid coords and adds wall to the game board
-	for i in range(0, availableCoords):
-		if rng.randf() > 0.75: # 75% chance no wall spawns on the currently checked tile
-			var chosenWall = wall.instantiate()
-			var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
-			var cornersOpen = checkCorners([gridCoords[chosen][0], gridCoords[chosen][0]], gridCoords) # Checks to see how many corners the wall will have open 
-			if cornersOpen > 1: # A tile must have at least 2 full corners open for a wall to spawn on it to ensure that no room-spanning walls can cut the player off completely from a required doorway
-				chosenWall.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1])) # Gives the walls their rerspective coordinates
-				objects.append(chosenWall) # Adds the walls to the list of objects 
+	# Iterates throught he available grid coords and adds wall to the game board
+		for i in range(0, availableCoords):
+			if rng.randf() > 0.75: # 75% chance no wall spawns on the currently checked tile
+				var chosenWall = wall.instantiate()
+				var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
+				var cornersOpen = checkCorners([gridCoords[chosen][0], gridCoords[chosen][0]], gridCoords) # Checks to see how many corners the wall will have open 
+				if cornersOpen > 1: # A tile must have at least 2 full corners open for a wall to spawn on it to ensure that no room-spanning walls can cut the player off completely from a required doorway
+					chosenWall.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1])) # Gives the walls their rerspective coordinates
+					objects.append(chosenWall) # Adds the walls to the list of objects 
+					gridCoords.remove_at(chosen) # removes the wall's coordinates from the pool of possible grid coordinates other objects can be assigned to
+		
+		availableCoords = len(gridCoords) # Updates the amount of grid ccordinates left after the walls are spawned in
+		
+		if mPos == endPos:
+			var ladder = preload("res://scenes/Tiles/ladder.tscn").instantiate()
+			if len(objects) > 0:
+				var randomIndex = rng.randi_range(0, len(objects)-1)
+				ladder.setup(objects[randomIndex].pos, data["level"], data["floor"])
+				objects[randomIndex] = ladder
+			else:
+				var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
+				ladder.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1]), data["level"], data["floor"])
+				objects.append(ladder)
+				gridCoords.remove_at(chosen)
+		
+		# Iterates throught he available grid coords and adds items to the game board
+		for i in range(0, availableCoords):
+			if rng.randf() > 0.99: # 99% chance no item spawns on the currently checked tile
+				var chosenItem = preload("res://scenes/Items/item.tscn").instantiate()
+				var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
+				chosenItem.setup((Vector2(gridCoords[chosen][0], gridCoords[chosen][1])), 1) # Gives the items their rerspective coordinates and IDs
+				objects.append(chosenItem) # Adds the items to the list of objects 
 				gridCoords.remove_at(chosen) # removes the wall's coordinates from the pool of possible grid coordinates other objects can be assigned to
-	
-	availableCoords = len(gridCoords) # Updates the amount of grid ccordinates left after the walls are spawned in
-	
-	if mPos == endPos:
-		var ladder = preload("res://scenes/Tiles/ladder.tscn").instantiate()
-		if len(objects) > 0:
-			var randomIndex = rng.randi_range(0, len(objects)-1)
-			ladder.setup(objects[randomIndex].pos, data["level"], data["floor"])
-			objects[randomIndex] = ladder
-		else:
-			var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
-			ladder.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1]), data["level"], data["floor"])
-			objects.append(ladder)
-			gridCoords.remove_at(chosen)
-	
-	# Iterates throught he available grid coords and adds items to the game board
-	for i in range(0, availableCoords):
-		if rng.randf() > 0.99: # 99% chance no item spawns on the currently checked tile
-			var chosenItem = preload("res://scenes/Items/item.tscn").instantiate()
-			var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
-			chosenItem.setup((Vector2(gridCoords[chosen][0], gridCoords[chosen][1])), 1) # Gives the items their rerspective coordinates and IDs
-			objects.append(chosenItem) # Adds the items to the list of objects 
-			gridCoords.remove_at(chosen) # removes the wall's coordinates from the pool of possible grid coordinates other objects can be assigned to
+			
+			
 		
+		availableCoords = len(gridCoords) # Updates the amount of grid ccordinates left after the items are spawned in
 		
-	
-	availableCoords = len(gridCoords) # Updates the amount of grid ccordinates left after the items are spawned in
-	
-	# Checks all avaialable spawn tiles for a percent chance to spawn a fiend
-	for i in range(0, availableCoords):
-		if rng.randf() > (1.01 - (0.05*sqrt((data["level"]*data["level"])+((data["floor"]/5)*(data["floor"]/5))))): # Chance gets higher as tower level increases
-			var chosenFiend = fiend.instantiate()
-			var chosen = rng.randi_range(0, len(gridCoords) - 1) # Picks an available spawn tiles
-			var brain = preload("res://scripts/Behaviors/slimeAI.gd").new()
-			var atk = preload("res://scripts/AttackingLogic/MeleeAttack.gd").new(1)
-			chosenFiend.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1]), preload("res://scenes/Opps/slime.tscn"), 10, brain, atk) # Adds all relevant information to the newly spawned fiend
-			objects.append(chosenFiend) # Adds the new fiend, along with it's position, to the fiends array, which will be returned at the end
-			gridCoords.remove_at(chosen) # Removes the location the fiend spawned at from the gridCoords array, so ot cannot be chosen again
-	# Returns the fiends array, containing the instances of the spawned fiends in the room, along with tier positions
-	
+		# Checks all avaialable spawn tiles for a percent chance to spawn a fiend
+		for i in range(0, availableCoords):
+			if rng.randf() > (1.01 - (0.05*sqrt((data["level"]*data["level"])+((data["floor"]/5)*(data["floor"]/5))))): # Chance gets higher as tower level increases
+				var chosenFiend = fiend.instantiate()
+				var chosen = rng.randi_range(0, len(gridCoords) - 1) # Picks an available spawn tiles
+				var brain = preload("res://scripts/Behaviors/slimeAI.gd").new()
+				var atk = preload("res://scripts/AttackingLogic/MeleeAttack.gd").new(1)
+				chosenFiend.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1]), preload("res://scenes/Opps/slime.tscn"), 10, brain, atk) # Adds all relevant information to the newly spawned fiend
+				objects.append(chosenFiend) # Adds the new fiend, along with it's position, to the fiends array, which will be returned at the end
+				gridCoords.remove_at(chosen) # Removes the location the fiend spawned at from the gridCoords array, so ot cannot be chosen again
+		# Returns the fiends array, containing the instances of the spawned fiends in the room, along with tier positionss
+		
 	
 	return objects
 
@@ -160,7 +163,6 @@ func genMapData(path: Array):
 	# Genrates the map data for each noew floor, including their dimensions, and the obstacles they have
 	# param - path: An array of coordinates correlating to every position of a room on the map
 	
-	rng.set_seed(seed)
 	
 	# Repeat this for every room in the map
 	for x in path:
@@ -168,8 +170,12 @@ func genMapData(path: Array):
 		var objectList: Array
 		# Checks to see if the floor being generated is the starting floor or not
 		if x != map.startPos: # If it isn't randomly generate unique data for the floor
-			gridSize = Vector2(rng.randi_range(3,11), rng.randi_range(3,11))
-			objectList = loadObjects(gridSize, x)
+			if(data["floor"] == 5 and x == endPos):
+				gridSize = Vector2(11,11)
+				objectList = loadObjects(gridSize, x)
+			else:
+				gridSize = Vector2(rng.randi_range(3,11), rng.randi_range(3,11))
+				objectList = loadObjects(gridSize, x)
 		else: # If it is the starting position, generate a 5x5 room with no obstacles
 			gridSize = Vector2(5,5)
 			var startingItem = preload("res://scenes/Items/item.tscn").instantiate()

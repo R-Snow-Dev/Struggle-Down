@@ -16,6 +16,7 @@ func _process(delta: float) -> void:
 			playAnim("slideOut")
 		else:
 			playAnim("slideOut")
+	
 
 func playAnim(name:String):
 	anim.play(name)

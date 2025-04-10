@@ -8,6 +8,7 @@ func setup(p: Vector2):
 	# Function that must be called after creating an instance, so that its characteristics may be given to it
 	# param - p: The position of the wall in Vector2 form
 	pos = p
+	return self
 
 	
 

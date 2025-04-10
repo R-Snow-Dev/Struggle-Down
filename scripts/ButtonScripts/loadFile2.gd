@@ -6,6 +6,7 @@ extends Node2D
 
 @onready var newfile = $file2/NewFile
 @onready var subMenu = $subMenu
+@onready var c = $file2/file2Button/CollisionShape2D
 var isHovering = false
 
 func _ready() -> void:
@@ -24,11 +25,18 @@ func _process(delta: float) -> void:
 				SaveController.setDefault()
 			EventBus.start.emit()
 		if(Input.is_action_just_pressed("special_select") && FileAccess.file_exists("res://saveFiles/save2.json")):
-			subMenu.playAnim("slideIn")
+			if subMenu.visible == false:
+				subMenu.playAnim("slideIn")
+			else:
+				subMenu.playAnim("slideOut")
 
 func _on_file_2_button_mouse_entered() -> void:
 	isHovering = true
+	c.position.y = 2
+	position.y = 0
 
 
 func _on_file_2_button_mouse_exited() -> void:
 	isHovering = false
+	c.position.y = 0
+	position.y = 2
