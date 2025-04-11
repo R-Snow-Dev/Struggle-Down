@@ -7,6 +7,7 @@ var health: int
 var brain: Object
 var facing: String
 var sprite = Node
+var finishedMoving = true
 @onready var timer = $Timer
 
 func setup(p: Vector2, s: PackedScene, hp: int, b: EnemyBehavior, a: AttackBehavior):
@@ -29,6 +30,8 @@ func setup(p: Vector2, s: PackedScene, hp: int, b: EnemyBehavior, a: AttackBehav
 func _process(delta: float) -> void:
 	health = sprite.health
 	if health < 1:
+		if(!finishedMoving):
+			EventBus.doneAttacking.emit()
 		EventBus.object_ded.emit(self)
 	
 func checkFacing(targetPos: Vector2):
@@ -51,6 +54,7 @@ func checkFacing(targetPos: Vector2):
 		return false
 
 func move(gameBoard: Array, playerPos: Vector2):
+	finishedMoving = false
 	var stepParticles = preload("res://scenes/Particles/slimey_step.tscn").instantiate() # Instantiates the particles for moving
 	# Function that changes the fiend's position based on it's given AI pathfinding
 	
@@ -63,6 +67,7 @@ func move(gameBoard: Array, playerPos: Vector2):
 			timer.start()
 		else:
 			EventBus.doneAttacking.emit() # if not, do nothing. Will change in the futur
+			finishedMoving = true
 		
 		
 	else:
@@ -86,3 +91,4 @@ func _on_timer_timeout() -> void:
 	# function that triggers after the player has waited for 0.5 seconds after the fiend performs their actions
 	timer.stop()
 	EventBus.doneAttacking.emit() # Tells the Game controller that it is finished moving
+	finishedMoving = true

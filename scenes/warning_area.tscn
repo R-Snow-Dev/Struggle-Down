@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://uts0yajgmxoi"]
+
+[ext_resource type="Script" path="res://scripts/bosses/warning_area.gd" id="1_q5dsi"]
+
+[sub_resource type="Animation" id="Animation_3kuma"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_smdix"]
+resource_name = "flash"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4w2ta"]
+_data = {
+"RESET": SubResource("Animation_3kuma"),
+"flash": SubResource("Animation_smdix")
+}
+
+[node name="WarningArea" type="Polygon2D"]
+scale = Vector2(16, 16)
+polygon = PackedVector2Array(0, 0, 1, 0, 1, 1, 0, 1)
+script = ExtResource("1_q5dsi")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4w2ta")
+}

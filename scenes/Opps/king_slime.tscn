@@ -1,79 +1,195 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctsng0vbroeda"]
+[gd_scene load_steps=21 format=3 uid="uid://ctsng0vbroeda"]
 
+[ext_resource type="Texture2D" uid="uid://ct6tn2l15ohai" path="res://assets/Kingslime.png" id="1_3t6ta"]
 [ext_resource type="Script" path="res://scripts/bosses/king_slime.gd" id="1_fmfgq"]
 
-[sub_resource type="QuadMesh" id="QuadMesh_th7pa"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_itmtg"]
+atlas = ExtResource("1_3t6ta")
+region = Rect2(0, 0, 48, 48)
 
-[sub_resource type="Animation" id="Animation_566g7"]
-resource_name = "charge"
-length = 0.4
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"values": [{
-"args": [],
-"method": &"positionShift"
+[sub_resource type="AtlasTexture" id="AtlasTexture_lacwv"]
+atlas = ExtResource("1_3t6ta")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l40ov"]
+atlas = ExtResource("1_3t6ta")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3qy4s"]
+atlas = ExtResource("1_3t6ta")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ai44c"]
+atlas = ExtResource("1_3t6ta")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idlwo"]
+atlas = ExtResource("1_3t6ta")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1gdnb"]
+atlas = ExtResource("1_3t6ta")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hqcjq"]
+atlas = ExtResource("1_3t6ta")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xirj3"]
+atlas = ExtResource("1_3t6ta")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hfww7"]
+atlas = ExtResource("1_3t6ta")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bgnx6"]
+atlas = ExtResource("1_3t6ta")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_odat5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_itmtg")
 }, {
-"args": [],
-"method": &"positionShift"
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lacwv")
 }, {
-"args": [],
-"method": &"positionShift"
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l40ov")
 }, {
-"args": [],
-"method": &"positionShift"
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3qy4s")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ai44c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idlwo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1gdnb")
+}, {
+"duration": 5.0,
+"texture": SubResource("AtlasTexture_hqcjq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xirj3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hfww7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bgnx6")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 10.0
 }]
-}
 
-[sub_resource type="Animation" id="Animation_yw8d3"]
-resource_name = "RESET"
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pd674"]
+size = Vector2(32, 31)
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_e5sx6"]
-_data = {
-"RESET": SubResource("Animation_yw8d3"),
-"charge": SubResource("Animation_566g7")
-}
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d4ibf"]
+size = Vector2(8, 6)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_m2uyg"]
-size = Vector2(0.875, 0.875)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hpbsp"]
+size = Vector2(7.75, 6)
 
-[node name="kingSlime" type="MeshInstance2D"]
-position = Vector2(0, -4)
-scale = Vector2(32, 32)
-mesh = SubResource("QuadMesh_th7pa")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_el4d5"]
+size = Vector2(8, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s0jao"]
+size = Vector2(8, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1jutc"]
+size = Vector2(62, 55)
+
+[node name="Kingslime" type="AnimatedSprite2D"]
+position = Vector2(0, -7)
+sprite_frames = SubResource("SpriteFrames_odat5")
+animation = &"jump"
+autoplay = "Idle"
+frame = 6
+frame_progress = 1.0
 script = ExtResource("1_fmfgq")
 
-[node name="atkAnims" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_e5sx6")
-}
+[node name="SlideAttack" type="Node2D" parent="."]
 
-[node name="AttackParticles" type="CPUParticles2D" parent="."]
-emitting = false
-amount = 20
-lifetime = 0.3
-one_shot = true
-explosiveness = 1.0
-lifetime_randomness = 1.0
-spread = 180.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 80.0
-initial_velocity_max = 80.0
-scale_amount_min = 3.0
-scale_amount_max = 3.0
-color = Color(0, 0, 0, 1)
+[node name="SlideHitbox" type="Area2D" parent="SlideAttack"]
+collision_layer = 4
+collision_mask = 5
+monitoring = false
+monitorable = false
 
-[node name="HitboxKS" type="Area2D" parent="."]
-collision_mask = 12
+[node name="slideCollider" type="CollisionShape2D" parent="SlideAttack/SlideHitbox"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_pd674")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxKS"]
-shape = SubResource("RectangleShape2D_m2uyg")
-one_way_collision_margin = 0.0
+[node name="JumpAttack" type="Node2D" parent="."]
 
-[connection signal="area_entered" from="HitboxKS" to="." method="_on_hitbox_ks_area_entered"]
+[node name="jBox1" type="Area2D" parent="JumpAttack"]
+collision_layer = 4
+collision_mask = 5
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpAttack/jBox1"]
+position = Vector2(-8, -5)
+shape = SubResource("RectangleShape2D_d4ibf")
+
+[node name="jBox2" type="Area2D" parent="JumpAttack"]
+collision_layer = 4
+collision_mask = 5
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpAttack/jBox2"]
+position = Vector2(8.125, -5)
+shape = SubResource("RectangleShape2D_hpbsp")
+
+[node name="jBox3" type="Area2D" parent="JumpAttack"]
+collision_layer = 4
+collision_mask = 5
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpAttack/jBox3"]
+position = Vector2(-8, 13)
+shape = SubResource("RectangleShape2D_el4d5")
+
+[node name="jBox4" type="Area2D" parent="JumpAttack"]
+collision_layer = 4
+collision_mask = 5
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpAttack/jBox4"]
+position = Vector2(8, 13)
+shape = SubResource("RectangleShape2D_s0jao")
+
+[node name="Spread" type="Node2D" parent="."]
+
+[node name="spreadHitbox" type="Area2D" parent="Spread"]
+collision_layer = 4
+collision_mask = 5
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spread/spreadHitbox"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_1jutc")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
+[connection signal="area_entered" from="SlideAttack/SlideHitbox" to="." method="_on_slide_hitbox_area_entered"]
+[connection signal="area_entered" from="JumpAttack/jBox1" to="." method="_on_j_box_1_area_entered"]
+[connection signal="area_entered" from="JumpAttack/jBox2" to="." method="_on_j_box_2_area_entered"]
+[connection signal="area_entered" from="JumpAttack/jBox3" to="." method="_on_j_box_3_area_entered"]
+[connection signal="area_entered" from="JumpAttack/jBox4" to="." method="_on_j_box_4_area_entered"]
+[connection signal="area_entered" from="Spread/spreadHitbox" to="." method="_on_spread_hitbox_area_entered"]

@@ -1,8 +1,13 @@
+"""
+Class that extends the basic bossAI class. Does all the Slime King-specific descisions
+for how it decides its next move, moves, and tailors the necessary animations to the Slime King
+"""
+
 extends "res://scripts/Behaviors/bossAI.gd"
 class_name KingSlimeAI
 
 var rng = RandomNumberGenerator.new()
-var moveData = {2: []}
+var moveData = {2: [],3: Vector2(0,0)}
 
 func updateView(board: Array, pPos: Vector2, boss: Object):
 	# Function that updates the vision board of the boss. Places the player on
@@ -60,11 +65,9 @@ func decide(boss: Object, pPos: Vector2, board: Array, gBoard: Array):
 	
 	# Updates the vision board to ensure its up to date
 	var temp = updateView(board, pPos, boss)
-	for l in temp[0]:
-		print(l)
 	# Gets the current id of the boss's next attack
 	var nMove = boss.nextMove
-	print(nMove)
+
 	# If that ID is 0, prepare a next attack.
 	if nMove == 0:
 		var facing = findFacing(temp[1], temp[2], boss)
@@ -75,26 +78,41 @@ func decide(boss: Object, pPos: Vector2, board: Array, gBoard: Array):
 				for x in range(rng.randi_range(0,1),11,2):
 					for y in range(rng.randi_range(0,1),11,2):
 						if gBoard[x][y] is Array:
-							moveData[2].append(Vector2(x,y))
+							if rng.randf() > 0.66:
+								moveData[2].append(Vector2(x,y))
+								EventBus.warn.emit((Vector2(x,y) - boss.pos) + Vector2(0,-1.5), (Vector2(x,y) - boss.pos) - Vector2(1,+0.5))
 			else:
 				boss.nextMove = 3 # Sets the next move to be the jump attack
+				moveData[3] = Vector2(randi_range(4,5), randi_range(4,5))
+				EventBus.warn.emit(Vector2((moveData[3].x - boss.pos.x) - 2, (moveData[3].y - boss.pos.y) - 2.5), Vector2((moveData[3].x - boss.pos.x) + 2, (moveData[3].y - boss.pos.y) + 1.5))
+				
 		else: # Sets the next attack to be the charge
 			boss.nextMove = 1
 			boss.facing = facing
+			if facing.x == 0:
+				if facing.y > 0:
+					EventBus.warn.emit(Vector2(1,-1.5), Vector2(-1, 9.5 - boss.pos.y))
+				else:
+					EventBus.warn.emit(Vector2(1,-1.5), Vector2(-1, -1.2 -boss.pos.y))
+			else:
+				if facing.x > 0:
+					EventBus.warn.emit(Vector2(-1,0.5), Vector2(10 - boss.pos.x, -1.5))
+				else:
+					EventBus.warn.emit(Vector2(-1,0.5), Vector2(-1-boss.pos.x, -1.5))
 	# If that ID is not zero, excecute the attack, then prepare a new one
 	else:
 		if nMove == 1:
+			EventBus.stop_warn.emit()
 			slideAtk(boss, [temp[1], temp[2]], board)
 			boss.nextMove = 0 
-			decide(boss, pPos, board, gBoard)
 		elif nMove == 2:
+			EventBus.stop_warn.emit()
 			spawnAdds(boss, pPos, board, moveData[nMove])
 			boss.nextMove = 0 
-			decide(boss, pPos, board, gBoard)
 		else:
+			EventBus.stop_warn.emit()
 			bounce(boss)
 			boss.nextMove = 0
-			decide(boss, pPos, board, gBoard)
 	boss.updateView(pPos)
 
 
@@ -167,7 +185,7 @@ func slideAtk(boss: Object, pPos: Array, board: Array):
 		targetCoord[index] = bP[index]
 		targetCoord[oIndex] = closestCoord - dir[oIndex]
 		targetCoord = Vector2(targetCoord[0], targetCoord[1])
-		charge(boss, targetCoord, abs(closestCoord - bP[oIndex]))
+		charge(boss, targetCoord, abs(closestCoord - bP[oIndex]), boss.facing)
 	
 	# If not, charge untill you hit the nearest wall
 	else:
@@ -179,7 +197,6 @@ func slideAtk(boss: Object, pPos: Array, board: Array):
 		# coordinate to one before that
 		if(dir[oIndex] > 0):
 			while(tValue < 9):
-				print(tValue)
 				testV[oIndex] = tValue
 				testV[index] = bP[index]
 				if board[testV[0]][testV[1]] == 1:
@@ -188,7 +205,6 @@ func slideAtk(boss: Object, pPos: Array, board: Array):
 				tValue += dir[oIndex]
 		elif(dir[oIndex] < 0):
 			while(tValue > 0):
-				print(tValue)
 				testV[oIndex] = tValue
 				testV[index] = bP[index]
 				if board[testV[0]][testV[1]] == 1:
@@ -200,19 +216,37 @@ func slideAtk(boss: Object, pPos: Array, board: Array):
 		targetCoord[index] = bP[index]
 		targetCoord[oIndex] = tValue
 		targetCoord = Vector2(targetCoord[0], targetCoord[1])
-		print(targetCoord)
-		charge(boss, targetCoord, abs(tValue - bP[oIndex]))
+		charge(boss, targetCoord, abs(tValue - bP[oIndex]), boss.facing)
 		
 		
 	
 func spawnAdds(boss: Object, pPos: Vector2, board: Array, data: Array):
-	print("adds Spawned")
+	for v in moveData[2]:
+		EventBus.createSlime.emit(v)
 	
 func bounce(boss: Object):
-	boss.pos = Vector2(rng.randi_range(4,5), rng.randi_range(4,5))
-	boss.draw()
+	# Function that animates the King Slime's jump attack.
+	# @param boss - A reference back to the Boss Object of the King Slime
 
-func charge(boss: Object, t: Vector2, diff: int):
+	# Get the animation player of the Boss Object
+	var animPlayer = boss.animPlayer
+	var jump = animPlayer.get_animation("jump") # Get the animation that will be altered
+	
+	# Get the starting location of the animation, and the end
+	var targ = moveData[3] * 16
+	var s = boss.pos * 16
+	s += Vector2(8,12)
+	targ += Vector2(8,12)
+	# Alter keyframes to be in acoordance with the start and end positions
+	jump.track_set_key_value(0,0,s)
+	jump.track_set_key_value(0,1,Vector2(targ.x, -1000))
+	jump.track_set_key_value(0,2,targ)
+	
+	# Play the animation
+	animPlayer.play("jump")
+	boss.timer.wait_time += 0.5
+
+func charge(boss: Object, t: Vector2, diff: int, bossFace: Vector2):
 	# Function that alters the charge animation based on certain parameters.
 	# @param boss - Reference back to the Boss Object of the king slime
 	# @param t - The Vector of the target destination to charge to
@@ -221,20 +255,20 @@ func charge(boss: Object, t: Vector2, diff: int):
 	# Set needed variables
 	var animPlayer = boss.animPlayer
 	var charge = animPlayer.get_animation("charge")
-	var time = 0.5 - (diff/10) # Sets the amount of time the animation will take based on the distance needed to travel
+	var a = (bossFace * 12)
 	var targ = t * 16
 	var s = boss.pos * 16
-	s += Vector2(8,8)
-	targ += Vector2(8,8)
+	s += Vector2(8,12)
+	targ += Vector2(8,12)
 	# Modifies the key frames in the animation so that the boss moves in the correct direction 
 	# Foe the correct amount of time
 	charge.track_set_key_value(0,0,s)
-	charge.track_set_key_value(0,1,targ)
-	charge.track_set_key_time(0,1,time)
-	charge.track_set_key_time(1,0,time)
+	charge.track_set_key_value(0,1,targ + a)
+	charge.track_set_key_value(0,2,targ)
+	charge.track_set_key_value(0,3,targ)
 	# Play the animation
 	animPlayer.play("charge")
-	boss.timer.wait_time += time # Make the player wait extra time so the animation finishes
+	boss.timer.wait_time += 0.5 # Make the player wait extra time so the animation finishes
 	
 	
 	

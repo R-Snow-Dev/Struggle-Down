@@ -27,6 +27,7 @@ var enemiesToMove = 0
 var paused = false
 var seed: int
 var pHP: int
+var toBeSummoned = []
 @onready var healthBar = $Node2D/Camera2D/HealthBar
 @onready var node_2d: Node2D = $Node2D
 @onready var data = SaveController.loadData()
@@ -39,7 +40,31 @@ func _doneAttacking():
 	# Takes off 1 from the enemiesToMove variable everytime a fiend finidhed their action, then gives back player movement once they are all done
 	enemiesToMove -= 1
 	if enemiesToMove < 1:
+		for f in toBeSummoned: # If there are new enemies to be summoned, do that
+			if boards[mapPos.x][mapPos.y][0].grid[f.pos.x][f.pos.y] is Array:
+				boards[mapPos.x][mapPos.y][0].objects.append(f)
+		drawBoard()
+		toBeSummoned = []
 		player.setActionsAvailable(data["pActions"])
+
+func _create_slime(p: Vector2):
+	# Function that handles the creation of slime summons from the Slime King by storing
+	# The slimes into the toBeSummoned array, which are then summoned after the fiends end their turn
+	# @param p - The position of the to be summoned slime
+	var slime = fiend.instantiate()
+	var brain = preload("res://scripts/Behaviors/slimeAI.gd").new()
+	var atk = preload("res://scripts/AttackingLogic/MeleeAttack.gd").new(1)
+	slime.setup(p, preload("res://scenes/Opps/slime.tscn"), 5, brain, atk) # Adds all relevant information to the newly spawned fiend
+	toBeSummoned.append(slime) # Adds the new fiend, along with it's position, to the fiends array, which will be returned at the end
+	drawBoard()
+
+func _create_stairs(p: Vector2):
+	# Function that handles teh creation of a new staircase, typically after a boss dies
+	# @param p - the location on the board that the stairs will spawn
+	var ladder = preload("res://scenes/Tiles/ladder.tscn").instantiate()
+	ladder.setup(p, data["level"], data["floor"])
+	boards[mapPos.x][mapPos.y][0].objects.append(ladder)
+	drawBoard()
 
 func drawBoard():
 	# Function that checks to see if a dungeon floor is already rendered, 
@@ -64,8 +89,12 @@ func drawBoard():
 	if boards[mapPos.x][mapPos.y][0].objects != []:
 		for f in boards[mapPos.x][mapPos.y][0].objects:
 			floorScene.add_child(f)
+	boards[mapPos.x][mapPos.y][0].loadBoard()
 
 func checkCorners(tile: Array, grid: Array):
+	# Helper function that checks to see if a tile has open corners based on an array full of the currently free tiles
+	# @param tile - an array containing the x-coordinate of a tile and the y-coordinate of a tile
+	# @param grid - An array conatining arrays with the x and y coordinates of tiles that are currently open
 	var cornersOpen = 0
 	if ([tile[0]+1, tile[1]+1] in grid) and ([tile[0]+1, tile[1]] in grid) and ([tile[0], tile[1]+1] in grid):
 		cornersOpen += 1
@@ -89,7 +118,7 @@ func loadObjects(grid: Vector2, mPos: Vector2):
 	var gridCoords = []
 	var DefaultFloors = preload("res://scripts/defaultFloors.gd").new()
 	
-	if data["floor"] == 5 and mPos == endPos:
+	if mPos == endPos and data["floor"] == 5:
 		objects = DefaultFloors.kSlime
 	
 	# Adds all open tiles that are not door tiles gridCoords
@@ -170,7 +199,7 @@ func genMapData(path: Array):
 		var objectList: Array
 		# Checks to see if the floor being generated is the starting floor or not
 		if x != map.startPos: # If it isn't randomly generate unique data for the floor
-			if(data["floor"] == 5 and x == endPos):
+			if x == endPos and data["floor"] == 5:
 				gridSize = Vector2(11,11)
 				objectList = loadObjects(gridSize, x)
 			else:
@@ -233,6 +262,8 @@ func _ready() -> void:
 	EventBus.on_death.connect(_on_death)
 	EventBus.new_level.connect(_new_level)
 	EventBus.update_hp.connect(_updateHealth)
+	EventBus.create_stairs.connect(_create_stairs)
+	EventBus.createSlime.connect(_create_slime)
 	
 	seed = data["seed"]
 	pHP = data["pHP"]
@@ -243,6 +274,7 @@ func _on_door(on: bool):
 	
 	# Sets the door boolean to on
 	door = on
+	
 
 func _changeRooms(changePos: Vector2, newPos: String):
 	# Function that handles the action of switching to a new room after recieving the changeRoom signal

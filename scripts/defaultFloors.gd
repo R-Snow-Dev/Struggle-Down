@@ -1,7 +1,13 @@
+'''
+Class that containes all the default floor that are used in special places, such as boss rooms 
+or vaults
+'''
+
 extends Node
 
 var wall = preload("res://scenes/Tiles/Wall.tscn")
 var boss = preload("res://scenes/Opps/boss.tscn")
+# Vision board of the king slime
 var kSlimeVision =[[1,1,1,1,0,0,1,1,1,1],
 				[1,1,1,1,0,0,1,1,1,1],
 				[1,1,1,1,0,0,1,1,1,1],
@@ -12,7 +18,6 @@ var kSlimeVision =[[1,1,1,1,0,0,1,1,1,1],
 				[1,1,1,1,0,0,1,1,1,1],
 				[1,1,1,1,0,0,1,1,1,1],
 				[1,1,1,1,0,0,1,1,1,1]]
-
 
 # Sets up the King Slime Arena
 var kSlime = [wall.instantiate().setup(Vector2(0,0)), wall.instantiate().setup(Vector2(0,1)), wall.instantiate().setup(Vector2(0,2)), wall.instantiate().setup(Vector2(0,3))
@@ -31,4 +36,4 @@ var kSlime = [wall.instantiate().setup(Vector2(0,0)), wall.instantiate().setup(V
 , wall.instantiate().setup(Vector2(9,10)), wall.instantiate().setup(Vector2(9,9)), wall.instantiate().setup(Vector2(9,8)), wall.instantiate().setup(Vector2(9,7))
 , wall.instantiate().setup(Vector2(8,10)), wall.instantiate().setup(Vector2(8,9)), wall.instantiate().setup(Vector2(8,8)), wall.instantiate().setup(Vector2(8,7))
 , wall.instantiate().setup(Vector2(7,10)), wall.instantiate().setup(Vector2(7,9)), wall.instantiate().setup(Vector2(7,8)), boss.instantiate().setup(Vector2(5,5) 
-, kSlimeVision, preload("res://scripts/Behaviors/KingSlimeAI.gd").new(), 50, preload("res://scenes/Opps/king_slime.tscn"), 2)]
+, kSlimeVision, preload("res://scripts/Behaviors/KingSlimeAI.gd").new(), 100, preload("res://scenes/Opps/king_slime.tscn"), 2)]

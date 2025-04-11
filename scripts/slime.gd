@@ -5,6 +5,7 @@ extends AnimatedSprite2D
 
 var dam: int
 var health: int
+var healed = false
 
 # Sets the amount of damage the slime does
 func setDam(damage: int):
@@ -13,6 +14,8 @@ func setDam(damage: int):
 # Necessary Function for all fiend sprites, so that any animation can be called on from it's parent node
 func playAnim(anim: String):
 	atk_anims.play(anim)
+	
+
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	# When the sprite hits an opponent or hurtbox, this function is called
@@ -20,6 +23,11 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	
 	if area is Player:# If the slime made contact with the player
 		EventBus.update_hp.emit(dam * -1) # Decrease player HP by the sprites "dam" value
-	elif area is Hurtbox: # If it made contact with something else, that means it has been attacked
+	elif area is Hurtbox: # If it made contact with a hurtbox, that means it has been attacked
 		health -= area.damage
+	else:
+		if !healed:
+			healed = true
+			EventBus.healSK.emit(5)
+		health = 0
 		

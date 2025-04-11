@@ -28,11 +28,18 @@ func broadcatDeath():
 
 func _ready() -> void:
 	EventBus.updateActions.connect(_updateActions)
+	EventBus.bump.connect(bump)
 
 func setPos(newPos: Vector2):
 	# Function to artificially change the current position of the player character
 	prevPos = pos
 	pos = newPos
+
+func bump(dir: Vector2):
+	prevPos = pos
+	pos += dir
+	draw()
+	
 
 func _updateActions(amount: int):
 	actionsAvailable += amount

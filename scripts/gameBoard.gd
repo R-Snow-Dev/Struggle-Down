@@ -21,6 +21,8 @@ var height: int
 var player: Object
 var walls: Array
 var door: bool
+var barriers = preload("res://scenes/Tiles/barrier.tscn")
+var data: Dictionary
 
 func _init(w: int, h: int, p: Object, o: Array):
 	# Constructor function
@@ -35,6 +37,9 @@ func _init(w: int, h: int, p: Object, o: Array):
 	door = true
 	objects = o
 	EventBus.object_ded.connect(_object_ded)
+	
+
+
 	
 
 func _object_ded(object: Object):
@@ -57,7 +62,16 @@ func loadBoard():
 	# Add enemies to the board
 	if objects != []:
 		for f in objects:
-			grid[f.pos.y][f.pos.x] = f
+			if f is Boss:
+				for i in range(0,f.size):
+					for j in range(0,f.size):
+						grid[f.pos.y + i][f.pos.x + j] = barriers.instantiate()
+				grid[f.pos.y][f.pos.x] = f
+			else:
+				grid[f.pos.y][f.pos.x] = f
+				
+	
+	
 	
 	# Default the player character to 0,0 if they are out of bounds 
 	grid[player.pos.y][player.pos.x] = player
@@ -70,6 +84,7 @@ func display():
 	# Parses through the 2D array representation and calls each object on the 
 	# board to show themselves in their corresponding locations on-screnn
 	for y in grid:
+		#print(y)
 		for x in y:
 			if x is Object:
 				x.draw()
@@ -89,7 +104,7 @@ func fiendsTurn():
 	if fien < 1: # If the fiend counter remains at 0, then immediatly return the players actions to them.
 		player.setActionsAvailable(2)
 	else: # If not, call all enemies on the floor to take their actions
-		EventBus.fiend_phase.emit(fien) # Tells the game controller that it is not the enemy's turn to take actions
+		EventBus.fiend_phase.emit(fien) # Tells the game controller that it is now the enemy's turn to take actions
 		for y in objects:
 			if y is Fiend or y is Boss:
 				loadBoard()
@@ -108,7 +123,7 @@ func checkInputs():
 		loadBoard()
 		if player.actionsAvailable > 0: #  Does the player have have actions to spend?
 			if player.pos.y > 0: # Did the player reach the edge of the map?
-				if grid[player.pos.y-1][player.pos.x] is not Wall and grid[player.pos.y-1][player.pos.x] is not Fiend:# Is the player walking into a spawned wall or enemy?
+				if grid[player.pos.y-1][player.pos.x] is not Wall and grid[player.pos.y-1][player.pos.x] is not Fiend and grid[player.pos.y-1][player.pos.x] is not Boss and grid[player.pos.y-1][player.pos.x] is not Barrier:# Is the player walking into a spawned wall or enemy?
 					EventBus.updateActions.emit(-1)
 					player.moveUp()
 					# relaods the board once movement is complete
@@ -122,7 +137,7 @@ func checkInputs():
 		loadBoard()
 		if player.actionsAvailable > 0:  #  Does the player have have actions to spend?
 			if player.pos.y < (height - 1):# Did the player reach the edge of the map? 
-				if grid[player.pos.y+1][player.pos.x] is not Wall and grid[player.pos.y+1][player.pos.x] is not Fiend: # Is the player walking into a spawned wall or enemy?
+				if grid[player.pos.y+1][player.pos.x] is not Wall and grid[player.pos.y+1][player.pos.x] is not Fiend and grid[player.pos.y+1][player.pos.x] is not Boss and grid[player.pos.y+1][player.pos.x] is not Barrier: # Is the player walking into a spawned wall or enemy?
 					EventBus.updateActions.emit(-1)
 					player.moveDown()
 					# relaods the board once movement is complete
@@ -136,7 +151,7 @@ func checkInputs():
 		loadBoard()
 		if player.actionsAvailable > 0: #  Does the player have have actions to spend?
 			if player.pos.x > 0: # Did the player reach the edge of the map?
-				if grid[player.pos.y][player.pos.x-1] is not Wall and grid[player.pos.y][player.pos.x-1] is not Fiend:# Is the player walking into a spawned wall or enemy?
+				if grid[player.pos.y][player.pos.x-1] is not Wall and grid[player.pos.y][player.pos.x-1] is not Fiend and grid[player.pos.y][player.pos.x-1] is not Boss and grid[player.pos.y][player.pos.x-1] is not Barrier:# Is the player walking into a spawned wall or enemy?
 					EventBus.updateActions.emit(-1)
 					player.moveLeft()
 					# relaods the board once movement is complete
@@ -150,7 +165,7 @@ func checkInputs():
 		loadBoard()
 		if player.actionsAvailable > 0: #  Does the player have have actions to spend?
 			if player.pos.x < (width-1): # Did the player reach the edge of the map?
-				if grid[player.pos.y][player.pos.x+1] is not Wall and grid[player.pos.y][player.pos.x+1] is not Fiend: # Is the player walking into a spawned wall or enemy?
+				if grid[player.pos.y][player.pos.x+1] is not Wall and grid[player.pos.y][player.pos.x+1] is not Fiend and grid[player.pos.y][player.pos.x+1] is not Boss and grid[player.pos.y][player.pos.x+1] is not Barrier: # Is the player walking into a spawned wall or enemy?
 					EventBus.updateActions.emit(-1)
 					player.moveRight()
 					# relaods the board once movement is complete

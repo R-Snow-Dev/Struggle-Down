@@ -53,10 +53,32 @@ signal pause()
 # Signal that is emitted whenever the game is unpaused
 signal unpause()
 
+# Signal that is broadcasted when enetring the file select menu
 signal file_select()
 
+# Signal that is emitted when saving your weapon data to the save file
 signal save_weapon()
 
+# Signal that is emitted when entering a new level
 signal new_level()
 
+# Signal that is emitted when a dungeon run is started
 signal start()
+
+# Signal that is emitted when a boss is preparing a big attack
+signal warn(p1: Vector2, p2: Vector2)
+
+# Signal that is emitted to clear all warning emitted by a boss
+signal stop_warn()
+
+# Signal that is emitted when a boss dies, and stairs must be generated
+signal create_stairs(pos: Vector2)
+
+# Signal that is emitted when the player is hit by an attack that must move them
+signal bump(dir: Vector2)
+
+# Signal that is emitted when the slime King summons minions
+signal createSlime(p: Vector2)
+
+# Signal that is emitted when the slime king heals by killing a minion
+signal healSK()
