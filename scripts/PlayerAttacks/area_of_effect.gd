@@ -6,7 +6,7 @@ extends Polygon2D
 class_name AreaOfEffect
 
 @onready var anim_player: AnimationPlayer = $AnimPlayer
-var hurtbox = preload("res://scenes/hurtbox.tscn").instantiate()
+var hurtbox = preload("res://scenes/DungeonParts/hurtbox.tscn").instantiate()
 
 
 # Called when the node enters the scene tree for the first time.

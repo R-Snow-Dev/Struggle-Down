@@ -1,6 +1,6 @@
 extends Node2D
 
-	
+var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -9,7 +9,7 @@ func _ready() -> void:
 	EventBus.new_level.connect(_new_level)
 	EventBus.start.connect(_start)
 	EventBus.file_select.connect(_file_select)
-	var titleScreen = preload("res://scenes/title_screen.tscn").instantiate() # In this case, it will be a basic dungeon
+	var titleScreen = preload("res://scenes/menus/title_screen.tscn").instantiate() # In this case, it will be a basic dungeon
 	add_child(titleScreen)
 	
 func _on_death():
@@ -17,8 +17,12 @@ func _on_death():
 	if self.get_child_count() > 0:
 		for i in self.get_children():
 			self.remove_child(i)
-	var titleScreen = preload("res://scenes/title_screen.tscn").instantiate() # In this case, it will be the title screen
-	add_child(titleScreen)
+	SaveController.setDefault()
+	rng.randomize()
+	var seed = rng.seed
+	SaveController.updateData("seed", seed)
+	var pouch = preload("res://scenes/menus/pouch_menu.tscn").instantiate() # In this case, it will be the title screen
+	add_child(pouch)
 
 func _new_level():
 	# Loads another dungeon upon loading a new level, after removing any children that may somehow still be under this node
@@ -28,7 +32,7 @@ func _new_level():
 	if self.get_child_count() > 0:
 		for i in self.get_children():
 			self.remove_child(i)
-	var dungeon = preload("res://scenes/dungeon.tscn").instantiate() # Once again, this case it will just be a basic dungeon again
+	var dungeon = preload("res://scenes/menus/dungeon.tscn").instantiate() # Once again, this case it will just be a basic dungeon again
 	
 	# If you beat floor 5, move on to the next level, and reset your floors to 1
 	if data["floor"] > 4:
@@ -43,7 +47,7 @@ func _file_select():
 	if self.get_child_count() > 0:
 		for i in self.get_children():
 			self.remove_child(i)
-	var dungeon = preload("res://scenes/file_select.tscn").instantiate() # Loads a new, default level dungeon
+	var dungeon = preload("res://scenes/menus/file_select.tscn").instantiate() # Loads a new, default level dungeon
 	add_child(dungeon)
 	
 	
@@ -54,5 +58,5 @@ func _start():
 	if self.get_child_count() > 0:
 		for i in self.get_children():
 			self.remove_child(i)
-	var dungeon = preload("res://scenes/dungeon.tscn").instantiate() # Loads a new, default level dungeon
+	var dungeon = preload("res://scenes/menus/dungeon.tscn").instantiate() # Loads a new, default level dungeon
 	add_child(dungeon)

@@ -12,10 +12,10 @@ extends Node
 # Basic data is loaded
 var gridSize = Vector2(11,11)# Dimensions of the current floor
 var boards: Array # 2D array of boards representing the floor map\
-var floorScene = preload("res://scenes/floor.tscn").instantiate()
-var oppControl = preload("res://scenes/opp_controller.tscn").instantiate()
-var player = preload("res://scenes/player.tscn").instantiate()
-var map = preload("res://scenes/map.tscn").instantiate()
+var floorScene = preload("res://scenes/DungeonParts/floor.tscn").instantiate()
+var oppControl = preload("res://scenes/DungeonParts/opp_controller.tscn").instantiate()
+var player = preload("res://scenes/DungeonParts/player.tscn").instantiate()
+var map = preload("res://scenes/DungeonParts/map.tscn").instantiate()
 var fiend = preload("res://scenes/Opps/fiend.tscn")
 var wall = preload("res://scenes/Tiles/Wall.tscn")
 var mapPos : Vector2

@@ -87,18 +87,29 @@ func decide(boss: Object, pPos: Vector2, board: Array, gBoard: Array):
 				EventBus.warn.emit(Vector2((moveData[3].x - boss.pos.x) - 2, (moveData[3].y - boss.pos.y) - 2.5), Vector2((moveData[3].x - boss.pos.x) + 2, (moveData[3].y - boss.pos.y) + 1.5))
 				
 		else: # Sets the next attack to be the charge
-			boss.nextMove = 1
-			boss.facing = facing
-			if facing.x == 0:
-				if facing.y > 0:
-					EventBus.warn.emit(Vector2(1,-1.5), Vector2(-1, 9.5 - boss.pos.y))
+			if(rng.randi_range(1,2) == 1):
+				boss.nextMove = 1
+				boss.facing = facing
+				if facing.x == 0:
+					if facing.y > 0:
+						EventBus.warn.emit(Vector2(1,-1.5), Vector2(-1, 9.5 - boss.pos.y))
+					else:
+						EventBus.warn.emit(Vector2(1,-1.5), Vector2(-1, -1.2 -boss.pos.y))
 				else:
-					EventBus.warn.emit(Vector2(1,-1.5), Vector2(-1, -1.2 -boss.pos.y))
+					if facing.x > 0:
+						EventBus.warn.emit(Vector2(-1,0.5), Vector2(10 - boss.pos.x, -1.5))
+					else:
+						EventBus.warn.emit(Vector2(-1,0.5), Vector2(-1-boss.pos.x, -1.5))
 			else:
-				if facing.x > 0:
-					EventBus.warn.emit(Vector2(-1,0.5), Vector2(10 - boss.pos.x, -1.5))
-				else:
-					EventBus.warn.emit(Vector2(-1,0.5), Vector2(-1-boss.pos.x, -1.5))
+				boss.nextMove = 2
+				moveData[2] = []
+				for x in range(rng.randi_range(0,1),11,2):
+					for y in range(rng.randi_range(0,1),11,2):
+						if gBoard[x][y] is Array:
+							if rng.randf() > 0.66:
+								moveData[2].append(Vector2(x,y))
+								EventBus.warn.emit((Vector2(x,y) - boss.pos) + Vector2(0,-1.5), (Vector2(x,y) - boss.pos) - Vector2(1,+0.5))
+				
 	# If that ID is not zero, excecute the attack, then prepare a new one
 	else:
 		if nMove == 1:

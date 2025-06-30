@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://djdmlq5xbxt6c" path="res://assets/Player_DG (1).png" id="1_83poi"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_i5qes"]
-[ext_resource type="PackedScene" uid="uid://ckyqm55pptwki" path="res://scenes/attack.tscn" id="3_45v0r"]
+[ext_resource type="PackedScene" uid="uid://ckyqm55pptwki" path="res://scenes/DungeonParts/attack.tscn" id="3_45v0r"]
 [ext_resource type="Script" path="res://scripts/PlayerAttacks/attack_origin.gd" id="3_itcv7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nb3vm"]

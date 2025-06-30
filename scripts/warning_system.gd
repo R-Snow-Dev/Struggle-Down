@@ -13,7 +13,7 @@ func setWarning(point1: Vector2, point2: Vector2):
 	# Adds a new warning zone as a child, and sets its bounds based on given points
 	# @param point1 - the first point of the new warning zone
 	# @param point2 - the second point of the new warning zone
-	var area = preload("res://scenes/warning_area.tscn")
+	var area = preload("res://scenes/GUIParts/warning_area.tscn")
 	area = area.instantiate()
 	area.setBounds(point1, point2)
 	add_child(area)

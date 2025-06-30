@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Dungeon Game"
-run/main_scene="res://scenes/game.tscn"
+run/main_scene="res://scenes/menus/game.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-EventBus="*res://scenes/event_bus.tscn"
+EventBus="*res://scenes/Globals/event_bus.tscn"
 SaveController="*res://scripts/SaveController.gd"
 
 [display]

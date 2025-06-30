@@ -10,7 +10,7 @@ var spriteType : int # determining what type of floor wil be generated
 var sprite : PackedScene #  A variable that will eventually be assigned a desired sprite scene, that the generated tile will then display
 var mapPos: Vector2 # Given by the game controller
 var path : Array 
-var doorCollider = preload("res://scenes/door_area.tscn")
+var doorCollider = preload("res://scenes/DungeonParts/door_area.tscn")
 
 # Called when the floor needs to be loaded onto the screen.
 func load(): 

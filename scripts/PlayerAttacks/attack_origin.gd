@@ -35,7 +35,7 @@ func _updateAOE(width: int, height: int, pointOfOrigin: Vector2):
 	# Depending on the dimentions, generate a new targeted area
 	for i in range(-(width/2), width/2 + 1):
 		for j in range(0, height):
-			var area = preload("res://scenes/AreaOfEffect.tscn").instantiate()
+			var area = preload("res://scenes/GUIParts/AreaOfEffect.tscn").instantiate()
 			area.position.x = position.x + (i*16)
 			area.position.y = position.y - (j * 16) - 16
 			add_child(area)

@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://ckyqm55pptwki"]
 
-[ext_resource type="Script" path="res://scripts/Items/slash_tip.gd" id="1_5lars"]
-[ext_resource type="Script" path="res://scripts/AttackingLogic/attack.gd" id="1_8w205"]
+[ext_resource type="Script" path="res://scripts/AttackingLogic/attack.gd" id="1_n0yi4"]
+[ext_resource type="Script" path="res://scripts/Items/slash_tip.gd" id="2_sww6r"]
 
 [node name="Attack" type="Node2D"]
-script = ExtResource("1_8w205")
+script = ExtResource("1_n0yi4")
 
 [node name="SlashTip" type="CPUParticles2D" parent="."]
 z_index = 100
@@ -28,7 +28,7 @@ angle_max = 720.0
 scale_amount_min = 3.0
 scale_amount_max = 3.0
 color = Color(0, 0, 0, 1)
-script = ExtResource("1_5lars")
+script = ExtResource("2_sww6r")
 
 [node name="SlashBase" type="CPUParticles2D" parent="SlashTip"]
 position = Vector2(0, -1)
