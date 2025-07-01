@@ -81,24 +81,6 @@ texture = ExtResource("1_4ewcp")
 [sub_resource type="TileSet" id="TileSet_4qmme"]
 sources/0 = SubResource("TileSetAtlasSource_4f4um")
 
-[sub_resource type="Animation" id="Animation_ps708"]
-resource_name = "open"
-length = 0.4
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D/BG/pouch")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.4),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"toggleCord"
-}]
-}
-
 [sub_resource type="Animation" id="Animation_h14pg"]
 resource_name = "close"
 length = 0.4
@@ -131,6 +113,24 @@ tracks/1/keys = {
 "values": [{
 "args": [],
 "method": &"close"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_ps708"]
+resource_name = "open"
+length = 0.4
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D/BG/pouch")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"toggleCord"
 }]
 }
 

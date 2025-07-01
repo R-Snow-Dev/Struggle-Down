@@ -10,6 +10,7 @@ var spriteType : int # determining what type of floor wil be generated
 var sprite : PackedScene #  A variable that will eventually be assigned a desired sprite scene, that the generated tile will then display
 var mapPos: Vector2 # Given by the game controller
 var path : Array 
+var doors : Array
 var doorCollider = preload("res://scenes/DungeonParts/door_area.tscn")
 
 # Called when the floor needs to be loaded onto the screen.
@@ -24,61 +25,53 @@ func load():
 			t.sprite = chooseTile(x, y) # function that chooses the appropriate sprite to be assigned to the unique tile
 			t.pos = Vector2(y,x) # assignes the on-screen position for the tile
 			add_child(t) # adds the unoque child to the scene tree, thus displaying it to the screen
-	add_doors(mapPos.x, mapPos.y, path) # Add doorways on top of the floor
+	add_doors(mapPos.x, mapPos.y, doors) # Add doorways on top of the floor
 			
-func add_doors(x: int, y: int, pathway: Array):
+func add_doors(x: int, y: int, doorWays: Array):
 	# Function that adds doors based on any adjascent rooms in the map
 	# Param - x: The x position of the room on the map
 	# Param = y: The y position of the room on the map
-	# Param - pathway: An array of Vector2s that tell the x and y position of every room on the map
+	# Param - doorWays: An array of integers that represent the connecting points of every possible room as a matrix
+
 	
-	for i in path: #Loop through every coordinate pair in the path array
+	for i in doorWays[x + y*9]: #Loop through every coordinate pair in the path array
 		
-		# If the absolute difference between a y value in the list and the current y value is exactly 1
-		# AND the x values are the same, put a door in the appropriate position
-		if abs(i.y - y) == 1 and i.x == x:
-			# If the difference is -1, put it at the top of the room
-			if i.y-y == -1:
-				var t = tile.instantiate()
-				var collider = doorCollider.instantiate()
-				t.sprite = preload("res://scenes/Tiles/door_up.tscn") # Sprite for a top facing doorway
-				t.pos = Vector2((grid.y)+2, (int(grid.x)+1)/2)
-				collider.pos = Vector2((grid.y), (int(grid.x)+1)/2)
-				add_child(t)
-				add_child(collider)
+		if i == 3:
+			var t = tile.instantiate()
+			var collider = doorCollider.instantiate()
+			t.sprite = preload("res://scenes/Tiles/door_up.tscn") # Sprite for a top facing doorway
+			t.pos = Vector2((grid.y)+2, (int(grid.x)+1)/2)
+			collider.pos = Vector2((grid.y), (int(grid.x)+1)/2)
+			add_child(t)
+			add_child(collider)
 				
-			# Otherwise, put it at the bottom
-			else:
-				var t = tile.instantiate()
-				var collider = doorCollider.instantiate()
-				t.sprite = preload("res://scenes/Tiles/door_down.tscn") # Sprite for a bottom facing doorway
-				t.pos = Vector2(-1, (int(grid.x)+1)/2)
-				collider.pos = Vector2(1, (int(grid.x)+1)/2)
-				add_child(t)
-				add_child(collider)
+		elif i == 1:
+			var t = tile.instantiate()
+			var collider = doorCollider.instantiate()
+			t.sprite = preload("res://scenes/Tiles/door_down.tscn") # Sprite for a bottom facing doorway
+			t.pos = Vector2(-1, (int(grid.x)+1)/2)
+			collider.pos = Vector2(1, (int(grid.x)+1)/2)
+			add_child(t)
+			add_child(collider)
 				
-		# If the absolute difference between a x value in the list and the current x value is exactly 1
-		# AND the y values are the same, put a door in the appropriate position
-		elif abs(i.x - x) == 1 and i.y == y:
+		elif i == 2:
 			# If the difference is 1, put it at the right of the room
-			if i.x-x == 1:
-				var t = tile.instantiate()
-				var collider = doorCollider.instantiate()
-				t.sprite = preload("res://scenes/Tiles/door_r.tscn") # Sprite for a right facing doorway
-				t.pos = Vector2((int(grid.y)/2)+0.6, grid.x+1.5)
-				collider.pos = Vector2((int(grid.y)/2)+1, grid.x)
-				add_child(t)
-				add_child(collider)
+			var t = tile.instantiate()
+			var collider = doorCollider.instantiate()
+			t.sprite = preload("res://scenes/Tiles/door_r.tscn") # Sprite for a right facing doorway
+			t.pos = Vector2((int(grid.y)/2)+0.6, grid.x+1.5)
+			collider.pos = Vector2((int(grid.y)/2)+1, grid.x)
+			add_child(t)
+			add_child(collider)
 			
-			# Otherwise, put it on the left
-			else:
-				var t = tile.instantiate()
-				var collider = doorCollider.instantiate()
-				t.sprite = preload("res://scenes/Tiles/door_l.tscn") # Sprite for a left facing doorway
-				t.pos = Vector2((int(grid.y)/2)+0.6, -0.5)
-				collider.pos = Vector2((int(grid.y)/2)+1, 1)
-				add_child(t)
-				add_child(collider)
+		elif i == 4:
+			var t = tile.instantiate()
+			var collider = doorCollider.instantiate()
+			t.sprite = preload("res://scenes/Tiles/door_l.tscn") # Sprite for a left facing doorway
+			t.pos = Vector2((int(grid.y)/2)+0.6, -0.5)
+			collider.pos = Vector2((int(grid.y)/2)+1, 1)
+			add_child(t)
+			add_child(collider)
 				
 				
 			

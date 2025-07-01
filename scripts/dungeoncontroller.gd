@@ -18,6 +18,7 @@ var player = preload("res://scenes/DungeonParts/player.tscn").instantiate()
 var map = preload("res://scenes/DungeonParts/map.tscn").instantiate()
 var fiend = preload("res://scenes/Opps/fiend.tscn")
 var wall = preload("res://scenes/Tiles/Wall.tscn")
+var dR = preload("res://scenes/GUIParts/discovered_room.tscn")
 var mapPos : Vector2
 var endPos: Vector2
 var pPos: Vector2
@@ -27,10 +28,13 @@ var enemiesToMove = 0
 var paused = false
 var seed: int
 var pHP: int
+var discovered = []
 var toBeSummoned = []
 @onready var healthBar = $Node2D/Camera2D/HealthBar
 @onready var node_2d: Node2D = $Node2D
 @onready var data = SaveController.loadData()
+@onready var mS = $Node2D/Camera2D/mapSpace
+@onready var pT = $Node2D/Camera2D/mapSpace/playerTracker
 
 func _fiend_phase(amount: int):
 	# function that sets the amount of fiends taking actions to a variable, to keep track of how many need to move before the player can
@@ -95,15 +99,23 @@ func checkCorners(tile: Array, grid: Array):
 	# Helper function that checks to see if a tile has open corners based on an array full of the currently free tiles
 	# @param tile - an array containing the x-coordinate of a tile and the y-coordinate of a tile
 	# @param grid - An array conatining arrays with the x and y coordinates of tiles that are currently open
-	var cornersOpen = 0
-	if ([tile[0]+1, tile[1]+1] in grid) and ([tile[0]+1, tile[1]] in grid) and ([tile[0], tile[1]+1] in grid):
-		cornersOpen += 1
-	if ([tile[0]-1, tile[1]-1] in grid) and ([tile[0]-1, tile[1]] in grid) and ([tile[0], tile[1]-11] in grid):
-		cornersOpen += 1
-	if ([tile[0]-1, tile[1]+1] in grid) and ([tile[0], tile[1]+1] in grid) and ([tile[0]-1, tile[1]] in grid):
-		cornersOpen += 1
-	if([tile[0]+1, tile[1]-1] in grid) and ([tile[0], tile[1]-1] in grid) and ([tile[0]+1, tile[1]] in grid):
-		cornersOpen += 1
+	var cornersOpen = 4
+	if !(([tile[0]+1, tile[1]+1] in grid) and ([tile[0]+1, tile[1]] in grid) and ([tile[0], tile[1]+1] in grid)):
+		cornersOpen -= 1
+	if !(([tile[0]-1, tile[1]-1] in grid) and ([tile[0]-1, tile[1]] in grid) and ([tile[0], tile[1]-11] in grid)):
+		cornersOpen -= 1
+	if !(([tile[0]-1, tile[1]+1] in grid) and ([tile[0], tile[1]+1] in grid) and ([tile[0]-1, tile[1]] in grid)):
+		cornersOpen -= 1
+	if!(([tile[0]+1, tile[1]-1] in grid) and ([tile[0], tile[1]-1] in grid) and ([tile[0]+1, tile[1]] in grid)):
+		cornersOpen -= 1
+	if !([tile[0]+1, tile[1]-1] in grid): #Extra penalty if a corner tile is occupied
+		cornersOpen -= 1
+	if !([tile[0]-1, tile[1]+1] in grid):
+		cornersOpen -= 1
+	if !([tile[0]-1, tile[1]-1] in grid):
+		cornersOpen -= 1
+	if !([tile[0]+1, tile[1]+1] in grid):
+		cornersOpen -= 1
 	return cornersOpen
 
 func loadObjects(grid: Vector2, mPos: Vector2):
@@ -230,6 +242,7 @@ func loadLevel():
 	boards = map.mapGrid
 	floorScene.mapPos = mapPos
 	floorScene.path = map.path
+	floorScene.doors = map.doorMatrix
 	player.setActionsAvailable(data["pActions"]) # Sets available actions to a default number
 	# creates the gameboards
 	genMapData(map.path)
@@ -238,7 +251,26 @@ func loadLevel():
 	player.setPos(pPos) # Set player to the center of the board
 	floorScene.grid = gridSize 
 	boards[mapPos.x][mapPos.y][0].loadBoard() # generates the gameboard and displays the objects in it to the screen for the first time
+	updateMap(mapPos) #Update the minimap to fill in the starting room
 	drawBoard() # Generates the dungeon floor
+
+func updateMap(mPos: Vector2):
+	# Function that updates the minimap in the top left to show discovered rooms and the player's current position
+	#@param mPos - The coordinates on the map that the update is called for. A Vector2
+	
+	# If the room is new, add it to the minimap
+	if discovered.find(mPos, 0) == -1:
+		discovered.append(mPos)
+		var d = dR.instantiate()
+		d.scale = Vector2(1.217, 10.87)
+		d.position = Vector2(51, -452) + Vector2(-11.3 * mPos.x, 101.1 * mPos.y)
+		if mPos == endPos:
+			d.color = Color(0.6,0.6,0.6,1)
+		mS.add_child(d)	
+	# Set the player marker to the correct area on the minimap
+	pT.position = Vector2(51, -452) + Vector2(-11.3 * mPos.x, 101.1 * mPos.y)
+	pT.z_index = 100
+		
 
 func setGrid(grid: Vector2):
 	# Function that allows you to change the desired grid dimentions 
@@ -305,6 +337,7 @@ func _changeRooms(changePos: Vector2, newPos: String):
 	floorScene.mapPos = mapPos # gives floorScene the new map position to load new doorways
 	floorScene.grid = gridSize  # Sets floorScene's grid size to the new grid size
 	boards[mapPos.x][mapPos.y][0].loadBoard() # generates the gameboard and displays the objects in it to the screen for the first time
+	updateMap(mapPos) # Update the minimap
 	drawBoard() # Generates the dungeon floor
 
 func _process(delta: float) -> void:
