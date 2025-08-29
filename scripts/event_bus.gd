@@ -57,7 +57,7 @@ signal unpause()
 signal file_select()
 
 # Signal that is emitted when saving your weapon data to the save file
-signal save_weapon()
+signal save_data()
 
 # Signal that is emitted when entering a new level
 signal new_level()
@@ -82,3 +82,15 @@ signal createSlime(p: Vector2)
 
 # Signal that is emitted when the slime king heals by killing a minion
 signal healSK()
+
+# Signal that is emitted to change the player's gold count
+signal updateGold(num: int)
+
+
+# Signal that is broadcasted when entering a dungeon from the pouch
+signal go()
+
+# signal that is emitted when the player adds or removes from the inventory
+signal updateInv()
+
+signal changeItem(id: int)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ckyqm55pptwki"]
+[gd_scene load_steps=4 format=3 uid="uid://ckyqm55pptwki"]
 
 [ext_resource type="Script" path="res://scripts/AttackingLogic/attack.gd" id="1_n0yi4"]
 [ext_resource type="Script" path="res://scripts/Items/slash_tip.gd" id="2_sww6r"]
+[ext_resource type="Script" path="res://scripts/Items/pierce_tip.gd" id="3_j6rdw"]
 
 [node name="Attack" type="Node2D"]
 script = ExtResource("1_n0yi4")
@@ -48,4 +49,40 @@ angle_max = 720.0
 scale_amount_min = 0.5
 scale_amount_max = 0.5
 
+[node name="PierceTip" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 30
+lifetime = 0.08
+one_shot = true
+explosiveness = 0.2
+randomness = 1.0
+lifetime_randomness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(1, 1)
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 400.0
+initial_velocity_max = 400.0
+scale_amount_min = 3.0
+scale_amount_max = 3.0
+color = Color(0, 0, 0, 1)
+script = ExtResource("3_j6rdw")
+
+[node name="PierceBase" type="CPUParticles2D" parent="PierceTip"]
+emitting = false
+amount = 30
+lifetime = 0.08
+one_shot = true
+explosiveness = 0.7
+lifetime_randomness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(1, 1)
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 500.0
+initial_velocity_max = 500.0
+
 [connection signal="finished" from="SlashTip" to="." method="_on_slash_tip_finished"]
+[connection signal="finished" from="PierceTip" to="." method="_on_pierce_tip_finished"]

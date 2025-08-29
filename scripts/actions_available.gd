@@ -2,7 +2,7 @@ extends Label
 class_name ActionLabel
 
 var  curDisplayed = 0 # Default amount displayed
-@onready var animationPlayer = $"Text Shaker" # Preps the animation player
+@onready var animationPlayer = $TextShaker# Preps the animation player
 
 # Connects to all the Event Bus signals that it requires
 func _ready() -> void:

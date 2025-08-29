@@ -7,9 +7,9 @@ extends "res://scripts/AttackingLogic/AttackBehavior.gd"
 
 
 
-func _init(dam: int) -> void:
+func _init(d: int) -> void:
 	# Inherit all needed variables from the parent class
-	super(dam)
+	super(d)
 	
 func attack(atker: Object):
 

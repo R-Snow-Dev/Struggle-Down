@@ -13,13 +13,15 @@ var isHovering = false
 @onready var guy = $guy
 @onready var pouch = $pouch_sprite
 @onready var timing = $timing
+@onready var consumeables = $ConsumableMenu
 
 func _ready() -> void:
 	# Play the opening animation on load
 	goCord.visible = false
+	consumeables.visible = false
 	timing.play("open")
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	
 	# If the cursor is hovering the button, and is left clicked, the button is pressed, so 
 	# play the closing animation
@@ -53,7 +55,10 @@ func toggleCord():
 	# Toggles the visibility of the "Go" button
 	goCord.visible = !goCord.visible
 
+func toggleMenus():
+	consumeables.visible = !consumeables.visible
+
 func go():
 	# Tells the game to load the dungeon scene
-	EventBus.start.emit()
+	EventBus.go.emit()
 	

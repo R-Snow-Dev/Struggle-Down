@@ -8,9 +8,11 @@ var brain: Object
 var facing: String
 var sprite = Node
 var finishedMoving = true
+var totHP: int
+var goldDrop: int
 @onready var timer = $Timer
 
-func setup(p: Vector2, s: PackedScene, hp: int, b: EnemyBehavior, a: AttackBehavior):
+func setup(p: Vector2, s: PackedScene, hp: int, b: EnemyBehavior, a: AttackBehavior, g: int):
 	# Function that must be called after creating an instance, so that its characteristics may be given to it
 	# param - p: The position of the fiend in Vector2 form
 	# param - s: The sprite of the fiend, in packedScene form
@@ -18,20 +20,23 @@ func setup(p: Vector2, s: PackedScene, hp: int, b: EnemyBehavior, a: AttackBehav
 	pos = p
 	sprite = s.instantiate()
 	health = hp
+	totHP = hp
 	sprite.health = health
 	brain = b
 	atk = a
+	goldDrop = g
 
 	# Adds the sprite to the scene tree, giving the fiend a sprite
 	sprite.position.y -= 4
 	add_child(sprite)
 	return self
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	health = sprite.health
 	if health < 1:
 		if(!finishedMoving):
 			EventBus.doneAttacking.emit()
+		EventBus.updateGold.emit(goldDrop)
 		EventBus.object_ded.emit(self)
 	
 func checkFacing(targetPos: Vector2):
@@ -53,7 +58,7 @@ func checkFacing(targetPos: Vector2):
 	else:
 		return false
 
-func move(gameBoard: Array, playerPos: Vector2):
+func move(gB: Array, playerPos: Vector2):
 	finishedMoving = false
 	var stepParticles = preload("res://scenes/Particles/slimey_step.tscn").instantiate() # Instantiates the particles for moving
 	# Function that changes the fiend's position based on it's given AI pathfinding
@@ -71,7 +76,7 @@ func move(gameBoard: Array, playerPos: Vector2):
 		
 		
 	else:
-		pos += brain.pathFind(gameBoard, pos, playerPos, self) # Change your position based on your given A
+		pos += brain.pathFind(gB, pos, playerPos, self) # Change your position based on your given A
 		add_child(stepParticles) # Make the stepping particles
 		stepParticles.z_index -= 1
 		stepParticles.restart()

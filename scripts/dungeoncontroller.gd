@@ -26,7 +26,8 @@ var rng = RandomNumberGenerator.new()
 var door: bool
 var enemiesToMove = 0
 var paused = false
-var seed: int
+var s: int
+var pHPTot: int
 var pHP: int
 var discovered = []
 var toBeSummoned = []
@@ -58,7 +59,7 @@ func _create_slime(p: Vector2):
 	var slime = fiend.instantiate()
 	var brain = preload("res://scripts/Behaviors/slimeAI.gd").new()
 	var atk = preload("res://scripts/AttackingLogic/MeleeAttack.gd").new(1)
-	slime.setup(p, preload("res://scenes/Opps/slime.tscn"), 5, brain, atk) # Adds all relevant information to the newly spawned fiend
+	slime.setup(p, preload("res://scenes/Opps/slime.tscn"), 5, brain, atk, 0) # Adds all relevant information to the newly spawned fiend
 	toBeSummoned.append(slime) # Adds the new fiend, along with it's position, to the fiends array, which will be returned at the end
 	drawBoard()
 
@@ -177,7 +178,7 @@ func loadObjects(grid: Vector2, mPos: Vector2):
 			if rng.randf() > 0.99: # 99% chance no item spawns on the currently checked tile
 				var chosenItem = preload("res://scenes/Items/item.tscn").instantiate()
 				var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
-				chosenItem.setup((Vector2(gridCoords[chosen][0], gridCoords[chosen][1])), 1) # Gives the items their rerspective coordinates and IDs
+				chosenItem.setup((Vector2(gridCoords[chosen][0], gridCoords[chosen][1])), rng.randi_range(1,6)) # Gives the items their rerspective coordinates and IDs
 				objects.append(chosenItem) # Adds the items to the list of objects 
 				gridCoords.remove_at(chosen) # removes the wall's coordinates from the pool of possible grid coordinates other objects can be assigned to
 			
@@ -192,7 +193,7 @@ func loadObjects(grid: Vector2, mPos: Vector2):
 				var chosen = rng.randi_range(0, len(gridCoords) - 1) # Picks an available spawn tiles
 				var brain = preload("res://scripts/Behaviors/slimeAI.gd").new()
 				var atk = preload("res://scripts/AttackingLogic/MeleeAttack.gd").new(1)
-				chosenFiend.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1]), preload("res://scenes/Opps/slime.tscn"), 10, brain, atk) # Adds all relevant information to the newly spawned fiend
+				chosenFiend.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1]), preload("res://scenes/Opps/slime.tscn"), 10, brain, atk, rng.randi_range(0,1)) # Adds all relevant information to the newly spawned fiend
 				objects.append(chosenFiend) # Adds the new fiend, along with it's position, to the fiends array, which will be returned at the end
 				gridCoords.remove_at(chosen) # Removes the location the fiend spawned at from the gridCoords array, so ot cannot be chosen again
 		# Returns the fiends array, containing the instances of the spawned fiends in the room, along with tier positionss
@@ -222,21 +223,23 @@ func genMapData(path: Array):
 			var startingItem = preload("res://scenes/Items/item.tscn").instantiate()
 			# Summons a single item into the starting room
 			var firstItemCoords = Vector2(rng.randi_range(0, gridSize.x-1),rng.randi_range(0, gridSize.y-1))
-			while firstItemCoords == pPos:
+			while firstItemCoords == Vector2(2,2):
 				firstItemCoords = Vector2(rng.randi_range(0, gridSize.x-1),rng.randi_range(0, gridSize.y-1))
-			startingItem.setup(firstItemCoords, 1)
+			startingItem.setup(firstItemCoords, rng.randi_range(1,6))
 			objectList = [startingItem]
 		
 		boards[x.x][x.y].append(preload("res://scripts/gameBoard.gd").new(gridSize.x, gridSize.y, player, objectList)) # Appends the genrated board to the "boards" array, representing the floor map
 
 # Load the level from the map, and load the first room
 func loadLevel():
-	rng.set_seed(seed)
+	rng.set_seed(s)
 	add_child(player) # Adds the player to the scene
 	pHP = data["pHP"]
+	pHPTot = data["pHP"]
+	SaveController.updateData("curHP", pHP)
 	healthBar.setHealthBar(pHP)
 	add_child(map)
-	map.gen_points(seed)
+	map.gen_points(s)
 	mapPos = map.startPos
 	endPos = map.exitPos
 	boards = map.mapGrid
@@ -281,7 +284,9 @@ func _updateHealth(amount: int):
 	if amount + pHP <= 0:
 		pHP = 0
 	else:
-		pHP += amount
+		if pHP + amount <= pHPTot:
+			pHP += amount
+	SaveController.updateData("curHP", pHP)
 
 func _ready() -> void:
 	# Connect all signals to approprate functions
@@ -297,7 +302,7 @@ func _ready() -> void:
 	EventBus.create_stairs.connect(_create_stairs)
 	EventBus.createSlime.connect(_create_slime)
 	
-	seed = data["seed"]
+	s = data["seed"]
 	pHP = data["pHP"]
 	
 func _on_door(on: bool):
@@ -333,14 +338,15 @@ func _changeRooms(changePos: Vector2, newPos: String):
 	gridSize = Vector2(boards[mapPos.x][mapPos.y][0].width, boards[mapPos.x][mapPos.y][0].height)
 	
 	player.setPos(pPos) # Sets player position to the newly aquired starting position
-	player.setActionsAvailable(data["pActions"]) # Sets available actions to a default number
+	player.setActionsAvailable(data["pActions"] - 1) # Sets available actions to a default number - 1
 	floorScene.mapPos = mapPos # gives floorScene the new map position to load new doorways
 	floorScene.grid = gridSize  # Sets floorScene's grid size to the new grid size
 	boards[mapPos.x][mapPos.y][0].loadBoard() # generates the gameboard and displays the objects in it to the screen for the first time
 	updateMap(mapPos) # Update the minimap
 	drawBoard() # Generates the dungeon floor
+	boards[mapPos.x][mapPos.y][0].heal()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# Executes code every frame
 	# If the player is alive, play the game
 	if pHP > 0:

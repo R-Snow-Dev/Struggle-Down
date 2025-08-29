@@ -3,4 +3,7 @@
 [ext_resource type="Script" path="res://scripts/gameBoard.gd" id="1_1lsqi"]
 
 [node name="gameBoard" type="Node2D"]
+position = Vector2(2, 0)
 script = ExtResource("1_1lsqi")
+
+[node name="Timer" type="Timer" parent="."]

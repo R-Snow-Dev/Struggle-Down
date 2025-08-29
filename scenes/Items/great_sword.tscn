@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5h8djiqfg3yd"]
+
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_wnswv"]
+
+[node name="GreatSword" type="Sprite2D"]
+texture = ExtResource("1_wnswv")
+region_enabled = true
+region_rect = Rect2(80, 80, 16, 16)

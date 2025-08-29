@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfgeh1p718b5s"]
+
+[ext_resource type="Script" path="res://scripts/Items/slots/consumable_grid.gd" id="1_8jwit"]
+[ext_resource type="PackedScene" uid="uid://da1o6h5521bfu" path="res://scenes/menus/consumable_slot.tscn" id="1_cwhn7"]
+
+[node name="ConsumableGrid" type="Node2D"]
+script = ExtResource("1_8jwit")
+
+[node name="ConsumableSlot" parent="." instance=ExtResource("1_cwhn7")]
+
+[node name="ConsumableSlot2" parent="." instance=ExtResource("1_cwhn7")]
+position = Vector2(32, 0)
+
+[node name="ConsumableSlot3" parent="." instance=ExtResource("1_cwhn7")]
+position = Vector2(64, 0)
+
+[node name="ConsumableSlot4" parent="." instance=ExtResource("1_cwhn7")]
+position = Vector2(96, 0)
+
+[node name="ConsumableSlot5" parent="." instance=ExtResource("1_cwhn7")]
+position = Vector2(0, 32)
+
+[node name="ConsumableSlot6" parent="." instance=ExtResource("1_cwhn7")]
+position = Vector2(32, 32)
+
+[node name="ConsumableSlot7" parent="." instance=ExtResource("1_cwhn7")]
+position = Vector2(64, 32)
+
+[node name="ConsumableSlot8" parent="." instance=ExtResource("1_cwhn7")]
+position = Vector2(96, 32)
+
+[node name="ConsumableSlot9" parent="." instance=ExtResource("1_cwhn7")]
+position = Vector2(0, 64)
+
+[node name="ConsumableSlot10" parent="." instance=ExtResource("1_cwhn7")]
+position = Vector2(32, 64)
+
+[node name="ConsumableSlot11" parent="." instance=ExtResource("1_cwhn7")]
+position = Vector2(64, 64)
+
+[node name="ConsumableSlot12" parent="." instance=ExtResource("1_cwhn7")]
+position = Vector2(96, 64)

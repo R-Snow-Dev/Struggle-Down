@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cki5w1kvhb6dp"]
+
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_kgmhm"]
+
+[node name="Spear" type="Sprite2D"]
+texture = ExtResource("1_kgmhm")
+region_enabled = true
+region_rect = Rect2(96, 96, 16, 16)

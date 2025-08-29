@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://db7tujx7b1kk4"]
+
+[ext_resource type="Texture2D" uid="uid://bbtpslvokymfr" path="res://assets/Consumables.png" id="1_10pjg"]
+
+[node name="hp_ap" type="Sprite2D"]
+texture = ExtResource("1_10pjg")
+region_enabled = true
+region_rect = Rect2(0, 480, 32, 32)

@@ -33,7 +33,7 @@ func draw():
 	position.y = pos.y*16
 	self.z_index = (pos.y + 1)
 
-func _on_ladder_trigger_area_entered(area: Area2D) -> void:
-	EventBus.save_weapon.emit()
+func _on_ladder_trigger_area_entered(_area: Area2D) -> void:
+	EventBus.save_data.emit()
 	SaveController.updateData("seed", rng.get_seed())
 	EventBus.new_level.emit()

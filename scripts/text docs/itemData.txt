@@ -1,0 +1,12 @@
+0,5,heal,1
+0,0,heal,2
+0,0,heal,3
+0,0,heal,4
+0,0,rage,1
+0,0,rage,2
+0,0,rage,3
+0,0,rage,4
+0,0,rush,1
+0,0,rush,2
+0,0,rush,3
+0,0,rush,4

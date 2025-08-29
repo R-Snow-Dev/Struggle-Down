@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://dwinc8jnjl38k"]
+
+[ext_resource type="Texture2D" uid="uid://drt5p763rgk04" path="res://assets/goldIcon.png" id="1_otip8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbe0u"]
+atlas = ExtResource("1_otip8")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2et2d"]
+atlas = ExtResource("1_otip8")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kxa60"]
+atlas = ExtResource("1_otip8")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vk0eo"]
+atlas = ExtResource("1_otip8")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_47you"]
+atlas = ExtResource("1_otip8")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_grbmk"]
+animations = [{
+"frames": [{
+"duration": 49.0,
+"texture": SubResource("AtlasTexture_mbe0u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2et2d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kxa60")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vk0eo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_47you")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[node name="goldIcon" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_grbmk")
+frame_progress = 0.173483

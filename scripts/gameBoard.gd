@@ -44,7 +44,8 @@ func _init(w: int, h: int, p: Object, o: Array):
 
 func _object_ded(object: Object):
 	var index = objects.find(object)
-	objects.remove_at(index)
+	if index != -1:
+		objects.remove_at(index)
 	object.queue_free()
 	checkInputs()
 
@@ -79,6 +80,14 @@ func loadBoard():
 	# display all objects to the screen
 	display()
 
+func heal():
+	for x in objects:
+		if x is Fiend or x is Boss:
+			if x is Fiend:
+				x.sprite.health = x.totHP
+			x.health = x.totHP
+			print("healed!", x.health)
+			
 
 func display():
 	# Parses through the 2D array representation and calls each object on the 
@@ -88,6 +97,7 @@ func display():
 		for x in y:
 			if x is Object:
 				x.draw()
+	EventBus.unpause.emit()
 
 func fiendsTurn():
 	# This function calls all monsters to act after the player has used up all their actions. If there are no monsters on the 
@@ -113,7 +123,6 @@ func fiendsTurn():
 		
 
 func checkInputs():
-
 	# This function simply checks for each individual input and then correctly handles each case
 	# Definitly not the best way to do this, but it works
 	
@@ -127,6 +136,7 @@ func checkInputs():
 					EventBus.updateActions.emit(-1)
 					player.moveUp()
 					# relaods the board once movement is complete
+					EventBus.pause.emit()
 					loadBoard()
 			elif door == true: # If the player is in a doorway at the top of the map
 				EventBus.changeRooms.emit(Vector2(0,1), "bottom") # change rooms upwards
@@ -141,6 +151,7 @@ func checkInputs():
 					EventBus.updateActions.emit(-1)
 					player.moveDown()
 					# relaods the board once movement is complete
+					EventBus.pause.emit()
 					loadBoard()
 			elif door == true: # If the player is in a doorway at the bottom of the map
 				EventBus.changeRooms.emit(Vector2(0,-1), "top")# change rooms downwards
@@ -155,6 +166,7 @@ func checkInputs():
 					EventBus.updateActions.emit(-1)
 					player.moveLeft()
 					# relaods the board once movement is complete
+					EventBus.pause.emit()
 					loadBoard()
 			elif door == true: # If the player is in a doorway at the left of the map
 				EventBus.changeRooms.emit(Vector2(-1,0), "right")# change rooms to the left
@@ -169,6 +181,7 @@ func checkInputs():
 					EventBus.updateActions.emit(-1)
 					player.moveRight()
 					# relaods the board once movement is complete
+					EventBus.pause.emit()
 					loadBoard()
 			elif door == true: # If the player is in a doorway at the right of the map
 				EventBus.changeRooms.emit(Vector2(1,0), "left")# change rooms to the right

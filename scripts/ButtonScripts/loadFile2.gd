@@ -13,7 +13,7 @@ func _ready() -> void:
 	subMenu.hide()
 
 # Called when the node enters the scene tree for the first time.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if(FileAccess.file_exists("res://saveFiles/save2.json")):
 		newfile.hide()
 	else:
@@ -34,7 +34,6 @@ func _on_file_2_button_mouse_entered() -> void:
 	isHovering = true
 	c.position.y = 2
 	position.y = 0
-
 
 func _on_file_2_button_mouse_exited() -> void:
 	isHovering = false

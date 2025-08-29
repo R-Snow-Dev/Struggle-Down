@@ -1,9 +1,9 @@
 extends "res://scripts/Behaviors/EnemyBehavior.gd"
 class_name SlimeAI
 
-func pathFind(gameBoard: Array, curPos: Vector2, targetPos: Vector2, fiend: Object):
+func pathFind(gB: Array, curPos: Vector2, targetPos: Vector2, fiend: Object):
 	# Function that determines the best move the slime can make to get closer to the player
-	# param - gameBoard: The grid holding the positions of every object on the floor
+	# param - gB: The grid holding the positions of every object on the floor
 	# param - curPos: The Current position of the slime
 	# param - targetPos: Position of the player that the slime is trying to move towards
 	# returns: A Vector two containing a 1 or -1 in therespective axis of movement the slime will move in
@@ -14,11 +14,11 @@ func pathFind(gameBoard: Array, curPos: Vector2, targetPos: Vector2, fiend: Obje
 	# Add the up, down, left, and right coordinates respective of the curent position, if these are within the bounds of the game board
 	if curPos.x-1 > 0:
 		possibleMoves.append(Vector2(curPos.x-1, curPos.y))
-	if curPos.x < len(gameBoard[0])-1:
+	if curPos.x < len(gB[0])-1:
 		possibleMoves.append(Vector2(curPos.x+1, curPos.y))
 	if curPos.y-1 > 0:
 		possibleMoves.append(Vector2(curPos.x, curPos.y-1))
-	if curPos.y < len(gameBoard)-1:
+	if curPos.y < len(gB)-1:
 		possibleMoves.append(Vector2(curPos.x, curPos.y+1))
 	
 	# Initialise the minMove Vector2, which will be returns, and the finalOptions array, that will the store coordinates from 
@@ -29,7 +29,7 @@ func pathFind(gameBoard: Array, curPos: Vector2, targetPos: Vector2, fiend: Obje
 	# Checks to make sure there are moves that can be made, otherwise return (0,0)
 	if len(possibleMoves) > 0:
 		for x in possibleMoves:
-			if gameBoard[x.y][x.x] is Array: # Adds non occupied coordinates to finalOptions
+			if gB[x.y][x.x] is Array: # Adds non occupied coordinates to finalOptions
 				finalOptions.append(x)
 				
 	# Checks to make sure there are options in finalOptions, otherwise return (0,0)

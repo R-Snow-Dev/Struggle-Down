@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxbklltj5ctwb"]
+
+[ext_resource type="Texture2D" uid="uid://c3d1bcjvhrl6y" path="res://assets/sword1 (1).png" id="1_nnyhx"]
+
+[node name="HalberdItem" type="Sprite2D"]
+texture = ExtResource("1_nnyhx")
+region_enabled = true
+region_rect = Rect2(0, 192, 32, 32)

@@ -1,0 +1,577 @@
+[gd_scene load_steps=35 format=4 uid="uid://dkqh251ixbss2"]
+
+[ext_resource type="Script" path="res://scripts/dungeon.gd" id="1_ba8p3"]
+[ext_resource type="Script" path="res://scripts/dungeoncontroller.gd" id="2_imoik"]
+[ext_resource type="Script" path="res://scripts/node_2d.gd" id="3_yj62m"]
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="4_48e0x"]
+[ext_resource type="PackedScene" uid="uid://biv52v6dwqsye" path="res://scenes/GUIParts/dash_icon.tscn" id="5_f6ywa"]
+[ext_resource type="FontFile" uid="uid://ds2ikdih7vjf2" path="res://assets/Fonts/Charybdis.pfb" id="6_n1fab"]
+[ext_resource type="Script" path="res://scripts/health_bar.gd" id="7_ta311"]
+[ext_resource type="Script" path="res://scripts/health_bar_faded.gd" id="8_bqf3f"]
+[ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="9_r56d8"]
+[ext_resource type="Script" path="res://scripts/actions_available.gd" id="10_4lyjd"]
+[ext_resource type="Script" path="res://scripts/PlayerAttacks/weapon_slot.gd" id="11_qqilx"]
+[ext_resource type="Script" path="res://scripts/floor_label.gd" id="12_8g240"]
+[ext_resource type="Script" path="res://scripts/level_label.gd" id="13_v0cjv"]
+[ext_resource type="Script" path="res://scripts/Items/gold.gd" id="14_2nn8w"]
+[ext_resource type="PackedScene" uid="uid://ddu3arvsw2mn7" path="res://scenes/GUIParts/playerTracker.tscn" id="14_hayvy"]
+[ext_resource type="PackedScene" uid="uid://dwinc8jnjl38k" path="res://scenes/GUIParts/gold_icon.tscn" id="15_yrjo3"]
+[ext_resource type="Script" path="res://scripts/ButtonScripts/inventory.gd" id="17_8lghc"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5iqrf"]
+texture = ExtResource("4_48e0x")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_p0fke"]
+sources/0 = SubResource("TileSetAtlasSource_5iqrf")
+
+[sub_resource type="Animation" id="Animation_tm4tq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:pivot_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_mska0"]
+resource_name = "shake"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:pivot_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 3.48, 3.48, 3.48, 3.48, 3.48, 3.48, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(10, -10), Vector2(0, -20), Vector2(-10, -10), Vector2(10, 10), Vector2(0, 20), Vector2(-10, 10), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w78g7"]
+_data = {
+"RESET": SubResource("Animation_tm4tq"),
+"shake": SubResource("Animation_mska0")
+}
+
+[sub_resource type="Animation" id="Animation_61drc"]
+resource_name = "Change Number"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(380.003, -1552.58), Vector2(380, -1400)]
+}
+
+[sub_resource type="Animation" id="Animation_8wbaq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(380.003, -1552.58)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bkhy4"]
+_data = {
+"Change Number": SubResource("Animation_61drc"),
+"RESET": SubResource("Animation_8wbaq")
+}
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xw3q6"]
+texture = ExtResource("4_48e0x")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_qhury"]
+sources/0 = SubResource("TileSetAtlasSource_xw3q6")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5uiki"]
+size = Vector2(44, 28.0057)
+
+[sub_resource type="Animation" id="Animation_71ypv"]
+resource_name = "Change Number"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-401.726, -1503.99), Vector2(-399.294, -1351.42)]
+}
+
+[sub_resource type="Animation" id="Animation_x0jxr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-399.294, -1351.42)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5iec0"]
+_data = {
+"Change Number": SubResource("Animation_71ypv"),
+"RESET": SubResource("Animation_x0jxr")
+}
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cyf1o"]
+texture = ExtResource("4_48e0x")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+3:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+2:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+5:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+1:9/0 = 0
+5:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+0:12/0 = 0
+1:12/0 = 0
+0:13/0 = 0
+1:13/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_531it"]
+sources/0 = SubResource("TileSetAtlasSource_cyf1o")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1syf1"]
+size = Vector2(44.0002, 29.9505)
+
+[node name="dungeon" type="Node2D"]
+script = ExtResource("1_ba8p3")
+metadata/_edit_horizontal_guides_ = [24.0]
+
+[node name="Gamecontroller" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_imoik")
+
+[node name="Node2D" type="Node2D" parent="Gamecontroller"]
+script = ExtResource("3_yj62m")
+
+[node name="Camera2D" type="Camera2D" parent="Gamecontroller/Node2D"]
+rotation = 3.14159
+scale = Vector2(0.410726, 0.0458781)
+zoom = Vector2(2.48, 2.68)
+
+[node name="Background" type="TileMapLayer" parent="Gamecontroller/Node2D/Camera2D"]
+use_parent_material = true
+position = Vector2(175.3, -1569.37)
+rotation = -3.14157
+scale = Vector2(2.43471, 21.7969)
+skew = -2.24113e-05
+tile_map_data = PackedByteArray("AAD1//P/AAAJAAAAAAD1//T/AAAJAAAAAAD1//X/AAAJAAAAAAD1//b/AAAJAAAAAAD1//f/AAAJAAAAAAD1//j/AAAJAAAAAAD1//n/AAAJAAAAAAD1//r/AAAJAAAAAAD1//v/AAAJAAAAAAD1//z/AAAJAAAAAAD1//3/AAAJAAAAAAD1//7/AAAJAAAAAAD1////AAAJAAAAAAD1/wAAAAAJAAAAAAD1/wEAAAAJAAAAAAD1/wIAAAAJAAAAAAD1/wMAAAAJAAAAAAD2//P/AAAJAAAAAAD2//T/AAAJAAAAAAD2//X/AAAJAAAAAAD2//b/AAAJAAAAAAD2//f/AAAJAAAAAAD2//j/AAAJAAAAAAD2//n/AAAJAAAAAAD2//r/AAAJAAAAAAD2//v/AAAJAAAAAAD2//z/AAAJAAAAAAD2//3/AAAJAAAAAAD2//7/AAAJAAAAAAD2////AAAJAAAAAAD2/wAAAAAJAAAAAAD2/wEAAAAJAAAAAAD2/wIAAAAJAAAAAAD2/wMAAAAJAAAAAAD3//P/AAAJAAAAAAD3//T/AAAJAAAAAAD3//X/AAABAAEAAAD3//b/AAABAAEAAAD3//f/AAABAAEAAAD3//j/AAABAAEAAAD3//n/AAABAAEAAAD3//r/AAABAAEAAAD3//v/AAABAAEAAAD3//z/AAABAAEAAAD3//3/AAABAAEAAAD3//7/AAABAAEAAAD3////AAABAAEAAAD3/wAAAAABAAEAAAD3/wEAAAABAAEAAAD3/wIAAAAJAAAAAAD3/wMAAAAJAAAAAAD4//P/AAAJAAAAAAD4//T/AAAJAAAAAAD4//X/AAABAAEAAAD4//b/AAABAAEAAAD4//f/AAABAAEAAAD4//j/AAABAAEAAAD4//n/AAABAAEAAAD4//r/AAABAAEAAAD4//v/AAABAAEAAAD4//z/AAABAAEAAAD4//3/AAABAAEAAAD4//7/AAABAAEAAAD4////AAABAAEAAAD4/wAAAAABAAEAAAD4/wEAAAABAAEAAAD4/wIAAAAJAAAAAAD4/wMAAAAJAAAAAAD5//P/AAAJAAAAAAD5//T/AAAJAAAAAAD5//X/AAABAAEAAAD5//b/AAABAAEAAAD5//f/AAABAAEAAAD5//j/AAAJAAAAAAD5//n/AAABAAEAAAD5//r/AAABAAEAAAD5//v/AAABAAEAAAD5//z/AAABAAEAAAD5//3/AAABAAEAAAD5//7/AAABAAEAAAD5////AAABAAEAAAD5/wAAAAABAAEAAAD5/wEAAAABAAEAAAD5/wIAAAAJAAAAAAD5/wMAAAAJAAAAAAD6//P/AAAJAAAAAAD6//T/AAAJAAAAAAD6//X/AAABAAEAAAD6//b/AAABAAEAAAD6//f/AAABAAEAAAD6//j/AAAJAAAAAAD6//n/AAABAAEAAAD6//r/AAABAAEAAAD6//v/AAABAAEAAAD6//z/AAABAAEAAAD6//3/AAABAAEAAAD6//7/AAABAAEAAAD6////AAABAAEAAAD6/wAAAAABAAEAAAD6/wEAAAABAAEAAAD6/wIAAAAJAAAAAAD6/wMAAAAJAAAAAAD7//P/AAAJAAAAAAD7//T/AAAJAAAAAAD7//X/AAABAAEAAAD7//b/AAABAAEAAAD7//f/AAABAAEAAAD7//j/AAAJAAAAAAD7//n/AAABAAEAAAD7//r/AAABAAEAAAD7//v/AAABAAEAAAD7//z/AAABAAEAAAD7//3/AAABAAEAAAD7//7/AAABAAEAAAD7////AAABAAEAAAD7/wAAAAABAAEAAAD7/wEAAAABAAEAAAD7/wIAAAAJAAAAAAD7/wMAAAAJAAAAAAD8//P/AAAJAAAAAAD8//T/AAAJAAAAAAD8//X/AAABAAEAAAD8//b/AAABAAEAAAD8//f/AAABAAEAAAD8//j/AAABAAEAAAD8//n/AAABAAEAAAD8//r/AAABAAEAAAD8//v/AAABAAEAAAD8//z/AAABAAEAAAD8//3/AAABAAEAAAD8//7/AAABAAEAAAD8////AAABAAEAAAD8/wAAAAABAAEAAAD8/wEAAAABAAEAAAD8/wIAAAAJAAAAAAD8/wMAAAAJAAAAAAD9//P/AAAJAAAAAAD9//T/AAAJAAAAAAD9//X/AAABAAEAAAD9//b/AAABAAEAAAD9//f/AAABAAEAAAD9//j/AAABAAEAAAD9//n/AAABAAEAAAD9//r/AAABAAEAAAD9//v/AAABAAEAAAD9//z/AAABAAEAAAD9//3/AAABAAEAAAD9//7/AAABAAEAAAD9////AAABAAEAAAD9/wAAAAABAAEAAAD9/wEAAAABAAEAAAD9/wIAAAAJAAAAAAD9/wMAAAAJAAAAAAD+//P/AAAJAAAAAAD+//T/AAAJAAAAAAD+//X/AAAJAAAAAAD+//b/AAAJAAAAAAD+//f/AAAJAAAAAAD+//j/AAAJAAAAAAD+//n/AAAJAAAAAAD+//r/AAAJAAAAAAD+//v/AAAJAAAAAAD+//z/AAAJAAAAAAD+//3/AAAJAAAAAAD+//7/AAAJAAAAAAD+////AAAJAAAAAAD+/wAAAAAJAAAAAAD+/wEAAAAJAAAAAAD+/wIAAAAJAAAAAAD+/wMAAAAJAAAAAAD///P/AAAJAAAAAAD///T/AAAJAAAAAAD///X/AAAJAAAAAAD///b/AAAJAAAAAAD///f/AAAJAAAAAAD///j/AAAJAAAAAAD///n/AAAJAAAAAAD///r/AAAJAAAAAAD///v/AAAJAAAAAAD///z/AAAJAAAAAAD///3/AAAJAAAAAAD///7/AAAJAAAAAAD/////AAAJAAAAAAD//wAAAAAJAAAAAAD//wEAAAAJAAAAAAD//wIAAAAJAAAAAAD//wMAAAAJAAAAAAAAAPP/AAAJAAAAAAAAAPT/AAAJAAAAAAAAAPX/AAAJAAAAAAAAAPb/AAAJAAAAAAAAAPf/AAAJAAAAAAAAAPj/AAAJAAAAAAAAAPn/AAAJAAAAAAAAAPr/AAAJAAAAAAAAAPv/AAAJAAAAAAAAAPz/AAAJAAAAAAAAAP3/AAAJAAAAAAAAAP7/AAAJAAAAAAAAAP//AAAJAAAAAAAAAAAAAAAJAAAAAAAAAAEAAAAJAAAAAAAAAAIAAAAJAAAAAAAAAAMAAAAJAAAAAAABAPP/AAAJAAAAAAABAPT/AAAJAAAAAAABAPX/AAAJAAAAAAABAPb/AAAJAAAAAAABAPf/AAAJAAAAAAABAPj/AAAJAAAAAAABAPn/AAAJAAAAAAABAPr/AAAJAAAAAAABAPv/AAAJAAAAAAABAPz/AAAJAAAAAAABAP3/AAAJAAAAAAABAP7/AAAJAAAAAAABAP//AAAJAAAAAAABAAAAAAAJAAAAAAABAAEAAAAJAAAAAAABAAIAAAAJAAAAAAABAAMAAAAJAAAAAAACAPP/AAAJAAAAAAACAPT/AAAJAAAAAAACAPX/AAAJAAAAAAACAPb/AAAJAAAAAAACAPf/AAAJAAAAAAACAPj/AAAJAAAAAAACAPn/AAAJAAAAAAACAPr/AAAJAAAAAAACAPv/AAAJAAAAAAACAPz/AAAJAAAAAAACAP3/AAAJAAAAAAACAP7/AAAJAAAAAAACAP//AAAJAAAAAAACAAAAAAAJAAAAAAACAAEAAAAJAAAAAAACAAIAAAAJAAAAAAACAAMAAAAJAAAAAAADAPP/AAAJAAAAAAADAPT/AAAJAAAAAAADAPX/AAAJAAAAAAADAPb/AAAJAAAAAAADAPf/AAAJAAAAAAADAPj/AAAJAAAAAAADAPn/AAAJAAAAAAADAPr/AAAJAAAAAAADAPv/AAAJAAAAAAADAPz/AAAJAAAAAAADAP3/AAAJAAAAAAADAP7/AAAJAAAAAAADAP//AAAJAAAAAAADAAAAAAAJAAAAAAADAAEAAAAJAAAAAAADAAIAAAAJAAAAAAADAAMAAAAJAAAAAAAEAPP/AAAJAAAAAAAEAPT/AAAJAAAAAAAEAPX/AAAJAAAAAAAEAPb/AAAJAAAAAAAEAPf/AAAJAAAAAAAEAPj/AAAJAAAAAAAEAPn/AAAJAAAAAAAEAPr/AAAJAAAAAAAEAPv/AAAJAAAAAAAEAPz/AAAJAAAAAAAEAP3/AAAJAAAAAAAEAP7/AAAJAAAAAAAEAP//AAAJAAAAAAAEAAAAAAAJAAAAAAAEAAEAAAAJAAAAAAAEAAIAAAAJAAAAAAAEAAMAAAAJAAAAAAAFAPP/AAAJAAAAAAAFAPT/AAAJAAAAAAAFAPX/AAAJAAAAAAAFAPb/AAAJAAAAAAAFAPf/AAAJAAAAAAAFAPj/AAAJAAAAAAAFAPn/AAAJAAAAAAAFAPr/AAAJAAAAAAAFAPv/AAAJAAAAAAAFAPz/AAAJAAAAAAAFAP3/AAAJAAAAAAAFAP7/AAAJAAAAAAAFAP//AAAJAAAAAAAFAAAAAAAJAAAAAAAFAAEAAAAJAAAAAAAFAAIAAAAJAAAAAAAFAAMAAAAJAAAAAAAGAPP/AAAJAAAAAAAGAPT/AAAJAAAAAAAGAPX/AAAJAAAAAAAGAPb/AAAJAAAAAAAGAPf/AAAJAAAAAAAGAPj/AAAJAAAAAAAGAPn/AAAJAAAAAAAGAPr/AAAJAAAAAAAGAPv/AAAJAAAAAAAGAPz/AAAJAAAAAAAGAP3/AAAJAAAAAAAGAP7/AAAJAAAAAAAGAP//AAAJAAAAAAAGAAAAAAAJAAAAAAAGAAEAAAAJAAAAAAAGAAIAAAAJAAAAAAAGAAMAAAAJAAAAAAAHAPP/AAAJAAAAAAAHAPT/AAAJAAAAAAAHAPX/AAAJAAAAAAAHAPb/AAAJAAAAAAAHAPf/AAAJAAAAAAAHAPj/AAAJAAAAAAAHAPn/AAAJAAAAAAAHAPr/AAAJAAAAAAAHAPv/AAAJAAAAAAAHAPz/AAAJAAAAAAAHAP3/AAAJAAAAAAAHAP7/AAAJAAAAAAAHAP//AAAJAAAAAAAHAAAAAAAJAAAAAAAHAAEAAAAJAAAAAAAHAAIAAAAJAAAAAAAHAAMAAAAJAAAAAAAIAPP/AAAJAAAAAAAIAPT/AAAJAAAAAAAIAPX/AAAJAAAAAAAIAPb/AAAJAAAAAAAIAPf/AAAJAAAAAAAIAPj/AAAJAAAAAAAIAPn/AAAJAAAAAAAIAPr/AAAJAAAAAAAIAPv/AAAJAAAAAAAIAPz/AAAJAAAAAAAIAP3/AAAJAAAAAAAIAP7/AAAJAAAAAAAIAP//AAAJAAAAAAAIAAAAAAAJAAAAAAAIAAEAAAAJAAAAAAAIAAIAAAAJAAAAAAAIAAMAAAAJAAAAAAAJAPP/AAAJAAAAAAAJAPT/AAAJAAAAAAAJAPX/AAAJAAAAAAAJAPb/AAAJAAAAAAAJAPf/AAAJAAAAAAAJAPj/AAAJAAAAAAAJAPn/AAAJAAAAAAAJAPr/AAAJAAAAAAAJAPv/AAAJAAAAAAAJAPz/AAAJAAAAAAAJAP3/AAAJAAAAAAAJAP7/AAAJAAAAAAAJAP//AAAJAAAAAAAJAAAAAAAJAAAAAAAJAAEAAAAJAAAAAAAJAAIAAAAJAAAAAAAJAAMAAAAJAAAAAAAKAPP/AAAJAAAAAAAKAPT/AAAJAAAAAAAKAPX/AAAJAAAAAAAKAPb/AAAJAAAAAAAKAPf/AAAJAAAAAAAKAPj/AAAJAAAAAAAKAPn/AAAJAAAAAAAKAPr/AAAJAAAAAAAKAPv/AAAJAAAAAAAKAPz/AAAJAAAAAAAKAP3/AAAJAAAAAAAKAP7/AAAJAAAAAAAKAP//AAAJAAAAAAAKAAAAAAAJAAAAAAAKAAEAAAAJAAAAAAAKAAIAAAAJAAAAAAAKAAMAAAAJAAAAAAALAPP/AAAJAAAAAAALAPT/AAAJAAAAAAALAPX/AAABAAEAAAALAPb/AAABAAEAAAALAPf/AAABAAEAAAALAPj/AAABAAEAAAALAPn/AAABAAEAAAALAPr/AAABAAEAAAALAPv/AAABAAEAAAALAPz/AAABAAEAAAALAP3/AAABAAEAAAALAP7/AAABAAEAAAALAP//AAABAAEAAAALAAAAAAABAAEAAAALAAEAAAABAAEAAAALAAIAAAAJAAAAAAALAAMAAAAJAAAAAAAMAPP/AAAJAAAAAAAMAPT/AAAJAAAAAAAMAPX/AAABAAEAAAAMAPb/AAABAAEAAAAMAPf/AAABAAEAAAAMAPj/AAABAAEAAAAMAPn/AAABAAEAAAAMAPr/AAABAAEAAAAMAPv/AAABAAEAAAAMAPz/AAABAAEAAAAMAP3/AAABAAEAAAAMAP7/AAABAAEAAAAMAP//AAABAAEAAAAMAAAAAAABAAEAAAAMAAEAAAABAAEAAAAMAAIAAAAJAAAAAAAMAAMAAAAJAAAAAAANAPP/AAAJAAAAAAANAPT/AAAJAAAAAAANAPX/AAABAAEAAAANAPb/AAABAAEAAAANAPf/AAABAAEAAAANAPj/AAABAAEAAAANAPn/AAABAAEAAAANAPr/AAABAAEAAAANAPv/AAABAAEAAAANAPz/AAABAAEAAAANAP3/AAABAAEAAAANAP7/AAABAAEAAAANAP//AAABAAEAAAANAAAAAAABAAEAAAANAAEAAAABAAEAAAANAAIAAAAJAAAAAAANAAMAAAAJAAAAAAAOAPP/AAAJAAAAAAAOAPT/AAAJAAAAAAAOAPX/AAABAAEAAAAOAPb/AAABAAEAAAAOAPf/AAABAAEAAAAOAPj/AAABAAEAAAAOAPn/AAABAAEAAAAOAPr/AAABAAEAAAAOAPv/AAABAAEAAAAOAPz/AAABAAEAAAAOAP3/AAABAAEAAAAOAP7/AAABAAEAAAAOAP//AAABAAEAAAAOAAAAAAABAAEAAAAOAAEAAAABAAEAAAAOAAIAAAAJAAAAAAAOAAMAAAAJAAAAAAAPAPP/AAAJAAAAAAAPAPT/AAAJAAAAAAAPAPX/AAABAAEAAAAPAPb/AAABAAEAAAAPAPf/AAABAAEAAAAPAPj/AAABAAEAAAAPAPn/AAABAAEAAAAPAPr/AAABAAEAAAAPAPv/AAABAAEAAAAPAPz/AAABAAEAAAAPAP3/AAABAAEAAAAPAP7/AAABAAEAAAAPAP//AAABAAEAAAAPAAAAAAABAAEAAAAPAAEAAAABAAEAAAAPAAIAAAAJAAAAAAAPAAMAAAAJAAAAAAAQAPP/AAAJAAAAAAAQAPT/AAAJAAAAAAAQAPX/AAABAAEAAAAQAPb/AAABAAEAAAAQAPf/AAABAAEAAAAQAPj/AAABAAEAAAAQAPn/AAABAAEAAAAQAPr/AAABAAEAAAAQAPv/AAABAAEAAAAQAPz/AAABAAEAAAAQAP3/AAABAAEAAAAQAP7/AAABAAEAAAAQAP//AAABAAEAAAAQAAAAAAABAAEAAAAQAAEAAAABAAEAAAAQAAIAAAAJAAAAAAAQAAMAAAAJAAAAAAARAPP/AAAJAAAAAAARAPT/AAAJAAAAAAARAPX/AAABAAEAAAARAPb/AAABAAEAAAARAPf/AAABAAEAAAARAPj/AAABAAEAAAARAPn/AAABAAEAAAARAPr/AAABAAEAAAARAPv/AAABAAEAAAARAPz/AAABAAEAAAARAP3/AAABAAEAAAARAP7/AAABAAEAAAARAP//AAABAAEAAAARAAAAAAABAAEAAAARAAEAAAABAAEAAAARAAIAAAAJAAAAAAARAAMAAAAJAAAAAAASAPP/AAAJAAAAAAASAPT/AAAJAAAAAAASAPX/AAAJAAAAAAASAPb/AAAJAAAAAAASAPf/AAAJAAAAAAASAPj/AAAJAAAAAAASAPn/AAAJAAAAAAASAPr/AAAJAAAAAAASAPv/AAAJAAAAAAASAPz/AAAJAAAAAAASAP3/AAAJAAAAAAASAP7/AAAJAAAAAAASAP//AAAJAAAAAAASAAAAAAAJAAAAAAASAAEAAAAJAAAAAAASAAIAAAAJAAAAAAASAAMAAAAJAAAAAAATAPP/AAAJAAAAAAATAPT/AAAJAAAAAAATAPX/AAAJAAAAAAATAPb/AAAJAAAAAAATAPf/AAAJAAAAAAATAPj/AAAJAAAAAAATAPn/AAAJAAAAAAATAPr/AAAJAAAAAAATAPv/AAAJAAAAAAATAPz/AAAJAAAAAAATAP3/AAAJAAAAAAATAP7/AAAJAAAAAAATAP//AAAJAAAAAAATAAAAAAAJAAAAAAATAAEAAAAJAAAAAAATAAIAAAAJAAAAAAATAAMAAAAJAAAAAAA=")
+tile_set = SubResource("TileSet_p0fke")
+
+[node name="Midground" type="TileMapLayer" parent="Gamecontroller/Node2D/Camera2D"]
+use_parent_material = true
+position = Vector2(175.3, -1569.37)
+rotation = -3.14157
+scale = Vector2(2.43471, 21.7969)
+skew = -2.24113e-05
+tile_map_data = PackedByteArray("AAALAAEAAAAAAAIAAAALAPX/AAAAAAAAAAARAAEAAAACAAIAAAARAPX/AAACAAAAAAAMAPX/AAABAAAAAAANAPX/AAABAAAAAAAOAPX/AAABAAAAAAAPAPX/AAABAAAAAAAQAPX/AAABAAAAAAARAPb/AAACAAEAAAARAPf/AAACAAEAAAARAPj/AAACAAEAAAARAPn/AAACAAEAAAARAPr/AAACAAEAAAARAPv/AAACAAEAAAARAPz/AAACAAEAAAARAP3/AAACAAEAAAARAP7/AAACAAEAAAARAP//AAACAAEAAAARAAAAAAACAAEAAAAQAAEAAAABAAIAAAAPAAEAAAABAAIAAAAOAAEAAAABAAIAAAANAAEAAAABAAIAAAAMAAEAAAABAAIAAAALAAAAAAAAAAEAAAALAP//AAAAAAEAAAAMAP//AAABAAEAAAAMAP7/AAABAAEAAAAMAP3/AAABAAEAAAAMAPz/AAABAAEAAAAMAPv/AAABAAEAAAAMAPr/AAABAAEAAAAMAPn/AAABAAEAAAAMAPj/AAABAAEAAAAMAPf/AAABAAEAAAAMAPb/AAABAAEAAAALAPb/AAAAAAEAAAALAPf/AAAAAAEAAAALAPj/AAAAAAEAAAALAPn/AAAAAAEAAAALAP7/AAAAAAEAAAALAP3/AAAAAAEAAAALAPz/AAAAAAEAAAALAPv/AAAAAAEAAAALAPr/AAAAAAEAAAAMAAAAAAABAAEAAAANAAAAAAAAAAQAAAAOAAAAAAABAAIAAAAPAAAAAAABAAQAAAAQAAAAAAABAAEAAAAQAP//AAABAAEAAAAQAP7/AAABAAEAAAAQAP3/AAABAAEAAAAPAPz/AAABAAMAAAAPAPv/AAABAAEAAAAPAPr/AAABAAQAAAAPAPn/AAABAAMAAAAPAPj/AAABAAEAAAAPAPf/AAABAAEAAAAPAPb/AAABAAEAAAAQAPb/AAABAAEAAAAQAPf/AAABAAEAAAAQAPj/AAABAAEAAAAQAPn/AAABAAEAAAAQAPr/AAABAAEAAAAQAPv/AAABAAEAAAAQAPz/AAABAAEAAAAOAPb/AAABAAEAAAANAPb/AAABAAEAAAANAPf/AAABAAEAAAANAPj/AAABAAEAAAANAPn/AAAAAAMAAAANAPr/AAAAAAQAAAAOAPr/AAABAAIAAAAOAPv/AAABAAEAAAAOAPz/AAABAAAAAAAOAP3/AAABAAIAAAAOAP7/AAABAAEAAAAOAP//AAABAAAAAAANAP//AAAAAAMAAAANAP7/AAABAAEAAAANAP3/AAAAAAQAAAANAPz/AAAAAAMAAAANAPv/AAABAAEAAAAPAP7/AAABAAEAAAAPAP//AAABAAMAAAAPAP3/AAABAAQAAAAOAPn/AAABAAAAAAAOAPj/AAABAAEAAAAOAPf/AAABAAEAAAD9/wEAAAACAAIAAAD9//X/AAACAAAAAAD3//X/AAAAAAAAAAD3/wEAAAAAAAIAAAD4/wEAAAABAAIAAAD5/wEAAAABAAIAAAD6/wEAAAABAAIAAAD7/wEAAAABAAIAAAD8/wEAAAABAAIAAAD9/wAAAAACAAEAAAD9////AAACAAEAAAD9//7/AAACAAEAAAD9//3/AAACAAEAAAD8//3/AAABAAEAAAD8//z/AAABAAEAAAD8//v/AAABAAEAAAD9//v/AAACAAEAAAD9//r/AAACAAEAAAD9//n/AAACAAEAAAD9//j/AAACAAEAAAD9//f/AAACAAEAAAD9//b/AAACAAEAAAD9//z/AAACAAEAAAD8//X/AAABAAAAAAD7//X/AAABAAAAAAD6//X/AAABAAAAAAD5//X/AAABAAAAAAD4//X/AAABAAAAAAD3//b/AAAAAAEAAAD3//f/AAAAAAEAAAD3//j/AAAAAAEAAAD3//n/AAAAAAEAAAD3//r/AAAAAAEAAAD3//v/AAAAAAEAAAD3//z/AAAAAAEAAAD3//3/AAAAAAEAAAD3//7/AAAAAAEAAAD3////AAAAAAEAAAD3/wAAAAAAAAEAAAD8//7/AAABAAEAAAD8////AAABAAEAAAD8/wAAAAABAAEAAAD7/wAAAAACAAcAAAD7////AAACAAUAAAD6////AAABAAUAAAD5////AAAAAAUAAAD4////AAABAAEAAAD4/wAAAAABAAEAAAD5/wAAAAAAAAcAAAD6/wAAAAABAAcAAAD4//7/AAABAAEAAAD4//3/AAABAAEAAAD4//z/AAABAAEAAAD4//v/AAABAAEAAAD4//r/AAABAAEAAAD4//n/AAABAAEAAAD4//j/AAABAAEAAAD4//f/AAABAAEAAAD4//b/AAABAAEAAAD5//b/AAABAAEAAAD6//b/AAABAAEAAAD7//b/AAABAAEAAAD8//b/AAABAAEAAAD8//f/AAABAAEAAAD8//j/AAABAAEAAAD8//n/AAABAAEAAAD8//r/AAABAAEAAAD7//r/AAAJAAAAAAD7//n/AAAJAAAAAAD7//j/AAABAAUAAAD7//f/AAABAAEAAAD6//f/AAABAAEAAAD5//f/AAABAAEAAAD5//j/AAABAAUAAAD5//n/AAAJAAAAAAD5//r/AAAJAAAAAAD6//r/AAAJAAAAAAD6//n/AAAJAAAAAAD6//j/AAABAAUAAAD6//v/AAABAAEAAAD5//v/AAABAAEAAAD5//z/AAABAAEAAAD5//3/AAABAAEAAAD5//7/AAABAAEAAAD6//7/AAABAAEAAAD6//3/AAABAAEAAAD6//z/AAABAAEAAAD7//z/AAABAAEAAAD7//v/AAABAAEAAAD7//3/AAABAAEAAAD7//7/AAABAAEAAAA=")
+tile_set = SubResource("TileSet_p0fke")
+
+[node name="Foreground" type="TileMapLayer" parent="Gamecontroller/Node2D/Camera2D"]
+use_parent_material = true
+position = Vector2(175.3, -1569.37)
+rotation = -3.14157
+scale = Vector2(2.43471, 21.7969)
+skew = -2.24113e-05
+tile_map_data = PackedByteArray("AAANAPz/AAABAAEAAAAPAPz/AAABAAEAAAANAP3/AAABAAEAAAAPAP3/AAABAAEAAAAOAP3/AAABAAEAAAAOAPz/AAABAAEAAAANAPn/AAABAAEAAAAOAPn/AAABAAEAAAAPAPn/AAABAAEAAAAPAPr/AAABAAEAAAAOAPr/AAABAAEAAAANAPr/AAABAAEAAAAOAPj/AAABAAEAAAA=")
+tile_set = SubResource("TileSet_p0fke")
+
+[node name="DashIcon" parent="Gamecontroller/Node2D/Camera2D" instance=ExtResource("5_f6ywa")]
+position = Vector2(418.771, -1590)
+rotation = -3.14157
+scale = Vector2(2.43471, 21.7969)
+skew = -2.24113e-05
+
+[node name="HealthBar" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+z_index = 1
+offset_left = -348.0
+offset_top = 2100.0
+offset_right = -128.0
+offset_bottom = 2193.0
+rotation = 3.14159
+scale = Vector2(1, 8)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("6_n1fab")
+theme_override_font_sizes/font_size = 48
+text = "ABAB"
+autowrap_mode = 1
+script = ExtResource("7_ta311")
+
+[node name="HealthBarFaded" type="Label" parent="Gamecontroller/Node2D/Camera2D/HealthBar"]
+z_as_relative = false
+layout_mode = 0
+offset_right = 220.0
+offset_bottom = 93.0
+theme_override_colors/font_color = Color(0.737193, 0.737193, 0.737193, 1)
+theme_override_colors/font_outline_color = Color(0.737193, 0.737193, 0.737193, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("6_n1fab")
+theme_override_font_sizes/font_size = 48
+text = "ABABABAB"
+autowrap_mode = 1
+script = ExtResource("8_bqf3f")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Gamecontroller/Node2D/Camera2D/HealthBar"]
+libraries = {
+"": SubResource("AnimationLibrary_w78g7")
+}
+
+[node name="x" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+offset_left = 389.555
+offset_top = -1569.37
+offset_right = 537.555
+offset_bottom = -1462.37
+rotation = -3.14159
+scale = Vector2(0.6, 3.5)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_r56d8")
+theme_override_font_sizes/font_size = 48
+text = "x"
+
+[node name="Actions Available" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+offset_left = 380.003
+offset_top = -1552.58
+offset_right = 412.003
+offset_bottom = -1503.58
+rotation = 3.14159
+scale = Vector2(1, 8.299)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_r56d8")
+theme_override_font_sizes/font_size = 48
+text = "0"
+script = ExtResource("10_4lyjd")
+
+[node name="TextShaker" type="AnimationPlayer" parent="Gamecontroller/Node2D/Camera2D/Actions Available"]
+libraries = {
+"": SubResource("AnimationLibrary_bkhy4")
+}
+
+[node name="WeaponSlot" type="Node2D" parent="Gamecontroller/Node2D/Camera2D"]
+position = Vector2(-389.554, -543.134)
+rotation = -3.14157
+scale = Vector2(2.43471, 21.7969)
+skew = -2.24113e-05
+script = ExtResource("11_qqilx")
+
+[node name="slot" type="TileMapLayer" parent="Gamecontroller/Node2D/Camera2D/WeaponSlot"]
+position = Vector2(-8.00003, 1.32317e-05)
+tile_map_data = PackedByteArray("AAD/////AAAAAAMAAAD//wAAAAAAAAQAAAABAAAAAAABAAQAAAABAP//AAABAAMAAAAAAAAAAAABAAIAAAAAAP//AAABAAAAAAA=")
+tile_set = SubResource("TileSet_qhury")
+
+[node name="Area2D" type="Area2D" parent="Gamecontroller/Node2D/Camera2D/WeaponSlot"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D"]
+position = Vector2(0, 0.00284576)
+shape = SubResource("RectangleShape2D_5uiki")
+
+[node name="Floor" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+offset_left = 486.942
+offset_top = 1569.39
+offset_right = 634.942
+offset_bottom = 1618.39
+rotation = 3.14159
+scale = Vector2(1, 8)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_r56d8")
+theme_override_font_sizes/font_size = 32
+text = "Floor:"
+horizontal_alignment = 1
+
+[node name="floorLabel" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+offset_left = 370.076
+offset_top = 1569.38
+offset_right = 410.076
+offset_bottom = 1618.38
+rotation = 3.14159
+scale = Vector2(1, 8)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_r56d8")
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1
+script = ExtResource("12_8g240")
+
+[node name="Level" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+offset_left = 486.942
+offset_top = 1918.14
+offset_right = 634.942
+offset_bottom = 1967.14
+rotation = 3.14159
+scale = Vector2(1, 8)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_r56d8")
+theme_override_font_sizes/font_size = 48
+text = "Level:"
+horizontal_alignment = 1
+
+[node name="LevelLabel" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+offset_left = 350.598
+offset_top = 1918.13
+offset_right = 390.598
+offset_bottom = 1967.13
+rotation = 3.14159
+scale = Vector2(1, 8)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_r56d8")
+theme_override_font_sizes/font_size = 48
+text = "0"
+horizontal_alignment = 1
+script = ExtResource("13_v0cjv")
+
+[node name="x2" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+offset_left = -387.12
+offset_top = -1525.79
+offset_right = -239.12
+offset_bottom = -1418.79
+rotation = -3.14159
+scale = Vector2(0.6, 3.5)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_r56d8")
+theme_override_font_sizes/font_size = 48
+text = "x"
+
+[node name="Gold" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+offset_left = -399.294
+offset_top = -1351.42
+offset_right = -367.294
+offset_bottom = -1302.42
+rotation = 3.14159
+scale = Vector2(1, 8.299)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_r56d8")
+theme_override_font_sizes/font_size = 48
+text = "0"
+script = ExtResource("14_2nn8w")
+
+[node name="TextShaker" type="AnimationPlayer" parent="Gamecontroller/Node2D/Camera2D/Gold"]
+libraries = {
+"": SubResource("AnimationLibrary_5iec0")
+}
+
+[node name="goldIcon" parent="Gamecontroller/Node2D/Camera2D" instance=ExtResource("15_yrjo3")]
+position = Vector2(-364.654, -1575.92)
+rotation = -3.14157
+scale = Vector2(1.7, 14)
+skew = -2.24113e-05
+autoplay = "default"
+
+[node name="mapSpace" type="Node2D" parent="Gamecontroller/Node2D/Camera2D"]
+position = Vector2(384.684, 653.916)
+
+[node name="playerTracker" parent="Gamecontroller/Node2D/Camera2D/mapSpace" instance=ExtResource("14_hayvy")]
+position = Vector2(-51.1312, 457.735)
+scale = Vector2(1.21736, 10.8984)
+
+[node name="Inventory" type="Node2D" parent="Gamecontroller/Node2D/Camera2D"]
+position = Vector2(-389.554, 523.117)
+rotation = -3.14157
+scale = Vector2(2.43471, 21.7969)
+skew = -2.24113e-05
+script = ExtResource("17_8lghc")
+
+[node name="slot" type="TileMapLayer" parent="Gamecontroller/Node2D/Camera2D/Inventory"]
+position = Vector2(8.00012, 2.11006e-05)
+tile_map_data = PackedByteArray("AAD+////AAAAAAMAAAAAAP//AAABAAMAAAD+/wAAAAAAAAQAAAAAAAAAAAABAAQAAAD//wAAAAABAAIAAAD/////AAABAAAAAAA=")
+tile_set = SubResource("TileSet_531it")
+
+[node name="Area2D" type="Area2D" parent="Gamecontroller/Node2D/Camera2D/Inventory"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gamecontroller/Node2D/Camera2D/Inventory/Area2D"]
+position = Vector2(0.0122528, 0.0224667)
+shape = SubResource("RectangleShape2D_1syf1")
+
+[node name="itemAmount" type="Label" parent="Gamecontroller/Node2D/Camera2D/Inventory"]
+offset_left = 0.000106812
+offset_top = 2.09808e-05
+offset_right = 40.0001
+offset_bottom = 23.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("9_r56d8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_exited"]
+[connection signal="mouse_entered" from="Gamecontroller/Node2D/Camera2D/Inventory/Area2D" to="Gamecontroller/Node2D/Camera2D/Inventory" method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Gamecontroller/Node2D/Camera2D/Inventory/Area2D" to="Gamecontroller/Node2D/Camera2D/Inventory" method="_on_area_2d_mouse_exited"]

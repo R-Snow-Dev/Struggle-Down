@@ -184,6 +184,6 @@ libraries = {
 script = ExtResource("3_itcv7")
 
 [node name="Attack" parent="AttackOrigin" instance=ExtResource("3_45v0r")]
-position = Vector2(-8, -16)
+position = Vector2(0, -8)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

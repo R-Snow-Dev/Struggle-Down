@@ -11,7 +11,7 @@ var isHovering = false
 
 func _ready() -> void:
 	subMenu.hide()
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if(FileAccess.file_exists("res://saveFiles/save1.json")):
 		newfile.hide()
 	else:
@@ -32,7 +32,6 @@ func _on_file_1_button_mouse_entered() -> void:
 	isHovering = true
 	c.position.y = 66
 	position.y = 0
-
 
 func _on_file_1_button_mouse_exited() -> void:
 	isHovering = false

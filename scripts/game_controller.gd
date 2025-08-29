@@ -9,21 +9,14 @@ func _ready() -> void:
 	EventBus.new_level.connect(_new_level)
 	EventBus.start.connect(_start)
 	EventBus.file_select.connect(_file_select)
+	EventBus.go.connect(_go)
 	var titleScreen = preload("res://scenes/menus/title_screen.tscn").instantiate() # In this case, it will be a basic dungeon
 	add_child(titleScreen)
 	
 func _on_death():
-	# Loads another scene upon death, after removing any children that may somehow still be under this node
-	if self.get_child_count() > 0:
-		for i in self.get_children():
-			self.remove_child(i)
-	SaveController.setDefault()
-	rng.randomize()
-	var seed = rng.seed
-	SaveController.updateData("seed", seed)
-	var pouch = preload("res://scenes/menus/pouch_menu.tscn").instantiate() # In this case, it will be the title screen
-	add_child(pouch)
-
+	# Loads to the pouch upon death
+	loadPouch()
+	
 func _new_level():
 	# Loads another dungeon upon loading a new level, after removing any children that may somehow still be under this node
 	
@@ -50,13 +43,41 @@ func _file_select():
 	var dungeon = preload("res://scenes/menus/file_select.tscn").instantiate() # Loads a new, default level dungeon
 	add_child(dungeon)
 	
+func loadPouch():
+	# Delete all current children, and go to the pouch menu
+	
+	if self.get_child_count() > 0:
+		for i in self.get_children():
+			self.remove_child(i)
+	# Reset all run-dependant info
+	SaveController.updateData("floor", 1)
+	SaveController.updateData("level", 1)
+	SaveController.updateData("weapon", 0)
+	SaveController.updateData("inrun", false) # Set your status to "outside of a run"
+	rng.randomize()
+	var s = rng.seed # Generate a new seed to randomize the next run with
+	SaveController.updateData("seed", s)
+	var pouch = preload("res://scenes/menus/pouch_menu.tscn").instantiate()
+	add_child(pouch)
 	
 	
+func _go():
+	# Code that is executed from the pouch menu's start button. Loads the player into a new dungeon
+	
+	if self.get_child_count() > 0:
+		for i in self.get_children():
+			self.remove_child(i)
+	SaveController.updateData("inrun", true)
+	var dungeon = preload("res://scenes/menus/dungeon.tscn").instantiate() # Loads a new, first level dungeon
+	add_child(dungeon)
 
 func _start():
 	# Loads another dungeon upon loading a new level, after removing any children that may somehow still be under this node
 	if self.get_child_count() > 0:
 		for i in self.get_children():
 			self.remove_child(i)
-	var dungeon = preload("res://scenes/menus/dungeon.tscn").instantiate() # Loads a new, default level dungeon
-	add_child(dungeon)
+	if SaveController.getData("inrun"):
+		var dungeon = preload("res://scenes/menus/dungeon.tscn").instantiate() # Loads a dungeon from the save data, if there was an ongoing run
+		add_child(dungeon)
+	else:
+		loadPouch() # If the player exited in the pouch, take them to the pouch instead

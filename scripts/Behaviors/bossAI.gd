@@ -3,8 +3,8 @@ class_name bossAI
 
 
 	
-func updateView(board: Array, playerPos: Vector2, boss: Object):
+func updateView(_board: Array, _playerPos: Vector2, _boss: Object):
 	return
 	
-func decide(boss: Object, playerPos: Vector2, board: Array, gBoard: Array):
+func decide(_boss: Object, _playerPos: Vector2, _board: Array, _gBoard: Array):
 	return

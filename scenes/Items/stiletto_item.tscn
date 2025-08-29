@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpgkvtfoel24o"]
+
+[ext_resource type="Texture2D" uid="uid://c3d1bcjvhrl6y" path="res://assets/sword1 (1).png" id="1_wnkgr"]
+
+[node name="StilettoItem" type="Sprite2D"]
+texture = ExtResource("1_wnkgr")
+region_enabled = true
+region_rect = Rect2(0, 160, 32, 32)

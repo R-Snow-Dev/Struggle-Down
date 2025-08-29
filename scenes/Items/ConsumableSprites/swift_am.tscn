@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://eu2s0jksp0c"]
+
+[ext_resource type="Texture2D" uid="uid://bbtpslvokymfr" path="res://assets/Consumables.png" id="1_tw1ms"]
+
+[node name="swift_am" type="Sprite2D"]
+texture = ExtResource("1_tw1ms")
+region_enabled = true
+region_rect = Rect2(0, 416, 32, 32)

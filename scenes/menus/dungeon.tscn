@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://dkqh251ixbss2"]
+[gd_scene load_steps=36 format=4 uid="uid://dkqh251ixbss2"]
 
 [ext_resource type="Script" path="res://scripts/dungeon.gd" id="1_ba8p3"]
 [ext_resource type="Script" path="res://scripts/dungeoncontroller.gd" id="2_imoik"]
@@ -13,7 +13,11 @@
 [ext_resource type="Script" path="res://scripts/PlayerAttacks/weapon_slot.gd" id="11_qqilx"]
 [ext_resource type="Script" path="res://scripts/floor_label.gd" id="12_8g240"]
 [ext_resource type="Script" path="res://scripts/level_label.gd" id="13_v0cjv"]
+[ext_resource type="Script" path="res://scripts/Items/gold.gd" id="14_2nn8w"]
 [ext_resource type="PackedScene" uid="uid://ddu3arvsw2mn7" path="res://scenes/GUIParts/playerTracker.tscn" id="14_hayvy"]
+[ext_resource type="PackedScene" uid="uid://dwinc8jnjl38k" path="res://scenes/GUIParts/gold_icon.tscn" id="15_yrjo3"]
+[ext_resource type="Script" path="res://scripts/ButtonScripts/inventory.gd" id="17_8lghc"]
+[ext_resource type="PackedScene" uid="uid://dou5rxf8tiklv" path="res://scenes/GUIParts/inventory_bar.tscn" id="18_0hxsq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5iqrf"]
 texture = ExtResource("4_48e0x")
@@ -101,9 +105,9 @@ _data = {
 "shake": SubResource("Animation_mska0")
 }
 
-[sub_resource type="Animation" id="Animation_757r6"]
+[sub_resource type="Animation" id="Animation_61drc"]
 resource_name = "Change Number"
-length = 0.14
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -111,13 +115,13 @@ tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.133333),
-"transitions": PackedFloat32Array(0.196146, 1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(380, -1500), Vector2(380, -1400)]
+"values": [Vector2(380.003, -1552.58), Vector2(380, -1400)]
 }
 
-[sub_resource type="Animation" id="Animation_i03ll"]
+[sub_resource type="Animation" id="Animation_8wbaq"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -129,13 +133,13 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(380, -1400)]
+"values": [Vector2(380.003, -1552.58)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_qc35l"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bkhy4"]
 _data = {
-"Change Number": SubResource("Animation_757r6"),
-"RESET": SubResource("Animation_i03ll")
+"Change Number": SubResource("Animation_61drc"),
+"RESET": SubResource("Animation_8wbaq")
 }
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xw3q6"]
@@ -193,8 +197,124 @@ sources/0 = SubResource("TileSetAtlasSource_xw3q6")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5uiki"]
 size = Vector2(44, 28.0057)
 
+[sub_resource type="Animation" id="Animation_71ypv"]
+resource_name = "Change Number"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-401.726, -1503.99), Vector2(-399.294, -1351.42)]
+}
+
+[sub_resource type="Animation" id="Animation_x0jxr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-399.294, -1351.42)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5iec0"]
+_data = {
+"Change Number": SubResource("Animation_71ypv"),
+"RESET": SubResource("Animation_x0jxr")
+}
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cyf1o"]
+texture = ExtResource("4_48e0x")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+3:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+2:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+5:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+1:9/0 = 0
+5:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+0:12/0 = 0
+1:12/0 = 0
+0:13/0 = 0
+1:13/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_531it"]
+sources/0 = SubResource("TileSetAtlasSource_cyf1o")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1syf1"]
+size = Vector2(44.0002, 29.9505)
+
 [node name="dungeon" type="Node2D"]
 script = ExtResource("1_ba8p3")
+metadata/_edit_horizontal_guides_ = [24.0]
 
 [node name="Gamecontroller" type="Node" parent="."]
 unique_name_in_owner = true
@@ -206,7 +326,7 @@ script = ExtResource("3_yj62m")
 [node name="Camera2D" type="Camera2D" parent="Gamecontroller/Node2D"]
 rotation = 3.14159
 scale = Vector2(0.410726, 0.0458781)
-zoom = Vector2(2.48, 2.679)
+zoom = Vector2(2.48, 2.68)
 
 [node name="Background" type="TileMapLayer" parent="Gamecontroller/Node2D/Camera2D"]
 use_parent_material = true
@@ -232,7 +352,7 @@ position = Vector2(175.3, -1569.37)
 rotation = -3.14157
 scale = Vector2(2.43471, 21.7969)
 skew = -2.24113e-05
-tile_map_data = PackedByteArray("AAANAPz/AAABAAEAAAAPAPz/AAABAAEAAAANAP3/AAABAAEAAAAPAP3/AAABAAEAAAAOAP3/AAABAAEAAAAOAPz/AAABAAEAAAA=")
+tile_map_data = PackedByteArray("AAANAPz/AAABAAEAAAAPAPz/AAABAAEAAAANAP3/AAABAAEAAAAPAP3/AAABAAEAAAAOAP3/AAABAAEAAAAOAPz/AAABAAEAAAANAPn/AAABAAEAAAAOAPn/AAABAAEAAAAPAPn/AAABAAEAAAAPAPr/AAABAAEAAAAOAPr/AAABAAEAAAANAPr/AAABAAEAAAAOAPj/AAABAAEAAAA=")
 tile_set = SubResource("TileSet_p0fke")
 
 [node name="DashIcon" parent="Gamecontroller/Node2D/Camera2D" instance=ExtResource("5_f6ywa")]
@@ -290,10 +410,10 @@ theme_override_font_sizes/font_size = 48
 text = "x"
 
 [node name="Actions Available" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
-offset_left = 380.0
-offset_top = -1500.0
-offset_right = 412.0
-offset_bottom = -1451.0
+offset_left = 380.003
+offset_top = -1552.58
+offset_right = 412.003
+offset_bottom = -1503.58
 rotation = 3.14159
 scale = Vector2(1, 8.299)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -302,9 +422,9 @@ theme_override_font_sizes/font_size = 48
 text = "0"
 script = ExtResource("10_4lyjd")
 
-[node name="Text Shaker" type="AnimationPlayer" parent="Gamecontroller/Node2D/Camera2D/Actions Available"]
+[node name="TextShaker" type="AnimationPlayer" parent="Gamecontroller/Node2D/Camera2D/Actions Available"]
 libraries = {
-"": SubResource("AnimationLibrary_qc35l")
+"": SubResource("AnimationLibrary_bkhy4")
 }
 
 [node name="WeaponSlot" type="Node2D" parent="Gamecontroller/Node2D/Camera2D"]
@@ -379,6 +499,43 @@ text = "0"
 horizontal_alignment = 1
 script = ExtResource("13_v0cjv")
 
+[node name="x2" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+offset_left = -387.12
+offset_top = -1525.79
+offset_right = -239.12
+offset_bottom = -1418.79
+rotation = -3.14159
+scale = Vector2(0.6, 3.5)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_r56d8")
+theme_override_font_sizes/font_size = 48
+text = "x"
+
+[node name="Gold" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
+offset_left = -399.294
+offset_top = -1351.42
+offset_right = -367.294
+offset_bottom = -1302.42
+rotation = 3.14159
+scale = Vector2(1, 8.299)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_r56d8")
+theme_override_font_sizes/font_size = 48
+text = "0"
+script = ExtResource("14_2nn8w")
+
+[node name="TextShaker" type="AnimationPlayer" parent="Gamecontroller/Node2D/Camera2D/Gold"]
+libraries = {
+"": SubResource("AnimationLibrary_5iec0")
+}
+
+[node name="goldIcon" parent="Gamecontroller/Node2D/Camera2D" instance=ExtResource("15_yrjo3")]
+position = Vector2(-364.654, -1575.92)
+rotation = -3.14157
+scale = Vector2(1.7, 14)
+skew = -2.24113e-05
+autoplay = "default"
+
 [node name="mapSpace" type="Node2D" parent="Gamecontroller/Node2D/Camera2D"]
 position = Vector2(384.684, 653.916)
 
@@ -386,5 +543,40 @@ position = Vector2(384.684, 653.916)
 position = Vector2(-51.1312, 457.735)
 scale = Vector2(1.21736, 10.8984)
 
+[node name="Inventory" type="Node2D" parent="Gamecontroller/Node2D/Camera2D"]
+position = Vector2(-389.554, 523.117)
+rotation = -3.14157
+scale = Vector2(2.43471, 21.7969)
+skew = -2.24113e-05
+script = ExtResource("17_8lghc")
+
+[node name="slot" type="TileMapLayer" parent="Gamecontroller/Node2D/Camera2D/Inventory"]
+position = Vector2(8.00012, 2.11006e-05)
+tile_map_data = PackedByteArray("AAD+////AAAAAAMAAAAAAP//AAABAAMAAAD+/wAAAAAAAAQAAAAAAAAAAAABAAQAAAD//wAAAAABAAIAAAD/////AAABAAUAAAA=")
+tile_set = SubResource("TileSet_531it")
+
+[node name="Area2D" type="Area2D" parent="Gamecontroller/Node2D/Camera2D/Inventory"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gamecontroller/Node2D/Camera2D/Inventory/Area2D"]
+position = Vector2(0.0122528, 0.0224667)
+shape = SubResource("RectangleShape2D_1syf1")
+
+[node name="itemAmount" type="Label" parent="Gamecontroller/Node2D/Camera2D/Inventory"]
+offset_left = 0.000106812
+offset_top = 2.09808e-05
+offset_right = 40.0001
+offset_bottom = 23.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("9_r56d8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="inventoryBar" parent="Gamecontroller/Node2D/Camera2D/Inventory" instance=ExtResource("18_0hxsq")]
+visible = false
+position = Vector2(1.52588e-05, 0)
+
 [connection signal="mouse_entered" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_exited"]
+[connection signal="mouse_entered" from="Gamecontroller/Node2D/Camera2D/Inventory/Area2D" to="Gamecontroller/Node2D/Camera2D/Inventory" method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Gamecontroller/Node2D/Camera2D/Inventory/Area2D" to="Gamecontroller/Node2D/Camera2D/Inventory" method="_on_area_2d_mouse_exited"]

@@ -11,11 +11,11 @@ var prevPos = pos
 var facing: Vector2
 var vision: Array # What grid the boss sees
 var brain: bossAI # What types of attacks the boss may perform, and what determines it
-var HP: int # The amount of hitpoints the boss has
+var health: int # The amount of hitpoints the boss has
 var sprite: Node # The sprite of the boss
 var nextMove = 0
 var size: int
-var maxHP: int
+var totHP: int
 @onready var timer = $Timer # Timer 
 @onready var animPlayer = $AnimationPlayer # Animation Player
 @onready var bP = $BashParts
@@ -26,8 +26,8 @@ func setup(p: Vector2, vis: Array, b: bossAI, hp: int, s: PackedScene, sz: int):
 	pos = p
 	vision = vis
 	brain = b
-	HP = hp
-	maxHP = HP
+	health = hp
+	totHP = hp
 	sprite = s.instantiate()
 	size = sz
 	EventBus.healSK.connect(heal)
@@ -38,15 +38,15 @@ func setup(p: Vector2, vis: Array, b: bossAI, hp: int, s: PackedScene, sz: int):
 
 func heal(num: int):
 	# Heals the boss when called. Fails to heal if already at Full HP
-	if HP < maxHP:
-		if maxHP - HP > 4:
-			HP += num
+	if health < totHP:
+		if totHP - health > num:
+			health += num
 		else:
-			HP += maxHP - HP
+			health += totHP - health
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	hurtbox.scale = Vector2(size,size)
-	if HP < 1:
+	if health < 1:
 		die()	
 		
 func updateView(playerPos: Vector2):
@@ -119,4 +119,4 @@ func _on_body_area_entered(area: Area2D) -> void:
 	# Function that handles the boss being hit by a weapon
 	if area is Hurtbox: # If it made contact with something else, that means it has been attacked
 		crash()
-		HP -= area.damage
+		health -= area.damage

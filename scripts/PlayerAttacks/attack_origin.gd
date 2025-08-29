@@ -15,6 +15,8 @@ func _attack(weapon: Array):
 	# param - weapon: The weapon data from the WeaponSlot
 	if weapon[4] == "slashing":
 		attack.slash(Vector2(weapon[1], weapon[2]))
+	elif weapon[4] == "piercing":
+		attack.pierce(Vector2(weapon[1], weapon[2]))
 	
 	
 	

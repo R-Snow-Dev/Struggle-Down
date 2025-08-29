@@ -12,11 +12,11 @@ func _ready() -> void:
 	position.x = (pos.y-1)*16
 	position.y = ((pos.x-1)*16)
 
-func _on_area_entered(area: Area2D) -> void:
+func _on_area_entered(_area: Area2D) -> void:
 	# Function that detects when the player has entered the doorway, and sends out a signal to the game controller to let it know
 	EventBus.on_door.emit(true)
 	
-func _on_area_exited(area: Area2D) -> void:
+func _on_area_exited(_area: Area2D) -> void:
 	# Function that detects when the player has exited the doorway, and sends out a signal to the game controller to let it know
 	EventBus.on_door.emit(false)
  

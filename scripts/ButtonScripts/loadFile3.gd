@@ -13,7 +13,7 @@ func _ready() -> void:
 	subMenu.hide()
 
 # Called when the node enters the scene tree for the first time.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if(FileAccess.file_exists("res://saveFiles/save3.json")):
 		newfile.hide()
 	else:

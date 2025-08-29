@@ -16,19 +16,19 @@ var tPath : Array
 var doorMatrix : Array
 
 
-func genPath(start: Vector2, end: Vector2, prevP: Vector2, diff: int, gridsize: int, path: Array):
+func genPath(start: Vector2, end: Vector2, prevP: Vector2, diff: int, gridsize: int, p: Array):
 	# Function that generates a random path between points on a 2D array recursively
 	# Param - start: A Vector2 representing the point that we need to find the next best move from
 	# Param - end: A Vector2 representing the point that we are calculating the best route towards
 	# Param - prevP: A Vector2 representing the last point on the array that was processed
 	# Param - diff: The total number of spaces away the two points on a 2D array are.
 	# Param - gridSize: An integer representing the length and height of the map grid. Determines the limits of generation.
-	# Param - path: And array that conatins Vector2 coordinates for the optimal path toward the desire end point
+	# Param - p: And array that conatins Vector2 coordinates for the optimal path toward the desire end point
 	# Return: The complete path Array
 	
 	# Base case. The start point is the end point
 	if start == end:
-		return path
+		return p
 	else:
 		# Logic to determine which way we will go to get closer to the endpoint
 		
@@ -50,27 +50,27 @@ func genPath(start: Vector2, end: Vector2, prevP: Vector2, diff: int, gridsize: 
 		var choice : Vector2  
 		if fPos.size() < 1:
 			choice = prevP
-			return genPath(prevP, end, start, diff-1, 9, path)
+			return genPath(prevP, end, start, diff-1, 9, p)
 		# Otherwise, choose a random option from the remaining possible points, and recursively loop with it
 		else:
 			choice = fPos[rng.randi_range(0, fPos.size() - 1)]
-			if path.find(choice, 0) == -1:
-				path.append(choice)
+			if p.find(choice, 0) == -1:
+				p.append(choice)
 			else:
 				print("Repeat")
-			return genPath(choice, end, start, (abs((end - start).x) + abs((end - start).y)), 9, path)
+			return genPath(choice, end, start, (abs((end - start).x) + abs((end - start).y)), 9, p)
 		
-func setDoors(path: Array):
+func setDoors(pa: Array):
 	# Function that generates the doors between each point in an array
-	# Param - path: an array containing all the points on a graph that may connect to one another
+	# Param - pa: an array containing all the points on a graph that may connect to one another
 	
 	# For each point in the path, check if any adjacent points are also in the path, and set an edge between the two, whose
 	# value depends on the derection the two points are connected. 
-	for start in path:
+	for start in pa:
 		var pPos = [Vector2(start.x - 1, start.y), Vector2(start.x + 1, start.y), Vector2(start.x, start.y-1), Vector2(start.x, start.y+1)]
 		for p in pPos:
 			var diff = start-p
-			if path.find(p, 0) != -1:
+			if pa.find(p, 0) != -1:
 				if diff.x != 0:
 					if diff.x > 0:
 						doorMatrix[(start.x) + (start.y * 9)][(p.x) + (p.y * 9)] = 4
@@ -86,37 +86,37 @@ func setDoors(path: Array):
 						doorMatrix[(start.x) + (start.y * 9)][(p.x) + (p.y * 9)] = 1
 						doorMatrix[(p.x) + (p.y * 9)][(start.x) + (start.y * 9)] = 3
 
-func truePath(path: Array, cur: Vector2, start: Vector2, end: Vector2, tPath: Array):
+func truePath(p: Array, cur: Vector2, start: Vector2, end: Vector2, tP: Array):
 	# A function that finds a random path between two points using a limited set of points.
-	# Param - path: The set of points the path will be made from
+	# Param - p: The set of points the path will be made from
 	# Param - cur: The current point being processed
 	# Param - start: The initial starting point. Doesn't change
 	# Param - end: The target point. Doesn't change
-	# Param - tPath: An array containing the points of the generated path
-	# Returns: tPath
+	# Param - tP: An array containing the points of the generated path
+	# Returns: tP
 	
 	if cur == end: # Base case. The current point is the end point.
-		return tPath
+		return tP
 	else:
 		# List of possible points adjacent to the current point
 		var pPos = [Vector2(cur.x - 1, cur.y), Vector2(cur.x + 1, cur.y), Vector2(cur.x, cur.y-1), Vector2(cur.x, cur.y+1)]
 		var fPath = []
 		# Remove from the list of possible points, checking if a point is in the list of allowed points and if we haven't already visited it.
-		for p in pPos:
-			if path.find(p, 0) != -1 and tPath.find(p, 0 ) == -1:
-				fPath.append(p)
+		for i in pPos:
+			if p.find(i, 0) != -1 and tP.find(i, 0 ) == -1:
+				fPath.append(i)
 		print(fPath)
 		# If there are no possible points to move to, restart from the beginning
 		if fPath.size() < 1:
 			print("redo")
-			return truePath(path, start, start, end, [start])
+			return truePath(p, start, start, end, [start])
 		else: 
 			# Otherwise, choose a point among the remaining possible points to continue the recursive loop from
 			print("go")
 			var choice = fPath[rng.randi_range(0, fPath.size() - 1)]
 			print(choice)
-			tPath.append(choice)
-			return truePath(path, choice, start, end, tPath)
+			tP.append(choice)
+			return truePath(p, choice, start, end, tP)
 
 func doorCleanUp(t, p):
 	# Function that goes through the edges connecting each point in the generated path, and has a 
@@ -157,9 +157,9 @@ func _ready() -> void:
 		for j in range(0,81):
 			doorMatrix[i].append(0)
 			
-func gen_points(seed: int):
+func gen_points(s: int):
 	
-	rng.set_seed(seed)
+	rng.set_seed(s)
 	
 	# Randomly generating a starting point to start the path
 	startPos = Vector2(rng.randi_range(0,mapSize-1), rng.randi_range(0,mapSize-1))

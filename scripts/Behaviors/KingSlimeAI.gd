@@ -231,7 +231,7 @@ func slideAtk(boss: Object, pPos: Array, board: Array):
 		
 		
 	
-func spawnAdds(boss: Object, pPos: Vector2, board: Array, data: Array):
+func spawnAdds(_boss: Object, _pPos: Vector2, _board: Array, _data: Array):
 	for v in moveData[2]:
 		EventBus.createSlime.emit(v)
 	
@@ -257,7 +257,7 @@ func bounce(boss: Object):
 	animPlayer.play("jump")
 	boss.timer.wait_time += 0.5
 
-func charge(boss: Object, t: Vector2, diff: int, bossFace: Vector2):
+func charge(boss: Object, t: Vector2, _diff: int, bossFace: Vector2):
 	# Function that alters the charge animation based on certain parameters.
 	# @param boss - Reference back to the Boss Object of the king slime
 	# @param t - The Vector of the target destination to charge to
@@ -265,7 +265,7 @@ func charge(boss: Object, t: Vector2, diff: int, bossFace: Vector2):
 	
 	# Set needed variables
 	var animPlayer = boss.animPlayer
-	var charge = animPlayer.get_animation("charge")
+	var c = animPlayer.get_animation("charge")
 	var a = (bossFace * 12)
 	var targ = t * 16
 	var s = boss.pos * 16
@@ -273,10 +273,10 @@ func charge(boss: Object, t: Vector2, diff: int, bossFace: Vector2):
 	targ += Vector2(8,12)
 	# Modifies the key frames in the animation so that the boss moves in the correct direction 
 	# Foe the correct amount of time
-	charge.track_set_key_value(0,0,s)
-	charge.track_set_key_value(0,1,targ + a)
-	charge.track_set_key_value(0,2,targ)
-	charge.track_set_key_value(0,3,targ)
+	c.track_set_key_value(0,0,s)
+	c.track_set_key_value(0,1,targ + a)
+	c.track_set_key_value(0,2,targ)
+	c.track_set_key_value(0,3,targ)
 	# Play the animation
 	animPlayer.play("charge")
 	boss.timer.wait_time += 0.5 # Make the player wait extra time so the animation finishes

@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://cw6dqr51sqycc"]
+
+[sub_resource type="GDScript" id="GDScript_hxhpg"]
+script/source = "extends Node2D
+class_name Consumable
+
+var charges: int
+var stored: int
+var id: int
+var effect: Object
+var hoverEffect: Object
+var sprite: Node
+var isHovering = false
+
+func setup(c: int, s: int, i: int, e: Object, hE:Object, sp: PackedScene) -> void:
+	charges = c
+	stored = s
+	id = i
+	effect = e
+	hoverEffect = hE
+	sprite = sp.instantiate()
+	
+
+func _process(_delta: float) -> void:
+	if isHovering:
+		hoverEffect.run()
+		if Input.is_action_just_pressed(\"select\"):
+			effect.run()
+	
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t5d6s"]
+
+[node name="Consumables" type="Node2D"]
+script = SubResource("GDScript_hxhpg")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_t5d6s")
