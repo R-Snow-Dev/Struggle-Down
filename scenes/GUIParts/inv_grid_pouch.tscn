@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://4kofdi0ogs3j"]
 
-[ext_resource type="Script" path="res://scripts/Items/slots/inv_grid_pouch.gd" id="1_bgge8"]
+[ext_resource type="Script" uid="uid://ctkc6sx3fm5kt" path="res://scripts/Items/slots/inv_grid_pouch.gd" id="1_bgge8"]
 [ext_resource type="PackedScene" uid="uid://ds82we8fhiky8" path="res://scenes/GUIParts/inventory_slot.tscn" id="1_orb4i"]
 
 [node name="InvGridPouch" type="Node2D"]

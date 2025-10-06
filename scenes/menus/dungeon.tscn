@@ -1,22 +1,22 @@
 [gd_scene load_steps=36 format=4 uid="uid://dkqh251ixbss2"]
 
-[ext_resource type="Script" path="res://scripts/dungeon.gd" id="1_ba8p3"]
-[ext_resource type="Script" path="res://scripts/dungeoncontroller.gd" id="2_imoik"]
-[ext_resource type="Script" path="res://scripts/node_2d.gd" id="3_yj62m"]
+[ext_resource type="Script" uid="uid://crf0iaimv3j33" path="res://scripts/dungeon.gd" id="1_ba8p3"]
+[ext_resource type="Script" uid="uid://dqhwkgc4c44u5" path="res://scripts/dungeoncontroller.gd" id="2_imoik"]
+[ext_resource type="Script" uid="uid://dra32kwejthms" path="res://scripts/node_2d.gd" id="3_yj62m"]
 [ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="4_48e0x"]
 [ext_resource type="PackedScene" uid="uid://biv52v6dwqsye" path="res://scenes/GUIParts/dash_icon.tscn" id="5_f6ywa"]
 [ext_resource type="FontFile" uid="uid://ds2ikdih7vjf2" path="res://assets/Fonts/Charybdis.pfb" id="6_n1fab"]
-[ext_resource type="Script" path="res://scripts/health_bar.gd" id="7_ta311"]
-[ext_resource type="Script" path="res://scripts/health_bar_faded.gd" id="8_bqf3f"]
+[ext_resource type="Script" uid="uid://wk5avemegaq3" path="res://scripts/health_bar.gd" id="7_ta311"]
+[ext_resource type="Script" uid="uid://c48hr2libjjfq" path="res://scripts/health_bar_faded.gd" id="8_bqf3f"]
 [ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="9_r56d8"]
-[ext_resource type="Script" path="res://scripts/actions_available.gd" id="10_4lyjd"]
-[ext_resource type="Script" path="res://scripts/PlayerAttacks/weapon_slot.gd" id="11_qqilx"]
-[ext_resource type="Script" path="res://scripts/floor_label.gd" id="12_8g240"]
-[ext_resource type="Script" path="res://scripts/level_label.gd" id="13_v0cjv"]
-[ext_resource type="Script" path="res://scripts/Items/gold.gd" id="14_2nn8w"]
+[ext_resource type="Script" uid="uid://camaxf1ecr47q" path="res://scripts/actions_available.gd" id="10_4lyjd"]
+[ext_resource type="Script" uid="uid://cw68tjmfrurj3" path="res://scripts/PlayerAttacks/weapon_slot.gd" id="11_qqilx"]
+[ext_resource type="Script" uid="uid://2dhto75416yn" path="res://scripts/floor_label.gd" id="12_8g240"]
+[ext_resource type="Script" uid="uid://cb5d4164dxut0" path="res://scripts/level_label.gd" id="13_v0cjv"]
+[ext_resource type="Script" uid="uid://bdr8i7mhjxkpp" path="res://scripts/Items/gold.gd" id="14_2nn8w"]
 [ext_resource type="PackedScene" uid="uid://ddu3arvsw2mn7" path="res://scenes/GUIParts/playerTracker.tscn" id="14_hayvy"]
 [ext_resource type="PackedScene" uid="uid://dwinc8jnjl38k" path="res://scenes/GUIParts/gold_icon.tscn" id="15_yrjo3"]
-[ext_resource type="Script" path="res://scripts/ButtonScripts/inventory.gd" id="17_8lghc"]
+[ext_resource type="Script" uid="uid://cu2si4x8n0phk" path="res://scripts/ButtonScripts/inventory.gd" id="17_8lghc"]
 [ext_resource type="PackedScene" uid="uid://dou5rxf8tiklv" path="res://scenes/GUIParts/inventory_bar.tscn" id="18_0hxsq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5iqrf"]
@@ -101,8 +101,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_w78g7"]
 _data = {
-"RESET": SubResource("Animation_tm4tq"),
-"shake": SubResource("Animation_mska0")
+&"RESET": SubResource("Animation_tm4tq"),
+&"shake": SubResource("Animation_mska0")
 }
 
 [sub_resource type="Animation" id="Animation_61drc"]
@@ -138,8 +138,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bkhy4"]
 _data = {
-"Change Number": SubResource("Animation_61drc"),
-"RESET": SubResource("Animation_8wbaq")
+&"Change Number": SubResource("Animation_61drc"),
+&"RESET": SubResource("Animation_8wbaq")
 }
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xw3q6"]
@@ -230,8 +230,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5iec0"]
 _data = {
-"Change Number": SubResource("Animation_71ypv"),
-"RESET": SubResource("Animation_x0jxr")
+&"Change Number": SubResource("Animation_71ypv"),
+&"RESET": SubResource("Animation_x0jxr")
 }
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cyf1o"]
@@ -394,7 +394,7 @@ script = ExtResource("8_bqf3f")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Gamecontroller/Node2D/Camera2D/HealthBar"]
 libraries = {
-"": SubResource("AnimationLibrary_w78g7")
+&"": SubResource("AnimationLibrary_w78g7")
 }
 
 [node name="x" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
@@ -424,7 +424,7 @@ script = ExtResource("10_4lyjd")
 
 [node name="TextShaker" type="AnimationPlayer" parent="Gamecontroller/Node2D/Camera2D/Actions Available"]
 libraries = {
-"": SubResource("AnimationLibrary_bkhy4")
+&"": SubResource("AnimationLibrary_bkhy4")
 }
 
 [node name="WeaponSlot" type="Node2D" parent="Gamecontroller/Node2D/Camera2D"]
@@ -526,7 +526,7 @@ script = ExtResource("14_2nn8w")
 
 [node name="TextShaker" type="AnimationPlayer" parent="Gamecontroller/Node2D/Camera2D/Gold"]
 libraries = {
-"": SubResource("AnimationLibrary_5iec0")
+&"": SubResource("AnimationLibrary_5iec0")
 }
 
 [node name="goldIcon" parent="Gamecontroller/Node2D/Camera2D" instance=ExtResource("15_yrjo3")]
@@ -562,12 +562,11 @@ position = Vector2(0.0122528, 0.0224667)
 shape = SubResource("RectangleShape2D_1syf1")
 
 [node name="itemAmount" type="Label" parent="Gamecontroller/Node2D/Camera2D/Inventory"]
-offset_left = 0.000106812
-offset_top = 2.09808e-05
-offset_right = 40.0001
-offset_bottom = 23.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 8
+offset_left = -4.9999084
+offset_top = -1.999979
+offset_right = 35.000084
+offset_bottom = 21.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("9_r56d8")
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -4,7 +4,7 @@ Code that displays the amount of gold the player has.
 
 extends Label
 
-var  curDisplayed = SaveController.getData("gold") # Default amount displayed
+var  curDisplayed = int(SaveController.getData("gold")) # Default amount displayed
 @onready var animationPlayer = $TextShaker# Preps the animation player
 
 # Connects to all the Event Bus signals that it requires
@@ -18,7 +18,7 @@ func _updateGold(amount:int):
 	# param - amount: An integer given when the updateAction signal is emitted. Its the amount the displayed number will change. Typically negative
 	
 	print("done Deal")
-	curDisplayed += amount # Changes the current number displayed
+	curDisplayed += int(amount) # Changes the current number displayed
 	self.text = str(curDisplayed) # Updates the label's text
 	animationPlayer.play("Change Number") # Plays a sort "bounce" animation for emphasis
 

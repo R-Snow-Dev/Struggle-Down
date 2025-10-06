@@ -37,8 +37,8 @@ func delSprite():
 func updateAmount():
 	# Sets the text label to show however many of an item this slot is carrying
 	var data = SaveController.getData("items")[id]
-	stored = data[1]
-	inInv = data[0]
+	stored = int(data[1])
+	inInv = int(data[0])
 	if inInv > 0:
 		amount.text = str(inInv)
 	else:

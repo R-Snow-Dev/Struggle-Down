@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cfgeh1p718b5s"]
 
-[ext_resource type="Script" path="res://scripts/Items/slots/consumable_grid.gd" id="1_8jwit"]
+[ext_resource type="Script" uid="uid://bhhb7vrvker0f" path="res://scripts/Items/slots/consumable_grid.gd" id="1_8jwit"]
 [ext_resource type="PackedScene" uid="uid://da1o6h5521bfu" path="res://scenes/menus/consumable_slot.tscn" id="1_cwhn7"]
 
 [node name="ConsumableGrid" type="Node2D"]

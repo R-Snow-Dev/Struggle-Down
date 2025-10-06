@@ -81,7 +81,7 @@ func updateAmount():
 			delIcons()
 			inventoryBar.update(curID, inventory)
 	else:
-		label.text = str(items[curID][0])
+		label.text = str(int(items[curID][0]))
 		inventoryBar.update(curID, inventory)
 
 func _swapItem(id: int):
@@ -107,9 +107,9 @@ func _on_area_2d_mouse_entered() -> void:
 	if inventory.size() > 0:
 		isHovering = true
 	slot.position.y = -2
-	label.position.y = -2
+	label.position.y = -4
 
 func _on_area_2d_mouse_exited() -> void:
 	isHovering = false
 	slot.position.y = 0
-	label.position.y = 0
+	label.position.y = -2

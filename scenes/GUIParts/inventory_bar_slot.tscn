@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bd7u1ih5ksmhm"]
 
-[ext_resource type="Script" path="res://scripts/Items/slots/inventory_bar_slot.gd" id="1_cxqw5"]
+[ext_resource type="Script" uid="uid://iyfox6uijbxq" path="res://scripts/Items/slots/inventory_bar_slot.gd" id="1_cxqw5"]
 [ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_xkwyx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cphhi"]

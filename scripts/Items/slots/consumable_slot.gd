@@ -36,8 +36,8 @@ func updateAmount():
 	# Sets the text label to show however many of an item this slot is carrying
 	var data = SaveController.getData("items")[id]
 	var inv = SaveController.getData("inventory")
-	stored = data[1]
-	inInv = data[0]
+	stored = int(data[1])
+	inInv = int(data[0])
 	invTot = inv.size()
 	amount.text = str(stored)
 	if stored > 0:
