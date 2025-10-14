@@ -3,6 +3,7 @@ Code that tells how a tile positions itself, and gives itself a texture
 """
 
 extends StaticBody2D
+class_name Tile
 
 var pos: Vector2 # It's given position as a Vector2
 var sprite: PackedScene # The sprite it will be assigned.

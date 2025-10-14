@@ -11,12 +11,11 @@ extends Node
 
 # Basic data is loaded
 var gridSize = Vector2(11,11)# Dimensions of the current floor
-var boards: Array # 2D array of boards representing the floor map\
+var boards: Array # 2D array of boards representing the floor map
 var floorScene = preload("res://scenes/DungeonParts/floor.tscn").instantiate()
 var oppControl = preload("res://scenes/DungeonParts/opp_controller.tscn").instantiate()
 var player = preload("res://scenes/DungeonParts/player.tscn").instantiate()
 var map = preload("res://scenes/DungeonParts/map.tscn").instantiate()
-var fiend = preload("res://scenes/Opps/fiend.tscn")
 var wall = preload("res://scenes/Tiles/Wall.tscn")
 var dR = preload("res://scenes/GUIParts/discovered_room.tscn")
 var mapPos : Vector2
@@ -24,42 +23,28 @@ var endPos: Vector2
 var pPos: Vector2
 var rng = RandomNumberGenerator.new()
 var door: bool
-var enemiesToMove = 0
 var paused = false
 var s: int
 var pHPTot: int
 var pHP: int
 var discovered = []
 var toBeSummoned = []
+var ff = false
+var facings = [Vector2(0,1), Vector2(1,0), Vector2(-1,0), Vector2(0,-1)]
 @onready var healthBar = $Node2D/Camera2D/HealthBar
 @onready var node_2d: Node2D = $Node2D
 @onready var data = SaveController.loadData()
 @onready var mS = $Node2D/Camera2D/mapSpace
 @onready var pT = $Node2D/Camera2D/mapSpace/playerTracker
 
-func _fiend_phase(amount: int):
-	# function that sets the amount of fiends taking actions to a variable, to keep track of how many need to move before the player can
-	enemiesToMove = amount
-
-func _doneAttacking():
-	# Takes off 1 from the enemiesToMove variable everytime a fiend finidhed their action, then gives back player movement once they are all done
-	enemiesToMove -= 1
-	if enemiesToMove < 1:
-		for f in toBeSummoned: # If there are new enemies to be summoned, do that
-			if boards[mapPos.x][mapPos.y][0].grid[f.pos.x][f.pos.y] is Array:
-				boards[mapPos.x][mapPos.y][0].objects.append(f)
-		drawBoard()
-		toBeSummoned = []
-		player.setActionsAvailable(data["pActions"])
 
 func _create_slime(p: Vector2):
 	# Function that handles the creation of slime summons from the Slime King by storing
 	# The slimes into the toBeSummoned array, which are then summoned after the fiends end their turn
 	# @param p - The position of the to be summoned slime
-	var slime = fiend.instantiate()
-	var brain = preload("res://scripts/Behaviors/slimeAI.gd").new()
-	var atk = preload("res://scripts/AttackingLogic/MeleeAttack.gd").new(1)
-	slime.setup(p, preload("res://scenes/Opps/slime.tscn"), 5, brain, atk, 0) # Adds all relevant information to the newly spawned fiend
+	var slime = preload("res://scenes/Opps/slime.tscn").instantiate()
+	var behavior = SlimeBehavior.new()
+	slime.setData(p, 5, 1, Vector2(0,1), 1, Vector2(0,1), behavior) # Adds all relevant information to the newly spawned fiend
 	toBeSummoned.append(slime) # Adds the new fiend, along with it's position, to the fiends array, which will be returned at the end
 	drawBoard()
 
@@ -95,6 +80,30 @@ func drawBoard():
 		for f in boards[mapPos.x][mapPos.y][0].objects:
 			floorScene.add_child(f)
 	boards[mapPos.x][mapPos.y][0].loadBoard()
+
+func rollEnemy(level:int, gridCoords: Array, chosen: int) -> Fiend:
+	# Function that spawns a random enemy based on what level you are on
+	var chosenFiend: Fiend
+	if level == 1:
+		# Roll tables for level 1
+		if rng.randf() > 0.5:
+			chosenFiend = preload("res://scenes/Opps/slime.tscn").instantiate()
+			var behavior = SlimeBehavior.new()
+			chosenFiend.setData(Vector2(gridCoords[chosen][0], gridCoords[chosen][1]), 10, 1, Vector2(0,1), 1, Vector2(0,1), behavior) # Adds all relevant information to the newly spawned fiend
+		else:
+			chosenFiend = preload("res://scenes/Opps/evil_rat.tscn").instantiate()
+			var behavior = RatBehavior.new()
+			chosenFiend.setData(Vector2(gridCoords[chosen][0], gridCoords[chosen][1]), 10, 2, Vector2(0,1), 1, Vector2(0,1), behavior) # Adds all relevant information to the newly spawned fiend
+	
+	else:
+		# Default to a slime
+		chosenFiend = preload("res://scenes/Opps/slime.tscn").instantiate()
+		var behavior = SlimeBehavior.new()
+		chosenFiend.setData(Vector2(gridCoords[chosen][0], gridCoords[chosen][1]), 10, 1, Vector2(0,1), 1, facings[rng.randi_range(0,3)], behavior) # Adds all relevant information to the newly spawned fiend
+	return chosenFiend
+		
+				
+			
 
 func checkCorners(tile: Array, grid: Array):
 	# Helper function that checks to see if a tile has open corners based on an array full of the currently free tiles
@@ -189,17 +198,55 @@ func loadObjects(grid: Vector2, mPos: Vector2):
 		# Checks all avaialable spawn tiles for a percent chance to spawn a fiend
 		for i in range(0, availableCoords):
 			if rng.randf() > (1.01 - (0.05*sqrt((data["level"]*data["level"])+((data["floor"]/5)*(data["floor"]/5))))): # Chance gets higher as tower level increases
-				var chosenFiend = fiend.instantiate()
 				var chosen = rng.randi_range(0, len(gridCoords) - 1) # Picks an available spawn tiles
-				var brain = preload("res://scripts/Behaviors/slimeAI.gd").new()
-				var atk = preload("res://scripts/AttackingLogic/MeleeAttack.gd").new(1)
-				chosenFiend.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1]), preload("res://scenes/Opps/slime.tscn"), 10, brain, atk, rng.randi_range(0,1)) # Adds all relevant information to the newly spawned fiend
+				var chosenFiend = rollEnemy(int(data["level"]), gridCoords, chosen)
 				objects.append(chosenFiend) # Adds the new fiend, along with it's position, to the fiends array, which will be returned at the end
 				gridCoords.remove_at(chosen) # Removes the location the fiend spawned at from the gridCoords array, so ot cannot be chosen again
 		# Returns the fiends array, containing the instances of the spawned fiends in the room, along with tier positionss
 		
 	
 	return objects
+
+
+func genPushPuzzleSolo(gridsize: Vector2):
+	# Function that handles the generation of a "solo push puzzle" room
+	
+	# Variables
+	var roomGenerator = PushPuzzleSolo.new(gridsize)
+	var coordinates = []
+	var button = preload("res://scenes/DungeonParts/button.tscn").instantiate()
+	var pushable = preload("res://scenes/DungeonParts/pushable.tscn").instantiate()
+	var start: Vector2
+	var e: Vector2
+	
+	roomGenerator.setSeed(s) # Standardize the randomization
+	
+	while coordinates.size() < 1: # Create the startibga nd coordinates
+		start = Vector2(rng.randi_range(1, gridsize.x-2), rng.randi_range(1, gridsize.y-2))
+		e = Vector2(rng.randi_range(1, gridsize.x-2), rng.randi_range(1, gridsize.y-2))
+		# Check to makee sure the endpoint is not on any door spawn areas,
+		# or the same as the starting point
+		while e == Vector2(0, gridsize.y-1 / 2) or e == Vector2(gridsize.x-1, gridsize.y-1 / 2) or e == Vector2(gridsize.x-1 / 2, 0) or e == Vector2(gridsize.x-1/2, gridsize.y-1) or e == start:
+			e = Vector2(rng.randi_range(0, gridsize.x-1), rng.randi_range(0, gridsize.y-1))
+		# Use these points to generate wall coordinates using the
+		# PushPuzzleSolo class
+		roomGenerator.setStart(start)
+		roomGenerator.setEnd(e)
+		coordinates = roomGenerator.genWalls()
+	
+	# Add every object to the board's "objects" array	
+	var objects = []
+	button.setup(e)
+	pushable.setup(start)
+	objects.append(button)
+	print("The Button is an Interactable: ", button is Interactable)
+	objects.append(pushable)
+	for x in coordinates:
+		var chosenWall = wall.instantiate()
+		chosenWall.setup(x)
+		objects.append(chosenWall)
+	return objects
+
 
 func genMapData(path: Array):
 	# Genrates the map data for each noew floor, including their dimensions, and the obstacles they have
@@ -209,15 +256,23 @@ func genMapData(path: Array):
 	# Repeat this for every room in the map
 	for x in path:
 		# List of fiends is initialised
+		var type = 1
 		var objectList: Array
 		# Checks to see if the floor being generated is the starting floor or not
 		if x != map.startPos: # If it isn't randomly generate unique data for the floor
 			if x == endPos and data["floor"] == 5:
 				gridSize = Vector2(11,11)
 				objectList = loadObjects(gridSize, x)
+				type = 1
 			else:
-				gridSize = Vector2(rng.randi_range(3,11), rng.randi_range(3,11))
-				objectList = loadObjects(gridSize, x)
+				if rng.randf() < 0.666666 or x == endPos:
+					gridSize = Vector2(rng.randi_range(3,11), rng.randi_range(3,11))
+					objectList = loadObjects(gridSize, x)
+					type = 1
+				else:
+					gridSize = Vector2(rng.randi_range(7,11), rng.randi_range(7,11))
+					objectList = genPushPuzzleSolo(gridSize)
+					type = 2
 		else: # If it is the starting position, generate a 5x5 room with no obstacles
 			gridSize = Vector2(5,5)
 			var startingItem = preload("res://scenes/Items/item.tscn").instantiate()
@@ -228,7 +283,7 @@ func genMapData(path: Array):
 			startingItem.setup(firstItemCoords, rng.randi_range(1,6))
 			objectList = [startingItem]
 		
-		boards[x.x][x.y].append(preload("res://scripts/gameBoard.gd").new(gridSize.x, gridSize.y, player, objectList)) # Appends the genrated board to the "boards" array, representing the floor map
+		boards[x.x][x.y].append(preload("res://scripts/gameBoard.gd").new(gridSize.x, gridSize.y, player, objectList, map.doorMatrix[x.x + x.y*9], type)) # Appends the genrated board to the "boards" array, representing the floor map
 
 # Load the level from the map, and load the first room
 func loadLevel():
@@ -294,16 +349,28 @@ func _ready() -> void:
 	EventBus.unpause.connect(_unpause)
 	EventBus.changeRooms.connect(_changeRooms)
 	EventBus.on_door.connect(_on_door)
-	EventBus.doneAttacking.connect(_doneAttacking)
 	EventBus.fiend_phase.connect(_fiend_phase)
 	EventBus.on_death.connect(_on_death)
 	EventBus.new_level.connect(_new_level)
 	EventBus.update_hp.connect(_updateHealth)
 	EventBus.create_stairs.connect(_create_stairs)
 	EventBus.createSlime.connect(_create_slime)
+	EventBus.unLock.connect(unLock)
+	EventBus.reLock.connect(reLock)
+	EventBus.object_ded.connect(object_ded)
 	
 	s = data["seed"]
 	pHP = data["pHP"]
+	
+func object_ded(obj: Object):
+	boards[mapPos.x][mapPos.y][0].object_ded(obj)
+	
+func reLock():
+	boards[mapPos.x][mapPos.y][0].lockDoors()
+	
+func unLock():
+	boards[mapPos.x][mapPos.y][0].unlockDoors()
+		
 	
 func _on_door(on: bool):
 	# Function that recieves a signal from the on_door signal
@@ -311,9 +378,11 @@ func _on_door(on: bool):
 	
 	# Sets the door boolean to on
 	door = on
+	boards[mapPos.x][mapPos.y][0].updateOnDoor(on)
+	
 	
 
-func _changeRooms(changePos: Vector2, newPos: String):
+func _changeRooms(changePos: Vector2, newPos: int):
 	# Function that handles the action of switching to a new room after recieving the changeRoom signal
 	# Param - changePos: A Vector2 recieved from the signal that tells how much the map position will change in both dimensions
 	# Param - newPos: A String recieved from the signal that will be translated into a new starting position for the player in the new room
@@ -323,16 +392,18 @@ func _changeRooms(changePos: Vector2, newPos: String):
 	mapPos = mapPos + changePos
 	
 	# newPos intepreter
-	if newPos == "top": # if new pos is "top, set the player position to the top of the new room
+	if newPos == 1: # if new pos is "top, set the player position to the top of the new room
 		pPos = Vector2((int(boards[mapPos.x][mapPos.y][0].width)-1)/2, 0)
-	elif newPos == "bottom": # etc
+	elif newPos == 3: # etc
 		pPos = Vector2((int(boards[mapPos.x][mapPos.y][0].width)-1)/2, int(boards[mapPos.x][mapPos.y][0].height-1))
-	elif newPos == "right": # etc
+	elif newPos == 2: # etc
 		pPos = Vector2(int(boards[mapPos.x][mapPos.y][0].width-1), int(boards[mapPos.x][mapPos.y][0].height)/2)
-	elif newPos == "left":# etc
+	elif newPos == 4:# etc
 		pPos = Vector2(0, int(boards[mapPos.x][mapPos.y][0].height)/2)
 	else:
 		pPos = Vector2(0,0) # Defaults position to 0,0 if an invalid newPos is given
+	
+	boards[mapPos.x][mapPos.y][0].firstDoor = newPos
 	
 	# Sets the current gridSize to the new room's dimentions
 	gridSize = Vector2(boards[mapPos.x][mapPos.y][0].width, boards[mapPos.x][mapPos.y][0].height)
@@ -344,6 +415,8 @@ func _changeRooms(changePos: Vector2, newPos: String):
 	boards[mapPos.x][mapPos.y][0].loadBoard() # generates the gameboard and displays the objects in it to the screen for the first time
 	updateMap(mapPos) # Update the minimap
 	drawBoard() # Generates the dungeon floor
+	if boards[mapPos.x][mapPos.y][0].type != 1:
+		boards[mapPos.x][mapPos.y][0].reset()
 	boards[mapPos.x][mapPos.y][0].heal()
 
 func _process(_delta: float) -> void:
@@ -351,12 +424,16 @@ func _process(_delta: float) -> void:
 	# If the player is alive, play the game
 	if pHP > 0:
 		if paused == false: # Id the game is paused, do not play the game
-			boards[mapPos.x][mapPos.y][0].door = door
 			boards[mapPos.x][mapPos.y][0].checkInputs() # checks to see if the user performs an action
-			if player.actionsAvailable == 0 and enemiesToMove == 0:
-				boards[mapPos.x][mapPos.y][0].fiendsTurn()
+			if player.actionsAvailable == 0 and !ff:
+				ff = true
+				boards[mapPos.x][mapPos.y][0].fiendsTurn(data["pActions"])
 	else: # If he isn't, initiate the detah sequence
 		deathSequence()
+
+func _fiend_phase():
+	# Tells the controller taht all enemies are done moving
+	ff = false
 
 func _pause():
 	# Function that pauses the game whenever the "paused" signal is emitted
@@ -375,6 +452,10 @@ func _on_death():
 	queue_free()
 	
 func _new_level():
+	for x in boards:
+		for y in x:
+			for b in y:
+				b.queue_free()
 	queue_free()
 	
 	

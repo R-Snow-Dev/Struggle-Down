@@ -39,11 +39,11 @@ func genPath(start: Vector2, end: Vector2, prevP: Vector2, diff: int, gridsize: 
 		for item in pPos:
 			var iDiff = abs((end - item).x) + abs((end - item).y)
 			if item.x >= gridsize or item.x < 0 or item.y >= gridsize or item.y < 0:
-				null
+				pass
 			elif iDiff > diff:
-				null
+				pass
 			elif item == prevP:
-				null
+				pass
 			else:
 				fPos.append(item)
 		# If there are no possible choices, lower the diff by one and go back to the previous point on the array

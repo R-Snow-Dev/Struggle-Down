@@ -24,7 +24,7 @@ signal actionsReset(amount: int)
 signal doneAttacking()
 
 # Tells the dungeon controller that it is the fiend's turn to attack
-signal fiend_phase(amount: int)
+signal fiend_phase()
 
 # Changes the player's hp and the hp bar when emitted
 signal update_hp(amount:int)
@@ -93,4 +93,11 @@ signal go()
 # signal that is emitted when the player adds or removes from the inventory
 signal updateInv()
 
+# Switches the displayed item in the inventory
 signal changeItem(id: int)
+
+# Unlocks the doors in a room
+signal unLock()
+
+# Locks the doors in a room
+signal reLock()

@@ -1,0 +1,188 @@
+[gd_scene load_steps=15 format=3 uid="uid://c88jx3mngd1br"]
+
+[ext_resource type="Script" uid="uid://wj4in6lhnx8i" path="res://scripts/Opps/evil_rat.gd" id="1_1aahg"]
+[ext_resource type="Texture2D" uid="uid://cq44wjkgmn2og" path="res://assets/Fiend_B.png" id="1_8vtmj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ke6qw"]
+atlas = ExtResource("1_8vtmj")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_htole"]
+atlas = ExtResource("1_8vtmj")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1aahg"]
+atlas = ExtResource("1_8vtmj")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_33cpv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ke6qw")
+}],
+"loop": true,
+"name": &"d",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_htole")
+}],
+"loop": true,
+"name": &"s",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1aahg")
+}],
+"loop": true,
+"name": &"u",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_80hn4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8vtmj"]
+resource_name = "atkD"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.366667),
+"transitions": PackedFloat32Array(1, 3.48, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 13), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ke6qw"]
+resource_name = "atkL"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.366667),
+"transitions": PackedFloat32Array(1, 3.4822, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-16, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_htole"]
+resource_name = "atkR"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.366667),
+"transitions": PackedFloat32Array(1, 3.4822, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(16, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1aahg"]
+resource_name = "atkU"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.366667),
+"transitions": PackedFloat32Array(1, 3.48, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -16), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5sbqc"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(31.999989, 43.71327, 40.78602),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 1), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aj0gg"]
+_data = {
+&"RESET": SubResource("Animation_80hn4"),
+&"atkD": SubResource("Animation_8vtmj"),
+&"atkL": SubResource("Animation_ke6qw"),
+&"atkR": SubResource("Animation_htole"),
+&"atkU": SubResource("Animation_1aahg"),
+&"idle": SubResource("Animation_5sbqc")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8vtmj"]
+radius = 5.0
+
+[node name="EvilRat" type="Node2D"]
+script = ExtResource("1_1aahg")
+
+[node name="AttackParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 20
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 80.0
+initial_velocity_max = 80.0
+scale_amount_min = 3.0
+scale_amount_max = 3.0
+color = Color(0, 0, 0, 1)
+
+[node name="Rat" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_33cpv")
+animation = &"d"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Rat"]
+libraries = {
+&"": SubResource("AnimationLibrary_aj0gg")
+}
+autoplay = "idle"
+
+[node name="hitBox" type="Area2D" parent="Rat"]
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rat/hitBox"]
+position = Vector2(0, -4.941215e-14)
+shape = SubResource("CircleShape2D_8vtmj")
+
+[connection signal="area_entered" from="Rat/hitBox" to="." method="_on_hit_box_area_entered"]

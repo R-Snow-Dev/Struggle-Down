@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://bdc04xxjf7wrq"]
 
 [ext_resource type="Texture2D" uid="uid://dqqo3yug1ex0c" path="res://assets/Fiend_A (1).png" id="1_a8tvx"]
-[ext_resource type="Script" path="res://scripts/slime.gd" id="2_oknjo"]
+[ext_resource type="Script" uid="uid://b7qbpyjgfgalu" path="res://scripts/slime.gd" id="2_oknjo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lsc2u"]
 atlas = ExtResource("1_a8tvx")
@@ -120,30 +120,21 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e5sx6"]
 _data = {
-"RESET": SubResource("Animation_lv221"),
-"atkD": SubResource("Animation_n1a7b"),
-"atkL": SubResource("Animation_ytak0"),
-"atkR": SubResource("Animation_y8wxa"),
-"atkU": SubResource("Animation_2gncm")
+&"RESET": SubResource("Animation_lv221"),
+&"atkD": SubResource("Animation_n1a7b"),
+&"atkL": SubResource("Animation_ytak0"),
+&"atkR": SubResource("Animation_y8wxa"),
+&"atkU": SubResource("Animation_2gncm")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_516xe"]
 radius = 4.12311
 
-[node name="Slime" type="AnimatedSprite2D"]
-position = Vector2(0, -1)
-sprite_frames = SubResource("SpriteFrames_00i4o")
-autoplay = "default"
-frame_progress = 0.257061
+[node name="Slime" type="Node2D"]
 script = ExtResource("2_oknjo")
-metadata/_edit_group_ = true
-
-[node name="atkAnims" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_e5sx6")
-}
 
 [node name="AttackParticles" type="CPUParticles2D" parent="."]
+position = Vector2(0, -4)
 emitting = false
 amount = 20
 lifetime = 0.3
@@ -158,11 +149,23 @@ scale_amount_min = 3.0
 scale_amount_max = 3.0
 color = Color(0, 0, 0, 1)
 
-[node name="Hitbox" type="Area2D" parent="."]
+[node name="Slime" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -1)
+sprite_frames = SubResource("SpriteFrames_00i4o")
+autoplay = "default"
+frame_progress = 0.257061
+metadata/_edit_group_ = true
+
+[node name="atkAnims" type="AnimationPlayer" parent="Slime"]
+libraries = {
+&"": SubResource("AnimationLibrary_e5sx6")
+}
+
+[node name="Hitbox" type="Area2D" parent="Slime"]
 collision_mask = 12
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slime/Hitbox"]
 shape = SubResource("CircleShape2D_516xe")
 one_way_collision_margin = 0.0
 
-[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="area_entered" from="Slime/Hitbox" to="." method="_on_hitbox_area_entered"]

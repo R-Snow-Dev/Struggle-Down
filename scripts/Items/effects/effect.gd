@@ -2,10 +2,10 @@ extends Node
 class_name ItemEffect
 
 func _init() -> void:
-	null
+	pass
 
 func run():
-	null
+	pass
 	
 func test():
-	null
+	pass

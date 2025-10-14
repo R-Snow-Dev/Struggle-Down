@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://ctsng0vbroeda"]
 
 [ext_resource type="Texture2D" uid="uid://ct6tn2l15ohai" path="res://assets/Kingslime.png" id="1_3t6ta"]
-[ext_resource type="Script" path="res://scripts/bosses/king_slime.gd" id="1_fmfgq"]
+[ext_resource type="Script" uid="uid://dr1xyxq1v6hys" path="res://scripts/bosses/king_slime.gd" id="1_fmfgq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_itmtg"]
 atlas = ExtResource("1_3t6ta")

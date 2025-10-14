@@ -1,33 +1,46 @@
-extends AnimatedSprite2D
+extends Fiend
+class_name Slime
 
-@onready var attack_particles: CPUParticles2D = $AttackParticles
-@onready var atk_anims: AnimationPlayer = $atkAnims
+"""
+Class that represents a Slime
+"""
 
-var dam: int
-var health: int
-var healed = false
+# Variables
+@onready var aParticles = $AttackParticles
+@onready var step = $slimeyStep
+@onready var anim = $Slime/atkAnims
 
-# Sets the amount of damage the slime does
-func setDam(damage: int):
-	dam = damage
+# Runs every process frames
+func _process(_delta: float) -> void:
+	pos = getData().getPos()
+	if isDead():
+		EventBus.updateGold.emit(rng.randi_range(getData().getGoldRange().x, getData().getGoldRange().y))
+		EventBus.object_ded.emit(self)
 
-# Necessary Function for all fiend sprites, so that any animation can be called on from it's parent node
-func playAnim(anim: String):
-	atk_anims.play(anim)
+# Function taht plays an animation based on the given String
+func playAnim(a: String):
+	anim.play(a)
 	
-
-
-func _on_hitbox_area_entered(area: Area2D) -> void:
-	# When the sprite hits an opponent or hurtbox, this function is called
-	attack_particles.restart() # Emits a particle effect representing contact
-	
-	if area is Player:# If the slime made contact with the player
-		EventBus.update_hp.emit(dam * -1) # Decrease player HP by the sprites "dam" value
-	elif area is Hurtbox: # If it made contact with a hurtbox, that means it has been attacked
-		health -= area.damage
+# Function that performs the necessary AI calculation forr the slime to move
+func move(grid: gameBoard, target: Player) -> void:
+	getData().getBehavior().setMyself(self) # Sets the targetyt of the AI calculations to itself
+	getData().think(grid, target) # Tells the AI class to perform it's operations
+	getData().getBehavior().getGrid().loadGrid() # Redraws the grid
+	await get_tree().create_timer(getDelay()).timeout # Waits a lil bit
+	if getData().getActions() > 0: # Chhecks to see if it has any actions left to perform
+		move(grid, target) # If so, do it again
 	else:
-		if !healed:
-			healed = true
-			EventBus.healSK.emit(5)
-		health = 0
-		
+		EventBus.doneAttacking.emit() # Otherwise, tell the board that ur done
+
+
+func chooseState() -> void:
+	pass
+
+# Function that eiterh deals damage to the player, or damages itself, based on
+# what the slime collided with
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area is Player:
+		EventBus.update_hp.emit(-getData().getDam())	
+	elif area is Hurtbox:
+		getData().updateHealth(-area.getDamage())
+	aParticles.emitting = true

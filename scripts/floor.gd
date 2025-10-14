@@ -25,54 +25,7 @@ func load():
 			t.sprite = chooseTile(x, y) # function that chooses the appropriate sprite to be assigned to the unique tile
 			t.pos = Vector2(y,x) # assignes the on-screen position for the tile
 			add_child(t) # adds the unoque child to the scene tree, thus displaying it to the screen
-	add_doors(mapPos.x, mapPos.y, doors) # Add doorways on top of the floor
-			
-func add_doors(x: int, y: int, doorWays: Array):
-	# Function that adds doors based on any adjascent rooms in the map
-	# Param - x: The x position of the room on the map
-	# Param = y: The y position of the room on the map
-	# Param - doorWays: An array of integers that represent the connecting points of every possible room as a matrix
-
 	
-	for i in doorWays[x + y*9]: #Loop through every coordinate pair in the path array
-		
-		if i == 3:
-			var t = tile.instantiate()
-			var collider = doorCollider.instantiate()
-			t.sprite = preload("res://scenes/Tiles/door_up.tscn") # Sprite for a top facing doorway
-			t.pos = Vector2((grid.y)+2, (int(grid.x)+1)/2)
-			collider.pos = Vector2((grid.y), (int(grid.x)+1)/2)
-			add_child(t)
-			add_child(collider)
-				
-		elif i == 1:
-			var t = tile.instantiate()
-			var collider = doorCollider.instantiate()
-			t.sprite = preload("res://scenes/Tiles/door_down.tscn") # Sprite for a bottom facing doorway
-			t.pos = Vector2(-1, (int(grid.x)+1)/2)
-			collider.pos = Vector2(1, (int(grid.x)+1)/2)
-			add_child(t)
-			add_child(collider)
-				
-		elif i == 2:
-			# If the difference is 1, put it at the right of the room
-			var t = tile.instantiate()
-			var collider = doorCollider.instantiate()
-			t.sprite = preload("res://scenes/Tiles/door_r.tscn") # Sprite for a right facing doorway
-			t.pos = Vector2((int(grid.y)/2)+0.6, grid.x+1.5)
-			collider.pos = Vector2((int(grid.y)/2)+1, grid.x)
-			add_child(t)
-			add_child(collider)
-			
-		elif i == 4:
-			var t = tile.instantiate()
-			var collider = doorCollider.instantiate()
-			t.sprite = preload("res://scenes/Tiles/door_l.tscn") # Sprite for a left facing doorway
-			t.pos = Vector2((int(grid.y)/2)+0.6, -0.5)
-			collider.pos = Vector2((int(grid.y)/2)+1, 1)
-			add_child(t)
-			add_child(collider)
-				
 				
 			
 func chooseTile(y: int, x: int):

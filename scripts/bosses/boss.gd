@@ -36,6 +36,9 @@ func setup(p: Vector2, vis: Array, b: bossAI, hp: int, s: PackedScene, sz: int):
 	add_child(sprite)
 	return self
 
+func restoreActions():
+	pass
+
 func heal(num: int):
 	# Heals the boss when called. Fails to heal if already at Full HP
 	if health < totHP:
@@ -52,13 +55,13 @@ func _process(_delta: float) -> void:
 func updateView(playerPos: Vector2):
 	return brain.updateView(vision, playerPos, self)[0]
 	
-func move(board: Array, playerPos: Vector2):
+func move(board: gameBoard, player: Player):
 	# Function that tells the given AI to perform the boss's move
 	# @param board - The current gameBoard
 	# @param playerPos - The index of the player of the game board
 	timer.wait_time = 0.5
-	vision = updateView(playerPos)
-	brain.decide(self, playerPos, vision, board)
+	vision = updateView(player.pos)
+	brain.decide(self, player.pos, vision, board.getGrid())
 	timer.start()
 	
 func draw():

@@ -5,7 +5,7 @@ func _init() -> void:
 	super()
 
 func run():
-	null
+	pass
 	
 func test():
-	null
+	pass
