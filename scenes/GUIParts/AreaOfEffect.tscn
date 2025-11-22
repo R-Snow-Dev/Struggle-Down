@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://duxra6ae82h7x"]
 
-[ext_resource type="Script" path="res://scripts/PlayerAttacks/area_of_effect.gd" id="1_rwpnc"]
+[ext_resource type="Script" uid="uid://d12520g3odqn8" path="res://scripts/PlayerAttacks/area_of_effect.gd" id="1_rwpnc"]
 
 [sub_resource type="Animation" id="Animation_klfn1"]
 length = 0.001
@@ -131,8 +131,8 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_h3ysv"]
 _data = {
-"RESET": SubResource("Animation_klfn1"),
-"flash": SubResource("Animation_xnd5g")
+&"RESET": SubResource("Animation_klfn1"),
+&"flash": SubResource("Animation_xnd5g")
 }
 
 [node name="AreaOfEffect" type="Polygon2D"]
@@ -160,5 +160,5 @@ polygon = PackedVector2Array(-6, 0, -8, 0, -8, 2, -7, 2, -7, 1, -6, 1)
 [node name="AnimPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../AreaOfEffect1")
 libraries = {
-"": SubResource("AnimationLibrary_h3ysv")
+&"": SubResource("AnimationLibrary_h3ysv")
 }

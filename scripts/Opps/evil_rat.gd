@@ -68,5 +68,5 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 	if area is Player:
 		EventBus.update_hp.emit(-getData().getDam())
 	elif area is Hurtbox:
-		getData().updateHealth(-area.getDamage())
+		getData().updateHealth(-area.getWeaponData().getBaseDam())
 	aParticles.emitting = true

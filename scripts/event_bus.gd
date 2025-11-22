@@ -39,13 +39,13 @@ signal object_ded(fiend:Object)
 signal swap_weapon(Id: int)
 
 # Signal that is emitted whenever the player attacks
-signal attack(weapon: Array)
+signal attack(id: int)
 
 # signal that is emitted whenever a player is finished attacking
 signal playerDoneAttacking()
 
 # Signal that is emitted whenever the mouse hovers over the attack button
-signal updateAOE(height: int, width: int, pointOfOrigin: String)
+signal updateAOE(id: int)
 
 # Signal that is emitted whenever the game is paused
 signal pause()
@@ -101,3 +101,18 @@ signal unLock()
 
 # Locks the doors in a room
 signal reLock()
+
+# Called when something needs to be delayed
+signal delay(time:float)
+
+# Called when a delay has ended
+signal delayEnd()
+
+# Called when the weapon slot is right clicked
+signal spWeapon(id: int)
+
+# Called when the game board updates
+signal updatedView()
+
+# Called when a player enters or exits an altar
+signal updateAltar()

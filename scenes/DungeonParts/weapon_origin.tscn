@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://deo5npa3uhrn6"]
+
+[ext_resource type="Script" uid="uid://chqwdc8a6jumo" path="res://scripts/PlayerAttacks/weapon_origin.gd" id="1_avs30"]
+
+[node name="WeaponOrigin" type="Node2D"]
+script = ExtResource("1_avs30")

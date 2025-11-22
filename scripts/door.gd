@@ -29,7 +29,7 @@ func unlock():
 func draw():
 	position.x = pos.x*16
 	position.y = pos.y*16 - 8
-	self.z_index = (pos.y + 2)
+	self.z_index = (pos.y)
 
 func move():
 	pass

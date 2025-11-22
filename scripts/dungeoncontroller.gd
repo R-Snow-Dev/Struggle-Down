@@ -79,6 +79,7 @@ func drawBoard():
 	if boards[mapPos.x][mapPos.y][0].objects != []:
 		for f in boards[mapPos.x][mapPos.y][0].objects:
 			floorScene.add_child(f)
+	player.attack_origin.setGrid(gridSize)
 	boards[mapPos.x][mapPos.y][0].loadBoard()
 
 func rollEnemy(level:int, gridCoords: Array, chosen: int) -> Fiend:
@@ -265,14 +266,24 @@ func genMapData(path: Array):
 				objectList = loadObjects(gridSize, x)
 				type = 1
 			else:
+				"""gridSize = Vector2(5,5)
+				objectList = preload("res://scripts/defaultFloors.gd").new().altarRoom
+				type = 1"""
 				if rng.randf() < 0.666666 or x == endPos:
 					gridSize = Vector2(rng.randi_range(3,11), rng.randi_range(3,11))
 					objectList = loadObjects(gridSize, x)
 					type = 1
 				else:
-					gridSize = Vector2(rng.randi_range(7,11), rng.randi_range(7,11))
-					objectList = genPushPuzzleSolo(gridSize)
-					type = 2
+					if rng.randf() > 0.5:
+						gridSize = Vector2(rng.randi_range(7,11), rng.randi_range(7,11))
+						objectList = genPushPuzzleSolo(gridSize)
+						type = 2
+					else:
+						var data = PushPuzzleMulti.new(rng)
+						gridSize = data.gridSize + Vector2(2,2)
+						objectList = data.getObj()
+						print("Path: ", data.finalPath, " Coordinates: ", x)
+						type = 2
 		else: # If it is the starting position, generate a 5x5 room with no obstacles
 			gridSize = Vector2(5,5)
 			var startingItem = preload("res://scenes/Items/item.tscn").instantiate()
@@ -358,9 +369,14 @@ func _ready() -> void:
 	EventBus.unLock.connect(unLock)
 	EventBus.reLock.connect(reLock)
 	EventBus.object_ded.connect(object_ded)
+	EventBus.delay.connect(delay)
 	
 	s = data["seed"]
 	pHP = data["pHP"]
+
+func delay(time: float):
+	await get_tree().create_timer(time).timeout
+	EventBus.delayEnd.emit()
 	
 func object_ded(obj: Object):
 	boards[mapPos.x][mapPos.y][0].object_ded(obj)
@@ -449,8 +465,15 @@ func deathSequence():
 	
 func _on_death():
 	# removes the dungeon from the game scene
+	for x in boards:
+		for y in x:
+			for b in y:
+				b.queue_free()
 	queue_free()
-	
+
+func getGridSize() -> Vector2:
+	return gridSize
+
 func _new_level():
 	for x in boards:
 		for y in x:

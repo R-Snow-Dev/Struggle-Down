@@ -1,9 +1,9 @@
 [gd_scene load_steps=22 format=3 uid="uid://7j8v5re6vnpc"]
 
 [ext_resource type="Texture2D" uid="uid://djdmlq5xbxt6c" path="res://assets/Player_DG (1).png" id="1_83poi"]
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_i5qes"]
+[ext_resource type="Script" uid="uid://bgpegndtd6fom" path="res://scripts/player.gd" id="1_i5qes"]
 [ext_resource type="PackedScene" uid="uid://ckyqm55pptwki" path="res://scenes/DungeonParts/attack.tscn" id="3_45v0r"]
-[ext_resource type="Script" path="res://scripts/PlayerAttacks/attack_origin.gd" id="3_itcv7"]
+[ext_resource type="PackedScene" uid="uid://deo5npa3uhrn6" path="res://scenes/DungeonParts/weapon_origin.tscn" id="3_gyp37"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nb3vm"]
 radius = 3.0
@@ -156,12 +156,13 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hu8rc"]
 _data = {
-"RESET": SubResource("Animation_8r2rh"),
-"death": SubResource("Animation_1cofm")
+&"RESET": SubResource("Animation_8r2rh"),
+&"death": SubResource("Animation_1cofm")
 }
 
 [node name="Player" type="Area2D"]
 collision_layer = 4
+collision_mask = 65
 script = ExtResource("1_i5qes")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -177,13 +178,14 @@ frame_progress = 0.848767
 [node name="animPlayer" type="AnimationPlayer" parent="CollisionShape2D/AnimatedSprite2D"]
 root_node = NodePath("../../..")
 libraries = {
-"": SubResource("AnimationLibrary_hu8rc")
+&"": SubResource("AnimationLibrary_hu8rc")
 }
 
-[node name="AttackOrigin" type="Node2D" parent="."]
-script = ExtResource("3_itcv7")
+[node name="WeaponOrigin" parent="." instance=ExtResource("3_gyp37")]
+position = Vector2(-0.12353134, -5.8465843)
 
-[node name="Attack" parent="AttackOrigin" instance=ExtResource("3_45v0r")]
-position = Vector2(0, -8)
+[node name="Attack" parent="WeaponOrigin" instance=ExtResource("3_45v0r")]
+position = Vector2(0.12353134, 5.8465843)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]

@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://ckyqm55pptwki"]
 
-[ext_resource type="Script" path="res://scripts/AttackingLogic/attack.gd" id="1_n0yi4"]
-[ext_resource type="Script" path="res://scripts/Items/slash_tip.gd" id="2_sww6r"]
-[ext_resource type="Script" path="res://scripts/Items/pierce_tip.gd" id="3_j6rdw"]
+[ext_resource type="Script" uid="uid://io5ymnaov6s0" path="res://scripts/AttackingLogic/attack.gd" id="1_n0yi4"]
+[ext_resource type="Script" uid="uid://xnqf63bf1y2d" path="res://scripts/Items/slash_tip.gd" id="2_sww6r"]
+[ext_resource type="Script" uid="uid://dywqdadpfnwt0" path="res://scripts/Items/pierce_tip.gd" id="3_j6rdw"]
 
 [node name="Attack" type="Node2D"]
 script = ExtResource("1_n0yi4")

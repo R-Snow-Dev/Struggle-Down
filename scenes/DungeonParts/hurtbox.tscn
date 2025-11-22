@@ -2,12 +2,15 @@
 
 [ext_resource type="Script" uid="uid://dihaevwq3k6uj" path="res://scripts/PlayerAttacks/hurtbox.gd" id="1_umkgf"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dhkwp"]
-size = Vector2(10, 10)
+[sub_resource type="CircleShape2D" id="CircleShape2D_cu2nh"]
+radius = 8.0
 
 [node name="Hurtbox" type="Area2D"]
 collision_layer = 8
+collision_mask = 33
 script = ExtResource("1_umkgf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_dhkwp")
+shape = SubResource("CircleShape2D_cu2nh")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

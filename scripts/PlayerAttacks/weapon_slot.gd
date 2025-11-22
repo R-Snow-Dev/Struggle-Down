@@ -16,7 +16,9 @@ var halStorage: int
 var busy = false
 var rng = RandomNumberGenerator.new()
 var aA: int
+var inAltar: bool = false
 
+@onready var sacText = $sacText
 @onready var gamecontroller: Node = %Gamecontroller
 @onready var data = SaveController.loadData()
 @onready var collider = $Area2D/CollisionShape2D
@@ -28,58 +30,48 @@ func _ready() -> void:
 	EventBus.playerDoneAttacking.connect(_playerDoneAttacking)
 	EventBus.swap_weapon.connect(_swap_weapon)
 	EventBus.save_data.connect(_save_weapon)
+	EventBus.updatedView.connect(update)
+	EventBus.updateAltar.connect(updateAltar)
 	
 	# allWeapons format is as follows: The ID of each item represents it's index on the main array. 
 	# Each sub array is divided into index 0-7. 0 is the sprite of the weapon, 1 is it's horizontal rage, 2
 	# is it's vertical range, 3 is it's point of origin where the attack will come from, 5 is the attack type which determines the animation 
 	# that plays, 6 is the damage it will deal, and 7 is how many actions it costs to use. All elements must be present for an Item to function correctly
 	allWeapons = [[],
-	[preload("res://scenes/Items/sword_1_item.tscn"), 3,1,Vector2(0,0),"slashing", 7,1],
-	[preload("res://scenes/Items/great_sword_item.tscn"), 3, 2, Vector2(0,0), "slashing", 10, 2],
-	[preload("res://scenes/Items/mace_item.tscn"), 1, 1, Vector2(0,0), "piercing", aA*5, aA],
-	[preload("res://scenes/Items/spear_item.tscn"), 1, 3, Vector2(0,0), "piercing", 7, 1],
-	[preload("res://scenes/Items/halberd_item.tscn"), 3, 1, Vector2(0,0), "slashing", 5, 1],
-	[preload("res://scenes/Items/stiletto_item.tscn"), 1, 1, Vector2(0,0), "piercing", 3, 1]]
+	preload("res://scenes/Items/sword_1_item.tscn"),
+	preload("res://scenes/Items/great_sword_item.tscn"),
+	preload("res://scenes/Items/mace_item.tscn"),
+	preload("res://scenes/Items/spear_item.tscn"),
+	preload("res://scenes/Items/halberd_item.tscn"),
+	preload("res://scenes/Items/stiletto_item.tscn")]
 	
 	
 	ID = data["weapon"]
 	_swap_weapon(ID)
 
+func updateAltar() -> void:
+	inAltar = !inAltar
+	sacText.stop()
+	if inAltar and ID > 0:
+		sacText.play()
+
+func update() -> void:
+	if mouseOn:
+		EventBus.updateAOE.emit(ID)
+
 func _process(_delta: float) -> void:
-	aA = gamecontroller.player.actionsAvailable
-	allWeapons[3][6] = aA
-	allWeapons[3][5] = aA * 5
 	if mouseOn and !busy:
 		if ID != 0:
-			if Input.is_action_just_pressed("select") and gamecontroller.paused == false and gamecontroller.player.actionsAvailable >= allWeapons[ID][6]:
-				EventBus.pause.emit()
-				if ID != 6:
-					print(aA)
-					print(allWeapons[ID][6])
-					EventBus.updateActions.emit(-(allWeapons[ID][6]))
-					print(gamecontroller.player.actionsAvailable)
+			if Input.is_action_just_pressed("select"):
+				if inAltar:
+					_swap_weapon(0)
+					sacText.stop()
 				else:
-					if rng.randf() > 0.66:
-						EventBus.updateActions.emit(-(allWeapons[ID][6]))
-					else:
-						EventBus.updateActions.emit(0)
-				EventBus.attack.emit(allWeapons[ID])
-				busy = true
+					print("Attacked with a weapon id of: ", ID)
+					busy = true
+					EventBus.attack.emit(ID)
 			if Input.is_action_just_pressed("special_select") and ID == 5:
-				if halFlip:
-					halStorage = allWeapons[5][1]
-					halFlip = false
-					allWeapons[5][4] = "slashing"
-					allWeapons[5][1] = allWeapons[5][2]
-					allWeapons[5][2] = halStorage
-					EventBus.updateAOE.emit(allWeapons[ID][1], allWeapons[ID][2], allWeapons[ID][3])
-				else:
-					halStorage = allWeapons[5][1]
-					allWeapons[5][4] = "piercing"
-					allWeapons[5][1] = allWeapons[5][2]
-					allWeapons[5][2] = halStorage
-					EventBus.updateAOE.emit(allWeapons[ID][1], allWeapons[ID][2], allWeapons[ID][3])
-					halFlip = true
+				EventBus.spWeapon.emit(ID)
 
 func _playerDoneAttacking():
 	EventBus.unpause.emit()
@@ -95,11 +87,12 @@ func _swap_weapon(id: int):
 		
 	# Finds the correct sprite node from allWeapons using the ID, then displays it by adding it as a child node
 	ID = id
+	WeaponList.held = id
 	if ID > 0:
-		sprite = allWeapons[ID][0].instantiate()
+		sprite = allWeapons[ID].instantiate()
 		sprite.position.x = 8
 		slot.add_child(sprite)
-		EventBus.updateAOE.emit(allWeapons[ID][1], allWeapons[ID][2], allWeapons[ID][3])
+		EventBus.updateAOE.emit(ID)
 	
 func _save_weapon():
 	# Updates the savefile with the current held weapon when going to a new floor
@@ -107,12 +100,12 @@ func _save_weapon():
 
 func _on_area_2d_mouse_entered() -> void:
 	if ID > 0:
-		EventBus.updateAOE.emit(allWeapons[ID][1], allWeapons[ID][2], allWeapons[ID][3])
+		EventBus.updateAOE.emit(ID)
 	mouseOn = true
 	slot.position.y = -2
 
 func _on_area_2d_mouse_exited() -> void:
-	EventBus.updateAOE.emit(0, 0, allWeapons[1][3])
+	EventBus.updateAOE.emit(0)
 	mouseOn = false
 	halFlip = false
 	slot.position.y = 0

@@ -173,6 +173,7 @@ func loadBoard():
 		unlockDoors()
 	
 	# display all objects to the screen
+	EventBus.updatedView.emit()
 	display()
 
 func heal():
@@ -217,6 +218,8 @@ func fiendsTurn(pActions: float):
 	if objects.size() > 0:
 		for y in objects:
 			if y is Fiend or y is Boss:
+				EventBus.delay.emit(0.2)
+				await EventBus.delayEnd
 				loadBoard()
 				y.restoreActions()
 				y.move(self, player)

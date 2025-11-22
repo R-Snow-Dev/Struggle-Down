@@ -7,6 +7,7 @@ Super class for all Fiend data types
 
 # Variables
 var data: FiendData
+var effects: Array= []
 var states: Array
 var curState: String
 var rng = RandomNumberGenerator.new()
@@ -19,6 +20,13 @@ func setDelay(time:float) -> void:
 
 func getDelay() -> float:
 	return delay
+
+func addEffect(e: String) -> void:
+	if e not in effects:
+		effects.append(e)
+
+func getEffects() -> Array:
+	return effects
 
 func setData(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCounted) -> void:
 	data = FiendData.new(p, h, a, gR, d, f, b)

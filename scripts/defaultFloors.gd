@@ -37,3 +37,7 @@ var kSlime = [wall.instantiate().setup(Vector2(0,0)), wall.instantiate().setup(V
 , wall.instantiate().setup(Vector2(8,10)), wall.instantiate().setup(Vector2(8,9)), wall.instantiate().setup(Vector2(8,8)), wall.instantiate().setup(Vector2(8,7))
 , wall.instantiate().setup(Vector2(7,10)), wall.instantiate().setup(Vector2(7,9)), wall.instantiate().setup(Vector2(7,8)), boss.instantiate().setup(Vector2(5,5) 
 , kSlimeVision, preload("res://scripts/Behaviors/KingSlimeAI.gd").new(), 100, preload("res://scenes/Opps/king_slime.tscn"), 2)]
+
+var altarRoom = [preload("res://scenes/Tiles/altar.tscn").instantiate().setup(Vector2(2,2)), preload("res://scenes/Tiles/barrier.tscn").instantiate().setup(Vector2(1,1)),
+preload("res://scenes/Tiles/barrier.tscn").instantiate().setup(Vector2(3,3)), preload("res://scenes/Tiles/barrier.tscn").instantiate().setup(Vector2(1,3)),
+preload("res://scenes/Tiles/barrier.tscn").instantiate().setup(Vector2(3,1))]

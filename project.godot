@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 EventBus="*res://scenes/Globals/event_bus.tscn"
 SaveController="*res://scripts/SaveController.gd"
+WeaponList="*res://scripts/ADTs/weaponList.gd"
+UpgradeList="*res://scripts/ADTs/attributes/upgrade_list.gd"
 
 [display]
 
@@ -60,6 +62,16 @@ special_select={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(380, 18),"global_position":Vector2(389, 64),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="General"
+2d_physics/layer_2="DoorArea"
+2d_physics/layer_3="Player"
+2d_physics/layer_4="AttackBox"
+2d_physics/layer_5="Pushable"
+2d_physics/layer_6="Wall"
+2d_physics/layer_7="Altar"
 
 [rendering]
 
