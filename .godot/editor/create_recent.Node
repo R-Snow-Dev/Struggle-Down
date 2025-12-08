@@ -1,7 +1,8 @@
+AnimationPlayer
+Label
 CollisionShape2D
 Area2D
-AnimationPlayer
 AnimatedSprite2D
+Sprite2D
 Node2D
 Node
-Sprite2D
