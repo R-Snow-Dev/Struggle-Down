@@ -23,14 +23,20 @@ func playAnim(a: String):
 	
 # Function that performs the necessary AI calculation forr the slime to move
 func move(grid: gameBoard, target: Player) -> void:
-	getData().getBehavior().setMyself(self) # Sets the targetyt of the AI calculations to itself
-	getData().think(grid, target) # Tells the AI class to perform it's operations
-	getData().getBehavior().getGrid().loadGrid() # Redraws the grid
-	await get_tree().create_timer(getDelay()).timeout # Waits a lil bit
-	if getData().getActions() > 0: # Chhecks to see if it has any actions left to perform
-		move(grid, target) # If so, do it again
+	activateEffects(0)
+	if getData().getActions() > 0:
+		getData().getBehavior().setMyself(self) # Sets the targetyt of the AI calculations to itself
+		getData().think(grid, target) # Tells the AI class to perform it's operations
+		getData().getBehavior().getGrid().loadGrid() # Redraws the grid
+		await get_tree().create_timer(getDelay()).timeout # Waits a lil bit
+		if getData().getActions() > 0: # Chhecks to see if it has any actions left to perform
+			move(grid, target) # If so, do it again
+		else:
+			EventBus.doneAttacking.emit() # Otherwise, tell the board that ur done
+			activateEffects(1)
 	else:
-		EventBus.doneAttacking.emit() # Otherwise, tell the board that ur done
+			EventBus.doneAttacking.emit() # Otherwise, tell the board that ur done
+			activateEffects(1)
 
 
 func chooseState() -> void:
@@ -42,5 +48,5 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area is Player:
 		EventBus.update_hp.emit(-getData().getDam())	
 	elif area is Hurtbox:
-		getData().updateHealth(-area.getWeaponData().getBaseDam())
+		getData().updateHealth(-calcDamage(area.getWeaponData()))
 	aParticles.emitting = true

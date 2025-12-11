@@ -20,19 +20,25 @@ func _process(_delta: float) -> void:
 	if isDead():
 		EventBus.updateGold.emit(rng.randi_range(getData().getGoldRange().x, getData().getGoldRange().y))
 		EventBus.object_ded.emit(self)
-	
+
 func move(grid: gameBoard, target: Player) -> void:
 	# Function that gets the "behavior" from the given FiendData type
 	# and calls it to do the AI calculations
-	getData().getBehavior().setMyself(self) # sets the target of the calculations to itself
-	getData().think(grid, target) # Performs the calcs
-	getData().getBehavior().getGrid().loadGrid() # Reloads the board grid
-	await get_tree().create_timer(getDelay()).timeout # Waits a 'lil bit
-	playAnim("idle") # Reset the animation
-	if getData().getActions() > 0: # Check to see if there anre any more actions it can take
-		move(grid, target)
+	activateEffects(0)
+	if getData().getActions() > 0: # Check to see if there are any actions it can take
+		getData().getBehavior().setMyself(self) # sets the target of the calculations to itself
+		getData().think(grid, target) # Performs the calcs
+		getData().getBehavior().getGrid().loadGrid() # Reloads the board grid
+		await get_tree().create_timer(getDelay()).timeout # Waits a 'lil bit
+		playAnim("idle") # Reset the animation
+		if getData().getActions() > 0: # Check to see if there anre any more actions it can take
+			move(grid, target)
+		else:
+			EventBus.doneAttacking.emit() # Tell the board it is finished moving
+			activateEffects(1)
 	else:
 		EventBus.doneAttacking.emit() # Tell the board it is finished moving
+		activateEffects(1)
 		
 
 func doSpriteAnim(a: String):
@@ -68,5 +74,5 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 	if area is Player:
 		EventBus.update_hp.emit(-getData().getDam())
 	elif area is Hurtbox:
-		getData().updateHealth(-area.getWeaponData().getBaseDam())
+		getData().updateHealth(-calcDamage(area.getWeaponData()))
 	aParticles.emitting = true

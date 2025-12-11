@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_4ewcp"]
 [ext_resource type="Texture2D" uid="uid://cv4uf3aycviv" path="res://assets/pouch person.png" id="2_xqi64"]
 [ext_resource type="Texture2D" uid="uid://bviykps1xkm1o" path="res://assets/goCord.png" id="3_0v2fr"]
-[ext_resource type="Script" path="res://scripts/ButtonScripts/pouch.gd" id="3_06ajq"]
+[ext_resource type="Script" uid="uid://3ebugr2d0hh5" path="res://scripts/ButtonScripts/pouch.gd" id="3_06ajq"]
 [ext_resource type="Texture2D" uid="uid://mem73q4qhu0" path="res://assets/pouchMenu.png" id="4_p5f6h"]
 [ext_resource type="PackedScene" uid="uid://uwue8fgsf3ss" path="res://scenes/menus/consumable_menu.tscn" id="6_3e3yh"]
 
@@ -165,8 +165,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1ree6"]
 _data = {
-"close": SubResource("Animation_h14pg"),
-"open": SubResource("Animation_ps708")
+&"close": SubResource("Animation_h14pg"),
+&"open": SubResource("Animation_ps708")
 }
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e06os"]
@@ -359,7 +359,7 @@ script = ExtResource("3_06ajq")
 [node name="timing" type="AnimationPlayer" parent="Camera2D/BG/pouch"]
 root_node = NodePath("../../../..")
 libraries = {
-"": SubResource("AnimationLibrary_1ree6")
+&"": SubResource("AnimationLibrary_1ree6")
 }
 
 [node name="guy" type="AnimatedSprite2D" parent="Camera2D/BG/pouch"]

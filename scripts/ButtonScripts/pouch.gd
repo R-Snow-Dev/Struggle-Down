@@ -60,5 +60,8 @@ func toggleMenus():
 
 func go():
 	# Tells the game to load the dungeon scene
+	WeaponList.reset()
+	UpgradeList.reset()
+	SaveController.resetUps()
 	EventBus.go.emit()
 	

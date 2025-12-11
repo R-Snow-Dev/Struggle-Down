@@ -18,7 +18,7 @@ preload("res://scenes/Items/ConsumableSprites/swift_ar.tscn")]
 var path = "res://saveFiles/save1.json"
 # Dictionary of default data. Used to initialise savefiles
 var default_data = {"pActions": 2, "pHP": 4, "curHP": 4, "seed": 22, "weapon": 0, "level": 1, "floor": 1, "gold": 0, "inrun": true, 
-"inventory": [], "inInv": 0, }
+"inventory": [], "inInv": 0, "upgrades": []}
 
 func save(dict: Dictionary):
 	# Function that writes a dictionary to the desired savefile
@@ -110,6 +110,18 @@ func find_id(num: int, data: Array):
 			return i
 	return -1
 
+func addUp(id: int):
+	# Adds the id of an upgrade to the savefile
+	var data = loadData()
+	data["upgrades"].append(id)
+	save(data)
+	
+func resetUps():
+	# Removes all saved upgrades
+	var data = loadData()
+	data["upgrades"] = []
+	save(data)
+	
 func getData(id: String):
 	# Fetches and returns the current value of the desired ID stored in the savefile
 	var data = loadData()

@@ -25,11 +25,13 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if dTotal < 1:
 		await get_tree().create_timer(0.1).timeout
+		EventBus.playerDoneAttacking.emit()
 		queue_free()
 	elif dTravelled < dTotal-16:
 		position += Vector2(4,4) * weapon.getVelo()
 		dTravelled += 4
 	else:
+		EventBus.playerDoneAttacking.emit()
 		queue_free()
 	
 

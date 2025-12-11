@@ -64,11 +64,19 @@ func _process(_delta: float) -> void:
 		if ID != 0:
 			if Input.is_action_just_pressed("select"):
 				if inAltar:
+					var w:Weapon = WeaponList.weapons[ID]
+					if UpgradeList.upgradeTable.has(w.getName()):
+						var chosen = rng.randi_range(0,UpgradeList.upgradeTable[w.getName()].size()-1)
+						var a: Attribute = UpgradeList.upgradeTable[w.getName()][chosen]
+						EventBus.sac.emit(a)
+						EventBus.pause.emit()
 					_swap_weapon(0)
+					ID = 0
 					sacText.stop()
 				else:
 					print("Attacked with a weapon id of: ", ID)
 					busy = true
+					var w: Weapon = WeaponList.weapons[ID]
 					EventBus.attack.emit(ID)
 			if Input.is_action_just_pressed("special_select") and ID == 5:
 				EventBus.spWeapon.emit(ID)

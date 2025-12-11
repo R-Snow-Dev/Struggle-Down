@@ -8,6 +8,7 @@ Super class for all Fiend data types
 # Variables
 var data: FiendData
 var effects: Array= []
+var modifiers: Dictionary = {}
 var states: Array
 var curState: String
 var rng = RandomNumberGenerator.new()
@@ -21,12 +22,17 @@ func setDelay(time:float) -> void:
 func getDelay() -> float:
 	return delay
 
-func addEffect(e: String) -> void:
+func addEffect(e: Effect) -> void:
 	if e not in effects:
 		effects.append(e)
 
 func getEffects() -> Array:
 	return effects
+
+func activateEffects(n: int):
+	for x:Effect in getEffects():
+		if x.getEffectTime() == n:
+			x.activate(self)
 
 func setData(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCounted) -> void:
 	data = FiendData.new(p, h, a, gR, d, f, b)
@@ -68,6 +74,19 @@ func chooseState() -> void:
 	
 func move(_grid: gameBoard, _target: Player) -> void:
 	pass
+
+func calc(num: int, type: String):
+	if modifiers.has(type):
+		return num * modifiers[type]
+	return num
+
+func calcDamage(w: Weapon):
+	var total = calc(w.getBaseDam(), w.getDamageType())
+	for x in w.getExtraAttacks():
+		total += calc(WeaponList.damages[x], x)
+	for x:Attribute in UpgradeList.getByType("onHit"):
+		total += calc(x.effect(self), x.damageType)
+	return total
 
 
 # Draws the Fiend to the game board

@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://dkqh251ixbss2"]
+[gd_scene load_steps=42 format=4 uid="uid://dkqh251ixbss2"]
 
 [ext_resource type="Script" uid="uid://crf0iaimv3j33" path="res://scripts/dungeon.gd" id="1_ba8p3"]
 [ext_resource type="Script" uid="uid://dqhwkgc4c44u5" path="res://scripts/dungeoncontroller.gd" id="2_imoik"]
@@ -19,6 +19,8 @@
 [ext_resource type="PackedScene" uid="uid://dwinc8jnjl38k" path="res://scenes/GUIParts/gold_icon.tscn" id="15_yrjo3"]
 [ext_resource type="Script" uid="uid://cu2si4x8n0phk" path="res://scripts/ButtonScripts/inventory.gd" id="17_8lghc"]
 [ext_resource type="PackedScene" uid="uid://dou5rxf8tiklv" path="res://scenes/GUIParts/inventory_bar.tscn" id="18_0hxsq"]
+[ext_resource type="PackedScene" uid="uid://chx0bi5hs55wc" path="res://scenes/GUIParts/u_popup.tscn" id="20_5d84e"]
+[ext_resource type="Script" uid="uid://bajmxiffqeqpp" path="res://scripts/UI Shizz/upgrade_container.gd" id="21_4k0vd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5iqrf"]
 texture = ExtResource("4_48e0x")
@@ -637,6 +639,25 @@ vertical_alignment = 1
 [node name="inventoryBar" parent="Gamecontroller/Node2D/Camera2D/Inventory" instance=ExtResource("18_0hxsq")]
 visible = false
 position = Vector2(1.52588e-05, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+scale = Vector2(1.5, 1.5)
+transform = Transform2D(1.5, 0, 0, 1.5, 0, 0)
+
+[node name="UPopup" parent="CanvasLayer" instance=ExtResource("20_5d84e")]
+position = Vector2(272, 111.99999)
+
+[node name="UpgradeContainer" type="HFlowContainer" parent="CanvasLayer"]
+z_index = 1000
+offset_left = 245.33334
+offset_top = 368.0
+offset_right = 522.6666
+offset_bottom = 400.0
+theme_override_constants/h_separation = 32
+theme_override_constants/v_separation = 32
+alignment = 2
+reverse_fill = true
+script = ExtResource("21_4k0vd")
 
 [connection signal="mouse_entered" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_exited"]

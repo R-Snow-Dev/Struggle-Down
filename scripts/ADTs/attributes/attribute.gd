@@ -4,6 +4,7 @@ class_name Attribute
 var type: String
 var name: String
 var description: String
+var damageType: String
 
 func _init() -> void:
 	pass

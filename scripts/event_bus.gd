@@ -17,6 +17,9 @@ signal changeRooms(direction: Vector2, startPos: String)
 # Signal that tells the action text that it needs to change it's displayed number.
 signal updateActions(amount: int)
 
+# Signal that is called when the action icon must update
+signal updateShoe(amount: int)
+
 # Signal that resets the action text to the max amount 
 signal actionsReset(amount: int)
 
@@ -116,3 +119,12 @@ signal updatedView()
 
 # Called when a player enters or exits an altar
 signal updateAltar()
+
+# Called when the player sacrifices a weapon
+signal sac(a: Attribute)
+
+# Signal that is called when an upgrade is added to the container
+signal uCont(a: Attribute)
+
+# Signal that is emitted when the upgrade container needs to be reset
+signal rUCont()

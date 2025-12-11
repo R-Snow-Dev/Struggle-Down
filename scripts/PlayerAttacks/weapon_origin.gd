@@ -99,6 +99,7 @@ func attack(id: int):
 		var player = get_parent()
 		var w: Weapon = WeaponList.weapons[id]
 		w.onAttack(player.actionsAvailable)
+		print("Attack had a cost of: ", w.getCost(), " and a damage of: ", w.getBaseDam())
 		if player.actionsAvailable >= w.getCost():
 			print("Attacking")
 			EventBus.pause.emit()
@@ -112,7 +113,7 @@ func attack(id: int):
 			var hurtbox = preload("res://scenes/DungeonParts/hurtbox.tscn").instantiate()
 			hurtbox.setup(w, dist)
 			add_child(hurtbox)
-			EventBus.updateActions.emit(w.getCost() * -1)
+			EventBus.updateActions.emit(w.getCost() * -1, "attack")
 		else:
 			print("Not Enough Actions")
 			EventBus.playerDoneAttacking.emit()

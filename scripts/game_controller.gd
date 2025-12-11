@@ -20,6 +20,9 @@ func _on_death():
 func _new_level():
 	# Loads another dungeon upon loading a new level, after removing any children that may somehow still be under this node
 	
+	WeaponList.reset()
+	UpgradeList.reset()
+	
 	# Gets the current saved data
 	var data = SaveController.loadData()
 	if self.get_child_count() > 0:
@@ -34,6 +37,7 @@ func _new_level():
 	else: # Otherwise, move onto the next floor
 		SaveController.updateData("floor", data["floor"] + 1)
 	add_child(dungeon)
+	UpgradeList.addFromSave()
 
 func _file_select():
 	# Opens the file selection menu upon selecting it from the main menu
@@ -72,7 +76,10 @@ func _go():
 	add_child(dungeon)
 
 func _start():
-	# Loads another dungeon upon loading a new level, after removing any children that may somehow still be under this node
+	# Loads another dungeon upon loading a new level, after removing any children that may somehow still under this node
+	WeaponList.reset()
+	UpgradeList.reset()
+
 	if self.get_child_count() > 0:
 		for i in self.get_children():
 			self.remove_child(i)
@@ -81,3 +88,4 @@ func _start():
 		add_child(dungeon)
 	else:
 		loadPouch() # If the player exited in the pouch, take them to the pouch instead
+	UpgradeList.addFromSave()

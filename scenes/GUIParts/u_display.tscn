@@ -1,0 +1,267 @@
+[gd_scene load_steps=9 format=4 uid="uid://cpspajf4011k"]
+
+[ext_resource type="Script" uid="uid://cf4nrithwt8ad" path="res://scripts/UI Shizz/u_display.gd" id="1_jxquf"]
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="2_ur608"]
+[ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="3_allkc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_na5p2"]
+size = Vector2(32, 32)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gncir"]
+texture = ExtResource("2_ur608")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+3:4/0 = 0
+8:4/0 = 0
+9:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+9:5/0 = 0
+0:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+8:6/0 = 0
+9:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+5:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+1:9/0 = 0
+5:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+7:11/0 = 0
+9:11/0 = 0
+0:12/0 = 0
+1:12/0 = 0
+7:12/0 = 0
+8:12/0 = 0
+9:12/0 = 0
+0:13/0 = 0
+1:13/0 = 0
+7:13/0 = 0
+8:13/0 = 0
+9:13/0 = 0
+7:14/0 = 0
+8:14/0 = 0
+9:14/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_2uyb5"]
+sources/0 = SubResource("TileSetAtlasSource_gncir")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8hblg"]
+texture = ExtResource("2_ur608")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+3:4/0 = 0
+8:4/0 = 0
+9:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+9:5/0 = 0
+0:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+8:6/0 = 0
+9:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+5:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+1:9/0 = 0
+5:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+7:11/0 = 0
+9:11/0 = 0
+0:12/0 = 0
+1:12/0 = 0
+7:12/0 = 0
+8:12/0 = 0
+9:12/0 = 0
+0:13/0 = 0
+1:13/0 = 0
+7:13/0 = 0
+8:13/0 = 0
+9:13/0 = 0
+7:14/0 = 0
+8:14/0 = 0
+9:14/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_aoun7"]
+sources/0 = SubResource("TileSetAtlasSource_8hblg")
+
+[node name="uDisplay" type="ColorRect"]
+modulate = Color(0.94509804, 0.94509804, 0.94509804, 1)
+offset_right = 32.0
+offset_bottom = 32.0
+scale = Vector2(0.25, 0.25)
+color = Color(1, 1, 1, 0)
+script = ExtResource("1_jxquf")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_na5p2")
+
+[node name="deets" type="TileMapLayer" parent="."]
+visible = false
+z_index = 10
+position = Vector2(0, -192)
+tile_map_data = PackedByteArray("AAD9/wIAAAABAAEAAAD9/wMAAAABAAEAAAD9/wQAAAABAAEAAAD9/wUAAAABAAEAAAD9/wYAAAABAAEAAAD9/wcAAAABAAEAAAD9/wgAAAABAAEAAAD9/wkAAAABAAEAAAD9/woAAAABAAEAAAD+/wIAAAABAAEAAAD+/wMAAAABAAEAAAD+/wQAAAABAAEAAAD+/wUAAAABAAEAAAD+/wYAAAABAAEAAAD+/wcAAAABAAEAAAD+/wgAAAABAAEAAAD+/wkAAAABAAEAAAD+/woAAAABAAEAAAD//wIAAAABAAEAAAD//wMAAAABAAEAAAD//wQAAAABAAEAAAD//wUAAAABAAEAAAD//wYAAAABAAEAAAD//wcAAAABAAEAAAD//wgAAAABAAEAAAD//wkAAAABAAEAAAD//woAAAABAAEAAAAAAAIAAAABAAEAAAAAAAMAAAABAAEAAAAAAAQAAAABAAEAAAAAAAUAAAABAAEAAAAAAAYAAAABAAEAAAAAAAcAAAABAAEAAAAAAAgAAAABAAEAAAAAAAkAAAABAAEAAAAAAAoAAAABAAEAAAABAAIAAAABAAEAAAABAAMAAAABAAEAAAABAAQAAAABAAEAAAABAAUAAAABAAEAAAABAAYAAAABAAEAAAABAAcAAAABAAEAAAABAAgAAAABAAEAAAABAAkAAAABAAEAAAABAAoAAAABAAEAAAACAAIAAAABAAEAAAACAAMAAAABAAEAAAACAAQAAAABAAEAAAACAAUAAAABAAEAAAACAAYAAAABAAEAAAACAAcAAAABAAEAAAACAAgAAAABAAEAAAACAAkAAAABAAEAAAACAAoAAAABAAEAAAADAAIAAAABAAEAAAADAAMAAAABAAEAAAADAAQAAAABAAEAAAADAAUAAAABAAEAAAADAAYAAAABAAEAAAADAAcAAAABAAEAAAADAAgAAAABAAEAAAADAAkAAAABAAEAAAADAAoAAAABAAEAAAAEAAIAAAABAAEAAAAEAAMAAAABAAEAAAAEAAQAAAABAAEAAAAEAAUAAAABAAEAAAAEAAYAAAABAAEAAAAEAAcAAAABAAEAAAAEAAgAAAABAAEAAAAEAAkAAAABAAEAAAAEAAoAAAABAAEAAAD9/wsAAAABAAEAAAD+/wsAAAABAAEAAAD//wsAAAABAAEAAAAAAAsAAAABAAEAAAABAAsAAAABAAEAAAACAAsAAAABAAEAAAADAAsAAAABAAEAAAAEAAsAAAABAAEAAAA=")
+tile_set = SubResource("TileSet_2uyb5")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="deets"]
+tile_map_data = PackedByteArray("AAAEAAIAAAACAAAAAAD9/wIAAAAAAAAAAAD+/wIAAAABAAAAAAD//wIAAAABAAAAAAAAAAIAAAABAAAAAAABAAIAAAABAAAAAAACAAIAAAABAAAAAAADAAIAAAABAAAAAAD9/wMAAAAAAAEAAAD9/wQAAAAAAAEAAAD9/wUAAAAAAAEAAAD9/wYAAAAAAAEAAAD9/wcAAAAAAAEAAAD9/wgAAAAAAAEAAAD9/wkAAAAAAAEAAAAEAAMAAAACAAEAAAAEAAQAAAACAAEAAAAEAAUAAAACAAEAAAAEAAYAAAACAAEAAAAEAAcAAAACAAEAAAAEAAgAAAACAAEAAAAEAAkAAAACAAEAAAD//wUAAAABAAAAAAABAAUAAAABAAAAAAAAAAUAAAABAAAAAAACAAUAAAABAAAAAAD9/wsAAAAAAAIAAAD+/wsAAAABAAIAAAD//wsAAAABAAIAAAAAAAsAAAABAAIAAAABAAsAAAABAAIAAAACAAsAAAABAAIAAAADAAsAAAABAAIAAAAEAAsAAAACAAIAAAAEAAoAAAACAAEAAAD9/woAAAAAAAEAAAA=")
+tile_set = SubResource("TileSet_aoun7")
+
+[node name="Name" type="Label" parent="deets"]
+offset_left = -32.0
+offset_top = 40.0
+offset_right = 160.0
+offset_bottom = 104.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_allkc")
+theme_override_font_sizes/font_size = 32
+text = "Upgrade Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="desc" type="Label" parent="deets"]
+offset_left = -32.0
+offset_top = 88.0
+offset_right = 288.0
+offset_bottom = 394.66666
+scale = Vector2(0.3, 0.3)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_allkc")
+theme_override_font_sizes/font_size = 32
+text = "Upgrade Description"
+autowrap_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_allkc")
+theme_override_font_sizes/font_size = 32
+text = "BR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

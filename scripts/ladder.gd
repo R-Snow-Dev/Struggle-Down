@@ -34,6 +34,7 @@ func draw():
 	self.z_index = (pos.y + 1)
 
 func _on_ladder_trigger_area_entered(_area: Area2D) -> void:
+	UpgradeList.saveToFile()
 	EventBus.save_data.emit()
 	SaveController.updateData("seed", rng.get_seed())
 	EventBus.new_level.emit()

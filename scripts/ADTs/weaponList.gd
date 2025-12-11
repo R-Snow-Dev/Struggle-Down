@@ -12,6 +12,8 @@ var weapons = [[],
 var damages = {"slash" = 0, "pierce" = 0, "blunt" = 0, "shockwave" = 0,
 "frost" = 0, "explosive" = 0, "shock" = 0, "fire" = 0, "holy" = 0}
 
+var effects = {"bleed": Bleed.new()}
+
 var held: int = 0
 
 func reset() -> void:

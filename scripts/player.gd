@@ -59,8 +59,13 @@ func bump(dir: Vector2):
 	draw()
 	
 
-func _updateActions(amount: int):
+func _updateActions(a: int, type: String = "move"):
+	var amount = a
+	if type == "attack":
+		for x: Attribute in UpgradeList.getByType("onAttack"):
+			amount *= x.effect(self)
 	actionsAvailable += amount
+	EventBus.updateShoe.emit(amount)
 
 func setActionsAvailable(actions: int):
 	# Function to artificially set the number of available actions for the player

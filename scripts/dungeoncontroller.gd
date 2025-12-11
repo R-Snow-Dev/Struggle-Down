@@ -15,7 +15,7 @@ var boards: Array # 2D array of boards representing the floor map
 var floorScene = preload("res://scenes/DungeonParts/floor.tscn").instantiate()
 var oppControl = preload("res://scenes/DungeonParts/opp_controller.tscn").instantiate()
 var player = preload("res://scenes/DungeonParts/player.tscn").instantiate()
-var map = preload("res://scenes/DungeonParts/map.tscn").instantiate()
+var map:Map = preload("res://scenes/DungeonParts/map.tscn").instantiate()
 var wall = preload("res://scenes/Tiles/Wall.tscn")
 var dR = preload("res://scenes/GUIParts/discovered_room.tscn")
 var mapPos : Vector2
@@ -259,16 +259,19 @@ func genMapData(path: Array):
 		# List of fiends is initialised
 		var type = 1
 		var objectList: Array
+		var id = (x.x) + (x.y * 9)
+		var mag = map.magnitudes[id]
 		# Checks to see if the floor being generated is the starting floor or not
 		if x != map.startPos: # If it isn't randomly generate unique data for the floor
 			if x == endPos and data["floor"] == 5:
 				gridSize = Vector2(11,11)
 				objectList = loadObjects(gridSize, x)
 				type = 1
-			else:
-				"""gridSize = Vector2(5,5)
+			elif mag == 1 and x != endPos:
+				gridSize = Vector2(5,5)
 				objectList = preload("res://scripts/defaultFloors.gd").new().altarRoom
-				type = 1"""
+				type = 1
+			else:
 				if rng.randf() < 0.666666 or x == endPos:
 					gridSize = Vector2(rng.randi_range(3,11), rng.randi_range(3,11))
 					objectList = loadObjects(gridSize, x)
@@ -291,7 +294,7 @@ func genMapData(path: Array):
 			var firstItemCoords = Vector2(rng.randi_range(0, gridSize.x-1),rng.randi_range(0, gridSize.y-1))
 			while firstItemCoords == Vector2(2,2):
 				firstItemCoords = Vector2(rng.randi_range(0, gridSize.x-1),rng.randi_range(0, gridSize.y-1))
-			startingItem.setup(firstItemCoords, rng.randi_range(1,6))
+			startingItem.setup(firstItemCoords, 3)#rng.randi_range(1,6))
 			objectList = [startingItem]
 		
 		boards[x.x][x.y].append(preload("res://scripts/gameBoard.gd").new(gridSize.x, gridSize.y, player, objectList, map.doorMatrix[x.x + x.y*9], type)) # Appends the genrated board to the "boards" array, representing the floor map
@@ -346,7 +349,10 @@ func setGrid(grid: Vector2):
 	# param - grid: A Vector2 representing the desired dimentions
 	gridSize = grid
 	
-func _updateHealth(amount: int):
+func _updateHealth(a: int):
+	var amount = a
+	for x: Attribute in UpgradeList.getByType("onDamaged"):
+		amount *= x.effect(player)
 	if amount + pHP <= 0:
 		pHP = 0
 	else:

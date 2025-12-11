@@ -4,6 +4,7 @@ Code that generates a starting and ending position in a 2D array,
 """
 
 extends Node2D
+class_name Map
 
 # Variables to be initialised
 const mapSize = 9 # Default map size
@@ -14,6 +15,7 @@ var exitPos: Vector2# Starting position in the form of x,y coordinates on the gr
 var path : Array # An array of Vector2s full of coordinates representing the optimal path between the starting and ending positions
 var tPath : Array
 var doorMatrix : Array
+var magnitudes: Array = []
 
 
 func genPath(start: Vector2, end: Vector2, prevP: Vector2, diff: int, gridsize: int, p: Array):
@@ -193,6 +195,15 @@ func gen_points(s: int):
 		mapGrid.append([])
 		for x in mapSize:
 			mapGrid[y].append([])
+	
+	# Saving the magnitudes of each room as an array
+	for x in doorMatrix:
+		var mag = 0
+		for y in x:
+			if y > 0:
+				mag += 1
+		magnitudes.append(mag)
+			
 	
 
 func _on_death():

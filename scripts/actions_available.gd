@@ -6,7 +6,7 @@ var  curDisplayed = 0 # Default amount displayed
 
 # Connects to all the Event Bus signals that it requires
 func _ready() -> void:
-	EventBus.updateActions.connect(_updateActions)
+	EventBus.updateShoe.connect(_updateActions)
 	EventBus.actionsReset.connect(_resetActions)
 	
 func _updateActions(amount:int):

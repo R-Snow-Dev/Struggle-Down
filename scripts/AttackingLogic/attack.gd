@@ -18,9 +18,3 @@ func pierce(r:Vector2):
 	position.y = 0
 	position.x = 0
 	pierce_tip.pierce(r)
-
-func _on_slash_tip_finished() -> void:
-	EventBus.playerDoneAttacking.emit()
-
-func _on_pierce_tip_finished() -> void:
-	EventBus.playerDoneAttacking.emit()

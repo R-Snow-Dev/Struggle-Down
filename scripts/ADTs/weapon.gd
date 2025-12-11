@@ -14,7 +14,7 @@ var dimensions: Vector2i # the size of the attack
 var velocity: Vector2 # How fast the attack will move
 var piercing: bool = false # If the attack goes through walls and enemies
 var extraAttacks: Array = []
-var effectChances: Dictionary = {"bleeding" = 0}
+var effectChances: Dictionary = {}
 var attribute: Attribute
 
 func _init(n: String, d: String, b: int, c: int, o: Vector2, dim: Vector2i, v: Vector2, p: bool) -> void:
@@ -61,7 +61,10 @@ func getPiercing() -> bool:
 	return piercing
 
 func addChance(effect: String, num: float) -> void:
-	effectChances[effect] += num
+	if effectChances.find_key(effect):
+		effectChances[effect] += num
+	else:
+		effectChances[effect] = num
 
 func setDamageType(data: String) -> void:
 	damageType = data

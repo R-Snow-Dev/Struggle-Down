@@ -1,8 +1,13 @@
-AnimationPlayer
+ColorRect
+HFlowContainer
 Label
+TileMapLayer
 CollisionShape2D
 Area2D
-AnimatedSprite2D
 Sprite2D
+CanvasLayer
+Button
+AnimationPlayer
+AnimatedSprite2D
 Node2D
 Node
