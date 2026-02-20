@@ -7,7 +7,7 @@ The script that runs the game essentially. If something needs doing, it will be 
 The big boss.
 """
 extends Node
-
+class_name DungeonController
 
 # Basic data is loaded
 var gridSize = Vector2(11,11)# Dimensions of the current floor
@@ -44,9 +44,8 @@ func _create_slime(p: Vector2):
 	# @param p - The position of the to be summoned slime
 	var slime = preload("res://scenes/Opps/slime.tscn").instantiate()
 	var behavior = SlimeBehavior.new()
-	slime.setData(p, 5, 1, Vector2(0,1), 1, Vector2(0,1), behavior) # Adds all relevant information to the newly spawned fiend
-	toBeSummoned.append(slime) # Adds the new fiend, along with it's position, to the fiends array, which will be returned at the end
-	drawBoard()
+	slime.setData(p, 5, 1, Vector2(0,0), 1, Vector2(0,1), behavior) # Adds all relevant information to the newly spawned fiend
+	toBeSummoned.append(slime)
 
 func _create_stairs(p: Vector2):
 	# Function that handles teh creation of a new staircase, typically after a boss dies
@@ -55,6 +54,14 @@ func _create_stairs(p: Vector2):
 	ladder.setup(p, data["level"], data["floor"])
 	boards[mapPos.x][mapPos.y][0].objects.append(ladder)
 	drawBoard()
+
+func setBossRoom() -> Array:
+	var DefaultFloors = preload("res://scripts/defaultFloors.gd").new()
+	var objects = DefaultFloors.kSlime.duplicate()
+	var ks = preload("res://scenes/Opps/kingslime.tscn").instantiate()
+	ks.setBossData(Vector2(5,5), 100, 1, Vector2(10,15), 1, Vector2(0,0), KSBehavior.new(), 2)
+	objects.append(ks)
+	return objects
 
 func drawBoard():
 	# Function that checks to see if a dungeon floor is already rendered, 
@@ -78,7 +85,8 @@ func drawBoard():
 	# Adding enemies/walls/items to the floor
 	if boards[mapPos.x][mapPos.y][0].objects != []:
 		for f in boards[mapPos.x][mapPos.y][0].objects:
-			floorScene.add_child(f)
+			floorScene.call_deferred("add_child",f)
+	await player.ready
 	player.attack_origin.setGrid(gridSize)
 	boards[mapPos.x][mapPos.y][0].loadBoard()
 
@@ -141,8 +149,8 @@ func loadObjects(grid: Vector2, mPos: Vector2):
 	var gridCoords = []
 	var DefaultFloors = preload("res://scripts/defaultFloors.gd").new()
 	
-	if mPos == endPos and data["floor"] == 5:
-		objects = DefaultFloors.kSlime
+	if true:#mPos == endPos and data["floor"] == 5:
+		objects = setBossRoom()
 	
 	# Adds all open tiles that are not door tiles gridCoords
 	else:
@@ -263,7 +271,7 @@ func genMapData(path: Array):
 		var mag = map.magnitudes[id]
 		# Checks to see if the floor being generated is the starting floor or not
 		if x != map.startPos: # If it isn't randomly generate unique data for the floor
-			if x == endPos and data["floor"] == 5:
+			if true:#x == endPos and data["floor"] == 5:
 				gridSize = Vector2(11,11)
 				objectList = loadObjects(gridSize, x)
 				type = 1
@@ -294,7 +302,7 @@ func genMapData(path: Array):
 			var firstItemCoords = Vector2(rng.randi_range(0, gridSize.x-1),rng.randi_range(0, gridSize.y-1))
 			while firstItemCoords == Vector2(2,2):
 				firstItemCoords = Vector2(rng.randi_range(0, gridSize.x-1),rng.randi_range(0, gridSize.y-1))
-			startingItem.setup(firstItemCoords, 3)#rng.randi_range(1,6))
+			startingItem.setup(firstItemCoords, rng.randi_range(1,6))
 			objectList = [startingItem]
 		
 		boards[x.x][x.y].append(preload("res://scripts/gameBoard.gd").new(gridSize.x, gridSize.y, player, objectList, map.doorMatrix[x.x + x.y*9], type)) # Appends the genrated board to the "boards" array, representing the floor map
@@ -302,7 +310,7 @@ func genMapData(path: Array):
 # Load the level from the map, and load the first room
 func loadLevel():
 	rng.set_seed(s)
-	add_child(player) # Adds the player to the scene
+	call_deferred("add_child",player) # Adds the player to the scene
 	pHP = data["pHP"]
 	pHPTot = data["pHP"]
 	SaveController.updateData("curHP", pHP)
@@ -348,7 +356,11 @@ func setGrid(grid: Vector2):
 	# Function that allows you to change the desired grid dimentions 
 	# param - grid: A Vector2 representing the desired dimentions
 	gridSize = grid
-	
+
+func _updateTotalHP(data: int) -> void:
+	pHPTot += data
+	pHP = pHPTot
+
 func _updateHealth(a: int):
 	var amount = a
 	for x: Attribute in UpgradeList.getByType("onDamaged"):
@@ -359,6 +371,7 @@ func _updateHealth(a: int):
 		if pHP + amount <= pHPTot:
 			pHP += amount
 	SaveController.updateData("curHP", pHP)
+	onActionUpdate(0, "move")
 
 func _ready() -> void:
 	# Connect all signals to approprate functions
@@ -370,15 +383,22 @@ func _ready() -> void:
 	EventBus.on_death.connect(_on_death)
 	EventBus.new_level.connect(_new_level)
 	EventBus.update_hp.connect(_updateHealth)
+	EventBus.update_total_hp.connect(_updateTotalHP)
+	EventBus.updateTotActions.connect(_updateTotActions)
 	EventBus.create_stairs.connect(_create_stairs)
 	EventBus.createSlime.connect(_create_slime)
 	EventBus.unLock.connect(unLock)
 	EventBus.reLock.connect(reLock)
 	EventBus.object_ded.connect(object_ded)
 	EventBus.delay.connect(delay)
+	EventBus.updateActions.connect(onActionUpdate)
 	
 	s = data["seed"]
 	pHP = data["pHP"]
+
+func onActionUpdate(_num: int, _type:String) -> void:
+	for a in UpgradeList.getByType("onCondition"):
+		a.check(self)
 
 func delay(time: float):
 	await get_tree().create_timer(time).timeout
@@ -452,9 +472,19 @@ func _process(_delta: float) -> void:
 				boards[mapPos.x][mapPos.y][0].fiendsTurn(data["pActions"])
 	else: # If he isn't, initiate the detah sequence
 		deathSequence()
+		
+func _updateTotActions(amount:int) -> void:
+	data["pActions"] += amount
+	player.setActionsAvailable(data["pActions"])
 
 func _fiend_phase():
-	# Tells the controller taht all enemies are done moving
+	# Tells the controller that all enemies are done moving
+	var grid: gameBoard = boards[mapPos.x][mapPos.y][0]
+	while len(toBeSummoned) > 0:
+		var f = toBeSummoned.pop_front()
+		grid.objects.push_front(f)
+		floorScene.call_deferred("add_child",f) # Adds the new fiend, along with it's position, to the fiends array, which will be returned at the end
+	grid.loadBoard()
 	ff = false
 
 func _pause():

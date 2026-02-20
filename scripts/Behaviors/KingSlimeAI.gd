@@ -255,7 +255,7 @@ func bounce(boss: Object):
 	
 	# Play the animation
 	animPlayer.play("jump")
-	boss.timer.wait_time += 0.5
+	boss.timer.wait_time += 0.5     
 
 func charge(boss: Object, t: Vector2, _diff: int, bossFace: Vector2):
 	# Function that alters the charge animation based on certain parameters.

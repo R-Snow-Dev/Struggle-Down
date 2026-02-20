@@ -17,6 +17,12 @@ func setup(p: Vector2):
 func move():
 	pass
 
+func getPos() -> Vector2:
+	return pos
+
+func myName() -> String:
+	return "pushable"
+
 # Resets its position to its initial position (For reseting puzzles)
 func reset():
 	pos = startPos

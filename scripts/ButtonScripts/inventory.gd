@@ -5,7 +5,7 @@ extends Node2D
 @onready var slot = $slot
 @onready var label = $itemAmount
 @onready var inventoryBar = $inventoryBar
-var curEffect
+var curEffect: ItemEffect
 var inventory = []
 var items = []
 var curID
@@ -31,7 +31,7 @@ func _process(_delta: float) -> void:
 	# open the item bar if they right clicked
 	if Input.is_action_just_pressed("select"):
 		if isHovering:
-			curEffect = itemEffects[items[curID][2]].new(items[curID][3])
+			curEffect = itemEffects[items[curID][2]].new(int(items[curID][3]))
 			if curEffect.test():
 				items[curID][0] -= 1
 				curEffect.run()

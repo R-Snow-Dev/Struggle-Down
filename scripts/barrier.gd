@@ -10,7 +10,11 @@ func setup(p: Vector2):
 	pos = p
 	return self
 
-	
+func myName() -> String:
+	return "barrier"
+
+func getPos() -> Vector2:
+	return pos
 
 # While a Barrier is an object, it cannot move, so it passes instead
 func move():

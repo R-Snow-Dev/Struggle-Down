@@ -6,10 +6,7 @@ func _init() -> void:
 	type = "onHit"
 	name = "Axiom of the Sword"
 	damageType = "special"
-	description = "By absorbing the spirit of the blade, you touch something deeper. When attacking
-	with a sword, you gain a 5% chance to deal extra damage. This extra damage is equal
-	to the total damage done by your sword, including all extra damage types. This damage is special damage,
-	and cannot be resisted. If only briefly, you touch the absolute with only your sword."
+	description = "By absorbing the spirit of the blade, you touch something deeper. When attacking with a sword, you gain a 5% chance to deal extra damage. This extra damage is equal to the total damage done by your sword, including all extra damage types. This damage is special damage, and cannot be resisted. If only briefly, you touch the absolute with only your sword."
 	
 func effect(target: Node) -> int:
 	var rng = RandomNumberGenerator.new()

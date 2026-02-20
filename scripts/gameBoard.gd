@@ -127,9 +127,10 @@ func loadGrid():
 	# Add enemies to the board
 	if objects != []:
 		for f in objects:
-			if f is Boss:
-				for i in range(0,f.size):
-					for j in range(0,f.size):
+			if f is BossNew:
+				var s = f.getData().getSize()
+				for i in range(0,s):
+					for j in range(0,s):
 						grid[f.pos.y + i][f.pos.x + j].append(barriers.instantiate())
 				grid[f.pos.y][f.pos.x].append(f)
 			else:
@@ -172,6 +173,12 @@ func loadBoard():
 	else:
 		unlockDoors()
 	
+	# Updates the Overseer's data
+	var dupe = objects.duplicate()
+	dupe.append(player)
+	Overseer.setGrid(grid)
+	Overseer.setObj(dupe)
+	
 	# display all objects to the screen
 	EventBus.updatedView.emit()
 	display()
@@ -179,11 +186,8 @@ func loadBoard():
 func heal():
 	# Heals all enemies to full whenever entering the room
 	for x in objects:
-		if x is Fiend or x is Boss:
-			if x is Fiend:
-				x.getData().setHealth(x.getData().getTotHealth())
-			else:
-				x.health = x.totHP
+		if x is Fiend or x is BossNew:
+			x.getData().setHealth(x.getData().getTotHealth())
 
 func reset():
 	# If the board is a puzzle, and it hasn't been solved, 
@@ -217,7 +221,7 @@ func fiendsTurn(pActions: float):
 	EventBus.pause.emit()
 	if objects.size() > 0:
 		for y in objects:
-			if y is Fiend or y is Boss:
+			if y is Fiend or y is BossNew:
 				EventBus.delay.emit(0.2)
 				await EventBus.delayEnd
 				loadBoard()
@@ -290,21 +294,21 @@ func checkInputs():
 			if player.pos.y > 0: # Did the player reach the edge of the map?
 				if grid[player.pos.y-1][player.pos.x].size() < 2:					
 					if grid[player.pos.y-1][player.pos.x].size() < 1:				
-						EventBus.updateActions.emit(-1)
+						EventBus.updateActions.emit(-1, "move")
 						player.moveUp()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()
 						loadBoard()
 					elif grid[player.pos.y-1][player.pos.x][0] is Pushable:
 						if checkPush(grid[player.pos.y-1][player.pos.x][0], Vector2(0,-1)):
-							EventBus.updateActions.emit(-1)
+							EventBus.updateActions.emit(-1, "move")
 							grid[player.pos.y-1][player.pos.x][0].moveUp()
 							player.moveUp()
 							# relaods the board once movement is complete
 							EventBus.pause.emit()
 							loadBoard()
 					elif checkPassable(grid[player.pos.y-1][player.pos.x][0]):
-						EventBus.updateActions.emit(-1)
+						EventBus.updateActions.emit(-1, "move")
 						player.moveUp()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()
@@ -322,21 +326,21 @@ func checkInputs():
 			if player.pos.y < (height - 1):# Did the player reach the edge of the map? 
 				if	grid[player.pos.y+1][player.pos.x].size() < 2: 
 					if grid[player.pos.y+1][player.pos.x].size() < 1:				
-						EventBus.updateActions.emit(-1)
+						EventBus.updateActions.emit(-1, "move")
 						player.moveDown()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()
 						loadBoard()
 					elif grid[player.pos.y+1][player.pos.x][0] is Pushable:
 						if checkPush(grid[player.pos.y+1][player.pos.x][0], Vector2(0, 1)):
-							EventBus.updateActions.emit(-1)
+							EventBus.updateActions.emit(-1, "move")
 							grid[player.pos.y+1][player.pos.x][0].moveDown()
 							player.moveDown()
 							# relaods the board once movement is complete
 							EventBus.pause.emit()
 							loadBoard()
 					elif checkPassable(grid[player.pos.y+1][player.pos.x][0]):
-						EventBus.updateActions.emit(-1)
+						EventBus.updateActions.emit(-1, "move")
 						player.moveDown()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()
@@ -355,7 +359,7 @@ func checkInputs():
 			if player.pos.x > 0: # Did the player reach the edge of the map?
 				if grid[player.pos.y][player.pos.x-1].size() < 2:					
 					if grid[player.pos.y][player.pos.x-1].size() < 1:				
-						EventBus.updateActions.emit(-1)
+						EventBus.updateActions.emit(-1, "move")
 						player.moveLeft()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()
@@ -363,14 +367,14 @@ func checkInputs():
 					elif grid[player.pos.y][player.pos.x-1][0] is Pushable:
 						print("That guy is pretty Pushable!")
 						if checkPush(grid[player.pos.y][player.pos.x-1][0], Vector2(-1,0)):
-							EventBus.updateActions.emit(-1)
+							EventBus.updateActions.emit(-1, "move")
 							grid[player.pos.y][player.pos.x-1][0].moveLeft()
 							player.moveLeft()
 							# relaods the board once movement is complete
 							EventBus.pause.emit()
 							loadBoard()
 					elif checkPassable(grid[player.pos.y][player.pos.x-1][0]):
-						EventBus.updateActions.emit(-1)
+						EventBus.updateActions.emit(-1, "move")
 						player.moveLeft()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()
@@ -388,21 +392,21 @@ func checkInputs():
 			if player.pos.x < (width-1): # Did the player reach the edge of the map?
 				if grid[player.pos.y][player.pos.x+1].size() < 2:
 					if grid[player.pos.y][player.pos.x+1].size() < 1:				
-						EventBus.updateActions.emit(-1)
+						EventBus.updateActions.emit(-1, "move")
 						player.moveRight()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()
 						loadBoard()
 					elif grid[player.pos.y][player.pos.x+1][0] is Pushable:
 						if checkPush(grid[player.pos.y][player.pos.x+1][0], Vector2(1,0)):
-							EventBus.updateActions.emit(-1)
+							EventBus.updateActions.emit(-1, "move")
 							grid[player.pos.y][player.pos.x+1][0].moveRight()
 							player.moveRight()
 							# relaods the board once movement is complete
 							EventBus.pause.emit()
 							loadBoard()
 					elif checkPassable(grid[player.pos.y][player.pos.x+1][0]):
-						EventBus.updateActions.emit(-1)
+						EventBus.updateActions.emit(-1, "move")
 						player.moveRight()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()

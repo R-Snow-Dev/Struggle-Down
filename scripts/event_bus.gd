@@ -15,7 +15,10 @@ signal on_door(on: bool)
 signal changeRooms(direction: Vector2, startPos: String)
 
 # Signal that tells the action text that it needs to change it's displayed number.
-signal updateActions(amount: int)
+signal updateActions(amount: int, type: String)
+
+# Signal that updtaes the total amount of action available, and resets the actions taken
+signal updateTotActions(amount: int)
 
 # Signal that is called when the action icon must update
 signal updateShoe(amount: int)
@@ -31,6 +34,9 @@ signal fiend_phase()
 
 # Changes the player's hp and the hp bar when emitted
 signal update_hp(amount:int)
+
+# Changes the total hp of the player and fully heals them
+signal update_total_hp(amount: int)
 
 # Emiited upon completion of the player's deth animation
 signal on_death()
@@ -78,7 +84,7 @@ signal stop_warn()
 signal create_stairs(pos: Vector2)
 
 # Signal that is emitted when the player is hit by an attack that must move them
-signal bump(dir: Vector2)
+signal bump()
 
 # Signal that is emitted when the slime King summons minions
 signal createSlime(p: Vector2)
@@ -128,3 +134,9 @@ signal uCont(a: Attribute)
 
 # Signal that is emitted when the upgrade container needs to be reset
 signal rUCont()
+
+# Signal that causes a target to spawn an entity on their position
+signal summon(target: Node, entity: PackedScene, damage: int, type: String)
+
+# Signal that adds a weapon effect into the dungeon
+signal throwEffect(effect: PackedScene, damage: int, type: String)

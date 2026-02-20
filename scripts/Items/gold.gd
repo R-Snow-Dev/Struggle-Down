@@ -20,7 +20,8 @@ func _updateGold(amount:int):
 	print("done Deal")
 	curDisplayed += int(amount) # Changes the current number displayed
 	self.text = str(curDisplayed) # Updates the label's text
-	animationPlayer.play("Change Number") # Plays a sort "bounce" animation for emphasis
+	if amount != 0:
+		animationPlayer.play("Change Number") # Plays a sort "bounce" animation for emphasis
 
 func _save_gold():
 	SaveController.updateData("gold", curDisplayed)

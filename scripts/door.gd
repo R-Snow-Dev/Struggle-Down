@@ -9,6 +9,11 @@ var pos: Vector2 # It's given position as a Vector2
 @onready var s = $Door
 @onready var area = $Door/doorArea
 
+func getPos() -> Vector2:
+	return pos
+
+func myName() -> String:
+	return "door"
 
 func _enter_tree() -> void:
 	s = $Door

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0qqxxij0bkal"]
+
+[ext_resource type="Script" uid="uid://d31ll87s05dvk" path="res://scripts/AttackingLogic/eatbox.gd" id="1_krwpc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l7p6l"]
+size = Vector2(64, 64)
+
+[node name="SlamWave" type="Area2D"]
+collision_layer = 128
+collision_mask = 4
+script = ExtResource("1_krwpc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_l7p6l")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

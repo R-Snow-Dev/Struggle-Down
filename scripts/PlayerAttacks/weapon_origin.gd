@@ -96,19 +96,16 @@ func getSign(num:int) -> int:
 # Creates a hurtbox based on weapon data.
 func attack(id: int):
 	if id > 0:
-		var player = get_parent()
+		var player:Player = get_parent()
 		var w: Weapon = WeaponList.weapons[id]
-		w.onAttack(player.actionsAvailable)
-		print("Attack had a cost of: ", w.getCost(), " and a damage of: ", w.getBaseDam())
+		w.setFacing(player.facing)
+		w.onAttack(player)
 		if player.actionsAvailable >= w.getCost():
-			print("Attacking")
 			EventBus.pause.emit()
 			aP.position = w.getOrigin() * 16
 			if w.getDamageType() == "slash":
-				print("Slash")
 				aP.slash(w.getDim())
 			elif w.getDamageType() == "pierce":
-				print("Pierce")
 				aP.pierce(w.getDim())
 			var hurtbox = preload("res://scenes/DungeonParts/hurtbox.tscn").instantiate()
 			hurtbox.setup(w, dist)
@@ -122,8 +119,9 @@ func attack(id: int):
 
 # Activates a weapon's special function on a right click		
 func special(id: int):
+	var player = get_parent()
 	if id > 0:
 		var weapon: Weapon = WeaponList.weapons[id]
-		weapon.onSpecial(get_parent().actionsAvailable)
+		weapon.onSpecial(player)
 		offHover()
 		hover(id)

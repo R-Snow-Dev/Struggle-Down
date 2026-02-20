@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bw5421u0o3x2o"]
 
-[ext_resource type="Script" path="res://scripts/bosses/boss.gd" id="1_tmepv"]
-[ext_resource type="Script" path="res://scripts/warning_system.gd" id="2_4w5hx"]
+[ext_resource type="Script" uid="uid://3j81qgwvtggj" path="res://scripts/bosses/boss.gd" id="1_tmepv"]
+[ext_resource type="Script" uid="uid://bcuc6m6xl4jxq" path="res://scripts/warning_system.gd" id="2_4w5hx"]
 
 [sub_resource type="Animation" id="Animation_m34ba"]
 length = 0.001
@@ -118,9 +118,9 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rh0qe"]
 _data = {
-"RESET": SubResource("Animation_m34ba"),
-"charge": SubResource("Animation_5vhna"),
-"jump": SubResource("Animation_xlmj0")
+&"RESET": SubResource("Animation_m34ba"),
+&"charge": SubResource("Animation_5vhna"),
+&"jump": SubResource("Animation_xlmj0")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ckd5k"]
@@ -133,7 +133,7 @@ script = ExtResource("1_tmepv")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_rh0qe")
+&"": SubResource("AnimationLibrary_rh0qe")
 }
 
 [node name="WarningSystem" type="Node2D" parent="."]

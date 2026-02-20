@@ -14,11 +14,17 @@ var pos: Vector2
 func setup(p: Vector2):
 	pos = p
 
+func myName() -> String:
+	return "interactable"
+
 func _on_area_2d_area_entered(_area: Area2D) -> void:
 	# Performs it's "interacted" behavior when touched
 	play("interact")
 	behavior.interact()
 	print("Interacted")
+
+func getPos() -> Vector2:
+	return pos
 	
 func move():
 	pass

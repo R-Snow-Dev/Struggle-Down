@@ -6,4 +6,5 @@ func _init():
 	name = "Bleed"
 
 func activate(target: Fiend):
+	print("Bleeding", target)
 	target.getData().updateHealth(-1)

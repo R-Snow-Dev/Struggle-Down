@@ -4,6 +4,7 @@ and what attack animation is to be played.
 """
 
 extends Node2D
+class_name AttackOrigin
 @onready var attack: Node2D = $Attack
 
 func _ready() -> void:
@@ -41,5 +42,6 @@ func _updateAOE(width: int, height: int, pointOfOrigin: Vector2):
 			area.position.x = position.x + (i*16)
 			area.position.y = position.y - (j * 16) - 16
 			add_child(area)
+
 	
 	

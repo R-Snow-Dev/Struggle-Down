@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://vihin8su3cdk"]
+
+[ext_resource type="Script" uid="uid://bwlo0ateihb8a" path="res://scripts/Globals/overseer.gd" id="1_o7k3o"]
+
+[node name="Overseer" type="Node2D"]
+script = ExtResource("1_o7k3o")

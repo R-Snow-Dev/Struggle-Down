@@ -74,15 +74,16 @@ func _process(_delta: float) -> void:
 					ID = 0
 					sacText.stop()
 				else:
-					print("Attacked with a weapon id of: ", ID)
 					busy = true
 					var w: Weapon = WeaponList.weapons[ID]
 					EventBus.attack.emit(ID)
-			if Input.is_action_just_pressed("special_select") and ID == 5:
+			if Input.is_action_just_pressed("special_select"):
 				EventBus.spWeapon.emit(ID)
 
 func _playerDoneAttacking():
 	EventBus.unpause.emit()
+	WeaponList.resetTempEffects()
+	WeaponList.resetTempDamage()
 	busy = false
 
 func _swap_weapon(id: int):

@@ -8,7 +8,8 @@ var  curDisplayed = 0 # Default amount displayed
 func _ready() -> void:
 	EventBus.updateShoe.connect(_updateActions)
 	EventBus.actionsReset.connect(_resetActions)
-	
+
+
 func _updateActions(amount:int):
 	# Function that changes how much the current number displayed is. Then playes a short animation.
 	# param - amount: An integer given when the updateAction signal is emitted. Its the amount the displayed number will change. Typically negative

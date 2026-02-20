@@ -31,7 +31,10 @@ func setup(p: Vector2, Id: int):
 # While a Item is an object, it cannot move, so it passes instead
 func move():
 	pass
-	
+
+func getPos() -> Vector2:
+	return pos
+
 func draw():
 	# code that converts the Vector2 position data into on-screen coordinates
 	position.x = pos.x*16

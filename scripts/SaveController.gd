@@ -18,7 +18,7 @@ preload("res://scenes/Items/ConsumableSprites/swift_ar.tscn")]
 var path = "res://saveFiles/save1.json"
 # Dictionary of default data. Used to initialise savefiles
 var default_data = {"pActions": 2, "pHP": 4, "curHP": 4, "seed": 22, "weapon": 0, "level": 1, "floor": 1, "gold": 0, "inrun": true, 
-"inventory": [], "inInv": 0, "upgrades": []}
+"inventory": [], "inInv": 0, "upgrades": [], "stored": 0}
 
 func save(dict: Dictionary):
 	# Function that writes a dictionary to the desired savefile

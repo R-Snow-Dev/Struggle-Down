@@ -9,6 +9,7 @@ Class that contains all the necessary data of a Fiend
 var pos: Vector2 # Position off the Fiend on the gameBoard
 var startPos: Vector2 # Initial position of the Fiend on the gameBoard
 var health: int # HP of the Fiend
+var maxHealth: int
 var totHealth: int # Max HP of the fiend
 var goldRange: Vector2 # A Vector2 conating the minimum and maximum possible gold drop amount
 var dam: int # The amount of dammage the Fiend deals to the player on hit
@@ -22,6 +23,7 @@ func _init(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCo
 	pos = p
 	startPos = p
 	health = h
+	maxHealth = h
 	totHealth = h
 	goldRange = gR
 	dam = d
@@ -53,7 +55,11 @@ func getHealth() -> int:
 	return health
 
 func updateHealth(num: int) -> void:
-	health += num
+	print("Damage Done: " + str(num))
+	if health + num > maxHealth:
+		health = maxHealth
+	else:
+		health += num
 
 func setHealth(num: int) -> void:
 	health = num

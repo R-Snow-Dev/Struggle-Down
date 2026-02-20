@@ -404,10 +404,10 @@ skew = -2.24113e-05
 
 [node name="HealthBar" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
 z_index = 1
-offset_left = -348.0
-offset_top = 2100.0
-offset_right = -128.0
-offset_bottom = 2193.0
+offset_left = -284.7766
+offset_top = 2201.4805
+offset_right = -64.77661
+offset_bottom = 2294.4805
 rotation = 3.14159
 scale = Vector2(1, 8)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -429,7 +429,7 @@ theme_override_colors/font_outline_color = Color(0.737193, 0.737193, 0.737193, 1
 theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("6_n1fab")
 theme_override_font_sizes/font_size = 48
-text = "ABABABAB"
+text = "ABABABABABAB"
 autowrap_mode = 1
 script = ExtResource("8_bqf3f")
 
@@ -644,9 +644,6 @@ position = Vector2(1.52588e-05, 0)
 scale = Vector2(1.5, 1.5)
 transform = Transform2D(1.5, 0, 0, 1.5, 0, 0)
 
-[node name="UPopup" parent="CanvasLayer" instance=ExtResource("20_5d84e")]
-position = Vector2(272, 111.99999)
-
 [node name="UpgradeContainer" type="HFlowContainer" parent="CanvasLayer"]
 z_index = 1000
 offset_left = 245.33334
@@ -658,6 +655,9 @@ theme_override_constants/v_separation = 32
 alignment = 2
 reverse_fill = true
 script = ExtResource("21_4k0vd")
+
+[node name="UPopup" parent="CanvasLayer" instance=ExtResource("20_5d84e")]
+position = Vector2(160, 0)
 
 [connection signal="mouse_entered" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_exited"]

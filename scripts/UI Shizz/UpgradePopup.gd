@@ -11,7 +11,7 @@ func _ready() -> void:
 
 func sac(a: Attribute):
 	n.text = a.name
-	desc.text = a.description.strip_escapes()
+	desc.text = a.description
 	att = a
 	visible = true
 

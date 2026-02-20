@@ -18,7 +18,10 @@ func playAnim(a: String):
 func _process(_delta: float) -> void:
 	pos = getData().getPos()
 	if isDead():
-		EventBus.updateGold.emit(rng.randi_range(getData().getGoldRange().x, getData().getGoldRange().y))
+		if UpgradeList.maxDrops:
+			EventBus.updateGold.emit(getData().getGoldRange().y)
+		else:
+			EventBus.updateGold.emit(rng.randi_range(getData().getGoldRange().x, getData().getGoldRange().y))
 		EventBus.object_ded.emit(self)
 
 func move(grid: gameBoard, target: Player) -> void:
@@ -71,8 +74,5 @@ func draw() -> void:
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	# Function that either damages the player, or deals damage to itself depending
 	# on what it collides with
-	if area is Player:
-		EventBus.update_hp.emit(-getData().getDam())
-	elif area is Hurtbox:
-		getData().updateHealth(-calcDamage(area.getWeaponData()))
+	onHit(area)
 	aParticles.emitting = true

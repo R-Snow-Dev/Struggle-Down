@@ -8,6 +8,7 @@ Parent ADT that represents a weapon in game
 var name: String
 var damageType: String # Damage type of the weapon
 var BaseDamage: int # Base damage of the weapon
+var curDamage: int
 var cost: int # Action cost of the weapon
 var origin: Vector2 # Where the attack will spawn
 var dimensions: Vector2i # the size of the attack
@@ -16,22 +17,44 @@ var piercing: bool = false # If the attack goes through walls and enemies
 var extraAttacks: Array = []
 var effectChances: Dictionary = {}
 var attribute: Attribute
+var ignore: bool = false
+var specialAttribute: Attribute
+var attackAttribute: Attribute
+var facing: Vector2i = Vector2i(0,0)
 
-func _init(n: String, d: String, b: int, c: int, o: Vector2, dim: Vector2i, v: Vector2, p: bool) -> void:
+func _init(n: String, d: String, b: int, c: int, o: Vector2, dim: Vector2i, v: Vector2, p: bool, sA:Attribute, aA:Attribute) -> void:
 	name = n
 	damageType = d
 	BaseDamage = b
+	curDamage = b
 	cost = c
 	origin = o
 	dimensions = dim
 	velocity = v
 	piercing = p
+	specialAttribute = sA
+	attackAttribute = aA
+
+func setFacing(v: Vector2i) -> void:
+	facing = v
+
+func setIgnore(b:bool) -> void:
+	ignore = b
 
 func setAttribute(a: Attribute) -> void:
 	attribute = a
-	
+
+func getFacing() -> Vector2i:
+	return facing
+
+func getIgnore() -> bool:
+	return ignore
+
 func getChance(effect: String) -> float:
 	return effectChances[effect]	
+	
+func getChances() -> Dictionary:
+	return effectChances
 
 func getExtraAttacks() -> Array:
 	return extraAttacks	
@@ -44,6 +67,9 @@ func getDamageType() -> String:
 	
 func getBaseDam() -> float:
 	return BaseDamage
+	
+func getAtkDam() -> int:
+	return curDamage
 	
 func getCost() -> int:
 	return cost
@@ -71,9 +97,14 @@ func setDamageType(data: String) -> void:
 
 func setBaseDam(data: int) -> void:
 	BaseDamage = data
+	curDamage = getBaseDam()
+	
+func setAtkDam(data: int) -> void:
+	curDamage = data
 
 func addBaseDam(data:int) -> void:
 	BaseDamage += data
+	curDamage = getBaseDam()
 
 func addExtraAttack(a: String) -> void:
 	if a not in extraAttacks:
@@ -82,8 +113,17 @@ func addExtraAttack(a: String) -> void:
 func setCost(data:int) -> void:
 	cost = data
 
+func addCost(data: int) -> void:
+	cost += data
+
 func setOrigin(data: Vector2) -> void:
 	origin = data
+
+func setAtkAttribute(a: Attribute) -> void:
+	attackAttribute = a
+
+func setSpeAttribute(a: Attribute) -> void:
+	specialAttribute = a
 
 func setDim(data: Vector2i) -> void:
 	dimensions = data
@@ -97,9 +137,9 @@ func setPierce(data: bool) -> void:
 func sacrifice() -> void:
 	UpgradeList.addAttribute(attribute)
 
-func onSpecial(_data) -> void:
-	pass
+func onSpecial(data) -> void:
+	specialAttribute.special(data)
 
-func onAttack(_data) -> void:
-	pass
+func onAttack(data) -> void:
+	attackAttribute.effect(data)
 	

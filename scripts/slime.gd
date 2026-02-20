@@ -14,7 +14,10 @@ Class that represents a Slime
 func _process(_delta: float) -> void:
 	pos = getData().getPos()
 	if isDead():
-		EventBus.updateGold.emit(rng.randi_range(getData().getGoldRange().x, getData().getGoldRange().y))
+		if UpgradeList.maxDrops:
+			EventBus.updateGold.emit(getData().getGoldRange().y)
+		else:
+			EventBus.updateGold.emit(rng.randi_range(getData().getGoldRange().x, getData().getGoldRange().y))
 		EventBus.object_ded.emit(self)
 
 # Function taht plays an animation based on the given String
@@ -25,7 +28,7 @@ func playAnim(a: String):
 func move(grid: gameBoard, target: Player) -> void:
 	activateEffects(0)
 	if getData().getActions() > 0:
-		getData().getBehavior().setMyself(self) # Sets the targetyt of the AI calculations to itself
+		getData().getBehavior().setMyself(self) # Sets the target of the AI calculations to itself
 		getData().think(grid, target) # Tells the AI class to perform it's operations
 		getData().getBehavior().getGrid().loadGrid() # Redraws the grid
 		await get_tree().create_timer(getDelay()).timeout # Waits a lil bit
@@ -45,8 +48,5 @@ func chooseState() -> void:
 # Function that eiterh deals damage to the player, or damages itself, based on
 # what the slime collided with
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area is Player:
-		EventBus.update_hp.emit(-getData().getDam())	
-	elif area is Hurtbox:
-		getData().updateHealth(-calcDamage(area.getWeaponData()))
+	onHit(area)
 	aParticles.emitting = true

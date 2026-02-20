@@ -27,7 +27,7 @@ func _new_level():
 	var data = SaveController.loadData()
 	if self.get_child_count() > 0:
 		for i in self.get_children():
-			self.remove_child(i)
+			self.call_deferred("remove_child", i)
 	var dungeon = preload("res://scenes/menus/dungeon.tscn").instantiate() # Once again, this case it will just be a basic dungeon again
 	
 	# If you beat floor 5, move on to the next level, and reset your floors to 1
@@ -36,7 +36,8 @@ func _new_level():
 		SaveController.updateData("level", data["level"] + 1)
 	else: # Otherwise, move onto the next floor
 		SaveController.updateData("floor", data["floor"] + 1)
-	add_child(dungeon)
+	call_deferred("add_child", dungeon)
+	await dungeon.ready
 	UpgradeList.addFromSave()
 
 func _file_select():
