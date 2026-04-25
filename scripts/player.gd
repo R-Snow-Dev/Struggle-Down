@@ -12,7 +12,7 @@ class_name Player
 signal drawn
 
 # Initialises a Vector2 that will store the position data that is represented on the gameboard
-var facing: Vector2i = Vector2i(0,1)
+var facing: Vector2i = Vector2i(0,-1)
 var pos: Vector2
 var prevPos = [Vector2(0,0)]
 var actionsAvailable: int

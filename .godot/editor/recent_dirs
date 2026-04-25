@@ -1,3 +1,5 @@
+res://scripts/UI Shizz
+res://scenes/GUIParts
 res://scripts/AttackingLogic
 res://scenes/Opps
 res://scripts/bosses
@@ -5,8 +7,6 @@ res://scenes/Globals
 res://scripts/Globals
 res://scripts/ADTs/effects
 res://scenes/DungeonParts
-res://scripts/UI Shizz
-res://scenes/GUIParts
 res://scripts/ADTs/attributes
 res://scripts
 res://assets

@@ -218,8 +218,8 @@ _data = {
 &"RESET": SubResource("Animation_jhkq7")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1uch0"]
-size = Vector2(32, 32)
+[sub_resource type="CircleShape2D" id="CircleShape2D_jhkq7"]
+radius = 12.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jhkq7"]
 size = Vector2(32, 32)
@@ -275,7 +275,7 @@ libraries = {
 collision_mask = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
-shape = SubResource("RectangleShape2D_1uch0")
+shape = SubResource("CircleShape2D_jhkq7")
 
 [node name="eatbox" type="Area2D" parent="."]
 collision_layer = 129

@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://ch0ff67ev3q0i"]
+
+[ext_resource type="FontFile" uid="uid://ds2ikdih7vjf2" path="res://assets/Fonts/Charybdis.pfb" id="1_j10x7"]
+[ext_resource type="Script" uid="uid://coyf4mlocf4h4" path="res://scripts/UI Shizz/damage_popup.gd" id="2_bohwo"]
+
+[node name="Label" type="Label"]
+offset_left = -67.0
+offset_top = -3.0
+offset_right = 1272.9999
+offset_bottom = 116.0
+scale = Vector2(0.1, 0.1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("1_j10x7")
+theme_override_font_sizes/font_size = 128
+text = "-10AB"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_bohwo")

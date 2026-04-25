@@ -20,7 +20,7 @@ var attribute: Attribute
 var ignore: bool = false
 var specialAttribute: Attribute
 var attackAttribute: Attribute
-var facing: Vector2i = Vector2i(0,0)
+var facing: Vector2i = Vector2i(0,-1)
 
 func _init(n: String, d: String, b: int, c: int, o: Vector2, dim: Vector2i, v: Vector2, p: bool, sA:Attribute, aA:Attribute) -> void:
 	name = n

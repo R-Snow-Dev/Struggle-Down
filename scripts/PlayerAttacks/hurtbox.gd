@@ -37,8 +37,8 @@ func _process(delta: float) -> void:
 
 # Sets the position to the given pos variable and dimentions
 func draw():
-	position = weapon.getOrigin() * 16
-	position.y += (weapon.getDim().y-1) * 8
+	position = (weapon.getOrigin() * 16)
+	position.y += ((weapon.getDim().y-1) * 8)
 
 # Returns the damage that is assigned to this hurtbox
 func getWeaponData() -> Weapon:
@@ -48,4 +48,4 @@ func getWeaponData() -> Weapon:
 func _on_area_entered(area: Area2D) -> void:
 	if not weapon.getPiercing():
 		EventBus.playerDoneAttacking.emit()
-		queue_free()
+		call_deferred("queue_free")

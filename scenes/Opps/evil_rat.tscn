@@ -148,7 +148,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8vtmj"]
-radius = 5.0
+radius = 3.0
 
 [node name="EvilRat" type="Node2D"]
 script = ExtResource("1_1aahg")
@@ -178,11 +178,12 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="hitBox" type="Area2D" parent="Rat"]
+[node name="Area2D" type="Area2D" parent="Rat"]
+position = Vector2(0, -1)
 collision_mask = 12
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Rat/hitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rat/Area2D"]
 position = Vector2(0, -4.941215e-14)
 shape = SubResource("CircleShape2D_8vtmj")
 
-[connection signal="area_entered" from="Rat/hitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="area_entered" from="Rat/Area2D" to="." method="_on_hit_box_area_entered"]

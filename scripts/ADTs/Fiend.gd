@@ -14,6 +14,7 @@ var curState: String
 var rng = RandomNumberGenerator.new()
 var delay: float = 0
 var pos: Vector2
+var dPop = preload("res://scenes/GUIParts/damagePopup.tscn")
 
 func _ready() -> void:
 	EventBus.summon.connect(summon)
@@ -51,6 +52,12 @@ func setPos(p: Vector2) -> void:
 	
 func getData() -> FiendData:
 	return data
+
+func updateHealth(num: int) -> void:
+	var popup:DamagePopup = dPop.instantiate()
+	popup.setup(num)
+	add_child(popup)
+	getData().updateHealth(num)
 
 func getPos() -> Vector2:
 	return pos
@@ -138,11 +145,11 @@ func onHit(area: Area2D) -> void:
 	if area is Player:
 		EventBus.update_hp.emit(-getData().getDam())
 	elif area is Hurtbox:
-		getData().updateHealth(-calcDamage(area.getWeaponData()))
+		updateHealth(-calcDamage(area.getWeaponData()))
 	elif area is WeaponEffect:
-		getData().updateHealth(-calcWeaponEffect(area)) 
+		updateHealth(-calcWeaponEffect(area)) 
 	elif area is WildDamage:
-		getData().updateHealth(-calc(area.getDam(), area.getType(), false))
+		updateHealth(-calc(area.getDam(), area.getType(), false))
 	elif area is EatBox:
 		getData().updateHealth(-999)
 		EventBus.healSK.emit()

@@ -149,7 +149,7 @@ func loadObjects(grid: Vector2, mPos: Vector2):
 	var gridCoords = []
 	var DefaultFloors = preload("res://scripts/defaultFloors.gd").new()
 	
-	if true:#mPos == endPos and data["floor"] == 5:
+	if mPos == endPos and data["floor"] == 5:
 		objects = setBossRoom()
 	
 	# Adds all open tiles that are not door tiles gridCoords
@@ -271,7 +271,7 @@ func genMapData(path: Array):
 		var mag = map.magnitudes[id]
 		# Checks to see if the floor being generated is the starting floor or not
 		if x != map.startPos: # If it isn't randomly generate unique data for the floor
-			if true:#x == endPos and data["floor"] == 5:
+			if x == endPos and data["floor"] == 5:
 				gridSize = Vector2(11,11)
 				objectList = loadObjects(gridSize, x)
 				type = 1
