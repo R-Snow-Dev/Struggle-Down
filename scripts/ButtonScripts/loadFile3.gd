@@ -20,17 +20,20 @@ func _process(_delta: float) -> void:
 		newfile.show()
 	if isHovering == true:
 		if Input.is_action_just_pressed("select"):
+			AudioManager.play_sound('Select')
 			SaveController.path = "res://saveFiles/save3.json"
 			if(!FileAccess.file_exists("res://saveFiles/save3.json")):
 				SaveController.setDefault()
 			EventBus.start.emit()
 		if(Input.is_action_just_pressed("special_select") && FileAccess.file_exists("res://saveFiles/save3.json")):
+			AudioManager.play_sound('Select')
 			if subMenu.visible == false:
 				subMenu.playAnim("slideIn")
 			else:
 				subMenu.playAnim("slideOut")
 
 func _on_file_3_button_mouse_entered() -> void:
+	AudioManager.play_sound('Hover')
 	isHovering = true
 	c.position.y = 2
 	position.y = 0

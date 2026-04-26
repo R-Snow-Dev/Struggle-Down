@@ -107,6 +107,8 @@ func attack(id: int):
 				aP.slash(w.getDim())
 			elif w.getDamageType() == "pierce":
 				aP.pierce(w.getDim())
+			if w.getDamageType() == 'slash' or w.getDamageType() == 'pierce' or w.getDamageType() == 'blunt':
+				AudioManager.play_sound('Melee')
 			var hurtbox = preload("res://scenes/DungeonParts/hurtbox.tscn").instantiate()
 			hurtbox.setup(w, dist)
 			add_child(hurtbox)

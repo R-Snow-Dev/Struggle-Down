@@ -1,0 +1,91 @@
+[gd_scene load_steps=8 format=3 uid="uid://bkjrmdwf0bgjt"]
+
+[ext_resource type="Script" uid="uid://bbag4jxh05164" path="res://scripts/UI Shizz/PauseMenu.gd" id="1_ewb21"]
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="2_08omf"]
+[ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="3_8tp38"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6w4qt"]
+atlas = ExtResource("2_08omf")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_54vlk"]
+atlas = ExtResource("2_08omf")
+region = Rect2(0, 80, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umty6"]
+atlas = ExtResource("2_08omf")
+region = Rect2(0, 80, 48, 48)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0g47k"]
+texture = SubResource("AtlasTexture_umty6")
+
+[node name="Pause Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ewb21")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(28.783905, 16.016302)
+color = Color(0, 0, 0, 0.6039216)
+
+[node name="Box" type="Sprite2D" parent="."]
+position = Vector2(552, 291.99997)
+scale = Vector2(19.806623, 19.336401)
+texture = SubResource("AtlasTexture_6w4qt")
+
+[node name="BoxOutline" type="Sprite2D" parent="Box"]
+position = Vector2(0, -0.20677376)
+scale = Vector2(0.33586028, 0.35358593)
+texture = SubResource("AtlasTexture_54vlk")
+
+[node name="Pause Menu Buttons" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 442.0
+offset_top = 137.0
+offset_right = 758.0
+offset_bottom = 578.5655
+scale = Vector2(0.69978297, 0.69978297)
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="Return" type="Button" parent="Pause Menu Buttons"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16206536, 0.16206571, 0.16206542, 1)
+theme_override_fonts/font = ExtResource("3_8tp38")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxTexture_0g47k")
+text = "Continue Delve"
+
+[node name="Options" type="Button" parent="Pause Menu Buttons"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16206536, 0.16206571, 0.16206542, 1)
+theme_override_fonts/font = ExtResource("3_8tp38")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxTexture_0g47k")
+text = "Options"
+
+[node name="Quit" type="Button" parent="Pause Menu Buttons"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16206536, 0.16206571, 0.16206542, 1)
+theme_override_fonts/font = ExtResource("3_8tp38")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxTexture_0g47k")
+text = "Return to Base Camp"
+
+[node name="Return to Title Screen" type="Button" parent="Pause Menu Buttons"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16206536, 0.16206571, 0.16206542, 1)
+theme_override_fonts/font = ExtResource("3_8tp38")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxTexture_0g47k")
+text = "Quit to Title Screen"
+
+[connection signal="pressed" from="Pause Menu Buttons/Return" to="." method="_on_return_pressed"]
+[connection signal="pressed" from="Pause Menu Buttons/Return to Title Screen" to="." method="_on_return_to_title_screen_pressed"]

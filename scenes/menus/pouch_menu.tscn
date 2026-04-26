@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://dnvktlw5q0u8y"]
+[gd_scene load_steps=28 format=4 uid="uid://dnvktlw5q0u8y"]
 
 [ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_4ewcp"]
 [ext_resource type="Texture2D" uid="uid://cv4uf3aycviv" path="res://assets/pouch person.png" id="2_xqi64"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://3ebugr2d0hh5" path="res://scripts/ButtonScripts/pouch.gd" id="3_06ajq"]
 [ext_resource type="Texture2D" uid="uid://mem73q4qhu0" path="res://assets/pouchMenu.png" id="4_p5f6h"]
 [ext_resource type="PackedScene" uid="uid://uwue8fgsf3ss" path="res://scenes/menus/consumable_menu.tscn" id="6_3e3yh"]
+[ext_resource type="PackedScene" uid="uid://c7gh7rt36oxfn" path="res://scenes/GUIParts/pause_menu_pouch.tscn" id="7_2djcx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4f4um"]
 texture = ExtResource("1_4ewcp")
@@ -394,6 +395,11 @@ position = Vector2(-8, -40)
 [node name="Outline" type="TileMapLayer" parent="Camera2D/BG"]
 tile_map_data = PackedByteArray("AADy//n/AAAAAAAAAAANAPn/AAACAAAAAAANAAYAAAACAAIAAADy/wYAAAAAAAIAAADy//r/AAAAAAEAAADy//v/AAAAAAEAAADy//z/AAAAAAEAAADy//3/AAAAAAEAAADy//7/AAAAAAEAAADy////AAAAAAEAAADy/wAAAAAAAAEAAADy/wEAAAAAAAEAAADy/wIAAAAAAAEAAADy/wMAAAAAAAEAAADy/wQAAAAAAAEAAADy/wUAAAAAAAEAAADz/wYAAAABAAIAAAD0/wYAAAABAAIAAAD1/wYAAAABAAIAAAD2/wYAAAABAAIAAAD3/wYAAAABAAIAAAD4/wYAAAABAAIAAAD5/wYAAAABAAIAAAD6/wYAAAABAAIAAAD7/wYAAAABAAIAAAD8/wYAAAABAAIAAAD9/wYAAAABAAIAAAD+/wYAAAABAAIAAAD//wYAAAABAAIAAAAAAAYAAAABAAIAAAABAAYAAAABAAIAAAACAAYAAAABAAIAAAADAAYAAAABAAIAAAAEAAYAAAABAAIAAAAFAAYAAAABAAIAAAAGAAYAAAABAAIAAAAHAAYAAAABAAIAAAAIAAYAAAABAAIAAAAJAAYAAAABAAIAAAAKAAYAAAABAAIAAAALAAYAAAABAAIAAAAMAAYAAAABAAIAAAANAPr/AAACAAEAAAANAPv/AAACAAEAAAANAPz/AAACAAEAAAANAP3/AAACAAEAAAANAP7/AAACAAEAAAANAP//AAACAAEAAAANAAAAAAACAAEAAAANAAEAAAACAAEAAAANAAIAAAACAAEAAAANAAMAAAACAAEAAAANAAQAAAACAAEAAAANAAUAAAACAAEAAADz//n/AAABAAAAAAD0//n/AAABAAAAAAD1//n/AAABAAAAAAD2//n/AAABAAAAAAD3//n/AAABAAAAAAD4//n/AAABAAAAAAD5//n/AAABAAAAAAD6//n/AAABAAAAAAD7//n/AAABAAAAAAD8//n/AAABAAAAAAD9//n/AAABAAAAAAD+//n/AAABAAAAAAD///n/AAABAAAAAAAAAPn/AAABAAAAAAABAPn/AAABAAAAAAACAPn/AAABAAAAAAADAPn/AAABAAAAAAAEAPn/AAABAAAAAAAFAPn/AAABAAAAAAAGAPn/AAABAAAAAAAHAPn/AAABAAAAAAAIAPn/AAABAAAAAAAJAPn/AAABAAAAAAAKAPn/AAABAAAAAAALAPn/AAABAAAAAAAMAPn/AAABAAAAAAA=")
 tile_set = SubResource("TileSet_pgy8k")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Pause Menu" parent="CanvasLayer" instance=ExtResource("7_2djcx")]
+visible = false
 
 [connection signal="mouse_entered" from="Camera2D/BG/pouch/goCord/Area2D" to="Camera2D/BG/pouch" method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Camera2D/BG/pouch/goCord/Area2D" to="Camera2D/BG/pouch" method="_on_area_2d_mouse_exited"]

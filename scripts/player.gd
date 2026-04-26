@@ -18,6 +18,7 @@ var prevPos = [Vector2(0,0)]
 var actionsAvailable: int
 var effects: Array = []
 var inside: bool = false
+var rng = RandomNumberGenerator.new()
 @onready var anim_player: AnimationPlayer = $CollisionShape2D/AnimatedSprite2D/animPlayer
 @onready var attack_origin: Node2D = $WeaponOrigin
 @onready var animated_sprite_2d: AnimatedSprite2D = $CollisionShape2D/AnimatedSprite2D
@@ -99,6 +100,7 @@ func setActionsAvailable(actions: int):
 
 func moveUp():
 	# Code to move the player character up
+	chooseFSSound()
 	prevPos.push_front(pos)
 	facing = Vector2i(0,1)
 	attack_origin.rotation_degrees = 180
@@ -108,6 +110,7 @@ func moveUp():
 
 func moveDown():
 	# Code to move the player character down
+	chooseFSSound()
 	prevPos.push_front(pos)
 	facing = Vector2i(0,-1)
 	attack_origin.rotation_degrees = 0
@@ -117,6 +120,7 @@ func moveDown():
 
 func moveLeft():
 	# Code to move the player character left
+	chooseFSSound()
 	prevPos.push_front(pos)
 	facing = Vector2i(-1,0)
 	attack_origin.rotation_degrees = 90
@@ -126,6 +130,7 @@ func moveLeft():
 
 func moveRight():
 	# Code to move the player character right
+	chooseFSSound()
 	prevPos.push_front(pos)
 	facing = Vector2i(1,0)
 	attack_origin.rotation_degrees = 270
@@ -133,6 +138,10 @@ func moveRight():
 	animated_sprite_2d.flip_h = 0
 	animated_sprite_2d.play("IdleS")
 
+func chooseFSSound():
+	var n = rng.randi_range(1, 2)
+	AudioManager.play_sound('FS' + str(n))
+	
 
 func draw():
 	# code that converts the Vector2 position data into on-screen coordinates

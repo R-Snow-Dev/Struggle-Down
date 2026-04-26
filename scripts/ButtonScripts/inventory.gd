@@ -31,6 +31,7 @@ func _process(_delta: float) -> void:
 	# open the item bar if they right clicked
 	if Input.is_action_just_pressed("select"):
 		if isHovering:
+			AudioManager.play_sound('Select')
 			curEffect = itemEffects[items[curID][2]].new(int(items[curID][3]))
 			if curEffect.test():
 				items[curID][0] -= 1
@@ -38,9 +39,11 @@ func _process(_delta: float) -> void:
 				updateAmount()
 	if Input.is_action_just_pressed("special_select"):
 		if menuOpen:
+			AudioManager.play_sound('Select')
 			menuOpen = false
 			inventoryBar.visible = false
 		elif isHovering:
+			AudioManager.play_sound('Select')
 			slot.position.y = 0
 			label.position.y = 0
 			inventoryBar.update(curID, inventory)
@@ -104,6 +107,7 @@ func _save_inventory():
 	SaveController.updateData("inventory", inventory)
 	
 func _on_area_2d_mouse_entered() -> void:
+	AudioManager.play_sound('Hover')
 	if inventory.size() > 0:
 		isHovering = true
 	slot.position.y = -2

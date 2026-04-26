@@ -44,6 +44,7 @@ func draw():
 # Code taht runs upon the player landing on the item object
 func _on_area_entered(_area: Area2D) -> void:
 	# Because the only items that spawn on the board currently are weapons, directly call the weapon slot to update what it displays
+	AudioManager.play_sound('GetWeapon')
 	EventBus.swap_weapon.emit(itemId)
 	# Delete this instace of an Item
 	EventBus.object_ded.emit(self)

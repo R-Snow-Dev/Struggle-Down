@@ -14,10 +14,10 @@ func setup(num: int) -> void:
 	
 func _ready() -> void:
 	position.y -= 2
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(1).timeout
 	call_deferred("queue_free")
 
 func _process(delta: float) -> void:
-	position.y -= 1 - decay
-	modulate -= Color(0,0,0,0.05)
-	decay += 0.01
+	position.y -= 0.7 - decay
+	modulate -= Color(0,0,0, 3  * delta)
+	decay += 0.007 + delta

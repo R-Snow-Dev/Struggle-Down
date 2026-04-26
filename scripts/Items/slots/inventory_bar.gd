@@ -18,8 +18,10 @@ func _process(_delta: float) -> void:
 	# Checks to see if one of the two buttons are pressed
 	if Input.is_action_just_pressed("select") and hasItem :
 		if hover1:
+			AudioManager.play_sound('Select')
 			EventBus.changeItem.emit(slotId1)
 		elif hover2:
+			AudioManager.play_sound('Select')
 			EventBus.changeItem.emit(slotId2)
 
 func update(num: int, inventory: Array):
@@ -52,6 +54,7 @@ func find_id(num: int, data: Array):
 		
 # Hover logic for the left-most slot
 func _on_area_2d_2_mouse_entered() -> void:
+	AudioManager.play_sound('Hover')
 	hover1 = true
 	slots[0].position.y = -2
 
@@ -61,6 +64,7 @@ func _on_area_2d_2_mouse_exited() -> void:
 
 # Hover logic for the right-most slot
 func _on_area_2d_mouse_entered() -> void:
+	AudioManager.play_sound('Hover')
 	hover2 = true
 	slots[1].position.y = -2
 

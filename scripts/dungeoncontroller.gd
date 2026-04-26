@@ -392,6 +392,7 @@ func _ready() -> void:
 	EventBus.object_ded.connect(object_ded)
 	EventBus.delay.connect(delay)
 	EventBus.updateActions.connect(onActionUpdate)
+	EventBus.title_screen.connect(_to_title)
 	
 	s = data["seed"]
 	pHP = data["pHP"]
@@ -510,6 +511,13 @@ func _on_death():
 func getGridSize() -> Vector2:
 	return gridSize
 
+func _to_title():
+	for x in boards:
+		for y in x:
+			for b in y:
+				b.queue_free()
+	queue_free()
+	
 func _new_level():
 	for x in boards:
 		for y in x:

@@ -55,6 +55,8 @@ func getData() -> FiendData:
 
 func updateHealth(num: int) -> void:
 	var popup:DamagePopup = dPop.instantiate()
+	if num < 0:
+		AudioManager.play_sound('EnemyDamaged')
 	popup.setup(num)
 	add_child(popup)
 	getData().updateHealth(num)

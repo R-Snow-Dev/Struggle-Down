@@ -93,12 +93,16 @@ func move() -> void:
 					chosen = fPos[rng.randi_range(0, fPos.size()-1)] - mPos
 	
 	# Update the Rat's position, and direction it is facing
-	getMyself().getData().setPos(chosen + mPos)	
+	getMyself().getData().setPos(chosen + mPos)
+	chooseFX()
 	getMyself().getData().setFacing(chosen)
 	getMyself().chooseState()
 	getMyself().draw()
 	getMyself().add_child(preload("res://scenes/Particles/slimey_step.tscn").instantiate())
 	getMyself().setDelay(0.3)
+
+func chooseFX():
+	AudioManager.play_sound('TinyStep' + str(rng.randi_range(1,3)))
 
 # Function that performs the attack operations
 func attack() -> void:

@@ -12,6 +12,7 @@ var isHovering = false
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("select"):
 		if isHovering == true:
+			AudioManager.play_sound('Select')
 			var path = "res://saveFiles/save3.json"
 			DirAccess.remove_absolute(path)
 			playAnim("slideOut")
@@ -23,6 +24,7 @@ func playAnim(n:String):
 
 
 func _on_sub_menu_3_button_mouse_entered() -> void:
+	AudioManager.play_sound('Hover')
 	isHovering = true
 
 

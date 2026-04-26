@@ -30,6 +30,7 @@ func _process(_delta: float) -> void:
 		goBox.scale.y = 1.3
 		goBox.position.x = 7
 		if Input.is_action_just_pressed("select"):
+			AudioManager.play_sound('Select')
 			timing.play("close")
 	else:
 		goCord.position.x = -128
@@ -39,6 +40,7 @@ func _process(_delta: float) -> void:
 			
 func _on_area_2d_mouse_entered() -> void:
 	# Update isHovering when the cursor is hovering over the "Go" button
+	AudioManager.play_sound('Hover')
 	isHovering = true
 	
 

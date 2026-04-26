@@ -8,6 +8,7 @@ extends Label
 var totalHP: int = 0
 var yPos = 2100
 var curHP: int = 0
+var rng = RandomNumberGenerator.new()
 @onready var health_bar_faded: Label = $HealthBarFaded
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 	
@@ -29,11 +30,16 @@ func setHealthBar(tHP: int):
 	
 func _update_hp(amount: int):
 	# Function that updates the heath bar upon damage or healing
+	chooseFX()
 	if amount + curHP <= 0:
 		curHP = 0
 	else:
 		curHP += amount
 	animation_player.play("shake")
+	
+func chooseFX():
+	var n = rng.randi_range(1,3)
+	AudioManager.play_sound('Hit' + str(n))
 
 func displayHP():
 	# Creates the amount of hearts depending on how much current HP the player has

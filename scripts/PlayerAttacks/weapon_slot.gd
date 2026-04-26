@@ -63,6 +63,7 @@ func _process(_delta: float) -> void:
 	if mouseOn and !busy:
 		if ID != 0:
 			if Input.is_action_just_pressed("select"):
+				AudioManager.play_sound('Select')
 				if inAltar:
 					var w:Weapon = WeaponList.weapons[ID]
 					if UpgradeList.upgradeTable.has(w.getName()):
@@ -78,6 +79,7 @@ func _process(_delta: float) -> void:
 					var w: Weapon = WeaponList.weapons[ID]
 					EventBus.attack.emit(ID)
 			if Input.is_action_just_pressed("special_select"):
+				AudioManager.play_sound('Select')
 				EventBus.spWeapon.emit(ID)
 
 func _playerDoneAttacking():
@@ -108,6 +110,7 @@ func _save_weapon():
 	SaveController.updateData("weapon", ID)
 
 func _on_area_2d_mouse_entered() -> void:
+	AudioManager.play_sound('Hover')
 	if ID > 0:
 		EventBus.updateAOE.emit(ID)
 	mouseOn = true

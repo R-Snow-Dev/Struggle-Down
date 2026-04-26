@@ -45,6 +45,7 @@ func attack():
 	c.track_set_key_value(0,2,targ - Vector2i(0,4))
 	c.track_set_key_value(0,3,targ)
 	# Play the animation
+	AudioManager.play_sound('KSCharge')
 	animPlayer.play("Charge")
 	EventBus.stop_warn.emit()
 	atckr.setDelay(1)

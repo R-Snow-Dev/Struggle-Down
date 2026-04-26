@@ -10,9 +10,20 @@ func _ready() -> void:
 	EventBus.start.connect(_start)
 	EventBus.file_select.connect(_file_select)
 	EventBus.go.connect(_go)
-	var titleScreen = preload("res://scenes/menus/title_screen.tscn").instantiate() # In this case, it will be a basic dungeon
+	EventBus.title_screen.connect(_to_title)
+	var titleScreen = preload("res://scenes/menus/title_screen.tscn").instantiate() # In this case, it will be a the title screen
 	add_child(titleScreen)
+
+func _to_title() -> void:
+	# Delete all current children, and go to the title screen
 	
+	if self.get_child_count() > 0:
+		for i in self.get_children():
+			self.remove_child(i)
+			
+	var titleScreen = preload("res://scenes/menus/title_screen.tscn").instantiate() # In this case, it will be a the title screen
+	add_child(titleScreen)
+
 func _on_death():
 	# Loads to the pouch upon death
 	loadPouch()
@@ -54,6 +65,7 @@ func loadPouch():
 	if self.get_child_count() > 0:
 		for i in self.get_children():
 			self.remove_child(i)
+			
 	# Reset all run-dependant info
 	SaveController.updateData("floor", 1)
 	SaveController.updateData("level", 1)

@@ -7,7 +7,6 @@ Class that represents a Slime
 
 # Variables
 @onready var aParticles = $AttackParticles
-@onready var step = $slimeyStep
 @onready var anim = $Slime/atkAnims
 
 # Runs every process frames

@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=4 uid="uid://dkqh251ixbss2"]
+[gd_scene load_steps=43 format=4 uid="uid://dkqh251ixbss2"]
 
 [ext_resource type="Script" uid="uid://crf0iaimv3j33" path="res://scripts/dungeon.gd" id="1_ba8p3"]
 [ext_resource type="Script" uid="uid://dqhwkgc4c44u5" path="res://scripts/dungeoncontroller.gd" id="2_imoik"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://dou5rxf8tiklv" path="res://scenes/GUIParts/inventory_bar.tscn" id="18_0hxsq"]
 [ext_resource type="PackedScene" uid="uid://chx0bi5hs55wc" path="res://scenes/GUIParts/u_popup.tscn" id="20_5d84e"]
 [ext_resource type="Script" uid="uid://bajmxiffqeqpp" path="res://scripts/UI Shizz/upgrade_container.gd" id="21_4k0vd"]
+[ext_resource type="PackedScene" uid="uid://bkjrmdwf0bgjt" path="res://scenes/GUIParts/pause_menu.tscn" id="22_f27gv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5iqrf"]
 texture = ExtResource("4_48e0x")
@@ -658,6 +659,13 @@ script = ExtResource("21_4k0vd")
 
 [node name="UPopup" parent="CanvasLayer" instance=ExtResource("20_5d84e")]
 position = Vector2(160, 0)
+
+[node name="Pause Menu" parent="CanvasLayer" instance=ExtResource("22_f27gv")]
+visible = false
+offset_left = -167.99992
+offset_top = -65.33333
+offset_right = -167.99994
+offset_bottom = -65.33331
 
 [connection signal="mouse_entered" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_exited"]

@@ -17,6 +17,7 @@ var invTot = 0
 func _process(_delta: float) -> void:
 	if isHovering and checkDependencies():
 		if Input.is_action_just_pressed("select"):
+			AudioManager.play_sound('Select')
 			SaveController.updateItems(id, Vector2(inInv+1,stored-1))
 			SaveController.updateInv(id, 1)
 			updateAmount()
@@ -60,9 +61,11 @@ func checkDependencies():
 		return true
 	
 func _on_area_2d_mouse_entered() -> void:
+	AudioManager.play_sound('Hover')
 	if checkDependencies():
 		spriteController.position.y = -1
 		isHovering = true
+		
 func _on_area_2d_mouse_exited() -> void:
 	isHovering = false
 	spriteController.position.y = 0

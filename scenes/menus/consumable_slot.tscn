@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_i50bp"]
 [ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="2_g5r1g"]
-[ext_resource type="Script" path="res://scripts/Items/slots/consumable_slot.gd" id="2_totq1"]
+[ext_resource type="Script" uid="uid://q8wkyg7sshm3" path="res://scripts/Items/slots/consumable_slot.gd" id="2_totq1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tvwio"]
 texture = ExtResource("1_i50bp")

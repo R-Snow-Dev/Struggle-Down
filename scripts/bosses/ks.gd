@@ -32,6 +32,7 @@ func playAnim(a: String):
 	anim.play(a)
 
 func slam() -> void:
+	AudioManager.play_sound('KSLand')
 	var wave: Area2D = preload("res://scenes/Opps/slam_wave.tscn").instantiate()
 	add_child(wave)
 	await get_tree().create_timer(0.1).timeout
@@ -39,6 +40,8 @@ func slam() -> void:
 	wave.queue_free()
 
 func crash() -> void:
+	AudioManager.stop_sound('KSCharge')
+	AudioManager.play_sound('KSCrash')
 	aParticles.emitting = true
 
 func toggleCharge() -> void:
@@ -63,6 +66,7 @@ func move(grid: gameBoard, target: Player) -> void:
 
 func j() -> void:
 	sprite.play("jump")
+	AudioManager.play_sound('KSJump')
 	await sprite.animation_finished
 	sprite.play("Idle")
 	

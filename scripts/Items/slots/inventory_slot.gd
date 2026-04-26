@@ -13,6 +13,7 @@ func _process(_delta: float) -> void:
 	# from the inventory if so
 	if isHovering and inInv > 0:
 		if Input.is_action_just_pressed("select"):
+			AudioManager.play_sound('Select')
 			SaveController.updateItems(id, Vector2(inInv-1,stored + 1))
 			SaveController.updateInv(id, -1)
 			updateAmount()
@@ -46,6 +47,7 @@ func updateAmount():
 
 func _on_area_2d_mouse_entered() -> void:
 	if inInv > 0:
+		AudioManager.play_sound('Hover')
 		spriteController.position.y = 7
 		isHovering = true
 
