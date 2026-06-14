@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2kor413bre1a"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_qxhbo"]
+
+[node name="None" type="Sprite2D"]
+texture = SubResource("CanvasTexture_qxhbo")

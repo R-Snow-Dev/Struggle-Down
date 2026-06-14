@@ -3,6 +3,7 @@ class_name BossNew
 
 var hitbox: Area2D
 
+
 func myName() -> String:
 	return "boss"
 
@@ -35,7 +36,7 @@ func onHit(area: Area2D) -> void:
 	elif area is WeaponEffect:
 		getData().updateHealth(-calcWeaponEffect(area)) 
 	elif area is WildDamage:
-		getData().updateHealth(-calc(area.getDam(), area.getType(), false))
+		getData().updateHealth(-calcWild(area))
 	elif area is EatBox:
 		getData().updateHealth(-999)
 		EventBus.healSK.emit()

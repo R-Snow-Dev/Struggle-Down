@@ -24,6 +24,8 @@ func setHealthBar(tHP: int):
 	curHP = totalHP
 	if totalHP < 10:
 		position.x = -290 - ((10*9) - (totalHP*9))
+	else:
+		position.x = -290 - ((10*9) - (10*9))
 	# Create a shadowed version of the health bar below the main onw, so taht when hp is lost, you can see how much you lost
 	health_bar_faded.loadHearts(totalHP)
 	

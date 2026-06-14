@@ -1,14 +1,14 @@
-CanvasLayer
-VBoxContainer
-Button
-ColorRect
-HSlider
-Label
-HBoxContainer
-Control
-TileMapLayer
 Sprite2D
-AudioStreamPlayer      - Matches the "sound" keyword.
+AnimationPlayer
+Label
+Control
+HBoxContainer
+Node2D
+VBoxContainer
+Node
+ColorRect
+Button
 CPUParticles2D
-CollisionShape2D
-Area2D
+AnimatedSprite2D
+Polygon2D
+CanvasLayer

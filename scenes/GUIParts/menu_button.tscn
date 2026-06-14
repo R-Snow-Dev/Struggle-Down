@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyrsrshvhm2o4"]
+
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_ch0wm"]
+[ext_resource type="Script" uid="uid://72t1ncvrcggw" path="res://scripts/ButtonScripts/basicButton.gd" id="1_lmqya"]
+
+[node name="MenuButton" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_lmqya")
+
+[node name="Display" type="Node2D" parent="."]
+
+[node name="bg" type="Sprite2D" parent="Display"]
+position = Vector2(-4.7683716e-07, -4.7683716e-07)
+scale = Vector2(1.75, 1.75)
+texture = ExtResource("1_ch0wm")
+region_enabled = true
+region_rect = Rect2(16, 16, 16, 16)
+
+[node name="border" type="Sprite2D" parent="Display"]
+texture = ExtResource("1_ch0wm")
+region_enabled = true
+region_rect = Rect2(0, 48, 32, 32)
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+focus_mode = 0
+button_mask = 3
+flat = true
+
+[connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

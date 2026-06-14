@@ -19,9 +19,10 @@ var map:Map = preload("res://scenes/DungeonParts/map.tscn").instantiate()
 var wall = preload("res://scenes/Tiles/Wall.tscn")
 var dR = preload("res://scenes/GUIParts/discovered_room.tscn")
 var mapPos : Vector2
+var startPos: Vector2
 var endPos: Vector2
 var pPos: Vector2
-var rng = RandomNumberGenerator.new()
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var door: bool
 var paused = false
 var s: int
@@ -31,12 +32,21 @@ var discovered = []
 var toBeSummoned = []
 var ff = false
 var facings = [Vector2(0,1), Vector2(1,0), Vector2(-1,0), Vector2(0,-1)]
+var res = false
+var mediumIds = Vector2(0,20)
+var materialIds = Vector2(0,23)
+var catalystIds = Vector2(0,28)
+var cGenerator = ComponentGenerator.new()
+@onready var resIcon = $Node2D/Camera2D/PBranch
 @onready var healthBar = $Node2D/Camera2D/HealthBar
 @onready var node_2d: Node2D = $Node2D
 @onready var data = SaveController.loadData()
 @onready var mS = $Node2D/Camera2D/mapSpace
 @onready var pT = $Node2D/Camera2D/mapSpace/playerTracker
 
+func rollComponent(r: Vector2 = Vector2(1,data['level'])) -> Components:
+	rng.set_seed(data['seed'])
+	return cGenerator.genComp(rng.randi_range(r.x,r.y))
 
 func _create_slime(p: Vector2):
 	# Function that handles the creation of slime summons from the Slime King by storing
@@ -89,6 +99,16 @@ func drawBoard():
 	await player.ready
 	player.attack_origin.setGrid(gridSize)
 	boards[mapPos.x][mapPos.y][0].loadBoard()
+
+func getRes() -> bool:
+	return res
+
+func setRes(b: bool) -> void:
+	if b:
+		resIcon.visible = true
+	else:
+		resIcon.visible = false
+	res = b
 
 func rollEnemy(level:int, gridCoords: Array, chosen: int) -> Fiend:
 	# Function that spawns a random enemy based on what level you are on
@@ -351,6 +371,17 @@ func updateMap(mPos: Vector2):
 	pT.position = Vector2(51, -452) + Vector2(-11.3 * mPos.x, 101.1 * mPos.y)
 	pT.z_index = 100
 		
+func checkRevealed():
+	return !(discovered.find(endPos,0) == -1)
+
+func revealLadder():
+	if discovered.find(endPos,0) == -1:
+		discovered.append(endPos)
+		var d = dR.instantiate()
+		d.scale = Vector2(1.217, 10.87)
+		d.position = Vector2(51, -452) + Vector2(-11.3 * endPos.x, 101.1 * endPos.y)
+		d.color = Color(0.6,0.6,0.6,1)
+		mS.add_child(d)	
 
 func setGrid(grid: Vector2):
 	# Function that allows you to change the desired grid dimentions 
@@ -394,8 +425,12 @@ func _ready() -> void:
 	EventBus.updateActions.connect(onActionUpdate)
 	EventBus.title_screen.connect(_to_title)
 	
+	Overseer.setController(self)
 	s = data["seed"]
-	pHP = data["pHP"]
+	data['pHP'] = 2 + int(data["hearts"])
+	healthBar.setHealthBar(pHP)
+	data['pActions'] = 1 + data['movement']
+	WeaponList.mult = 0.9 + (0.1 * data['atk'])
 
 func onActionUpdate(_num: int, _type:String) -> void:
 	for a in UpgradeList.getByType("onCondition"):
@@ -423,7 +458,21 @@ func _on_door(on: bool):
 	door = on
 	boards[mapPos.x][mapPos.y][0].updateOnDoor(on)
 	
+func goHome():
+	EventBus.killEntities.emit()
+	res = false
+	UpgradeList.maxDrops = false
+	mapPos = map.startPos
+	pPos = Vector2(2,2)
+	gridSize = Vector2(5,5)
 	
+	player.setPos(pPos) # Sets player position to the newly aquired starting position
+	player.setActionsAvailable(data["pActions"]) # Sets available actions to a default number - 1
+	floorScene.mapPos = mapPos # gives floorScene the new map position to load new doorways
+	floorScene.grid = gridSize  # Sets floorScene's grid size to the new grid size
+	boards[mapPos.x][mapPos.y][0].loadBoard() # generates the gameboard and displays the objects in it to the screen for the first time
+	updateMap(mapPos) # Update the minimap
+	drawBoard() # Generates the dungeon floor
 
 func _changeRooms(changePos: Vector2, newPos: int):
 	# Function that handles the action of switching to a new room after recieving the changeRoom signal
@@ -432,6 +481,11 @@ func _changeRooms(changePos: Vector2, newPos: int):
 	
 	
 	# Changes the map position by the changePos Vector2
+	
+	EventBus.killEntities.emit()
+	res = false
+	resIcon = false
+	UpgradeList.maxDrops = false
 	mapPos = mapPos + changePos
 	
 	# newPos intepreter
@@ -471,7 +525,10 @@ func _process(_delta: float) -> void:
 			if player.actionsAvailable == 0 and !ff:
 				ff = true
 				boards[mapPos.x][mapPos.y][0].fiendsTurn(data["pActions"])
-	else: # If he isn't, initiate the detah sequence
+	elif res:
+		EventBus.update_hp.emit(data['pHP'])
+		res = false
+	else: # If he isn't, initiate the death sequence
 		deathSequence()
 		
 func _updateTotActions(amount:int) -> void:

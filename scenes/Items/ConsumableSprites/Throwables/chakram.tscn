@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://twq0k3t0dnkf"]
+
+[ext_resource type="Texture2D" uid="uid://bbtpslvokymfr" path="res://assets/Consumables.png" id="1_o5b1a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bspa4"]
+atlas = ExtResource("1_o5b1a")
+region = Rect2(0, 192, 32, 32)
+
+[node name="chakram" type="Sprite2D"]
+position = Vector2(3, -1)
+texture = SubResource("AtlasTexture_bspa4")

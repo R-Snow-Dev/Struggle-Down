@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://84ycti4w5t1i"]
+
+[ext_resource type="Texture2D" uid="uid://bbtpslvokymfr" path="res://assets/Consumables.png" id="1_gm0hl"]
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="2_oemgl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xd3fu"]
+atlas = ExtResource("1_gm0hl")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kduhk"]
+atlas = ExtResource("2_oemgl")
+region = Rect2(32, 224, 16, 16)
+
+[node name="IceAm" type="Sprite2D"]
+texture = SubResource("AtlasTexture_xd3fu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 8)
+texture = SubResource("AtlasTexture_kduhk")

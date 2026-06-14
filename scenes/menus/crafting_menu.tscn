@@ -1,0 +1,285 @@
+[gd_scene load_steps=27 format=3 uid="uid://bke4cvplch77i"]
+
+[ext_resource type="PackedScene" uid="uid://dm5hgskt3jg8" path="res://scenes/GUIParts/component_select.tscn" id="1_uw5pg"]
+[ext_resource type="Script" uid="uid://b8dv3fb8u760k" path="res://scripts/UI Shizz/crafting_menu.gd" id="1_wjsk0"]
+[ext_resource type="Texture2D" uid="uid://vaqghyoiaexk" path="res://assets/crafting_sigil.png" id="2_oj3q8"]
+[ext_resource type="Texture2D" uid="uid://b3o3rfwml8bqe" path="res://assets/torchflame.png" id="3_ocaei"]
+[ext_resource type="PackedScene" uid="uid://hcj4tpt3rwkr" path="res://scenes/GUIParts/component_button.tscn" id="3_tb8l4"]
+[ext_resource type="PackedScene" uid="uid://4lhuiu7ktcl6" path="res://scenes/GUIParts/text_button.tscn" id="5_a82bn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwrso"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jbxrv"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ivl60"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h32wj"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sr5wh"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02ijo"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8q0qp"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ymce"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_molh1"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2tca"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(144, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5cwd"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(160, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtlmi"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(176, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u0m0p"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(192, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vtks"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(208, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mk356"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(224, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33wli"]
+atlas = ExtResource("3_ocaei")
+region = Rect2(240, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wjsk0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwrso")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jbxrv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ivl60")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h32wj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sr5wh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02ijo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8q0qp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ymce")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_molh1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2tca")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5cwd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gtlmi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0m0p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1vtks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk356")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_33wli")
+}],
+"loop": true,
+"name": &"flame",
+"speed": 8.0
+}]
+
+[sub_resource type="Animation" id="Animation_wjsk0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("reveal:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("torchflame:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ocaei"]
+resource_name = "craft"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("reveal:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("torchflame:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"craft"
+}, {
+"args": [],
+"method": &"reset"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a82bn"]
+_data = {
+&"RESET": SubResource("Animation_wjsk0"),
+&"craft": SubResource("Animation_ocaei")
+}
+
+[node name="craftingMenu" type="Node2D"]
+script = ExtResource("1_wjsk0")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ComponentSelect" parent="CanvasLayer" instance=ExtResource("1_uw5pg")]
+visible = false
+
+[node name="clickBlocker" type="ColorRect" parent="CanvasLayer"]
+visible = false
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(1, 1, 1, 0)
+
+[node name="CraftingSigil" type="Sprite2D" parent="."]
+scale = Vector2(0.673, 0.673)
+texture = ExtResource("2_oj3q8")
+
+[node name="visuals" type="Node2D" parent="."]
+
+[node name="torchflame" type="AnimatedSprite2D" parent="visuals"]
+z_index = 10
+z_as_relative = false
+position = Vector2(0, -16)
+scale = Vector2(2.8031206, 2.8031206)
+sprite_frames = SubResource("SpriteFrames_wjsk0")
+animation = &"flame"
+autoplay = "flame"
+frame_progress = 0.92525303
+
+[node name="reveal" type="CPUParticles2D" parent="visuals"]
+position = Vector2(0, -8)
+emitting = false
+amount = 64
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 1.0
+direction = Vector2(1, 1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 160.0
+initial_velocity_max = 200.0
+scale_amount_min = 8.0
+scale_amount_max = 10.0
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="visuals"]
+libraries = {
+&"": SubResource("AnimationLibrary_a82bn")
+}
+
+[node name="TextButton" parent="visuals" instance=ExtResource("5_a82bn")]
+visible = false
+z_index = 10
+offset_top = 6.0
+offset_bottom = 6.0
+scale = Vector2(0.8002572, 0.8002572)
+
+[node name="sContainer" type="Node2D" parent="visuals"]
+
+[node name="ButtonLayout" type="Node2D" parent="."]
+
+[node name="mediums" parent="ButtonLayout" instance=ExtResource("3_tb8l4")]
+position = Vector2(-70, -66)
+
+[node name="materials" parent="ButtonLayout" instance=ExtResource("3_tb8l4")]
+position = Vector2(72, -68)
+
+[node name="catalysts" parent="ButtonLayout" instance=ExtResource("3_tb8l4")]
+position = Vector2(0, 96)
+
+[connection signal="remove" from="CanvasLayer/ComponentSelect" to="." method="_on_component_select_remove"]
+[connection signal="selected" from="CanvasLayer/ComponentSelect" to="." method="_on_component_select_selected"]
+[connection signal="pressed" from="visuals/TextButton" to="." method="_on_text_button_pressed"]
+[connection signal="pressed" from="ButtonLayout/mediums" to="." method="_on_mediums_pressed"]
+[connection signal="pressed" from="ButtonLayout/materials" to="." method="_on_materials_pressed"]
+[connection signal="pressed" from="ButtonLayout/catalysts" to="." method="_on_catalysts_pressed"]

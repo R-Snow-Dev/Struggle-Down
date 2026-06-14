@@ -1,8 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://bn87afvg3tv4"]
+[gd_scene load_steps=3 format=3 uid="uid://bn87afvg3tv4"]
 
 [ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_f2kqg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vfajq"]
+size = Vector2(7, 16)
 
 [node name="lWall" type="Sprite2D"]
 texture = ExtResource("1_f2kqg")
 region_enabled = true
 region_rect = Rect2(64, 16, 16, 16)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(9, 0)
+collision_layer = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-4.5, 0)
+shape = SubResource("RectangleShape2D_vfajq")

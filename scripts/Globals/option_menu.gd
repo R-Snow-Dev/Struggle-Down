@@ -15,6 +15,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed('Pause'):
 		save(data)
 
+# Load pre-existig option data
 func _ready() -> void:
 	if !FileAccess.file_exists(path):
 		save(data)

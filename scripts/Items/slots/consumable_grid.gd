@@ -3,8 +3,8 @@ extends Node2D
 # variables
 
 @onready var items = SaveController.itemList # Connects to the list of all item sprites
-
-@onready var grid = [$ConsumableSlot,$ConsumableSlot2,$ConsumableSlot3,$ConsumableSlot4,
+@onready var max = items.size()
+@onready var grid = [0,$ConsumableSlot,$ConsumableSlot2,$ConsumableSlot3,$ConsumableSlot4,
 			$ConsumableSlot5,$ConsumableSlot6,$ConsumableSlot7,$ConsumableSlot8,
 			$ConsumableSlot9,$ConsumableSlot10,$ConsumableSlot11,$ConsumableSlot12]
 var scrllLvl = 0
@@ -17,7 +17,20 @@ func _ready() -> void:
 	
 func updateSprites():
 	# Sets all the consumable slots to show the correct sprites
-	for i in range(0,12):
-		grid[i].id = i + (4*scrllLvl)
-		grid[i].updateSprite(items[i + (4*scrllLvl)])
+	for i in range(1,13):
+		if i + (4*scrllLvl) >= max:
+			grid[i].id = 0
+			grid[i].updateSprite(items[0])
+		else:
+			grid[i].id = i + (4*scrllLvl)
+			grid[i].updateSprite(items[i + (4*scrllLvl)])
 		
+		
+func _on_v_slider_value_changed(value: float) -> void:
+	scrllLvl = int(value)
+	AudioManager.play_sound('Select')
+	updateSprites()
+
+
+func _on_v_slider_mouse_entered() -> void:
+	AudioManager.play_sound('Hover')

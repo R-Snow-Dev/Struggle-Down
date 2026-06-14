@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://b58r6y5cx67k6"]
+
+[ext_resource type="Texture2D" uid="uid://bou8j0bf51ckn" path="res://assets/Fire&Ice.png" id="1_cytd7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_45jg8"]
+atlas = ExtResource("1_cytd7")
+region = Rect2(0, 16, 16, 16)
+
+[node name="Fire" type="Sprite2D"]
+texture = SubResource("AtlasTexture_45jg8")

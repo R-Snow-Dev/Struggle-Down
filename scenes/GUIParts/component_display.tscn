@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://cc3tljxjb7tq2"]
+
+[ext_resource type="Script" uid="uid://cvg6h5a1cusre" path="res://scripts/UI Shizz/component_display.gd" id="1_e1dop"]
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="2_y336l"]
+[ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="3_qal1i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_blf8i"]
+atlas = ExtResource("2_y336l")
+region = Rect2(0, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1dop"]
+atlas = ExtResource("2_y336l")
+region = Rect2(32, 112, 16, 16)
+
+[node name="ComponentDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_e1dop")
+
+[node name="slot" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_blf8i")
+
+[node name="Sprite2D" type="Sprite2D" parent="slot"]
+texture = SubResource("AtlasTexture_e1dop")
+
+[node name="sprite" type="Node2D" parent="slot"]
+
+[node name="amount" type="Label" parent="slot"]
+offset_top = -1.0
+offset_right = 16.0
+offset_bottom = 16.0
+scale = Vector2(0.75, 0.75)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_qal1i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+focus_mode = 0
+flat = true
+
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]

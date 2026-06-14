@@ -110,10 +110,15 @@ func _on_area_2d_mouse_entered() -> void:
 	AudioManager.play_sound('Hover')
 	if inventory.size() > 0:
 		isHovering = true
+		curEffect = itemEffects[items[curID][2]].new(int(items[curID][3]))
+		curEffect.hover()
 	slot.position.y = -2
 	label.position.y = -4
 
 func _on_area_2d_mouse_exited() -> void:
 	isHovering = false
+	if inventory.size() > 0:
+		curEffect = itemEffects[items[curID][2]].new(int(items[curID][3]))
+		curEffect.offHover()
 	slot.position.y = 0
 	label.position.y = -2

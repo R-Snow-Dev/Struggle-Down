@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbhk5tordhqbi"]
+
+[ext_resource type="Script" uid="uid://2ngbs7bf5vyi" path="res://scripts/Entities/bomb.gd" id="1_0tavi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bc1lm"]
+radius = 7.0
+
+[node name="Bomb" type="Node2D"]
+script = ExtResource("1_0tavi")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 9
+collision_mask = 37
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_bc1lm")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

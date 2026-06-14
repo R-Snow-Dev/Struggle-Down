@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://dkqh251ixbss2"]
+[gd_scene load_steps=44 format=4 uid="uid://dkqh251ixbss2"]
 
 [ext_resource type="Script" uid="uid://crf0iaimv3j33" path="res://scripts/dungeon.gd" id="1_ba8p3"]
 [ext_resource type="Script" uid="uid://dqhwkgc4c44u5" path="res://scripts/dungeoncontroller.gd" id="2_imoik"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://cu2si4x8n0phk" path="res://scripts/ButtonScripts/inventory.gd" id="17_8lghc"]
 [ext_resource type="PackedScene" uid="uid://dou5rxf8tiklv" path="res://scenes/GUIParts/inventory_bar.tscn" id="18_0hxsq"]
 [ext_resource type="PackedScene" uid="uid://chx0bi5hs55wc" path="res://scenes/GUIParts/u_popup.tscn" id="20_5d84e"]
+[ext_resource type="PackedScene" uid="uid://bfeyw6dhiag7o" path="res://scenes/Items/ConsumableSprites/Ritual/pBranch.tscn" id="20_fy2oy"]
 [ext_resource type="Script" uid="uid://bajmxiffqeqpp" path="res://scripts/UI Shizz/upgrade_container.gd" id="21_4k0vd"]
 [ext_resource type="PackedScene" uid="uid://bkjrmdwf0bgjt" path="res://scenes/GUIParts/pause_menu.tscn" id="22_f27gv"]
 
@@ -405,10 +406,10 @@ skew = -2.24113e-05
 
 [node name="HealthBar" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
 z_index = 1
-offset_left = -284.7766
-offset_top = 2201.4805
-offset_right = -64.77661
-offset_bottom = 2294.4805
+offset_left = -284.77295
+offset_top = 2027.1045
+offset_right = -64.77295
+offset_bottom = 2120.1045
 rotation = 3.14159
 scale = Vector2(1, 8)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -476,8 +477,20 @@ scale = Vector2(2.43471, 21.7969)
 skew = -2.24113e-05
 script = ExtResource("11_qqilx")
 
+[node name="Floor" type="Label" parent="Gamecontroller/Node2D/Camera2D/WeaponSlot"]
+offset_left = -343.00024
+offset_top = -96.91753
+offset_right = -259.00024
+offset_bottom = -63.917526
+scale = Vector2(0.4, 0.4)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_r56d8")
+theme_override_font_sizes/font_size = 32
+text = "Floor:"
+horizontal_alignment = 1
+
 [node name="slot" type="TileMapLayer" parent="Gamecontroller/Node2D/Camera2D/WeaponSlot"]
-position = Vector2(-8.00003, 1.32317e-05)
+position = Vector2(-8.000046, 1.335144e-05)
 tile_map_data = PackedByteArray("AAD/////AAAAAAMAAAD//wAAAAAAAAQAAAABAAAAAAABAAQAAAABAP//AAABAAMAAAAAAAAAAAABAAIAAAAAAP//AAABAAAAAAA=")
 tile_set = SubResource("TileSet_qhury")
 
@@ -511,24 +524,11 @@ libraries = {
 }
 autoplay = "RESET"
 
-[node name="Floor" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
-offset_left = 486.942
-offset_top = 1569.39
-offset_right = 634.942
-offset_bottom = 1618.39
-rotation = 3.14159
-scale = Vector2(1, 8)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("9_r56d8")
-theme_override_font_sizes/font_size = 32
-text = "Floor:"
-horizontal_alignment = 1
-
 [node name="floorLabel" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
-offset_left = 370.076
-offset_top = 1569.38
-offset_right = 410.076
-offset_bottom = 1618.38
+offset_left = 362.77246
+offset_top = 1547.5879
+offset_right = 402.77246
+offset_bottom = 1596.5879
 rotation = 3.14159
 scale = Vector2(1, 8)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -640,6 +640,13 @@ vertical_alignment = 1
 [node name="inventoryBar" parent="Gamecontroller/Node2D/Camera2D/Inventory" instance=ExtResource("18_0hxsq")]
 visible = false
 position = Vector2(1.52588e-05, 0)
+
+[node name="PBranch" parent="Gamecontroller/Node2D/Camera2D" instance=ExtResource("20_fy2oy")]
+visible = false
+position = Vector2(-389.55475, 2092.493)
+rotation = -3.1415699
+scale = Vector2(0.95208377, 8.523578)
+skew = -2.2411346e-05
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 scale = Vector2(1.5, 1.5)

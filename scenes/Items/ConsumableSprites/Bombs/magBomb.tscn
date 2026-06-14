@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://r7o63kfrvliw"]
+
+[ext_resource type="Texture2D" uid="uid://bbtpslvokymfr" path="res://assets/Consumables.png" id="1_rx1jn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bee54"]
+atlas = ExtResource("1_rx1jn")
+region = Rect2(0, 800, 32, 32)
+
+[node name="MagBomb" type="Sprite2D"]
+texture = SubResource("AtlasTexture_bee54")

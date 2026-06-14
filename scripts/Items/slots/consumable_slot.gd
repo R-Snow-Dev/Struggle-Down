@@ -11,17 +11,7 @@ var id: int
 var stored = 0
 var inInv = 0
 var invTot = 0
-	
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	if isHovering and checkDependencies():
-		if Input.is_action_just_pressed("select"):
-			AudioManager.play_sound('Select')
-			SaveController.updateItems(id, Vector2(inInv+1,stored-1))
-			SaveController.updateInv(id, 1)
-			updateAmount()
-			EventBus.updateInv.emit()
+			
 
 func updateSprite(spr: PackedScene):
 	# Deletes old sprites and replaces it with a new sprite
@@ -40,7 +30,10 @@ func updateAmount():
 	stored = int(data[1])
 	inInv = int(data[0])
 	invTot = inv.size()
-	amount.text = str(stored)
+	if stored > 0:
+		amount.text = str(stored)
+	else:
+		amount.text = ''
 	if stored > 0:
 		filter.visible = false
 	else:
@@ -60,12 +53,20 @@ func checkDependencies():
 	else:
 		return true
 	
-func _on_area_2d_mouse_entered() -> void:
+func _on_button_pressed() -> void:
+	AudioManager.play_sound('Select')
+	SaveController.updateItems(id, Vector2(inInv+1,stored-1))
+	SaveController.updateInv(id, 1)
+	updateAmount()
+	EventBus.updateInv.emit()
+
+func _on_button_mouse_entered() -> void:
 	AudioManager.play_sound('Hover')
 	if checkDependencies():
 		spriteController.position.y = -1
 		isHovering = true
-		
-func _on_area_2d_mouse_exited() -> void:
+
+
+func _on_button_mouse_exited() -> void:
 	isHovering = false
 	spriteController.position.y = 0

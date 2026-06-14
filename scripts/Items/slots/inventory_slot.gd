@@ -8,16 +8,6 @@ var id: int
 var stored = 0
 var inInv = 0
 
-func _process(_delta: float) -> void:
-	# Checks to see if the inventory slot is pressed and has an item inside. Removes 1 of that item
-	# from the inventory if so
-	if isHovering and inInv > 0:
-		if Input.is_action_just_pressed("select"):
-			AudioManager.play_sound('Select')
-			SaveController.updateItems(id, Vector2(inInv-1,stored + 1))
-			SaveController.updateInv(id, -1)
-			updateAmount()
-			EventBus.updateInv.emit()
 
 func updateSprite(spr: PackedScene):
 	# Deletes old sprites and replaces it with a new sprite
@@ -45,12 +35,24 @@ func updateAmount():
 	else:
 		amount.text = ""
 
-func _on_area_2d_mouse_entered() -> void:
+
+
+func _on_button_pressed() -> void:
+	if inInv > 0:
+		AudioManager.play_sound('Select')
+		SaveController.updateItems(id, Vector2(inInv-1,stored + 1))
+		SaveController.updateInv(id, -1)
+		updateAmount()
+		EventBus.updateInv.emit()
+
+
+func _on_button_mouse_entered() -> void:
 	if inInv > 0:
 		AudioManager.play_sound('Hover')
 		spriteController.position.y = 7
 		isHovering = true
 
-func _on_area_2d_mouse_exited() -> void:
+
+func _on_button_mouse_exited() -> void:
 	isHovering = false
 	spriteController.position.y = 8

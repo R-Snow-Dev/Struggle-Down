@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://da1o6h5521bfu"]
+[gd_scene load_steps=6 format=3 uid="uid://da1o6h5521bfu"]
 
 [ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_i50bp"]
 [ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="2_g5r1g"]
@@ -79,8 +79,6 @@ texture = ExtResource("1_i50bp")
 [sub_resource type="TileSet" id="TileSet_81ubs"]
 sources/0 = SubResource("TileSetAtlasSource_tvwio")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pup2k"]
-
 [node name="ConsumableSlot" type="TileMapLayer"]
 tile_map_data = PackedByteArray(0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 255, 255, 0, 0, 1, 0, 3, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 4, 0, 0, 0)
 tile_set = SubResource("TileSet_81ubs")
@@ -95,12 +93,15 @@ theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_g5r1g")
 horizontal_alignment = 2
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_pup2k")
-
 [node name="SpriteController" type="Node2D" parent="."]
+
+[node name="Button" type="Button" parent="."]
+offset_left = -11.0
+offset_top = -11.0
+offset_right = 11.0
+offset_bottom = 11.0
+focus_mode = 0
+flat = true
 
 [node name="filter" type="ColorRect" parent="."]
 offset_left = -14.0
@@ -109,5 +110,6 @@ offset_right = 14.0
 offset_bottom = 14.0
 color = Color(0, 0, 0, 0.419608)
 
-[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

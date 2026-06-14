@@ -12,17 +12,23 @@ class_name Player
 signal drawn
 
 # Initialises a Vector2 that will store the position data that is represented on the gameboard
-var facing: Vector2i = Vector2i(0,-1)
+var facing: Vector2i = Vector2i(0,1)
 var pos: Vector2
 var prevPos = [Vector2(0,0)]
 var actionsAvailable: int
 var effects: Array = []
 var inside: bool = false
 var rng = RandomNumberGenerator.new()
+var wildImmune = false
+@onready var popup = $Popup
 @onready var anim_player: AnimationPlayer = $CollisionShape2D/AnimatedSprite2D/animPlayer
 @onready var attack_origin: Node2D = $WeaponOrigin
 @onready var animated_sprite_2d: AnimatedSprite2D = $CollisionShape2D/AnimatedSprite2D
 @onready var data = SaveController.loadData()
+
+func getComponent(c: Components) -> void:
+	popup.setSprite(c)
+	popup.pop()
 
 func findIn(target, list: Array) -> int:
 	for i in range(0, list.size()):
@@ -42,6 +48,7 @@ func getEffects() -> Array:
 
 func playDeath():
 	# Plays the death animation upon death
+	EventBus.save_data.emit()
 	anim_player.play("death")
 	
 func broadcatDeath():
@@ -52,6 +59,7 @@ func _ready() -> void:
 	EventBus.updateActions.connect(_updateActions)
 	EventBus.bump.connect(bump)
 	EventBus.throwEffect.connect(_effect)
+	EventBus.throwEntity.connect(_entity)
 
 func setPos(newPos: Vector2):
 	# Function to artificially change the current position of the player character
@@ -150,23 +158,29 @@ func draw():
 	self.z_index = (pos.y + 2)
 	drawn.emit()
 	
-	
-
-
-func _effect(e: PackedScene, d: int, t: String):
+func _entity(e: BoardEntity):
 	print("Attempting to Summon")
-	var entity: WeaponEffect = e.instantiate()
-	entity.setDam(d)
-	entity.setType(t)
-	attack_origin.add_child(entity)
-	entity.position.x -= attack_origin.position.x
-	entity.position.y = 16
+	e.facing = facing * Vector2i(1,-1)
+	e.global_position = attack_origin.global_position
+	get_parent().add_child(e)
+
+func _effect(e: WeaponEffect):
+	print("Attempting to Summon")
+	e.rotation_degrees = attack_origin.rotation_degrees
+	e.global_position = attack_origin.global_position
+	e.facing = facing * Vector2i(1,-1)
+	get_parent().add_child(e)
 	
 func _on_area_entered(area: Area2D) -> void:
 	inside = true
 	print("hello")
 	if area.get_parent() is Altar:
 		EventBus.updateAltar.emit()
+	if area is WildDamage and !wildImmune:
+		if area.getType() == 'death':
+			EventBus.update_hp.emit(-999)
+		else:
+			EventBus.update_hp.emit(int(area.getDam()/5 + 0.5) * -1)
 		
 func _on_area_exited(area: Area2D) -> void:
 	inside = false

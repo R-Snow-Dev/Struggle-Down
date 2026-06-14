@@ -6,6 +6,7 @@
 size = Vector2(16, 16)
 
 [node name="LightBeam" type="Area2D"]
+collision_mask = 33
 script = ExtResource("1_0i7f4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

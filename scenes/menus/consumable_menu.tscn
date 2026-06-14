@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=4 uid="uid://uwue8fgsf3ss"]
+[gd_scene load_steps=16 format=4 uid="uid://uwue8fgsf3ss"]
 
 [ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_1qwi3"]
+[ext_resource type="Script" uid="uid://dj53wbb3cpjyt" path="res://scripts/UI Shizz/consumable_menu.gd" id="1_4gntf"]
 [ext_resource type="PackedScene" uid="uid://cfgeh1p718b5s" path="res://scenes/GUIParts/consumable_grid.tscn" id="2_00ae5"]
 [ext_resource type="PackedScene" uid="uid://4kofdi0ogs3j" path="res://scenes/GUIParts/inv_grid_pouch.tscn" id="3_v5sxk"]
+[ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="5_ocm8s"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_litcn"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4gntf"]
 texture = ExtResource("1_1qwi3")
 0:0/0 = 0
 1:0/0 = 0
@@ -77,9 +79,9 @@ texture = ExtResource("1_1qwi3")
 1:13/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_b331o"]
-sources/0 = SubResource("TileSetAtlasSource_litcn")
+sources/0 = SubResource("TileSetAtlasSource_4gntf")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5ookn"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ocm8s"]
 texture = ExtResource("1_1qwi3")
 0:0/0 = 0
 1:0/0 = 0
@@ -152,20 +154,236 @@ texture = ExtResource("1_1qwi3")
 1:13/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_s0cg0"]
-sources/0 = SubResource("TileSetAtlasSource_5ookn")
+sources/0 = SubResource("TileSetAtlasSource_ocm8s")
+
+[sub_resource type="Animation" id="Animation_4gntf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("display:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("display:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ocm8s"]
+resource_name = "close"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"toggleVisible"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("display:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-16, -16)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("display:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0.01)]
+}
+
+[sub_resource type="Animation" id="Animation_o3dsi"]
+resource_name = "open"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("display:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0.01), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("display:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-16, -16), Vector2(0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"toggleVisible"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_728ig"]
+_data = {
+&"RESET": SubResource("Animation_4gntf"),
+&"close": SubResource("Animation_ocm8s"),
+&"open": SubResource("Animation_o3dsi")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ocm8s"]
+atlas = ExtResource("1_1qwi3")
+region = Rect2(0, 48, 31, 3)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3dsi"]
+atlas = ExtResource("1_1qwi3")
+region = Rect2(30, 55, 2, 19)
 
 [node name="ConsumableMenu" type="Node2D"]
+script = ExtResource("1_4gntf")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -16.0
+offset_top = -48.0
+offset_right = 160.0
+offset_bottom = 112.0
+color = Color(1, 1, 1, 0)
+
+[node name="display" type="Node2D" parent="."]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="display"]
 tile_map_data = PackedByteArray("AAAAAAAAAAABAAEAAAAAAAEAAAABAAEAAAAAAAIAAAABAAEAAAABAAAAAAABAAEAAAABAAEAAAABAAEAAAABAAIAAAABAAEAAAACAAAAAAABAAEAAAACAAEAAAABAAEAAAACAAIAAAABAAEAAAADAAAAAAABAAEAAAADAAEAAAABAAEAAAADAAIAAAABAAEAAAAEAAAAAAABAAEAAAAEAAEAAAABAAEAAAAEAAIAAAABAAEAAAAFAAAAAAABAAEAAAAFAAEAAAABAAEAAAAFAAIAAAABAAEAAAAGAAAAAAABAAEAAAAGAAEAAAABAAEAAAAGAAIAAAABAAEAAAAAAAMAAAABAAEAAAAAAAQAAAABAAEAAAAAAAUAAAABAAEAAAABAAMAAAABAAEAAAABAAQAAAABAAEAAAABAAUAAAABAAEAAAACAAMAAAABAAEAAAACAAQAAAABAAEAAAACAAUAAAABAAEAAAADAAMAAAABAAEAAAADAAQAAAABAAEAAAADAAUAAAABAAEAAAAEAAMAAAABAAEAAAAEAAQAAAABAAEAAAAEAAUAAAABAAEAAAAFAAMAAAABAAEAAAAFAAQAAAABAAEAAAAFAAUAAAABAAEAAAAGAAMAAAABAAEAAAAGAAQAAAABAAEAAAAGAAUAAAABAAEAAAAHAAAAAAABAAEAAAAHAAEAAAABAAEAAAAHAAIAAAABAAEAAAAHAAMAAAABAAEAAAAHAAQAAAABAAEAAAAHAAUAAAABAAEAAAD/////AAABAAEAAAD//wAAAAABAAEAAAD//wEAAAABAAEAAAD//wIAAAABAAEAAAD//wMAAAABAAEAAAD//wQAAAABAAEAAAD//wUAAAABAAEAAAD//wYAAAABAAEAAAAAAP//AAABAAEAAAAAAAYAAAABAAEAAAABAP//AAABAAEAAAABAAYAAAABAAEAAAACAP//AAABAAEAAAACAAYAAAABAAEAAAADAP//AAABAAEAAAADAAYAAAABAAEAAAAEAP//AAABAAEAAAAEAAYAAAABAAEAAAAFAP//AAABAAEAAAAFAAYAAAABAAEAAAAGAP//AAABAAEAAAAGAAYAAAABAAEAAAAHAP//AAABAAEAAAAHAAYAAAABAAEAAAAIAP//AAABAAEAAAAIAAAAAAABAAEAAAAIAAEAAAABAAEAAAAIAAIAAAABAAEAAAAIAAMAAAABAAEAAAAIAAQAAAABAAEAAAAIAAUAAAABAAEAAAAIAAYAAAABAAEAAAAJAP//AAABAAEAAAAJAAAAAAABAAEAAAAJAAEAAAABAAEAAAAJAAIAAAABAAEAAAAJAAMAAAABAAEAAAAJAAQAAAABAAEAAAAJAAUAAAABAAEAAAAJAAYAAAABAAEAAAD///7/AAABAAEAAAAAAP7/AAABAAEAAAABAP7/AAABAAEAAAACAP7/AAABAAEAAAADAP7/AAABAAEAAAAEAP7/AAABAAEAAAAFAP7/AAABAAEAAAAGAP7/AAABAAEAAAAHAP7/AAABAAEAAAAIAP7/AAABAAEAAAAJAP7/AAABAAEAAAD///3/AAABAAEAAAAAAP3/AAABAAEAAAABAP3/AAABAAEAAAACAP3/AAABAAEAAAADAP3/AAABAAEAAAAEAP3/AAABAAEAAAAFAP3/AAABAAEAAAAGAP3/AAABAAEAAAAHAP3/AAABAAEAAAAIAP3/AAABAAEAAAAJAP3/AAABAAEAAAA=")
 tile_set = SubResource("TileSet_b331o")
 
-[node name="TileMapLayer2" type="TileMapLayer" parent="."]
+[node name="TileMapLayer2" type="TileMapLayer" parent="display"]
 tile_map_data = PackedByteArray("AAD//wYAAAAAAAIAAAD//wAAAAAAAAEAAAD//wEAAAAAAAEAAAD//wIAAAAAAAEAAAD//wMAAAAAAAEAAAD//wQAAAAAAAEAAAD//wUAAAAAAAEAAAAAAAYAAAABAAIAAAABAAYAAAABAAIAAAACAAYAAAABAAIAAAADAAYAAAABAAIAAAAHAAYAAAABAAIAAAAJAAYAAAACAAIAAAAIAAYAAAABAAIAAAAJAAAAAAACAAEAAAAJAAEAAAACAAEAAAAJAAIAAAACAAEAAAAJAAMAAAACAAEAAAAJAAQAAAACAAEAAAAJAAUAAAACAAEAAAD///3/AAAAAAAAAAAJAP3/AAACAAAAAAAAAP3/AAABAAAAAAABAP3/AAABAAAAAAACAP3/AAABAAAAAAADAP3/AAABAAAAAAAEAP3/AAABAAAAAAAFAP3/AAABAAAAAAAGAP3/AAABAAAAAAAHAP3/AAABAAAAAAAIAP3/AAABAAAAAAD///7/AAAAAAEAAAD/////AAAAAAEAAAAJAP7/AAACAAEAAAAJAP//AAACAAEAAAAEAAYAAAABAAIAAAAFAAYAAAABAAIAAAAGAAYAAAABAAIAAAA=")
 tile_set = SubResource("TileSet_s0cg0")
 
-[node name="ConsumableGrid" parent="." instance=ExtResource("2_00ae5")]
-position = Vector2(24, 16)
+[node name="ConsumableGrid" parent="display" instance=ExtResource("2_00ae5")]
+position = Vector2(19, 27)
 
-[node name="InvGridPouch" parent="." instance=ExtResource("3_v5sxk")]
-position = Vector2(8, -32)
+[node name="InvGridPouch" parent="display" instance=ExtResource("3_v5sxk")]
+position = Vector2(8, -27)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="display"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_728ig")
+}
+
+[node name="InPouch" type="Label" parent="display"]
+offset_left = 42.0
+offset_top = -10.0
+offset_right = 267.0
+offset_bottom = 55.0
+scale = Vector2(0.25, 0.25)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_ocm8s")
+theme_override_font_sizes/font_size = 64
+text = "In Pouch"
+
+[node name="banner" type="Node2D" parent="display/InPouch"]
+position = Vector2(-96.000015, 116)
+scale = Vector2(2.9563942, 2.9795182)
+
+[node name="Sprite2D" type="Sprite2D" parent="display/InPouch/banner"]
+position = Vector2(69.25, -16)
+scale = Vector2(3.141, 1)
+texture = SubResource("AtlasTexture_ocm8s")
+
+[node name="Sprite2D2" type="Sprite2D" parent="display/InPouch/banner"]
+position = Vector2(69.25, -37)
+scale = Vector2(3.141, 0.5)
+texture = SubResource("AtlasTexture_ocm8s")
+
+[node name="Sprite2D3" type="Sprite2D" parent="display/InPouch/banner"]
+position = Vector2(117.725, -25.880001)
+rotation = 3.1415927
+scale = Vector2(0.2147483, -1.0926422)
+texture = SubResource("AtlasTexture_o3dsi")
+
+[node name="Sprite2D4" type="Sprite2D" parent="display/InPouch/banner"]
+position = Vector2(23.925, -25.880001)
+rotation = 3.1415927
+scale = Vector2(0.2147483, -1.0926416)
+texture = SubResource("AtlasTexture_o3dsi")
+
+[node name="InInventory" type="Label" parent="display"]
+offset_left = 29.0
+offset_top = -46.0
+offset_right = 394.0
+offset_bottom = 19.0
+scale = Vector2(0.25, 0.25)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_ocm8s")
+theme_override_font_sizes/font_size = 64
+text = "In Inventory"
+
+[node name="banner" type="Node2D" parent="display/InInventory"]
+position = Vector2(-119.99997, 112)
+scale = Vector2(4.0505195, 2.8135567)
+
+[node name="Sprite2D" type="Sprite2D" parent="display/InInventory/banner"]
+position = Vector2(69.25, -16)
+scale = Vector2(3.141, 1)
+texture = SubResource("AtlasTexture_ocm8s")
+
+[node name="Sprite2D2" type="Sprite2D" parent="display/InInventory/banner"]
+position = Vector2(69.25, -37)
+scale = Vector2(3.141, 0.5)
+texture = SubResource("AtlasTexture_ocm8s")
+
+[node name="Sprite2D3" type="Sprite2D" parent="display/InInventory/banner"]
+position = Vector2(117.725, -25.880001)
+rotation = 3.1415927
+scale = Vector2(0.2147483, -1.0926422)
+texture = SubResource("AtlasTexture_o3dsi")
+
+[node name="Sprite2D4" type="Sprite2D" parent="display/InInventory/banner"]
+position = Vector2(23.925, -25.880001)
+rotation = 3.1415927
+scale = Vector2(0.2147483, -1.0926416)
+texture = SubResource("AtlasTexture_o3dsi")

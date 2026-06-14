@@ -15,6 +15,7 @@ var rng = RandomNumberGenerator.new()
 var delay: float = 0
 var pos: Vector2
 var dPop = preload("res://scenes/GUIParts/damagePopup.tscn")
+var paid = false
 
 func _ready() -> void:
 	EventBus.summon.connect(summon)
@@ -53,7 +54,8 @@ func setPos(p: Vector2) -> void:
 func getData() -> FiendData:
 	return data
 
-func updateHealth(num: int) -> void:
+func updateHealth(n: int) -> void:
+	var num = n * WeaponList.mult
 	var popup:DamagePopup = dPop.instantiate()
 	if num < 0:
 		AudioManager.play_sound('EnemyDamaged')
@@ -93,6 +95,8 @@ func move(_grid: gameBoard, _target: Player) -> void:
 	pass
 
 func calc(num: int, type: String, i:bool):
+	if type == 'death' and !(modifiers.has(type)):
+		return 999
 	if modifiers.has(type) and !i:
 		return num * modifiers[type]
 	return num
@@ -129,6 +133,14 @@ func calcWeaponEffect(e: WeaponEffect) -> int:
 			addEffect(WeaponList.effects[e.getEffect()])
 	return total
 
+func calcWild(w: WildDamage):
+	var total = 0
+	total += calc(w.getDam(), w.getType(), false)
+	if w.getEffect():
+		if rng.randf() <= w.getChance():
+			addEffect(WeaponList.effects[w.getEffect()])
+	return total
+
 func calcDamage(w: Weapon):
 	var total = calc(w.getAtkDam(), w.getDamageType(), w.getIgnore())
 	total += calc(WeaponList.damages[w.getDamageType()], w.getDamageType(), w.getIgnore())
@@ -139,7 +151,7 @@ func calcDamage(w: Weapon):
 		total += calc(x.effect(self), x.damageType, w.getIgnore())
 	total += checkTemps()
 	addEffects(w)
-	return total
+	return total * (1 + (0.25 * WeaponList.enraged))
 
 func onHit(area: Area2D) -> void:
 	# Function that either damages the player, or deals damage to itself depending
@@ -151,7 +163,7 @@ func onHit(area: Area2D) -> void:
 	elif area is WeaponEffect:
 		updateHealth(-calcWeaponEffect(area)) 
 	elif area is WildDamage:
-		updateHealth(-calc(area.getDam(), area.getType(), false))
+		updateHealth(-calcWild(area))
 	elif area is EatBox:
 		getData().updateHealth(-999)
 		EventBus.healSK.emit()
@@ -166,10 +178,10 @@ func draw() -> void:
 	position.y =getData().getPos().y*16 - 4
 	self.z_index = (getData().getPos().y + 1)
 	
-func summon(target: Node, e: PackedScene, d: int, t: String):
+func summon(target: Node, e: Node2D):
 	if target == self:
-		var entity = e.instantiate()
-		entity.setDam(d)
-		entity.setType(t)
-		entity.position = global_position
-		get_parent().add_child(entity)
+		e.position = global_position
+		get_parent().add_child(e)
+		
+func reset():
+	pass

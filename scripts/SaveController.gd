@@ -7,18 +7,91 @@ done through that path.
 extends Node
 
 const effects = {"none": preload("res://scripts/Items/effects/none.gd"),
-				"heal": preload("res://scripts/Items/effects/heal.gd"),}
+				"heal": preload("res://scripts/Items/effects/Pots/heal.gd"),
+				"rage": preload("res://scripts/Items/effects/Pots/rage.gd"),
+				"rush": preload("res://scripts/Items/effects/Pots/rush.gd"),
+				"javelin": preload("res://scripts/Items/effects/Throwables/javelin.gd"),
+				"chakram": preload("res://scripts/Items/effects/Throwables/chakram.gd"),
+				"sAmmo": preload("res://scripts/Items/effects/Throwables/sAmmo.gd"),
+				"kunai": preload("res://scripts/Items/effects/Throwables/kunai.gd"),
+				"tStars": preload("res://scripts/Items/effects/Throwables/tStars.gd"),
+				"iBalls": preload("res://scripts/Items/effects/Throwables/iBalls.gd"),
+				"ice": preload("res://scripts/Items/effects/Scrolls/ice.gd"),
+				"fire": preload("res://scripts/Items/effects/Scrolls/fire.gd"),
+				"bomb": preload("res://scripts/Items/effects/Bombs/bomb.gd"),
+				"magBomb": preload("res://scripts/Items/effects/Bombs/magBomb.gd"),
+				"skull": preload("res://scripts/Items/effects/Bombs/skullBomb.gd"),
+				"kaltrops": preload("res://scripts/Items/effects/Traps/kaltrops.gd"),
+				"gFire": preload("res://scripts/Items/effects/Traps/gFire.gd"),
+				"tar": preload("res://scripts/Items/effects/Traps/tar.gd"),
+				"void": preload("res://scripts/Items/effects/Traps/void.gd"),
+				"pBranch": preload("res://scripts/Items/effects/Rituals/pBranch.gd"),
+				"gIdol": preload("res://scripts/Items/effects/Rituals/gIdol.gd"),
+				"dEye": preload("res://scripts/Items/effects/Rituals/dEye.gd"),
+				"aSpool": preload("res://scripts/Items/effects/Rituals/aSpool.gd"),
+				"sKey": preload("res://scripts/Items/effects/Rituals/sKey.gd"),
+				"pStar": preload("res://scripts/Items/effects/Rituals/pStar.gd"),}
 
-const itemList = [preload("res://scenes/Items/ConsumableSprites/hp_am.tscn"), preload("res://scenes/Items/ConsumableSprites/hp_ap.tscn"), preload("res://scenes/Items/ConsumableSprites/hp_pro.tscn"),
-preload("res://scenes/Items/ConsumableSprites/hp_ar.tscn"), preload("res://scenes/Items/ConsumableSprites/pow_am.tscn"), preload("res://scenes/Items/ConsumableSprites/pow_ap.tscn"), preload("res://scenes/Items/ConsumableSprites/pow_pro.tscn"),
-preload("res://scenes/Items/ConsumableSprites/pow_ar.tscn"), preload("res://scenes/Items/ConsumableSprites/swift_am.tscn"), preload("res://scenes/Items/ConsumableSprites/swift_ap.tscn"), preload("res://scenes/Items/ConsumableSprites/swift_pro.tscn"),
-preload("res://scenes/Items/ConsumableSprites/swift_ar.tscn")]
+const itemList = [preload("res://scenes/Items/ConsumableSprites/none.tscn"), preload("res://scenes/Items/ConsumableSprites/Pots/hp_am.tscn"), preload("res://scenes/Items/ConsumableSprites/Pots/hp_ap.tscn"), preload("res://scenes/Items/ConsumableSprites/Pots/hp_pro.tscn"),
+preload("res://scenes/Items/ConsumableSprites/Pots/hp_ar.tscn"), preload("res://scenes/Items/ConsumableSprites/Pots/pow_am.tscn"), preload("res://scenes/Items/ConsumableSprites/Pots/pow_ap.tscn"), preload("res://scenes/Items/ConsumableSprites/Pots/pow_pro.tscn"),
+preload("res://scenes/Items/ConsumableSprites/Pots/pow_ar.tscn"), preload("res://scenes/Items/ConsumableSprites/Pots/swift_am.tscn"), preload("res://scenes/Items/ConsumableSprites/Pots/swift_ap.tscn"), preload("res://scenes/Items/ConsumableSprites/Pots/swift_pro.tscn"),
+preload("res://scenes/Items/ConsumableSprites/Pots/swift_ar.tscn"), preload("res://scenes/Items/ConsumableSprites/Throwables/javelin.tscn"),preload("res://scenes/Items/ConsumableSprites/Throwables/kunai.tscn"),preload("res://scenes/Items/ConsumableSprites/Throwables/chakram.tscn"),
+preload("res://scenes/Items/ConsumableSprites/Throwables/tStars.tscn"), preload("res://scenes/Items/ConsumableSprites/Throwables/sAmmo.tscn"),preload("res://scenes/Items/ConsumableSprites/Throwables/iBalls.tscn"), preload("res://scenes/Items/ConsumableSprites/Scrolls/Ice/ice_am.tscn"),
+preload("res://scenes/Items/ConsumableSprites/Scrolls/Ice/ice_app.tscn"),preload("res://scenes/Items/ConsumableSprites/Scrolls/Ice/ice_pro.tscn"),preload("res://scenes/Items/ConsumableSprites/Scrolls/Ice/ice_art.tscn"),preload("res://scenes/Items/ConsumableSprites/Scrolls/Ice/ice_ex.tscn"),
+preload("res://scenes/Items/ConsumableSprites/Scrolls/Fire/fire_am.tscn"),preload("res://scenes/Items/ConsumableSprites/Scrolls/Fire/fire_app.tscn"),preload("res://scenes/Items/ConsumableSprites/Scrolls/Fire/fire_pro.tscn"),
+preload("res://scenes/Items/ConsumableSprites/Scrolls/Fire/fire_art.tscn"), preload("res://scenes/Items/ConsumableSprites/Scrolls/Fire/fire_ex.tscn"), preload("res://scenes/Items/ConsumableSprites/Scrolls/Earth/earth_am.tscn"),
+preload("res://scenes/Items/ConsumableSprites/Scrolls/Earth/earth_app.tscn"),preload("res://scenes/Items/ConsumableSprites/Scrolls/Earth/earth_pro.tscn"),preload("res://scenes/Items/ConsumableSprites/Scrolls/Earth/earth_art.tscn"), 
+preload("res://scenes/Items/ConsumableSprites/Scrolls/Earth/earth_ex.tscn"), preload("res://scenes/Items/ConsumableSprites/Scrolls/Wind/wind_am.tscn"),preload("res://scenes/Items/ConsumableSprites/Scrolls/Wind/wind_app.tscn"), 
+preload("res://scenes/Items/ConsumableSprites/Scrolls/Wind/wind_pro.tscn"),preload("res://scenes/Items/ConsumableSprites/Scrolls/Wind/wind_art.tscn"), preload("res://scenes/Items/ConsumableSprites/Scrolls/Wind/wind_ex.tscn"), 
+preload("res://scenes/Items/ConsumableSprites/Scrolls/Lightning/l_am.tscn"),preload("res://scenes/Items/ConsumableSprites/Scrolls/Lightning/l_app.tscn"), preload("res://scenes/Items/ConsumableSprites/Scrolls/Lightning/l_pro.tscn"),
+preload("res://scenes/Items/ConsumableSprites/Scrolls/Lightning/l_art.tscn"), preload("res://scenes/Items/ConsumableSprites/Scrolls/Lightning/l_ex.tscn"), preload("res://scenes/Items/ConsumableSprites/Scrolls/Holy/holy_am.tscn"),
+preload("res://scenes/Items/ConsumableSprites/Scrolls/Holy/holy_app.tscn"), preload("res://scenes/Items/ConsumableSprites/Scrolls/Holy/holy_pro.tscn"), preload("res://scenes/Items/ConsumableSprites/Scrolls/Holy/holy_art.tscn"), 
+preload("res://scenes/Items/ConsumableSprites/Scrolls/Holy/holy_ex.tscn"), preload("res://scenes/Items/ConsumableSprites/Bombs/bomb.tscn"), preload("res://scenes/Items/ConsumableSprites/Bombs/magBomb.tscn"), preload("res://scenes/Items/ConsumableSprites/Bombs/skullBomb.tscn"),
+preload("res://scenes/Items/ConsumableSprites/Traps/kaltrops.tscn"), preload("res://scenes/Items/ConsumableSprites/Traps/gFire.tscn"), preload("res://scenes/Items/ConsumableSprites/Traps/tar.tscn"), preload("res://scenes/Items/ConsumableSprites/Traps/void.tscn"),
+preload("res://scenes/Items/ConsumableSprites/Ritual/pBranch.tscn"), preload("res://scenes/Items/ConsumableSprites/Ritual/gIdol.tscn"), preload("res://scenes/Items/ConsumableSprites/Ritual/dEye.tscn"), preload("res://scenes/Items/ConsumableSprites/Ritual/tBead.tscn"),
+preload("res://scenes/Items/ConsumableSprites/Ritual/aSpool.tscn"), preload("res://scenes/Items/ConsumableSprites/Ritual/sKey.tscn"), preload("res://scenes/Items/ConsumableSprites/Ritual/pStar.tscn")]
 
 # Path to the chosen save file
 var path = "res://saveFiles/save1.json"
 # Dictionary of default data. Used to initialise savefiles
-var default_data = {"pActions": 2, "pHP": 4, "curHP": 4, "seed": 22, "weapon": 0, "level": 1, "floor": 1, "gold": 0, "inrun": true, 
-"inventory": [], "inInv": 0, "upgrades": [], "stored": 0}
+var default_data = {"pActions": 2, "pHP": 4, "curHP": 4, "seed": 22, "weapon": 0, "level": 1, "floor": 5, "gold": 0, "inrun": true, 
+"inventory": [], "inInv": 0, "upgrades": [], "stored": 0, "components": {'0': {4:1,7:1}, '1': {4:1,6:1}, '2': {16:1,17:1}},
+'atk': 1, 'movement': 1, 'hearts': 2, 'soulFlame': 0, 'unlocked': {},}
+
+var tempComponents = []
+
+func pickupComponent(component: Components) -> void:
+	tempComponents.append(component)
+
+func saveComponents() -> void:
+	for c in tempComponents:
+		addComponent(c)
+	tempComponents = []
+
+func addComponent(component: Components) -> void:
+	var data = loadData()
+	var c: Dictionary = data['components'][str(component.getType())]
+	var id = component.getId()
+	if c.has(id):
+		c[id] += 1
+	else:
+		c[id] = 1
+	save(data)
+
+func delComponent(component: Components) -> void:
+	var data = loadData()
+	var c: Dictionary = data['components'][str(component.getType())]
+	var id = component.getId()
+	if c.has(str(id)):
+		print("You have component of type", component.getType(),"and an id of",id,"being deleted.")
+		if c[str(id)] < 2:
+			print('Component erased')
+			c[str(id)] = 0
+			c.erase(str(id))
+		else:
+			print('Component decremented')
+			c[str(id)] -= 1
+	save(data)
 
 func save(dict: Dictionary):
 	# Function that writes a dictionary to the desired savefile

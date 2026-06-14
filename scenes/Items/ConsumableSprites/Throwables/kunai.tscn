@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://ce3bu1m48xkgm"]
+
+[ext_resource type="Texture2D" uid="uid://bbtpslvokymfr" path="res://assets/Consumables.png" id="1_1f6w5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r44hi"]
+atlas = ExtResource("1_1f6w5")
+region = Rect2(0, 320, 32, 32)
+
+[node name="Kunai" type="Sprite2D"]
+texture = SubResource("AtlasTexture_r44hi")

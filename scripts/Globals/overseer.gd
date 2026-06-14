@@ -2,18 +2,32 @@ extends Node2D
 
 var grid: Array
 var objects: Array
+var board: gameBoard
+var control: DungeonController
 
 func setObj(obj: Array) -> void:
 	objects = obj
+
+func setController(c: DungeonController) -> void:
+	control = c
+
+func setBoard(b: gameBoard) -> void:
+	board = b
 
 func setGrid(g:Array) -> void:
 	grid = g
 	
 func getGrid() -> Array:
 	return grid
-	
+
+func getController() -> DungeonController:
+	return control
+
 func getObj() -> Array:
 	return objects
+
+func getBoard() -> gameBoard:
+	return board
 
 func getDiff(pos1: Vector2i, pos2: Vector2i) -> Vector2i:
 	return pos1 - pos2

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dyedpyo4cphgh"]
+
+[ext_resource type="Texture2D" uid="uid://bbtpslvokymfr" path="res://assets/Consumables.png" id="1_1bv60"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smgiv"]
+atlas = ExtResource("1_1bv60")
+region = Rect2(0, 256, 32, 32)
+
+[node name="SAmmo" type="Sprite2D"]
+texture = SubResource("AtlasTexture_smgiv")

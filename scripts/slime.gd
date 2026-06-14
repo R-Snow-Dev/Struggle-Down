@@ -13,10 +13,13 @@ Class that represents a Slime
 func _process(_delta: float) -> void:
 	pos = getData().getPos()
 	if isDead():
-		if UpgradeList.maxDrops:
-			EventBus.updateGold.emit(getData().getGoldRange().y)
-		else:
-			EventBus.updateGold.emit(rng.randi_range(getData().getGoldRange().x, getData().getGoldRange().y))
+		if !paid:
+			paid = true
+			if UpgradeList.maxDrops:
+				EventBus.updateGold.emit(getData().getGoldRange().y)
+			else:
+				EventBus.updateGold.emit(rng.randi_range(getData().getGoldRange().x, getData().getGoldRange().y))
+		EventBus.doneAttacking.emit()
 		EventBus.object_ded.emit(self)
 
 # Function taht plays an animation based on the given String

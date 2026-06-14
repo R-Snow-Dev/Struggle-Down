@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bm7re27bwnq7m"]
+
+[ext_resource type="Texture2D" uid="uid://bbtpslvokymfr" path="res://assets/Consumables.png" id="1_4iffd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twego"]
+atlas = ExtResource("1_4iffd")
+region = Rect2(0, 224, 32, 32)
+
+[node name="Javelin" type="Sprite2D"]
+position = Vector2(5.9604645e-08, 5.9604634e-08)
+rotation = 5.484571
+scale = Vector2(0.5200383, 0.5200383)
+texture = SubResource("AtlasTexture_twego")

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://m57bh03fejfu"]
+
+[ext_resource type="Texture2D" uid="uid://bbtpslvokymfr" path="res://assets/Consumables.png" id="1_r75km"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twego"]
+atlas = ExtResource("1_r75km")
+region = Rect2(0, 192, 32, 32)
+
+[node name="Chakram" type="Sprite2D"]
+position = Vector2(2, -1.7763568e-14)
+rotation = 5.484571
+scale = Vector2(0.5200383, 0.5200383)
+texture = SubResource("AtlasTexture_twego")

@@ -1,0 +1,403 @@
+[gd_scene load_steps=22 format=4 uid="uid://c0ud1sgcoexmu"]
+
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_51sjn"]
+[ext_resource type="Script" uid="uid://bloiir3frd4nc" path="res://scripts/UI Shizz/component_pouch.gd" id="1_s4np2"]
+[ext_resource type="PackedScene" uid="uid://27aalvvyhyhj" path="res://scenes/GUIParts/display_grid.tscn" id="2_apvhg"]
+[ext_resource type="PackedScene" uid="uid://cyrsrshvhm2o4" path="res://scenes/GUIParts/menu_button.tscn" id="3_tf3q8"]
+[ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="3_vjuab"]
+[ext_resource type="Texture2D" uid="uid://bpmamosh44oc8" path="res://assets/Components-Mediums.png" id="5_s4np2"]
+[ext_resource type="Texture2D" uid="uid://c1vf6kkbpjt4" path="res://assets/Components-Materials.png" id="6_lskkj"]
+[ext_resource type="Texture2D" uid="uid://codvngasrglqa" path="res://assets/Components-Catalysts.png" id="7_o4mye"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_apvhg"]
+texture = ExtResource("1_51sjn")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+3:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+2:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+5:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+1:9/0 = 0
+5:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+0:12/0 = 0
+1:12/0 = 0
+0:13/0 = 0
+1:13/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_tf3q8"]
+sources/0 = SubResource("TileSetAtlasSource_apvhg")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yjpe1"]
+texture = ExtResource("1_51sjn")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+3:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+2:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+5:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+1:9/0 = 0
+5:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+0:12/0 = 0
+1:12/0 = 0
+0:13/0 = 0
+1:13/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_3qggk"]
+sources/0 = SubResource("TileSetAtlasSource_yjpe1")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2by5y"]
+atlas = ExtResource("5_s4np2")
+region = Rect2(0, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7la5"]
+atlas = ExtResource("6_lskkj")
+region = Rect2(0, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80kax"]
+atlas = ExtResource("7_o4mye")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqnre"]
+atlas = ExtResource("1_51sjn")
+region = Rect2(0, 48, 31, 3)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r8v15"]
+atlas = ExtResource("1_51sjn")
+region = Rect2(30, 55, 2, 19)
+
+[sub_resource type="Animation" id="Animation_s4np2"]
+resource_name = "open"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Display:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-16, 38), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Display:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.1, 0.1), Vector2(1, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"toggleVisible"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_lskkj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Display:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-16, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Display:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.1, 0.1)]
+}
+
+[sub_resource type="Animation" id="Animation_o4mye"]
+resource_name = "close"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Display:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-16, 38)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Display:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.1, 0.1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"toggleVisible"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lskkj"]
+_data = {
+&"RESET": SubResource("Animation_lskkj"),
+&"close": SubResource("Animation_o4mye"),
+&"open": SubResource("Animation_s4np2")
+}
+
+[node name="ComponentPouch" type="Node2D"]
+script = ExtResource("1_s4np2")
+
+[node name="Display" type="Node2D" parent="."]
+position = Vector2(-16, 0)
+scale = Vector2(0.1, 0.1)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Display"]
+tile_map_data = PackedByteArray("AAAAAAAAAAABAAEAAAAAAAEAAAABAAEAAAAAAAIAAAABAAEAAAABAAAAAAABAAEAAAABAAEAAAABAAEAAAABAAIAAAABAAEAAAACAAAAAAABAAEAAAACAAEAAAABAAEAAAACAAIAAAABAAEAAAADAAAAAAABAAEAAAADAAEAAAABAAEAAAADAAIAAAABAAEAAAAEAAAAAAABAAEAAAAEAAEAAAABAAEAAAAEAAIAAAABAAEAAAAFAAAAAAABAAEAAAAFAAEAAAABAAEAAAAFAAIAAAABAAEAAAAGAAAAAAABAAEAAAAGAAEAAAABAAEAAAAGAAIAAAABAAEAAAAAAAMAAAABAAEAAAAAAAQAAAABAAEAAAAAAAUAAAABAAEAAAABAAMAAAABAAEAAAABAAQAAAABAAEAAAABAAUAAAABAAEAAAACAAMAAAABAAEAAAACAAQAAAABAAEAAAACAAUAAAABAAEAAAADAAMAAAABAAEAAAADAAQAAAABAAEAAAADAAUAAAABAAEAAAAEAAMAAAABAAEAAAAEAAQAAAABAAEAAAAEAAUAAAABAAEAAAAFAAMAAAABAAEAAAAFAAQAAAABAAEAAAAFAAUAAAABAAEAAAAGAAMAAAABAAEAAAAGAAQAAAABAAEAAAAGAAUAAAABAAEAAAAHAAAAAAABAAEAAAAHAAEAAAABAAEAAAAHAAIAAAABAAEAAAAHAAMAAAABAAEAAAAHAAQAAAABAAEAAAAHAAUAAAABAAEAAAD/////AAABAAEAAAD//wAAAAABAAEAAAD//wEAAAABAAEAAAD//wIAAAABAAEAAAD//wMAAAABAAEAAAD//wQAAAABAAEAAAD//wUAAAABAAEAAAD//wYAAAABAAEAAAAAAP//AAABAAEAAAAAAAYAAAABAAEAAAABAP//AAABAAEAAAABAAYAAAABAAEAAAACAP//AAABAAEAAAACAAYAAAABAAEAAAADAP//AAABAAEAAAADAAYAAAABAAEAAAAEAP//AAABAAEAAAAEAAYAAAABAAEAAAAFAP//AAABAAEAAAAFAAYAAAABAAEAAAAGAP//AAABAAEAAAAGAAYAAAABAAEAAAAHAP//AAABAAEAAAAHAAYAAAABAAEAAAAIAP//AAABAAEAAAAIAAAAAAABAAEAAAAIAAEAAAABAAEAAAAIAAIAAAABAAEAAAAIAAMAAAABAAEAAAAIAAQAAAABAAEAAAAIAAUAAAABAAEAAAAIAAYAAAABAAEAAAAJAP//AAABAAEAAAAJAAAAAAABAAEAAAAJAAEAAAABAAEAAAAJAAIAAAABAAEAAAAJAAMAAAABAAEAAAAJAAQAAAABAAEAAAAJAAUAAAABAAEAAAAJAAYAAAABAAEAAAD///7/AAABAAEAAAAAAP7/AAABAAEAAAABAP7/AAABAAEAAAACAP7/AAABAAEAAAADAP7/AAABAAEAAAAEAP7/AAABAAEAAAAFAP7/AAABAAEAAAAGAP7/AAABAAEAAAAHAP7/AAABAAEAAAAIAP7/AAABAAEAAAAJAP7/AAABAAEAAAD///3/AAABAAEAAAAAAP3/AAABAAEAAAABAP3/AAABAAEAAAACAP3/AAABAAEAAAADAP3/AAABAAEAAAAEAP3/AAABAAEAAAAFAP3/AAABAAEAAAAGAP3/AAABAAEAAAAHAP3/AAABAAEAAAAIAP3/AAABAAEAAAAJAP3/AAABAAEAAAA=")
+tile_set = SubResource("TileSet_tf3q8")
+
+[node name="TileMapLayer2" type="TileMapLayer" parent="Display"]
+tile_map_data = PackedByteArray("AAD//wYAAAAAAAIAAAD//wAAAAAAAAEAAAD//wEAAAAAAAEAAAD//wIAAAAAAAEAAAD//wMAAAAAAAEAAAD//wQAAAAAAAEAAAD//wUAAAAAAAEAAAAAAAYAAAABAAIAAAABAAYAAAABAAIAAAACAAYAAAABAAIAAAADAAYAAAABAAIAAAAHAAYAAAABAAIAAAAJAAYAAAACAAIAAAAIAAYAAAABAAIAAAAJAAAAAAACAAEAAAAJAAEAAAACAAEAAAAJAAIAAAACAAEAAAAJAAMAAAACAAEAAAAJAAQAAAACAAEAAAAJAAUAAAACAAEAAAD///3/AAAAAAAAAAAJAP3/AAACAAAAAAAAAP3/AAABAAAAAAABAP3/AAABAAAAAAACAP3/AAABAAAAAAADAP3/AAABAAAAAAAEAP3/AAABAAAAAAAFAP3/AAABAAAAAAAGAP3/AAABAAAAAAAHAP3/AAABAAAAAAAIAP3/AAABAAAAAAD///7/AAAAAAEAAAD/////AAAAAAEAAAAJAP7/AAACAAEAAAAJAP//AAACAAEAAAAEAAYAAAABAAIAAAAFAAYAAAABAAIAAAAGAAYAAAABAAIAAAA=")
+tile_set = SubResource("TileSet_3qggk")
+
+[node name="Buttons" type="Control" parent="Display"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 10.0
+offset_top = -12.0
+offset_right = 10.0
+offset_bottom = -12.0
+scale = Vector2(0.5, 0.5)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Display/Buttons"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = -40.0
+offset_right = 188.0
+theme_override_constants/separation = 64
+
+[node name="Mediums" parent="Display/Buttons/HBoxContainer" instance=ExtResource("3_tf3q8")]
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Display/Buttons/HBoxContainer/Mediums"]
+scale = Vector2(1.5, 1.5)
+texture = SubResource("AtlasTexture_2by5y")
+
+[node name="Materials" parent="Display/Buttons/HBoxContainer" instance=ExtResource("3_tf3q8")]
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Display/Buttons/HBoxContainer/Materials"]
+scale = Vector2(1.5, 1.5)
+texture = SubResource("AtlasTexture_y7la5")
+
+[node name="Catalysts" parent="Display/Buttons/HBoxContainer" instance=ExtResource("3_tf3q8")]
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Display/Buttons/HBoxContainer/Catalysts"]
+scale = Vector2(1.5, 1.5)
+texture = SubResource("AtlasTexture_80kax")
+
+[node name="displayGrid" parent="Display" instance=ExtResource("2_apvhg")]
+offset_left = 8.0
+offset_top = 10.0
+offset_right = 8.0
+offset_bottom = 10.0
+
+[node name="Label" type="Label" parent="Display"]
+offset_left = 10.0
+offset_top = -20.0
+offset_right = 263.0
+offset_bottom = 45.0
+scale = Vector2(0.25, 0.25)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_vjuab")
+theme_override_font_sizes/font_size = 64
+text = "Catalysts"
+
+[node name="banner" type="Node2D" parent="Display"]
+position = Vector2(-13.999999, 11)
+scale = Vector2(0.7923821, 0.82)
+
+[node name="Sprite2D" type="Sprite2D" parent="Display/banner"]
+position = Vector2(69.25, -16)
+scale = Vector2(3.141, 1)
+texture = SubResource("AtlasTexture_eqnre")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Display/banner"]
+position = Vector2(69.25, -37)
+scale = Vector2(3.141, 0.5)
+texture = SubResource("AtlasTexture_eqnre")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Display/banner"]
+position = Vector2(117.725, -25.880001)
+rotation = 3.1415927
+scale = Vector2(0.2147483, -1.0926422)
+texture = SubResource("AtlasTexture_r8v15")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Display/banner"]
+position = Vector2(23.925, -25.880001)
+rotation = 3.1415927
+scale = Vector2(0.2147483, -1.0926416)
+texture = SubResource("AtlasTexture_r8v15")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Display"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_lskkj")
+}
+
+[connection signal="pressed" from="Display/Buttons/HBoxContainer/Mediums" to="." method="_on_mediums_pressed"]
+[connection signal="pressed" from="Display/Buttons/HBoxContainer/Materials" to="." method="_on_materials_pressed"]
+[connection signal="pressed" from="Display/Buttons/HBoxContainer/Catalysts" to="." method="_on_catalysts_pressed"]

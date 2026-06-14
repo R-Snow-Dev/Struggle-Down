@@ -32,6 +32,7 @@ var lockedDoors = false
 var button = -1
 var tempDead: Array = []
 var solved: bool = false
+var fTurn = false
 
 func findID(obj, list:Array):
 	# Helper function that replaces the "find" method for arrays
@@ -138,22 +139,30 @@ func loadGrid():
 	
 	display()
 
+func forceUnlock():
+	solved = true
+	lockedDoors = false
+	unlockDoors()
+	
+
 func object_ded(object: Object):
 	# Delete an object from the board, unless it's a puzzle, 
 	# in which case temporarily remove it
 	var index = findID(object, objects)
 	if index != -1:
 		objects.remove_at(index)
-		if type!=1:
+		if type!=1 or fTurn:
 			tempDead.append(object)
 			object.reset()
 			object.visible = false
 		else:
-			object.queue_free()
+			object.call_deferred('queue_free')
 		loadGrid()
-	if type == 1:
-		tempDead = []
 
+func clean():
+	for obj: Node2D in tempDead:
+		obj.call_deferred('queue_free')
+	tempDead = []
 
 func loadBoard():
 	# Generates the current board as a 2D array based on given data
@@ -178,10 +187,32 @@ func loadBoard():
 	dupe.append(player)
 	Overseer.setGrid(grid)
 	Overseer.setObj(dupe)
+	Overseer.setBoard(self)
 	
 	# display all objects to the screen
 	EventBus.updatedView.emit()
 	display()
+
+# Checks of a wall is immediately in front of the player
+func wallInFront() -> bool:
+	var maxs = Vector2(width, height)
+	var d = player.facing * Vector2i(1,-1)
+	var c = player.pos
+	var newPos = c + Vector2(d)
+	var axis = d * d
+	var maxCare = maxs * Vector2(axis)
+	var cCare = newPos * Vector2(axis)
+	var max = (maxCare.x + maxCare.y) - 1
+	var cVal = cCare.x + cCare.y
+	
+	if cVal < 0 or cVal > max:
+		return false
+	elif grid[newPos.y][newPos.x].size() < 1:
+		return true
+	elif grid[newPos.y][newPos.x][0] is Wall:
+		return false
+	else:
+		return true
 
 func heal():
 	# Heals all enemies to full whenever entering the room
@@ -218,7 +249,9 @@ func fiendsTurn(pActions: float):
 	# This function calls all monsters to act after the player has used up all their actions. If there are no monsters on the 
 	# board, the player will emmidiatly regain their actions. If not, every monster will be called to take their turns, and only afterwards does the player
 	# regain the ability to take another action
+	fTurn = true
 	EventBus.pause.emit()
+	WeaponList.enraged = 0
 	if objects.size() > 0:
 		for y in objects:
 			if y is Fiend or y is BossNew:
@@ -231,7 +264,11 @@ func fiendsTurn(pActions: float):
 				await EventBus.doneAttacking
 	player.setActionsAvailable(pActions)
 	EventBus.fiend_phase.emit()
+	fTurn = false
+	if type == 1:
+		clean()
 	EventBus.unpause.emit()
+	EventBus.playersTurnStart.emit()
 
 		
 func checkPush(obj: Pushable, dir: Vector2):
@@ -274,7 +311,7 @@ func checkInputs():
 	# Definitly not the best way to do this, but it works
 	
 	# Check to see if the room has a button that unlocks/locks doors
-	if button is Interactable:
+	if button is Interactable and solved == false:
 		# If so, set the doors to either locked or unlocked. depending on
 		# Whether or not the button is pressed
 		lockedDoors = !button.getState()

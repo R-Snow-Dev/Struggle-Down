@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://bipaopx1tqs57"]
+
+[ext_resource type="Script" uid="uid://b20mkwm04614u" path="res://scripts/Items/projectile.gd" id="1_b3dia"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jahl1"]
+radius = 5.0
+
+[node name="Projectile" type="Area2D"]
+collision_layer = 9
+collision_mask = 33
+priority = 1000
+script = ExtResource("1_b3dia")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_jahl1")
+
+[node name="Trail" type="CPUParticles2D" parent="."]
+amount = 64
+lifetime = 0.5
+emission_shape = 1
+emission_sphere_radius = 4.0
+gravity = Vector2(0, 0)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

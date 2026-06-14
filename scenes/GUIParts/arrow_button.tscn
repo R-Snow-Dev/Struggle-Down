@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://brpc7q81wblmj"]
+
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_h57rn"]
+[ext_resource type="Script" uid="uid://prkbcnwq6a85" path="res://scripts/ButtonScripts/arrow_button.gd" id="2_rcag4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcag4"]
+atlas = ExtResource("1_h57rn")
+region = Rect2(0, 127, 48, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xerie"]
+atlas = ExtResource("1_h57rn")
+region = Rect2(0, 160, 16, 32)
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_h57rn"]
+points = PackedVector2Array(-25, -12.5, 25, -12.5, 0, 13)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("2_rcag4")
+
+[node name="Arrow" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_rcag4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Arrow"]
+position = Vector2(0, 2.5)
+rotation = -1.5707964
+texture = SubResource("AtlasTexture_xerie")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Arrow"]
+position = Vector2(-6, -3.5)
+rotation = -1.5707964
+texture = SubResource("AtlasTexture_xerie")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Arrow"]
+position = Vector2(6, -3.5)
+rotation = -1.5707964
+texture = SubResource("AtlasTexture_xerie")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("ConvexPolygonShape2D_h57rn")
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

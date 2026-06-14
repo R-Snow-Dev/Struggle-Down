@@ -21,9 +21,12 @@ var inherentEffects = {
 	"holy": {}
 }
 
+var mult = 0.75
+
+var enraged: int = 0
 
 var damages = {"slash" = 0, "pierce" = 0, "blunt" = 0, "shockwave" = 0,
-"frost" = 0, "explosive" = 0, "shock" = 0, "fire" = 0, "holy" = 0}
+"frost" = 0, "explosive" = 0, "shock" = 0, "fire" = 0, "holy" = 0, "death" = 0}
 
 var effects = {"bleed": Bleed.new()}
 
@@ -58,8 +61,27 @@ func addIEffect(t:String, e:String, c:float) -> void:
 			target[e] += c
 		else:
 			target[e] = c
+
+func createNewProj(s: Sprite2D, pierce: bool, velo: Vector2, trail: bool, trailCol: Color, dT: String, d: int, effect: String, chance: float):
+	var p: Projectile= preload("res://scenes/Projectiles/projectile.tscn").instantiate()
+	p.setVars(s, pierce, velo, trail, trailCol)
+	p.setType(dT)
+	p.setDam(d)
+	p.setEffect(effect)
+	p.setChance(chance)
+	return p
 	
+func createNewAOE(s: AnimatedSprite2D, d: Vector2, o: Vector2, dT: String, dam: int, effect: String, chance: float):
+	var a: AOE = preload("res://scenes/Projectiles/aoe.tscn").instantiate()
+	a.setVars(s, d, o)
+	a.setType(dT)
+	a.setDam(dam)
+	a.setEffect(effect)
+	a.setChance(chance)
+	return a
+
 func reset() -> void:
+	enraged = 0
 	weapons = [[],
 	Weapon.new("Sword","slash",7,1,Vector2(0,1),Vector2i(3,1),Vector2(0,0),true, Attribute.new(), Attribute.new()),
 	Weapon.new("Great Sword","slash",10,2,Vector2(0,1),Vector2i(3,2),Vector2(0,0),true, Attribute.new(), Attribute.new()),

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bounfbtuv16mg"]
+
+[ext_resource type="Texture2D" uid="uid://bbtpslvokymfr" path="res://assets/Consumables.png" id="1_wpgcy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_asd6m"]
+atlas = ExtResource("1_wpgcy")
+region = Rect2(0, 832, 32, 32)
+
+[node name="SkullBomb" type="Sprite2D"]
+texture = SubResource("AtlasTexture_asd6m")

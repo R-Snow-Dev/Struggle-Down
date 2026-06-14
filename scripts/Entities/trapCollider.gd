@@ -1,0 +1,2 @@
+extends WildDamage
+class_name TrapCollider

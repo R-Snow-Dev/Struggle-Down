@@ -8,4 +8,10 @@ func run():
 	pass
 	
 func test():
+	return false
+
+func hover():
 	pass
+	
+func offHover():
+	pass 

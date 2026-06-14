@@ -1,0 +1,83 @@
+[gd_scene load_steps=6 format=3 uid="uid://4lhuiu7ktcl6"]
+
+[ext_resource type="Script" uid="uid://6h4ggxq4i4c6" path="res://scripts/ButtonScripts/text_button.gd" id="1_k7d32"]
+[ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="2_31djf"]
+
+[sub_resource type="Animation" id="Animation_31djf"]
+resource_name = "float"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2.0333333, 3, 4),
+"transitions": PackedFloat32Array(1.6, 1.6, 1.6, 1.6, 1.6),
+"update": 0,
+"values": [Vector2(-63, -17), Vector2(-63, -21), Vector2(-63, -17), Vector2(-63, -13), Vector2(-63, -17)]
+}
+
+[sub_resource type="Animation" id="Animation_ldq7c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-63, -13)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q21wi"]
+_data = {
+&"RESET": SubResource("Animation_ldq7c"),
+&"float": SubResource("Animation_31djf")
+}
+
+[node name="TextButton" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_k7d32")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="Visuals"]
+offset_left = -63.0
+offset_top = -13.0
+offset_right = 63.0
+offset_bottom = 20.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_31djf")
+theme_override_font_sizes/font_size = 32
+text = "Test"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LabelAnim" type="AnimationPlayer" parent="Visuals/Label"]
+libraries = {
+&"": SubResource("AnimationLibrary_q21wi")
+}
+autoplay = "float"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = -63.0
+offset_top = -13.0
+offset_right = 63.0
+offset_bottom = 20.0
+focus_mode = 0
+flat = true
+
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

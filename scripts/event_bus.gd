@@ -179,7 +179,7 @@ signal rUCont()
 
 # Signal that causes a target to spawn an entity on their position
 @warning_ignore("unused_signal")
-signal summon(target: Node, entity: PackedScene, damage: int, type: String)
+signal summon(target: Node, entity: Node2D)
 
 # Signal that adds a weapon effect into the dungeon
 @warning_ignore("unused_signal")
@@ -188,3 +188,35 @@ signal throwEffect(effect: PackedScene, damage: int, type: String)
 # Signal that sends the user to the title screen
 @warning_ignore("unused_signal")
 signal title_screen()
+
+# Signal used to force reticles to appear based on projectile data
+@warning_ignore("unused_signal")
+signal hoverProj(p: Projectile)
+
+# Signal that calls the offHover function from the WeaponOrigin
+@warning_ignore("unused_signal")
+signal offHover()
+
+# Signal that is called to trigger turn start effects
+@warning_ignore("unused_signal")
+signal playersTurnStart()
+
+# Signal that is called when the player should summon an entity to the board
+@warning_ignore("unused_signal")
+signal throwEntity()
+
+# Signal that is called when the board needs to eliminate all entities
+@warning_ignore("unused_signal")
+signal killEntities()
+
+# sigal that is used when a filled component slot is selected
+@warning_ignore("unused_signal")
+signal compChosen(c: Components)
+
+# Signal that is called when an empty component slot is selected
+@warning_ignore("unused_signal")
+signal removeComp(t: int)
+
+# Signal that calls a displyer entity to show the data from a given component
+@warning_ignore("unused_signal")
+signal displayComp(c: Components)

@@ -1,8 +1,6 @@
 extends Attribute
 class_name Overkill
 
-var explosion = preload("res://scenes/DungeonParts/explosion.tscn")
-
 func _init() -> void:
 	type = "onKill"
 	name = "Overkill"
@@ -11,6 +9,9 @@ func _init() -> void:
 	Enemies explode on death, dealing 3 explosive damage to everything around it."
 
 func effect(target: Node) -> int:
-	EventBus.summon.emit(target, explosion, 3, "explosive")
+	var explosion: WildDamage = preload("res://scenes/DungeonParts/explosion.tscn").instantiate()
+	explosion.setDam(3)
+	explosion.setType('explosive')
+	EventBus.summon.emit(target, explosion)
 	return 0
 	

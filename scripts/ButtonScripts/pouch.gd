@@ -14,11 +14,18 @@ var isHovering = false
 @onready var pouch = $pouch_sprite
 @onready var timing = $timing
 @onready var consumeables = $ConsumableMenu
+@onready var components = $ComponentPouch
+@onready var butts = $buttons
+@onready var souls = $SoulMenu
+@onready var sM = $SoulMenu
 
 func _ready() -> void:
 	# Play the opening animation on load
 	goCord.visible = false
 	consumeables.visible = false
+	components.visible = false
+	butts.visible = false
+	souls.visible = false
 	timing.play("open")
 	
 func _process(_delta: float) -> void:
@@ -50,15 +57,18 @@ func _on_area_2d_mouse_exited() -> void:
 	
 func close():
 	# Function that makes the two animated sprites playb their closing animations at the same time
+	sM.save()
 	guy.play("close")
 	pouch.play("close")
+	
 	
 func toggleCord():
 	# Toggles the visibility of the "Go" button
 	goCord.visible = !goCord.visible
 
 func toggleMenus():
-	consumeables.visible = !consumeables.visible
+	butts.visible = !butts.visible
+	souls.visible = !souls.visible
 
 func go():
 	# Tells the game to load the dungeon scene
@@ -67,3 +77,17 @@ func go():
 	SaveController.resetUps()
 	EventBus.go.emit()
 	
+func _on_arrow_2_pressed() -> void:
+	consumeables.update()
+	
+func _on_consumables_pressed() -> void:
+	consumeables.open()
+	components.close()
+	
+func _on_components_pressed() -> void:
+	consumeables.close()
+	components.open()
+
+func _on_relics_pressed() -> void:
+	consumeables.close()
+	components.close()

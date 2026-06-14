@@ -1,7 +1,8 @@
 extends Attribute
 class_name GiantSlam
 
-var explosion = preload("res://scenes/DungeonParts/explosion.tscn")
+var explosion: AOE = preload("res://scenes/Projectiles/aoe.tscn").instantiate()
+var s = preload("res://scenes/Projectiles/Sprites/sample_anim.tscn").instantiate()
 
 func _init() -> void:
 	type = "onHit"
@@ -23,6 +24,13 @@ func effect(target: Node) -> int:
 	
 	damage = damage * 0.1	
 	
-	EventBus.summon.emit(target, explosion, damage, "shockwave")
+	if damage < 1:
+		damage = 1
+		
+	explosion.setVars(s, Vector2(3,3), Vector2(0,0))
+	explosion.setDam(damage)
+	explosion.setType('shockwave')
+	
+	EventBus.summon.emit(target, explosion)
 	return 0
 	

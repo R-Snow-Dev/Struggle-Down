@@ -9,3 +9,9 @@ func run():
 	
 func test():
 	pass
+	
+func hover():
+	pass
+	
+func offHover():
+	pass

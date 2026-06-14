@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://wuv5peymvpxd"]
+
+[ext_resource type="Script" uid="uid://blmbfck20mp0h" path="res://scripts/Items/Components/components.gd" id="1_hsv0y"]
+[ext_resource type="Texture2D" uid="uid://bpmamosh44oc8" path="res://assets/Components-Mediums.png" id="2_hswf8"]
+
+[node name="mediums" type="Node2D"]
+script = ExtResource("1_hsv0y")
+
+[node name="mAtlas" type="Sprite2D" parent="."]
+texture = ExtResource("2_hswf8")

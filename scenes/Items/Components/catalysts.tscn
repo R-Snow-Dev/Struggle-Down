@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://kwyvuse2hwux"]
+
+[ext_resource type="Script" uid="uid://blmbfck20mp0h" path="res://scripts/Items/Components/components.gd" id="1_j2tm6"]
+[ext_resource type="Texture2D" uid="uid://codvngasrglqa" path="res://assets/Components-Catalysts.png" id="1_orjp0"]
+
+[node name="Catalysts" type="Node2D"]
+script = ExtResource("1_j2tm6")
+
+[node name="mAtlas" type="Sprite2D" parent="."]
+texture = ExtResource("1_orjp0")

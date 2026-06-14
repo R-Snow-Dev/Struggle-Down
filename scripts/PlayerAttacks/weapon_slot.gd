@@ -60,6 +60,10 @@ func update() -> void:
 		EventBus.updateAOE.emit(ID)
 
 func _process(_delta: float) -> void:
+	if WeaponList.enraged != 0:
+		slot.modulate = Color(255, 0, 0, 1)
+	else:
+		slot.modulate = Color(1,1,1,1)
 	if mouseOn and !busy:
 		if ID != 0:
 			if Input.is_action_just_pressed("select"):

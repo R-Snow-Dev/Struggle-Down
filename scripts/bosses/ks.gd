@@ -16,10 +16,13 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pos = getData().getPos()
 	if isDead():
-		if UpgradeList.maxDrops:
-			EventBus.updateGold.emit(getData().getGoldRange().y)
-		else:
-			EventBus.updateGold.emit(rng.randi_range(getData().getGoldRange().x, getData().getGoldRange().y))
+		if !paid:
+			paid = true
+			if UpgradeList.maxDrops:
+				EventBus.updateGold.emit(getData().getGoldRange().y)
+			else:
+				EventBus.updateGold.emit(rng.randi_range(getData().getGoldRange().x, getData().getGoldRange().y))
+		EventBus.doneAttacking.emit()
 		EventBus.create_stairs.emit(Vector2(5,5))
 		EventBus.object_ded.emit(self)
 
