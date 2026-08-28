@@ -7,6 +7,16 @@ signal hover
 signal off_hover
 
 @onready var dis = $Display
+@onready var sprite = $Display/sprite
+
+func setSprite(s: Node) -> void:
+	removeSprite()
+	sprite.add_child(s)
+	
+func removeSprite() -> void:
+	for child in sprite.get_children():
+		sprite.remove_child(child)
+		child.call_deferred("queue_free")
 
 func _on_button_pressed() -> void:
 	AudioManager.play_sound('Select')
@@ -33,10 +43,11 @@ func _on_button_mouse_exited() -> void:
 			c.position.y = 0
 
 
-func _on_button_gui_input(event: InputEventMouseButton) -> void:
-	if event.pressed:
-		match event.button_index:
-			MOUSE_BUTTON_LEFT:
-				pressed.emit()
-			MOUSE_BUTTON_RIGHT:
-				pressed_right.emit()
+func _on_button_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.pressed:
+			match event.button_index:
+				MOUSE_BUTTON_LEFT:
+					pressed.emit()
+				MOUSE_BUTTON_RIGHT:
+					pressed_right.emit()

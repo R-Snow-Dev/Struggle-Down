@@ -232,9 +232,9 @@ scale = Vector2(0.25, 0.25)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_vb6a0")
 theme_override_font_sizes/font_size = 32
-text = "You inherit the will of an unnamed nobleman.
+text = "Mysterious map carved in stone.
 	
-You deal 1 more piercing damage when using a stiletto."
+	Floors will be bigger."
 autowrap_mode = 2
 
 [node name="Decline" type="Button" parent="."]

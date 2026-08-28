@@ -1,0 +1,73 @@
+[gd_scene load_steps=11 format=3 uid="uid://8sfeppjo1n6w"]
+
+[ext_resource type="Texture2D" uid="uid://b5ongsj4n0qds" path="res://assets/Lightning.png" id="1_iw76y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fcyx"]
+atlas = ExtResource("1_iw76y")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kt3x8"]
+atlas = ExtResource("1_iw76y")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t86v0"]
+atlas = ExtResource("1_iw76y")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h23uy"]
+atlas = ExtResource("1_iw76y")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_irn4t"]
+atlas = ExtResource("1_iw76y")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_06vqa"]
+atlas = ExtResource("1_iw76y")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8h16s"]
+atlas = ExtResource("1_iw76y")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_es8ro"]
+atlas = ExtResource("1_iw76y")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o6t3j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0fcyx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kt3x8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t86v0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h23uy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_irn4t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_06vqa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8h16s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_es8ro")
+}],
+"loop": false,
+"name": &"default",
+"speed": 20.0
+}]
+
+[node name="Lightning" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_o6t3j")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0

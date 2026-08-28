@@ -11,4 +11,5 @@ func _init() -> void:
 
 func effect(target: Node) -> int:
 	EventBus.updateActions.emit(1)
+	effectDone.emit()
 	return 0

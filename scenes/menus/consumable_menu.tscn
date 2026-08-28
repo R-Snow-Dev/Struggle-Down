@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=4 uid="uid://uwue8fgsf3ss"]
+[gd_scene load_steps=18 format=4 uid="uid://uwue8fgsf3ss"]
 
 [ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_1qwi3"]
 [ext_resource type="Script" uid="uid://dj53wbb3cpjyt" path="res://scripts/UI Shizz/consumable_menu.gd" id="1_4gntf"]
 [ext_resource type="PackedScene" uid="uid://cfgeh1p718b5s" path="res://scenes/GUIParts/consumable_grid.tscn" id="2_00ae5"]
 [ext_resource type="PackedScene" uid="uid://4kofdi0ogs3j" path="res://scenes/GUIParts/inv_grid_pouch.tscn" id="3_v5sxk"]
+[ext_resource type="Script" uid="uid://b0grecqf0nmgq" path="res://scripts/ButtonScripts/scroll_area.gd" id="5_o3dsi"]
 [ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="5_ocm8s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4gntf"]
@@ -155,6 +156,9 @@ texture = ExtResource("1_1qwi3")
 
 [sub_resource type="TileSet" id="TileSet_s0cg0"]
 sources/0 = SubResource("TileSetAtlasSource_ocm8s")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ocm8s"]
+size = Vector2(176, 160)
 
 [sub_resource type="Animation" id="Animation_4gntf"]
 length = 0.001
@@ -308,6 +312,13 @@ position = Vector2(19, 27)
 [node name="InvGridPouch" parent="display" instance=ExtResource("3_v5sxk")]
 position = Vector2(8, -27)
 
+[node name="Scroll Area" type="Area2D" parent="display"]
+script = ExtResource("5_o3dsi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="display/Scroll Area"]
+position = Vector2(72, 32)
+shape = SubResource("RectangleShape2D_ocm8s")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="display"]
 root_node = NodePath("../..")
 libraries = {
@@ -387,3 +398,8 @@ position = Vector2(23.925, -25.880001)
 rotation = 3.1415927
 scale = Vector2(0.2147483, -1.0926416)
 texture = SubResource("AtlasTexture_o3dsi")
+
+[connection signal="down" from="display/Scroll Area" to="display/ConsumableGrid" method="_on_scroll_area_down"]
+[connection signal="mouse_entered" from="display/Scroll Area" to="display/Scroll Area" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="display/Scroll Area" to="display/Scroll Area" method="_on_mouse_exited"]
+[connection signal="up" from="display/Scroll Area" to="display/ConsumableGrid" method="_on_scroll_area_up"]

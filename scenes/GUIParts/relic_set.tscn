@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctmy4va1v3h3e"]
+
+[ext_resource type="Script" uid="uid://d7nhvqk7crqk" path="res://scripts/UI Shizz/relic_set.gd" id="1_aykgl"]
+[ext_resource type="PackedScene" uid="uid://dit26d5axjc8l" path="res://scenes/GUIParts/relic_slot.tscn" id="1_sqwyx"]
+
+[node name="RelicSet" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_aykgl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 32
+
+[node name="RelicSlot" parent="HBoxContainer" instance=ExtResource("1_sqwyx")]
+layout_mode = 2
+
+[node name="RelicSlot2" parent="HBoxContainer" instance=ExtResource("1_sqwyx")]
+layout_mode = 2
+
+[node name="RelicSlot3" parent="HBoxContainer" instance=ExtResource("1_sqwyx")]
+layout_mode = 2

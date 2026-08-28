@@ -18,6 +18,7 @@ var rng = RandomNumberGenerator.new()
 var aA: int
 var inAltar: bool = false
 
+@onready var weaponName = $WeaponName
 @onready var sacText = $sacText
 @onready var gamecontroller: Node = %Gamecontroller
 @onready var data = SaveController.loadData()
@@ -43,10 +44,20 @@ func _ready() -> void:
 	preload("res://scenes/Items/mace_item.tscn"),
 	preload("res://scenes/Items/spear_item.tscn"),
 	preload("res://scenes/Items/halberd_item.tscn"),
-	preload("res://scenes/Items/stiletto_item.tscn")]
+	preload("res://scenes/Items/stiletto_item.tscn"),
+	preload("res://scenes/Items/ice_wand_item.tscn"),
+	preload("res://scenes/Items/quake_staff_item.tscn"),
+	preload("res://scenes/Items/unstable_wand_item.tscn"),
+	preload("res://scenes/Items/thunder_gem_item.tscn"),
+	preload("res://scenes/Items/wind_charm_item.tscn"),
+	preload("res://scenes/Items/demon_horn_item.tscn"),
+	preload("res://scenes/Items/holy_scepter_item.tscn"),]
 	
 	
 	ID = data["weapon"]
+	if ID > 0:
+		WeaponList.weapons[ID].setTMod(int(data['tMod']))
+	
 	_swap_weapon(ID)
 
 func updateAltar() -> void:
@@ -64,20 +75,28 @@ func _process(_delta: float) -> void:
 		slot.modulate = Color(255, 0, 0, 1)
 	else:
 		slot.modulate = Color(1,1,1,1)
-	if mouseOn and !busy:
+	if mouseOn and !Overseer.control.paused:
 		if ID != 0:
 			if Input.is_action_just_pressed("select"):
 				AudioManager.play_sound('Select')
 				if inAltar:
 					var w:Weapon = WeaponList.weapons[ID]
-					if UpgradeList.upgradeTable.has(w.getName()):
+					var a: Attribute = UpgradeList.titleUpgrades['Quake Staff'][0]
+					EventBus.sac.emit(a)
+					EventBus.pause.emit()
+					'''if w.getTMod() > 0:
+						var a: Attribute = UpgradeList.titleUpgrades[w.getName()][w.getTMod()-1]
+						EventBus.sac.emit(a)
+						EventBus.pause.emit()
+					elif UpgradeList.upgradeTable.has(w.getName()):
 						var chosen = rng.randi_range(0,UpgradeList.upgradeTable[w.getName()].size()-1)
 						var a: Attribute = UpgradeList.upgradeTable[w.getName()][chosen]
 						EventBus.sac.emit(a)
-						EventBus.pause.emit()
+						EventBus.pause.emit()'''
 					_swap_weapon(0)
 					ID = 0
 					sacText.stop()
+					weaponName.text = ''
 				else:
 					busy = true
 					var w: Weapon = WeaponList.weapons[ID]
@@ -90,6 +109,8 @@ func _playerDoneAttacking():
 	EventBus.unpause.emit()
 	WeaponList.resetTempEffects()
 	WeaponList.resetTempDamage()
+	if mouseOn == false:
+		EventBus.updateAOE.emit(0)
 	busy = false
 
 func _swap_weapon(id: int):
@@ -108,20 +129,26 @@ func _swap_weapon(id: int):
 		sprite.position.x = 8
 		slot.add_child(sprite)
 		EventBus.updateAOE.emit(ID)
+		weaponName.text = WeaponList.titles[ID][WeaponList.weapons[ID].getTMod()]
 	
 func _save_weapon():
 	# Updates the savefile with the current held weapon when going to a new floor
 	SaveController.updateData("weapon", ID)
+	if ID > 0:
+		SaveController.updateData('tMod', WeaponList.weapons[ID].getTMod())
+	else:
+		SaveController.updateData('tMod', 0)
 
 func _on_area_2d_mouse_entered() -> void:
 	AudioManager.play_sound('Hover')
-	if ID > 0:
+	if ID > 0 and Overseer.control.paused == false:
 		EventBus.updateAOE.emit(ID)
 	mouseOn = true
 	slot.position.y = -2
 
 func _on_area_2d_mouse_exited() -> void:
-	EventBus.updateAOE.emit(0)
+	if Overseer.control.paused == false:
+		EventBus.updateAOE.emit(0)
 	mouseOn = false
 	halFlip = false
 	slot.position.y = 0

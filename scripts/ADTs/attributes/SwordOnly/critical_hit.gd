@@ -13,4 +13,5 @@ func effect(target: Node) -> int:
 	for e in target.getEffects():
 		if e is Bleed and WeaponList.held == 1:
 			return 2
+	effectDone.emit()
 	return 0

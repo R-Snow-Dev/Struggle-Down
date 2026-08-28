@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://dkqh251ixbss2"]
+[gd_scene load_steps=47 format=4 uid="uid://dkqh251ixbss2"]
 
 [ext_resource type="Script" uid="uid://crf0iaimv3j33" path="res://scripts/dungeon.gd" id="1_ba8p3"]
 [ext_resource type="Script" uid="uid://dqhwkgc4c44u5" path="res://scripts/dungeoncontroller.gd" id="2_imoik"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://chx0bi5hs55wc" path="res://scenes/GUIParts/u_popup.tscn" id="20_5d84e"]
 [ext_resource type="PackedScene" uid="uid://bfeyw6dhiag7o" path="res://scenes/Items/ConsumableSprites/Ritual/pBranch.tscn" id="20_fy2oy"]
 [ext_resource type="Script" uid="uid://bajmxiffqeqpp" path="res://scripts/UI Shizz/upgrade_container.gd" id="21_4k0vd"]
+[ext_resource type="PackedScene" uid="uid://ctmy4va1v3h3e" path="res://scenes/GUIParts/relic_set.tscn" id="21_weerd"]
 [ext_resource type="PackedScene" uid="uid://bkjrmdwf0bgjt" path="res://scenes/GUIParts/pause_menu.tscn" id="22_f27gv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5iqrf"]
@@ -355,6 +356,14 @@ sources/0 = SubResource("TileSetAtlasSource_cyf1o")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1syf1"]
 size = Vector2(44.0002, 29.9505)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_weerd"]
+atlas = ExtResource("4_48e0x")
+region = Rect2(0, 48, 31, 3)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jl35"]
+atlas = ExtResource("4_48e0x")
+region = Rect2(30, 55, 2, 19)
+
 [node name="dungeon" type="Node2D"]
 script = ExtResource("1_ba8p3")
 metadata/_edit_horizontal_guides_ = [24.0]
@@ -471,7 +480,7 @@ libraries = {
 }
 
 [node name="WeaponSlot" type="Node2D" parent="Gamecontroller/Node2D/Camera2D"]
-position = Vector2(-389.554, -543.134)
+position = Vector2(-389.554, -523.1343)
 rotation = -3.14157
 scale = Vector2(2.43471, 21.7969)
 skew = -2.24113e-05
@@ -523,6 +532,19 @@ libraries = {
 &"": SubResource("AnimationLibrary_f27gv")
 }
 autoplay = "RESET"
+
+[node name="WeaponName" type="Label" parent="Gamecontroller/Node2D/Camera2D/WeaponSlot"]
+offset_left = -53.630188
+offset_top = -46.999985
+offset_right = 485.21747
+offset_bottom = 103.000015
+scale = Vector2(0.2, 0.2)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_r56d8")
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="floorLabel" type="Label" parent="Gamecontroller/Node2D/Camera2D"]
 offset_left = 362.77246
@@ -610,7 +632,7 @@ position = Vector2(-51.1312, 457.735)
 scale = Vector2(1.21736, 10.8984)
 
 [node name="Inventory" type="Node2D" parent="Gamecontroller/Node2D/Camera2D"]
-position = Vector2(-389.554, 523.117)
+position = Vector2(-389.55435, 871.8668)
 rotation = -3.14157
 scale = Vector2(2.43471, 21.7969)
 skew = -2.24113e-05
@@ -648,6 +670,53 @@ rotation = -3.1415699
 scale = Vector2(0.95208377, 8.523578)
 skew = -2.2411346e-05
 
+[node name="RelicSet" parent="Gamecontroller/Node2D/Camera2D" instance=ExtResource("21_weerd")]
+offset_left = 486.94272
+offset_top = -523.1143
+offset_right = 486.94272
+offset_bottom = -523.1143
+scale = Vector2(-2.5, -20)
+
+[node name="InPouch" type="Label" parent="Gamecontroller/Node2D/Camera2D/RelicSet"]
+layout_mode = 0
+offset_left = 8.765015
+offset_top = -26.156235
+offset_right = 233.76501
+offset_bottom = 38.843765
+scale = Vector2(0.275, 0.275)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_r56d8")
+theme_override_font_sizes/font_size = 64
+text = "Relics"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="banner" type="Node2D" parent="Gamecontroller/Node2D/Camera2D/RelicSet/InPouch"]
+position = Vector2(-96.000015, 116)
+scale = Vector2(2.9563942, 2.9795182)
+
+[node name="Sprite2D" type="Sprite2D" parent="Gamecontroller/Node2D/Camera2D/RelicSet/InPouch/banner"]
+position = Vector2(69.25, -16)
+scale = Vector2(3.141, 1)
+texture = SubResource("AtlasTexture_weerd")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Gamecontroller/Node2D/Camera2D/RelicSet/InPouch/banner"]
+position = Vector2(69.25, -37)
+scale = Vector2(3.141, 0.5)
+texture = SubResource("AtlasTexture_weerd")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Gamecontroller/Node2D/Camera2D/RelicSet/InPouch/banner"]
+position = Vector2(117.725, -25.880001)
+rotation = 3.1415927
+scale = Vector2(0.2147483, -1.0926422)
+texture = SubResource("AtlasTexture_4jl35")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Gamecontroller/Node2D/Camera2D/RelicSet/InPouch/banner"]
+position = Vector2(23.925, -25.880001)
+rotation = 3.1415927
+scale = Vector2(0.2147483, -1.0926416)
+texture = SubResource("AtlasTexture_4jl35")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 scale = Vector2(1.5, 1.5)
 transform = Transform2D(1.5, 0, 0, 1.5, 0, 0)
@@ -674,6 +743,7 @@ offset_top = -65.33333
 offset_right = -167.99994
 offset_bottom = -65.33331
 
+[connection signal="healthbar" from="Gamecontroller" to="Gamecontroller/Node2D/Camera2D/HealthBar" method="_on_gamecontroller_healthbar"]
 [connection signal="mouse_entered" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_exited"]
 [connection signal="mouse_entered" from="Gamecontroller/Node2D/Camera2D/Inventory/Area2D" to="Gamecontroller/Node2D/Camera2D/Inventory" method="_on_area_2d_mouse_entered"]

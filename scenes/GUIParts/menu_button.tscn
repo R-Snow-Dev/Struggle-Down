@@ -22,6 +22,8 @@ texture = ExtResource("1_ch0wm")
 region_enabled = true
 region_rect = Rect2(0, 48, 32, 32)
 
+[node name="sprite" type="Node2D" parent="Display"]
+
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
 offset_left = -16.0

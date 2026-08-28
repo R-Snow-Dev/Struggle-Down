@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_haad6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_forex"]
-size = Vector2(7, 16)
+size = Vector2(4, 5)
 
 [node name="TLCorner" type="Sprite2D"]
 texture = ExtResource("1_haad6")
@@ -15,5 +15,5 @@ position = Vector2(9, 0)
 collision_layer = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-4.5, 0)
+position = Vector2(-6, -5.5)
 shape = SubResource("RectangleShape2D_forex")

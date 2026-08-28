@@ -15,4 +15,5 @@ func special(target: Node) -> int:
 		halberd.setDim(Vector2i(1,3))
 		halberd.setDamageType("pierce")
 		default = true
+	effectDone.emit()
 	return 0

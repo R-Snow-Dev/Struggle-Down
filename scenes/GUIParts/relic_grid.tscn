@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1tymiewubo6p"]
+
+[ext_resource type="PackedScene" uid="uid://dai701ktogsxm" path="res://scenes/GUIParts/relic_display.tscn" id="1_164kt"]
+[ext_resource type="Script" uid="uid://barrtohkk2xg5" path="res://scripts/UI Shizz/relic_grid.gd" id="1_u7pn3"]
+
+[node name="RelicGrid" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u7pn3")
+
+[node name="HBoxContainer" type="HFlowContainer" parent="."]
+layout_mode = 0
+offset_right = 52.0
+offset_bottom = 40.0
+scale = Vector2(2, 2)
+theme_override_constants/h_separation = 18
+theme_override_constants/v_separation = 18
+
+[node name="RelicDisplay" parent="HBoxContainer" instance=ExtResource("1_164kt")]
+layout_mode = 2
+
+[node name="RelicDisplay2" parent="HBoxContainer" instance=ExtResource("1_164kt")]
+layout_mode = 2
+
+[node name="RelicDisplay3" parent="HBoxContainer" instance=ExtResource("1_164kt")]
+layout_mode = 2
+
+[node name="RelicDisplay4" parent="HBoxContainer" instance=ExtResource("1_164kt")]
+layout_mode = 2
+
+[node name="RelicDisplay5" parent="HBoxContainer" instance=ExtResource("1_164kt")]
+layout_mode = 2
+
+[node name="RelicDisplay6" parent="HBoxContainer" instance=ExtResource("1_164kt")]
+layout_mode = 2
+
+[node name="RelicDisplay7" parent="HBoxContainer" instance=ExtResource("1_164kt")]
+layout_mode = 2
+
+[node name="RelicDisplay8" parent="HBoxContainer" instance=ExtResource("1_164kt")]
+layout_mode = 2
+
+[node name="RelicDisplay9" parent="HBoxContainer" instance=ExtResource("1_164kt")]
+layout_mode = 2
+
+[node name="VSlider" type="VSlider" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 104.0
+offset_right = 144.0
+offset_bottom = 208.0
+rotation = 3.1415927
+max_value = 3.0
+scrollable = false
+
+[connection signal="mouse_entered" from="VSlider" to="." method="_on_v_slider_mouse_entered"]
+[connection signal="value_changed" from="VSlider" to="." method="_on_v_slider_value_changed"]

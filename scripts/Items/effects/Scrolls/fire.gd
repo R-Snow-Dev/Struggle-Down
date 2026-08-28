@@ -21,4 +21,11 @@ func test():
 	return true
 	
 func run():
+	EventBus.pause.emit()
+	if UpgradeList.relicData['wishbone']:
+		j.setDam(j.getDam() * 0.5)
 	EventBus.throwEffect.emit(j)
+	if UpgradeList.relicData['wishbone']:
+		await EventBus.get_tree().create_timer(0.3).timeout
+		EventBus.throwEffect.emit(j)
+	EventBus.unpause.emit()

@@ -7,4 +7,4 @@ func _init():
 
 func activate(target: Fiend):
 	print("Bleeding", target)
-	target.updateHealth(-1)
+	target.updateHealth(-1 * UpgradeList.relicData['pestilence'])

@@ -15,7 +15,9 @@ func effect(target: Node) -> int:
 	if WeaponList.held == 2:
 		var total = counter
 		counter += 2
+		effectDone.emit()
 		return total
+	effectDone.emit()
 	return 0
 
 func reset() -> void:

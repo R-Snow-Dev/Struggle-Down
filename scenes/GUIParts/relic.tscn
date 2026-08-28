@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://blto7tjhkvskt"]
+
+[ext_resource type="Texture2D" uid="uid://b28wr671yd278" path="res://assets/Relics.png" id="1_cf6gk"]
+[ext_resource type="Script" uid="uid://b3aa58icmqdqd" path="res://scripts/UI Shizz/relic.gd" id="2_wbjut"]
+
+[node name="Relic" type="Sprite2D"]
+texture = ExtResource("1_cf6gk")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+script = ExtResource("2_wbjut")

@@ -11,6 +11,6 @@ func _init() -> void:
 Though a reflection, the light of the moon still touches all."
 
 func onPickup(target : Node):
-	for x in range(0, 7):
+	for x in range(1, 7):
 		WeaponList.weapons[x].addExtraAttack("frost")
 	WeaponList.damages["frost"] += 3

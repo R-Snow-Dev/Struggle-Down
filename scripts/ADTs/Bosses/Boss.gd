@@ -10,11 +10,11 @@ func myName() -> String:
 func setHbox(area: Area2D) -> void:
 	hitbox = area
 
-func setData(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCounted) -> void:
+func setData(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCounted, dt: Array = [], m: Dictionary = {}) -> void:
 	pass
 
-func setBossData(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCounted, s:int) -> void:
-	data = BossData.new(p, h, a, gR, d, f, b,s)
+func setBossData(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCounted, s:int,  dt: Array = [], m: Dictionary = {}) -> void:
+	data = BossData.new(p, h, a, gR, d, f, b, s, dt, m)
 
 func positionToPos():
 	var size = getData().getSize()

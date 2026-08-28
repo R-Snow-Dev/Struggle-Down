@@ -11,6 +11,7 @@ var items = []
 var curID
 var isHovering: bool = false
 var menuOpen = false
+var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
 	# Gets the current inventory loadout from the save file, along with all the 
@@ -34,7 +35,8 @@ func _process(_delta: float) -> void:
 			AudioManager.play_sound('Select')
 			curEffect = itemEffects[items[curID][2]].new(int(items[curID][3]))
 			if curEffect.test():
-				items[curID][0] -= 1
+				if rng.randf() <= UpgradeList.relicData['consumptionChance']:
+					items[curID][0] -= 1
 				curEffect.run()
 				updateAmount()
 	if Input.is_action_just_pressed("special_select"):
@@ -69,6 +71,7 @@ func updateAmount():
 	# Change the displayed amount of the displayed item (shows in bottom right
 	# corner of the button). If that amount is 0, delete the item from the inventory
 	# and switch to the next item (or none if the inventory is now empty)
+	
 	if items[curID][0] < 1:
 		var index = find_id(curID, inventory)
 		inventory.remove_at(index)

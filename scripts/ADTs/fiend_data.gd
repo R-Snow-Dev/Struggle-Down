@@ -17,9 +17,13 @@ var behavior: RefCounted # The AI calculations governing the Fiend's actions
 var facing: Vector2 # The direction the Fiend is facing, in Vector2 format
 var actions: int # The amount of action the fiend takes before ending it's turn
 var maxActions: int # The max amount of action the fiend has before moving
+var dropTable: Array
+var modifiers = {}
+
+const LIBRA = 0.5
 
 # Constructor
-func _init(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCounted) -> void:
+func _init(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCounted, dr: Array = [], m: Dictionary = {}) -> void:
 	pos = p
 	startPos = p
 	health = h
@@ -31,6 +35,14 @@ func _init(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCo
 	behavior = b
 	actions = a
 	maxActions = a
+	dropTable = dr
+	modifiers = m
+	if UpgradeList.relicData['libra']:
+		for mods in modifiers.keys():
+			if modifiers[mods] < 1:
+				modifiers[mods] /= LIBRA
+			else:
+				modifiers[mods] *= LIBRA
 
 # Set's the Fiend back to it's inital position and HP (for puzzles)
 func reset():
@@ -42,6 +54,19 @@ func restoreActions():
 	setActions(getMaxActions())
 
 # "get" and "set" functions for the variables
+
+func setDrops(d: Array) -> void:
+	dropTable = d
+	
+func setMods(m: Dictionary) -> void:
+	modifiers = m
+	
+func getDrops() -> Array:
+	return dropTable
+	
+func getMods() -> Dictionary:
+	return modifiers
+
 func getPos() -> Vector2:
 	return pos
 	

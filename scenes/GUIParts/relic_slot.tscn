@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://dit26d5axjc8l"]
+
+[ext_resource type="Script" uid="uid://cwaoufnoipejo" path="res://scripts/UI Shizz/relic_slot.gd" id="1_653hv"]
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_xal0o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xal0o"]
+atlas = ExtResource("1_xal0o")
+region = Rect2(0, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_653hv"]
+atlas = ExtResource("1_xal0o")
+region = Rect2(32, 112, 16, 16)
+
+[node name="RelicSlot" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_653hv")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="slot" type="Sprite2D" parent="Visuals"]
+position = Vector2(8, 8)
+texture = SubResource("AtlasTexture_xal0o")
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+position = Vector2(8, 8)
+texture = SubResource("AtlasTexture_653hv")
+
+[node name="relic" type="Node2D" parent="Visuals"]
+position = Vector2(8, 8)
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+focus_mode = 0
+flat = true
+
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

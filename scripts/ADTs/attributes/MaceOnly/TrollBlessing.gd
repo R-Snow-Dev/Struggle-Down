@@ -9,4 +9,5 @@ func _init() -> void:
 Burning such a weapon has granted you an echo of their terrible strength. When using a mace, deal an extra 3 blunt damage for point of health you have remaining."
 func effect(target: Node) -> int:
 	var cHP = SaveController.getData("pHP")
+	effectDone.emit()
 	return 3 * cHP

@@ -13,4 +13,5 @@ func effect(target: Node) -> int:
 	var rng = RandomNumberGenerator.new()
 	if rng.randf() >= 0.1:
 		EventBus.update_hp.emit(1)
+	effectDone.emit()
 	return 0

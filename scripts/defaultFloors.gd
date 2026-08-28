@@ -28,3 +28,8 @@ var kSlime = [wall.instantiate().setup(Vector2(0,0)), wall.instantiate().setup(V
 var altarRoom = [preload("res://scenes/Tiles/altar.tscn").instantiate().setup(Vector2(2,2)), preload("res://scenes/Tiles/barrier.tscn").instantiate().setup(Vector2(1,1)),
 preload("res://scenes/Tiles/barrier.tscn").instantiate().setup(Vector2(3,3)), preload("res://scenes/Tiles/barrier.tscn").instantiate().setup(Vector2(1,3)),
 preload("res://scenes/Tiles/barrier.tscn").instantiate().setup(Vector2(3,1))]
+
+var vault = [preload("res://scenes/Tiles/chest.tscn").instantiate().setup(Vector2(0,1),Vector2(2,2)),preload("res://scenes/Tiles/chest.tscn").instantiate().setup(Vector2(0,3),
+Vector2(2,2)),preload("res://scenes/Tiles/chest.tscn").instantiate().setup(Vector2(1,0),Vector2(2,2)), preload("res://scenes/Tiles/chest.tscn").instantiate().setup(Vector2(3,0),Vector2(2,2)),
+preload("res://scenes/Tiles/chest.tscn").instantiate().setup(Vector2(4,1),Vector2(2,2)),preload("res://scenes/Tiles/chest.tscn").instantiate().setup(Vector2(4,3),
+Vector2(2,2)),preload("res://scenes/Tiles/chest.tscn").instantiate().setup(Vector2(1,4),Vector2(2,2)), preload("res://scenes/Tiles/chest.tscn").instantiate().setup(Vector2(3,4),Vector2(2,2)),]

@@ -1,9 +1,6 @@
 extends Attribute
 class_name GiantSlam
 
-var explosion: AOE = preload("res://scenes/Projectiles/aoe.tscn").instantiate()
-var s = preload("res://scenes/Projectiles/Sprites/sample_anim.tscn").instantiate()
-
 func _init() -> void:
 	type = "onHit"
 	name = "Giant's Hammer"
@@ -13,8 +10,16 @@ Create a shockwave that deals 10% of your weapon's max damage when you hit an en
 
 func effect(target: Node) -> int:
 	
+	var explosion: AOE = preload("res://scenes/Projectiles/aoe.tscn").instantiate()
+	var s = preload("res://scenes/Projectiles/Sprites/sample_anim.tscn").instantiate()
+	var w:Weapon
+	
 	var damage = 0
-	var w:Weapon = WeaponList.weapons[WeaponList.held]
+	if WeaponList.held > 0:
+		w = WeaponList.weapons[WeaponList.held]
+	else:
+		w = WeaponList.weapons[1]
+		
 	var extras = w.getExtraAttacks()
 	
 	damage += w.getBaseDam()
@@ -32,5 +37,6 @@ func effect(target: Node) -> int:
 	explosion.setType('shockwave')
 	
 	EventBus.summon.emit(target, explosion)
+	effectDone.emit()
 	return 0
 	

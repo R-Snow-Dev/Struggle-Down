@@ -4,6 +4,23 @@ var grid: Array
 var objects: Array
 var board: gameBoard
 var control: DungeonController
+var gold: int
+var wrath = false
+
+func rollChest() -> void:
+	control.rollChest()
+
+func setWrath(v:bool = false) -> void:
+	wrath = v
+
+func getWrath() -> bool:
+	return wrath
+
+func setGold(a: int) -> void:
+	gold = a
+
+func getGold() -> int:
+	return gold
 
 func setObj(obj: Array) -> void:
 	objects = obj

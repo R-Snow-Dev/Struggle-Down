@@ -10,6 +10,7 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	EventBus.on_death.connect(_on_death)
+	await get_tree().process_frame
 	gamecontroller.loadLevel()
 	
 func _on_death():

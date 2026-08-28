@@ -1,0 +1,628 @@
+[gd_scene load_steps=22 format=4 uid="uid://b1velhlrhk8ht"]
+
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_cyjja"]
+[ext_resource type="Script" uid="uid://bmuypr1a6hesb" path="res://scripts/UI Shizz/relic_pouch.gd" id="1_raswq"]
+[ext_resource type="PackedScene" uid="uid://cyrsrshvhm2o4" path="res://scenes/GUIParts/menu_button.tscn" id="2_ogsnp"]
+[ext_resource type="Script" uid="uid://b0grecqf0nmgq" path="res://scripts/ButtonScripts/scroll_area.gd" id="3_d1cpp"]
+[ext_resource type="PackedScene" uid="uid://d1tymiewubo6p" path="res://scenes/GUIParts/relic_grid.tscn" id="3_nt5np"]
+[ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="4_lc2lo"]
+[ext_resource type="Texture2D" uid="uid://b3o3rfwml8bqe" path="res://assets/torchflame.png" id="4_n8fi2"]
+[ext_resource type="Script" uid="uid://dwcyp7s173fbt" path="res://scripts/UI Shizz/grayed_out.gd" id="6_j2865"]
+[ext_resource type="PackedScene" uid="uid://na5l0fd5sli" path="res://scenes/GUIParts/relic_data.tscn" id="8_k66a7"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ogsnp"]
+texture = ExtResource("1_cyjja")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+3:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+2:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+5:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+1:9/0 = 0
+5:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+0:12/0 = 0
+1:12/0 = 0
+0:13/0 = 0
+1:13/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_nt5np"]
+sources/0 = SubResource("TileSetAtlasSource_ogsnp")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lc2lo"]
+texture = ExtResource("1_cyjja")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+3:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+2:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+5:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+1:9/0 = 0
+5:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+0:12/0 = 0
+1:12/0 = 0
+0:13/0 = 0
+1:13/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_n8fi2"]
+sources/0 = SubResource("TileSetAtlasSource_lc2lo")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k66a7"]
+size = Vector2(176, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2865"]
+atlas = ExtResource("4_n8fi2")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8fi2"]
+atlas = ExtResource("1_cyjja")
+region = Rect2(0, 48, 31, 3)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raswq"]
+atlas = ExtResource("1_cyjja")
+region = Rect2(30, 55, 2, 19)
+
+[sub_resource type="Animation" id="Animation_j2865"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_raswq"]
+resource_name = "close"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-16, 64)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1e-05, 0.1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"toggleVisible"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_k66a7"]
+resource_name = "open"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-16, 64), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 0.1), Vector2(1, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"toggleVisible"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j2865"]
+_data = {
+&"RESET": SubResource("Animation_j2865"),
+&"close": SubResource("Animation_raswq"),
+&"open": SubResource("Animation_k66a7")
+}
+
+[node name="Relic Pouch" type="Node2D"]
+script = ExtResource("1_raswq")
+
+[node name="Display" type="Node2D" parent="."]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Display"]
+tile_map_data = PackedByteArray("AAAAAAAAAAABAAEAAAAAAAEAAAABAAEAAAAAAAIAAAABAAEAAAABAAAAAAABAAEAAAABAAEAAAABAAEAAAABAAIAAAABAAEAAAACAAAAAAABAAEAAAACAAEAAAABAAEAAAACAAIAAAABAAEAAAADAAAAAAABAAEAAAADAAEAAAABAAEAAAADAAIAAAABAAEAAAAEAAAAAAABAAEAAAAEAAEAAAABAAEAAAAEAAIAAAABAAEAAAAFAAAAAAABAAEAAAAFAAEAAAABAAEAAAAFAAIAAAABAAEAAAAGAAAAAAABAAEAAAAGAAEAAAABAAEAAAAGAAIAAAABAAEAAAAAAAMAAAABAAEAAAAAAAQAAAABAAEAAAAAAAUAAAABAAEAAAABAAMAAAABAAEAAAABAAQAAAABAAEAAAABAAUAAAABAAEAAAACAAMAAAABAAEAAAACAAQAAAABAAEAAAACAAUAAAABAAEAAAADAAMAAAABAAEAAAADAAQAAAABAAEAAAADAAUAAAABAAEAAAAEAAMAAAABAAEAAAAEAAQAAAABAAEAAAAEAAUAAAABAAEAAAAFAAMAAAABAAEAAAAFAAQAAAABAAEAAAAFAAUAAAABAAEAAAAGAAMAAAABAAEAAAAGAAQAAAABAAEAAAAGAAUAAAABAAEAAAAHAAAAAAABAAEAAAAHAAEAAAABAAEAAAAHAAIAAAABAAEAAAAHAAMAAAABAAEAAAAHAAQAAAABAAEAAAAHAAUAAAABAAEAAAD/////AAABAAEAAAD//wAAAAABAAEAAAD//wEAAAABAAEAAAD//wIAAAABAAEAAAD//wMAAAABAAEAAAD//wQAAAABAAEAAAD//wUAAAABAAEAAAD//wYAAAABAAEAAAAAAP//AAABAAEAAAAAAAYAAAABAAEAAAABAP//AAABAAEAAAABAAYAAAABAAEAAAACAP//AAABAAEAAAACAAYAAAABAAEAAAADAP//AAABAAEAAAADAAYAAAABAAEAAAAEAP//AAABAAEAAAAEAAYAAAABAAEAAAAFAP//AAABAAEAAAAFAAYAAAABAAEAAAAGAP//AAABAAEAAAAGAAYAAAABAAEAAAAHAP//AAABAAEAAAAHAAYAAAABAAEAAAAIAP//AAABAAEAAAAIAAAAAAABAAEAAAAIAAEAAAABAAEAAAAIAAIAAAABAAEAAAAIAAMAAAABAAEAAAAIAAQAAAABAAEAAAAIAAUAAAABAAEAAAAIAAYAAAABAAEAAAAJAP//AAABAAEAAAAJAAAAAAABAAEAAAAJAAEAAAABAAEAAAAJAAIAAAABAAEAAAAJAAMAAAABAAEAAAAJAAQAAAABAAEAAAAJAAUAAAABAAEAAAAJAAYAAAABAAEAAAD///7/AAABAAEAAAAAAP7/AAABAAEAAAABAP7/AAABAAEAAAACAP7/AAABAAEAAAADAP7/AAABAAEAAAAEAP7/AAABAAEAAAAFAP7/AAABAAEAAAAGAP7/AAABAAEAAAAHAP7/AAABAAEAAAAIAP7/AAABAAEAAAAJAP7/AAABAAEAAAD///3/AAABAAEAAAAAAP3/AAABAAEAAAABAP3/AAABAAEAAAACAP3/AAABAAEAAAADAP3/AAABAAEAAAAEAP3/AAABAAEAAAAFAP3/AAABAAEAAAAGAP3/AAABAAEAAAAHAP3/AAABAAEAAAAIAP3/AAABAAEAAAAJAP3/AAABAAEAAAA=")
+tile_set = SubResource("TileSet_nt5np")
+
+[node name="TileMapLayer2" type="TileMapLayer" parent="Display"]
+tile_map_data = PackedByteArray("AAD//wYAAAAAAAIAAAD//wAAAAAAAAEAAAD//wEAAAAAAAEAAAD//wIAAAAAAAEAAAD//wMAAAAAAAEAAAD//wQAAAAAAAEAAAD//wUAAAAAAAEAAAAAAAYAAAABAAIAAAABAAYAAAABAAIAAAACAAYAAAABAAIAAAADAAYAAAABAAIAAAAHAAYAAAABAAIAAAAJAAYAAAACAAIAAAAIAAYAAAABAAIAAAAJAAAAAAACAAEAAAAJAAEAAAACAAEAAAAJAAIAAAACAAEAAAAJAAMAAAACAAEAAAAJAAQAAAACAAEAAAAJAAUAAAACAAEAAAD///3/AAAAAAAAAAAJAP3/AAACAAAAAAAAAP3/AAABAAAAAAABAP3/AAABAAAAAAACAP3/AAABAAAAAAADAP3/AAABAAAAAAAEAP3/AAABAAAAAAAFAP3/AAABAAAAAAAGAP3/AAABAAAAAAAHAP3/AAABAAAAAAAIAP3/AAABAAAAAAD///7/AAAAAAEAAAD/////AAAAAAEAAAAJAP7/AAACAAEAAAAJAP//AAACAAEAAAAEAAYAAAABAAIAAAAFAAYAAAABAAIAAAAGAAYAAAABAAIAAAA=")
+tile_set = SubResource("TileSet_n8fi2")
+
+[node name="Area2D" type="Area2D" parent="Display"]
+script = ExtResource("3_d1cpp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Display/Area2D"]
+position = Vector2(72, 32)
+shape = SubResource("RectangleShape2D_k66a7")
+
+[node name="Buttons" type="Control" parent="Display"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Display/Buttons"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 1.0
+offset_right = 120.0
+offset_bottom = 1.0
+theme_override_constants/separation = 48
+
+[node name="MenuButton" parent="Display/Buttons/HBoxContainer" instance=ExtResource("2_ogsnp")]
+layout_mode = 2
+
+[node name="GrayedOut" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton"]
+self_modulate = Color(0, 0, 0, 0.69803923)
+scale = Vector2(2, 2)
+texture = ExtResource("1_cyjja")
+region_enabled = true
+region_rect = Rect2(16, 16, 16, 16)
+script = ExtResource("6_j2865")
+
+[node name="Label" type="Label" parent="Display/Buttons/HBoxContainer/MenuButton/GrayedOut"]
+offset_left = -6.0
+offset_top = -4.0
+offset_right = 275.0
+offset_bottom = 197.0
+scale = Vector2(0.04, 0.04)
+theme_override_fonts/font = ExtResource("4_lc2lo")
+theme_override_font_sizes/font_size = 64
+text = "Unlock for
+
+10   "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SoulFlame" type="Node2D" parent="Display/Buttons/HBoxContainer/MenuButton/GrayedOut/Label"]
+position = Vector2(186.66821, 173.33344)
+scale = Vector2(3, 3)
+
+[node name="soulflame2" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton/GrayedOut/Label/SoulFlame"]
+position = Vector2(-1, -8)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame3" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton/GrayedOut/Label/SoulFlame"]
+position = Vector2(-1, -5.9999924)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame4" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton/GrayedOut/Label/SoulFlame"]
+position = Vector2(-2.8181763, -5.9999924)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame5" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton/GrayedOut/Label/SoulFlame"]
+position = Vector2(-2.8181763, -8)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton/GrayedOut/Label/SoulFlame"]
+self_modulate = Color(18.892157, 18.892157, 18.892157, 1)
+position = Vector2(-1.9090576, -7)
+scale = Vector2(1.9971408, 1.9971408)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame6" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton/GrayedOut/Label/SoulFlame"]
+position = Vector2(-0.09094238, 0)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="MenuButton2" parent="Display/Buttons/HBoxContainer" instance=ExtResource("2_ogsnp")]
+layout_mode = 2
+
+[node name="GrayedOut" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton2"]
+self_modulate = Color(0, 0, 0, 0.69803923)
+scale = Vector2(2, 2)
+texture = ExtResource("1_cyjja")
+region_enabled = true
+region_rect = Rect2(16, 16, 16, 16)
+script = ExtResource("6_j2865")
+
+[node name="Label" type="Label" parent="Display/Buttons/HBoxContainer/MenuButton2/GrayedOut"]
+offset_left = -6.0
+offset_top = -4.0
+offset_right = 275.0
+offset_bottom = 197.0
+scale = Vector2(0.04, 0.04)
+theme_override_fonts/font = ExtResource("4_lc2lo")
+theme_override_font_sizes/font_size = 64
+text = "Unlock for
+
+20   "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SoulFlame" type="Node2D" parent="Display/Buttons/HBoxContainer/MenuButton2/GrayedOut/Label"]
+position = Vector2(186.66821, 173.33344)
+scale = Vector2(3, 3)
+
+[node name="soulflame2" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton2/GrayedOut/Label/SoulFlame"]
+position = Vector2(-1, -8)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame3" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton2/GrayedOut/Label/SoulFlame"]
+position = Vector2(-1, -5.9999924)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame4" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton2/GrayedOut/Label/SoulFlame"]
+position = Vector2(-2.8181763, -5.9999924)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame5" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton2/GrayedOut/Label/SoulFlame"]
+position = Vector2(-2.8181763, -8)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton2/GrayedOut/Label/SoulFlame"]
+self_modulate = Color(18.892157, 18.892157, 18.892157, 1)
+position = Vector2(-1.9090576, -7)
+scale = Vector2(1.9971408, 1.9971408)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame6" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton2/GrayedOut/Label/SoulFlame"]
+position = Vector2(-0.09094238, 0)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="MenuButton3" parent="Display/Buttons/HBoxContainer" instance=ExtResource("2_ogsnp")]
+layout_mode = 2
+
+[node name="GrayedOut" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton3"]
+self_modulate = Color(0, 0, 0, 0.69803923)
+scale = Vector2(2, 2)
+texture = ExtResource("1_cyjja")
+region_enabled = true
+region_rect = Rect2(16, 16, 16, 16)
+script = ExtResource("6_j2865")
+
+[node name="Label" type="Label" parent="Display/Buttons/HBoxContainer/MenuButton3/GrayedOut"]
+offset_left = -6.0
+offset_top = -4.0
+offset_right = 275.0
+offset_bottom = 197.0
+scale = Vector2(0.04, 0.04)
+theme_override_fonts/font = ExtResource("4_lc2lo")
+theme_override_font_sizes/font_size = 64
+text = "Unlock for
+
+30   "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SoulFlame" type="Node2D" parent="Display/Buttons/HBoxContainer/MenuButton3/GrayedOut/Label"]
+position = Vector2(186.66821, 173.33344)
+scale = Vector2(3, 3)
+
+[node name="soulflame2" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton3/GrayedOut/Label/SoulFlame"]
+position = Vector2(-1, -8)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame3" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton3/GrayedOut/Label/SoulFlame"]
+position = Vector2(-1, -5.9999924)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame4" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton3/GrayedOut/Label/SoulFlame"]
+position = Vector2(-2.8181763, -5.9999924)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame5" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton3/GrayedOut/Label/SoulFlame"]
+position = Vector2(-2.8181763, -8)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton3/GrayedOut/Label/SoulFlame"]
+self_modulate = Color(18.892157, 18.892157, 18.892157, 1)
+position = Vector2(-1.9090576, -7)
+scale = Vector2(1.9971408, 1.9971408)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame6" type="Sprite2D" parent="Display/Buttons/HBoxContainer/MenuButton3/GrayedOut/Label/SoulFlame"]
+position = Vector2(-0.09094238, 0)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="RelicGrid" parent="Display/Buttons" instance=ExtResource("3_nt5np")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 60.000004
+offset_top = 24.0
+offset_right = 156.0
+offset_bottom = 24.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.75, 0.75)
+
+[node name="Banner" type="Label" parent="Display"]
+offset_left = 30.0
+offset_top = -40.0
+offset_right = 255.0
+offset_bottom = 25.0
+scale = Vector2(0.275, 0.275)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_lc2lo")
+theme_override_font_sizes/font_size = 64
+text = "Relics"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="banner" type="Node2D" parent="Display/Banner"]
+position = Vector2(-96.000015, 116)
+scale = Vector2(2.9563942, 2.9795182)
+
+[node name="Sprite2D" type="Sprite2D" parent="Display/Banner/banner"]
+position = Vector2(69.25, -16)
+scale = Vector2(3.141, 1)
+texture = SubResource("AtlasTexture_n8fi2")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Display/Banner/banner"]
+position = Vector2(69.25, -37)
+scale = Vector2(3.141, 0.5)
+texture = SubResource("AtlasTexture_n8fi2")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Display/Banner/banner"]
+position = Vector2(117.725, -25.880001)
+rotation = 3.1415927
+scale = Vector2(0.2147483, -1.0926422)
+texture = SubResource("AtlasTexture_raswq")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Display/Banner/banner"]
+position = Vector2(23.925, -25.880001)
+rotation = 3.1415927
+scale = Vector2(0.2147483, -1.0926416)
+texture = SubResource("AtlasTexture_raswq")
+
+[node name="SoulFlame" type="Node2D" parent="Display"]
+position = Vector2(113.000015, -27.000002)
+scale = Vector2(0.7, 0.7)
+
+[node name="soulflame2" type="Sprite2D" parent="Display/SoulFlame"]
+position = Vector2(-1, -8)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame3" type="Sprite2D" parent="Display/SoulFlame"]
+position = Vector2(-1, -5.9999924)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame4" type="Sprite2D" parent="Display/SoulFlame"]
+position = Vector2(-2.8181763, -5.9999924)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame5" type="Sprite2D" parent="Display/SoulFlame"]
+position = Vector2(-2.8181763, -8)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame" type="Sprite2D" parent="Display/SoulFlame"]
+self_modulate = Color(18.892157, 18.892157, 18.892157, 1)
+position = Vector2(-1.9090576, -7)
+scale = Vector2(1.9971408, 1.9971408)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="soulflame6" type="Sprite2D" parent="Display/SoulFlame"]
+position = Vector2(-0.09094238, 0)
+texture = SubResource("AtlasTexture_j2865")
+
+[node name="FlameAmount" type="Label" parent="Display"]
+offset_left = 123.0
+offset_top = -38.0
+offset_right = 235.0
+offset_bottom = 27.0
+scale = Vector2(0.3, 0.3)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_lc2lo")
+theme_override_font_sizes/font_size = 64
+text = "0"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Display"]
+libraries = {
+&"": SubResource("AnimationLibrary_j2865")
+}
+
+[node name="RelicData" parent="Display" instance=ExtResource("8_k66a7")]
+offset_left = 29.0
+offset_top = 23.0
+offset_right = 29.0
+offset_bottom = 23.0
+scale = Vector2(0.3, 0.3)
+
+[connection signal="down" from="Display/Area2D" to="Display/Buttons/RelicGrid" method="_on_area_2d_down"]
+[connection signal="mouse_entered" from="Display/Area2D" to="Display/Area2D" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Display/Area2D" to="Display/Area2D" method="_on_mouse_exited"]
+[connection signal="up" from="Display/Area2D" to="Display/Buttons/RelicGrid" method="_on_area_2d_up"]
+[connection signal="hover" from="Display/Buttons/HBoxContainer/MenuButton" to="." method="_on_menu_button_hover"]
+[connection signal="off_hover" from="Display/Buttons/HBoxContainer/MenuButton" to="." method="_on_menu_button_off_hover"]
+[connection signal="pressed" from="Display/Buttons/HBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="hover" from="Display/Buttons/HBoxContainer/MenuButton2" to="." method="_on_menu_button_2_hover"]
+[connection signal="off_hover" from="Display/Buttons/HBoxContainer/MenuButton2" to="." method="_on_menu_button_2_off_hover"]
+[connection signal="pressed" from="Display/Buttons/HBoxContainer/MenuButton2" to="." method="_on_menu_button_2_pressed"]
+[connection signal="hover" from="Display/Buttons/HBoxContainer/MenuButton3" to="." method="_on_menu_button_3_hover"]
+[connection signal="off_hover" from="Display/Buttons/HBoxContainer/MenuButton3" to="." method="_on_menu_button_3_off_hover"]
+[connection signal="pressed" from="Display/Buttons/HBoxContainer/MenuButton3" to="." method="_on_menu_button_3_pressed"]

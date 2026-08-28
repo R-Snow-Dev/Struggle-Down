@@ -251,6 +251,7 @@ func fiendsTurn(pActions: float):
 	# regain the ability to take another action
 	fTurn = true
 	EventBus.pause.emit()
+	EventBus.over.emit()
 	WeaponList.enraged = 0
 	if objects.size() > 0:
 		for y in objects:
@@ -302,8 +303,10 @@ func updateOnDoor(d: bool):
 
 func checkPassable(obj):
 	# Checks to see if a a player can move onto a tile or not
-	if obj is Item or obj is Interactable or obj is Ladder or obj is Door:
+	if obj is Item or obj is Interactable or obj is Ladder or obj is Door or UpgradeList.relicData['immaterial']:
 		return true
+	elif obj is Chest:
+		obj.open()
 	return false
 
 func checkInputs():
@@ -332,6 +335,8 @@ func checkInputs():
 				if grid[player.pos.y-1][player.pos.x].size() < 2:					
 					if grid[player.pos.y-1][player.pos.x].size() < 1:				
 						EventBus.updateActions.emit(-1, "move")
+						for u in UpgradeList.getByType('onMove'):
+							u.effect(player)
 						player.moveUp()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()
@@ -340,12 +345,16 @@ func checkInputs():
 						if checkPush(grid[player.pos.y-1][player.pos.x][0], Vector2(0,-1)):
 							EventBus.updateActions.emit(-1, "move")
 							grid[player.pos.y-1][player.pos.x][0].moveUp()
+							for u in UpgradeList.getByType('onMove'):
+								u.effect(player)
 							player.moveUp()
 							# relaods the board once movement is complete
 							EventBus.pause.emit()
 							loadBoard()
 					elif checkPassable(grid[player.pos.y-1][player.pos.x][0]):
 						EventBus.updateActions.emit(-1, "move")
+						for u in UpgradeList.getByType('onMove'):
+							u.effect(player)
 						player.moveUp()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()
@@ -364,6 +373,8 @@ func checkInputs():
 				if	grid[player.pos.y+1][player.pos.x].size() < 2: 
 					if grid[player.pos.y+1][player.pos.x].size() < 1:				
 						EventBus.updateActions.emit(-1, "move")
+						for u in UpgradeList.getByType('onMove'):
+							u.effect(player)
 						player.moveDown()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()
@@ -372,12 +383,16 @@ func checkInputs():
 						if checkPush(grid[player.pos.y+1][player.pos.x][0], Vector2(0, 1)):
 							EventBus.updateActions.emit(-1, "move")
 							grid[player.pos.y+1][player.pos.x][0].moveDown()
+							for u in UpgradeList.getByType('onMove'):
+								u.effect(player)
 							player.moveDown()
 							# relaods the board once movement is complete
 							EventBus.pause.emit()
 							loadBoard()
 					elif checkPassable(grid[player.pos.y+1][player.pos.x][0]):
 						EventBus.updateActions.emit(-1, "move")
+						for u in UpgradeList.getByType('onMove'):
+							u.effect(player)
 						player.moveDown()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()
@@ -397,6 +412,8 @@ func checkInputs():
 				if grid[player.pos.y][player.pos.x-1].size() < 2:					
 					if grid[player.pos.y][player.pos.x-1].size() < 1:				
 						EventBus.updateActions.emit(-1, "move")
+						for u in UpgradeList.getByType('onMove'):
+							u.effect(player)
 						player.moveLeft()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()
@@ -406,12 +423,16 @@ func checkInputs():
 						if checkPush(grid[player.pos.y][player.pos.x-1][0], Vector2(-1,0)):
 							EventBus.updateActions.emit(-1, "move")
 							grid[player.pos.y][player.pos.x-1][0].moveLeft()
+							for u in UpgradeList.getByType('onMove'):
+								u.effect(player)
 							player.moveLeft()
 							# relaods the board once movement is complete
 							EventBus.pause.emit()
 							loadBoard()
 					elif checkPassable(grid[player.pos.y][player.pos.x-1][0]):
 						EventBus.updateActions.emit(-1, "move")
+						for u in UpgradeList.getByType('onMove'):
+							u.effect(player)
 						player.moveLeft()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()
@@ -430,6 +451,8 @@ func checkInputs():
 				if grid[player.pos.y][player.pos.x+1].size() < 2:
 					if grid[player.pos.y][player.pos.x+1].size() < 1:				
 						EventBus.updateActions.emit(-1, "move")
+						for u in UpgradeList.getByType('onMove'):
+							u.effect(player)
 						player.moveRight()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()
@@ -438,12 +461,16 @@ func checkInputs():
 						if checkPush(grid[player.pos.y][player.pos.x+1][0], Vector2(1,0)):
 							EventBus.updateActions.emit(-1, "move")
 							grid[player.pos.y][player.pos.x+1][0].moveRight()
+							for u in UpgradeList.getByType('onMove'):
+								u.effect(player)
 							player.moveRight()
 							# relaods the board once movement is complete
 							EventBus.pause.emit()
 							loadBoard()
 					elif checkPassable(grid[player.pos.y][player.pos.x+1][0]):
 						EventBus.updateActions.emit(-1, "move")
+						for u in UpgradeList.getByType('onMove'):
+							u.effect(player)
 						player.moveRight()
 						# relaods the board once movement is complete
 						EventBus.pause.emit()

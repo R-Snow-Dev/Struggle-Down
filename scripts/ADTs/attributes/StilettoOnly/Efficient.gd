@@ -14,5 +14,7 @@ func effect(target: Node) -> int:
 	var rng = RandomNumberGenerator.new()
 	var w:Weapon = WeaponList.weapons[WeaponList.held]
 	if w.getCost() == 1 and rng.randf() <= 0.1:
+		effectDone.emit()
 		return 0
+	effectDone.emit()
 	return 1

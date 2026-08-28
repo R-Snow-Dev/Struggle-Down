@@ -10,12 +10,14 @@ func _ready() -> void:
 	grid.open()
 
 func open() -> void:
+	grid.open()
 	if !visible:
 		anim.play("open")
 	else:
 		anim.play("close")
 
 func close() -> void:
+	grid.open()
 	if visible:
 		anim.play("close")
 

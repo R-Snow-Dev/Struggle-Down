@@ -14,10 +14,11 @@ var gridSize = Vector2(11,11)# Dimensions of the current floor
 var boards: Array # 2D array of boards representing the floor map
 var floorScene = preload("res://scenes/DungeonParts/floor.tscn").instantiate()
 var oppControl = preload("res://scenes/DungeonParts/opp_controller.tscn").instantiate()
-var player = preload("res://scenes/DungeonParts/player.tscn").instantiate()
+var player: Player = preload("res://scenes/DungeonParts/player.tscn").instantiate()
 var map:Map = preload("res://scenes/DungeonParts/map.tscn").instantiate()
 var wall = preload("res://scenes/Tiles/Wall.tscn")
 var dR = preload("res://scenes/GUIParts/discovered_room.tscn")
+var chest = preload("res://scenes/Tiles/chest.tscn")
 var mapPos : Vector2
 var startPos: Vector2
 var endPos: Vector2
@@ -37,6 +38,8 @@ var mediumIds = Vector2(0,20)
 var materialIds = Vector2(0,23)
 var catalystIds = Vector2(0,28)
 var cGenerator = ComponentGenerator.new()
+var possibleRelics: Array = []
+var componentBacklog = []
 @onready var resIcon = $Node2D/Camera2D/PBranch
 @onready var healthBar = $Node2D/Camera2D/HealthBar
 @onready var node_2d: Node2D = $Node2D
@@ -44,9 +47,36 @@ var cGenerator = ComponentGenerator.new()
 @onready var mS = $Node2D/Camera2D/mapSpace
 @onready var pT = $Node2D/Camera2D/mapSpace/playerTracker
 
+signal healthbar(amount: int)
+
+func HasIntIn(target: int, array: Array) -> bool:
+	for x in array:
+		if x is float or x is int:
+			if target == x:
+				return true
+	return false
+
 func rollComponent(r: Vector2 = Vector2(1,data['level'])) -> Components:
-	rng.set_seed(data['seed'])
+	rng.seed = data['seed']
 	return cGenerator.genComp(rng.randi_range(r.x,r.y))
+
+func rollChest():
+	var roll = rng.randf()
+	if roll >= 0.995 and len(possibleRelics) > 0:
+		var relicRolled = rng.randi_range(0,len(possibleRelics) - 1)
+		var relic = possibleRelics.pop_at(relicRolled)
+		data['unlockedRelics'].append(relic)
+		var rel: Relic =  preload("res://scenes/GUIParts/relic.tscn").instantiate()
+		rel.setId(relic)
+		EventBus.popup.emit(1, rel)
+	elif roll <= 0.5:
+		EventBus.updateGold.emit(rng.randi_range(3 * data['level'], 9 * data['level']))
+	else:
+		var c = rollComponent(Vector2(data['level'], data['level'] + 1))
+		componentBacklog.append(c)
+		c.scale *= 0.4
+		EventBus.popup.emit(1, c)
+		
 
 func _create_slime(p: Vector2):
 	# Function that handles the creation of slime summons from the Slime King by storing
@@ -189,13 +219,22 @@ func loadObjects(grid: Vector2, mPos: Vector2):
 	# Iterates throught he available grid coords and adds wall to the game board
 		for i in range(0, availableCoords):
 			if rng.randf() > 0.75: # 75% chance no wall spawns on the currently checked tile
-				var chosenWall = wall.instantiate()
-				var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
-				var cornersOpen = checkCorners([gridCoords[chosen][0], gridCoords[chosen][0]], gridCoords) # Checks to see how many corners the wall will have open 
-				if cornersOpen > 1: # A tile must have at least 2 full corners open for a wall to spawn on it to ensure that no room-spanning walls can cut the player off completely from a required doorway
-					chosenWall.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1])) # Gives the walls their rerspective coordinates
-					objects.append(chosenWall) # Adds the walls to the list of objects 
-					gridCoords.remove_at(chosen) # removes the wall's coordinates from the pool of possible grid coordinates other objects can be assigned to
+				if rng.randf() > 0.99:
+					var chosenWall = chest.instantiate()
+					var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
+					var cornersOpen = checkCorners([gridCoords[chosen][0], gridCoords[chosen][0]], gridCoords) # Checks to see how many corners the wall will have open 
+					if cornersOpen > 1: # A tile must have at least 2 full corners open for a wall to spawn on it to ensure that no room-spanning walls can cut the player off completely from a required doorway
+						chosenWall.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1]), gridSize/2) # Gives the walls their rerspective coordinates
+						objects.append(chosenWall) # Adds the walls to the list of objects 
+						gridCoords.remove_at(chosen) # removes the wall's coordinates from the pool of possible grid coordinates other objects can be assigned to
+				else:
+					var chosenWall = wall.instantiate()
+					var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
+					var cornersOpen = checkCorners([gridCoords[chosen][0], gridCoords[chosen][0]], gridCoords) # Checks to see how many corners the wall will have open 
+					if cornersOpen > 1: # A tile must have at least 2 full corners open for a wall to spawn on it to ensure that no room-spanning walls can cut the player off completely from a required doorway
+						chosenWall.setup(Vector2(gridCoords[chosen][0], gridCoords[chosen][1])) # Gives the walls their rerspective coordinates
+						objects.append(chosenWall) # Adds the walls to the list of objects 
+						gridCoords.remove_at(chosen) # removes the wall's coordinates from the pool of possible grid coordinates other objects can be assigned to
 		
 		availableCoords = len(gridCoords) # Updates the amount of grid ccordinates left after the walls are spawned in
 		
@@ -214,9 +253,12 @@ func loadObjects(grid: Vector2, mPos: Vector2):
 		# Iterates throught he available grid coords and adds items to the game board
 		for i in range(0, availableCoords):
 			if rng.randf() > 0.99: # 99% chance no item spawns on the currently checked tile
+				var t = 0
+				if rng.randf() > 0.99:
+					t = randi_range(1,2)
 				var chosenItem = preload("res://scenes/Items/item.tscn").instantiate()
 				var chosen = rng.randi_range(0, len(gridCoords) - 1) # chooses a coordinate out of the list of possible grid coordinates
-				chosenItem.setup((Vector2(gridCoords[chosen][0], gridCoords[chosen][1])), rng.randi_range(1,6)) # Gives the items their rerspective coordinates and IDs
+				chosenItem.setup((Vector2(gridCoords[chosen][0], gridCoords[chosen][1])), rng.randi_range(1,6), t) # Gives the items their rerspective coordinates and IDs
 				objects.append(chosenItem) # Adds the items to the list of objects 
 				gridCoords.remove_at(chosen) # removes the wall's coordinates from the pool of possible grid coordinates other objects can be assigned to
 			
@@ -296,11 +338,22 @@ func genMapData(path: Array):
 				objectList = loadObjects(gridSize, x)
 				type = 1
 			elif mag == 1 and x != endPos:
-				gridSize = Vector2(5,5)
-				objectList = preload("res://scripts/defaultFloors.gd").new().altarRoom
-				type = 1
+				if rng.randf() <= 0.75:
+					gridSize = Vector2(5,5)
+					objectList = preload("res://scripts/defaultFloors.gd").new().altarRoom
+					type = 1
+				else:
+					var t = 0
+					if rng.randf() >= 0.75:
+						t = randi_range(1,2)
+					gridSize = Vector2(5,5)
+					objectList = preload("res://scripts/defaultFloors.gd").new().vault
+					var item = preload("res://scenes/Items/item.tscn").instantiate()
+					item.setup(Vector2(2,2), rng.randi_range(1,6), t)
+					objectList.append(item)
+					type = 1
 			else:
-				if rng.randf() < 0.666666 or x == endPos:
+				if (rng.randf() < 0.666666 or x == endPos):
 					gridSize = Vector2(rng.randi_range(3,11), rng.randi_range(3,11))
 					objectList = loadObjects(gridSize, x)
 					type = 1
@@ -322,7 +375,10 @@ func genMapData(path: Array):
 			var firstItemCoords = Vector2(rng.randi_range(0, gridSize.x-1),rng.randi_range(0, gridSize.y-1))
 			while firstItemCoords == Vector2(2,2):
 				firstItemCoords = Vector2(rng.randi_range(0, gridSize.x-1),rng.randi_range(0, gridSize.y-1))
-			startingItem.setup(firstItemCoords, rng.randi_range(1,6))
+			if UpgradeList.relicData['swords']:
+				startingItem.setup(firstItemCoords, 1,0)
+			else:
+				startingItem.setup(firstItemCoords, rng.randi_range(1,13),0)
 			objectList = [startingItem]
 		
 		boards[x.x][x.y].append(preload("res://scripts/gameBoard.gd").new(gridSize.x, gridSize.y, player, objectList, map.doorMatrix[x.x + x.y*9], type)) # Appends the genrated board to the "boards" array, representing the floor map
@@ -367,6 +423,8 @@ func updateMap(mPos: Vector2):
 		if mPos == endPos:
 			d.color = Color(0.6,0.6,0.6,1)
 		mS.add_child(d)	
+		for u: Attribute in UpgradeList.getByType('onRoom'):
+			u.effect(player)
 	# Set the player marker to the correct area on the minimap
 	pT.position = Vector2(51, -452) + Vector2(-11.3 * mPos.x, 101.1 * mPos.y)
 	pT.z_index = 100
@@ -394,19 +452,39 @@ func _updateTotalHP(data: int) -> void:
 
 func _updateHealth(a: int):
 	var amount = a
-	for x: Attribute in UpgradeList.getByType("onDamaged"):
-		amount *= x.effect(player)
-	if amount + pHP <= 0:
-		pHP = 0
+	if player.shielded and amount < 0:
+		if amount < 0 and UpgradeList.cShields < 2:
+			UpgradeList.cShields = 0
+			player.shielded = false
+			player.draw()
+		else:
+			UpgradeList.cShields -= 1
 	else:
-		if pHP + amount <= pHPTot:
-			pHP += amount
-	SaveController.updateData("curHP", pHP)
-	onActionUpdate(0, "move")
+		if not rng.randf() < UpgradeList.angel or amount > 0:
+			if amount < 0:
+				UpgradeList.setNoHit(false)
+			for x: Attribute in UpgradeList.getByType("onDamaged"):
+				amount *= x.effect(player)
+			if amount + pHP <= 0:
+				pHP = 0
+			else:
+				if pHP + amount <= pHPTot:
+					pHP += amount
+			healthbar.emit(amount)
+			SaveController.updateData("curHP", pHP)
+			onActionUpdate(0, "move")
+
+func summon(target: Node, e: Node2D):
+	e.position = target.global_position
+	add_child(e)
+
+	
 
 func _ready() -> void:
 	# Connect all signals to approprate functions
+	
 	EventBus.pause.connect(_pause)
+	EventBus.summon.connect(summon)
 	EventBus.unpause.connect(_unpause)
 	EventBus.changeRooms.connect(_changeRooms)
 	EventBus.on_door.connect(_on_door)
@@ -431,8 +509,16 @@ func _ready() -> void:
 	healthBar.setHealthBar(pHP)
 	data['pActions'] = 1 + data['movement']
 	WeaponList.mult = 0.9 + (0.1 * data['atk'])
+	possibleRelics = []
+	componentBacklog = []
+	for x in UpgradeList.relicIdByLevel[data['level'] - 1]:
+		if not HasIntIn(x, data['unlockedRelics']):
+			possibleRelics.append(x)
+		
 
 func onActionUpdate(_num: int, _type:String) -> void:
+	if UpgradeList.chargeable:
+		UpgradeList.charge += 1
 	for a in UpgradeList.getByType("onCondition"):
 		a.check(self)
 
@@ -506,12 +592,12 @@ func _changeRooms(changePos: Vector2, newPos: int):
 	gridSize = Vector2(boards[mapPos.x][mapPos.y][0].width, boards[mapPos.x][mapPos.y][0].height)
 	
 	player.setPos(pPos) # Sets player position to the newly aquired starting position
-	player.setActionsAvailable(data["pActions"] - 1) # Sets available actions to a default number - 1
+	player.setActionsAvailable(data["pActions"] - 1) # Sets available actions to a default number - 1\
 	floorScene.mapPos = mapPos # gives floorScene the new map position to load new doorways
 	floorScene.grid = gridSize  # Sets floorScene's grid size to the new grid size
 	boards[mapPos.x][mapPos.y][0].loadBoard() # generates the gameboard and displays the objects in it to the screen for the first time
-	updateMap(mapPos) # Update the minimap
 	drawBoard() # Generates the dungeon floor
+	updateMap(mapPos) # Update the minimap
 	if boards[mapPos.x][mapPos.y][0].type != 1:
 		boards[mapPos.x][mapPos.y][0].reset()
 	boards[mapPos.x][mapPos.y][0].heal()
@@ -519,10 +605,20 @@ func _changeRooms(changePos: Vector2, newPos: int):
 func _process(_delta: float) -> void:
 	# Executes code every frame
 	# If the player is alive, play the game
+	if UpgradeList.relicData['immaterial']:
+		player.monitorable = false
+		player.modulate = Color(1,1,1,0.5)
+	else:
+		player.monitorable = true
+		player.modulate = Color(1,1,1,1)
 	if pHP > 0:
 		if paused == false: # Id the game is paused, do not play the game
 			boards[mapPos.x][mapPos.y][0].checkInputs() # checks to see if the user performs an action
 			if player.actionsAvailable == 0 and !ff:
+				UpgradeList.chargeable = 0
+				UpgradeList.setRData('immaterial', false)
+				player.monitorable = true
+				player.modulate = Color(1,1,1,1)
 				ff = true
 				boards[mapPos.x][mapPos.y][0].fiendsTurn(data["pActions"])
 	elif res:
@@ -559,6 +655,9 @@ func deathSequence():
 	
 func _on_death():
 	# removes the dungeon from the game scene
+	SaveController.updateData('unlockedRelics', data['unlockedRelics'])
+	for x in componentBacklog:
+		SaveController.addComponent(x)
 	for x in boards:
 		for y in x:
 			for b in y:
@@ -576,6 +675,9 @@ func _to_title():
 	queue_free()
 	
 func _new_level():
+	SaveController.updateData('unlockedRelics', data['unlockedRelics'])
+	for x in componentBacklog:
+		SaveController.addComponent(x)
 	for x in boards:
 		for y in x:
 			for b in y:

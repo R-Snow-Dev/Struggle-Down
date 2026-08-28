@@ -12,19 +12,28 @@ preload("res://scenes/Items/great_sword.tscn"),
 preload("res://scenes/Items/mace.tscn"),
 preload("res://scenes/Items/spear.tscn"),
 preload("res://scenes/Items/halberd.tscn"),
-preload("res://scenes/Items/stiletto.tscn")] # An array storing every possible item that can be found on the board
+preload("res://scenes/Items/stiletto.tscn"),
+preload("res://scenes/Items/ice_wand.tscn"),
+preload("res://scenes/Items/quake_staff.tscn"),
+preload("res://scenes/Items/unstable_wand.tscn"),
+preload("res://scenes/Items/thunder_gem.tscn"),
+preload("res://scenes/Items/wind_charm.tscn"),
+preload("res://scenes/Items/demon_horn.tscn"),
+preload("res://scenes/Items/holy_scepter.tscn"),] # An array storing every possible item that can be found on the board
 
 var sprite: Node
 var pos: Vector2
 var itemId:int
+var tMod = 0
 
-func setup(p: Vector2, Id: int):
+func setup(p: Vector2, Id: int, t: int):
 	# Function that assigns all the variables their appropriate values, so the desired item spawns
 	# param - p: The position of the spawned Item on the board, in Vector 2 format
 	# param - Id: The item Id, also known as the index of the item in the "allItems" constant
 	sprite = allItems[Id].instantiate()
 	pos = p
 	itemId = Id
+	tMod = t
 	
 	add_child(sprite)
 	
@@ -48,6 +57,7 @@ func draw():
 func _on_area_entered(_area: Area2D) -> void:
 	# Because the only items that spawn on the board currently are weapons, directly call the weapon slot to update what it displays
 	AudioManager.play_sound('GetWeapon')
+	WeaponList.weapons[itemId].setTMod(tMod)
 	EventBus.swap_weapon.emit(itemId)
 	# Delete this instace of an Item
 	EventBus.object_ded.emit(self)

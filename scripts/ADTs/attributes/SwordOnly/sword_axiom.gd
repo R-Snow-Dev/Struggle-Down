@@ -15,7 +15,9 @@ func effect(target: Node) -> int:
 		var damage = w.getBaseDam()
 		for x in w.getExtraAttacks():
 			damage += WeaponList.damages[x]
+		effectDone.emit()
 		return damage
+	effectDone.emit()
 	return 0
 			
 	

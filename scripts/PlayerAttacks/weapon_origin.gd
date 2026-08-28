@@ -49,6 +49,8 @@ func hoverProj(p: Projectile):
 	var mins: Vector2
 	var maxs: Vector2
 	dist = 0
+	gridSize = Overseer.control.gridSize
+	print(gridSize)
 	
 	if player.facing.x + player.facing.y < 1:
 		if player.facing.x != 0:
@@ -98,6 +100,8 @@ func hover(id: int):
 	var mins: Vector2
 	var maxs: Vector2
 	dist = 0
+	gridSize = Overseer.control.gridSize
+	print(gridSize)
 	
 	if player.facing.x + player.facing.y < 1:
 		if player.facing.x != 0:
@@ -140,34 +144,135 @@ func getSign(num:int) -> int:
 	elif num < 0:
 		return -1
 	return 0
-
-# Creates a hurtbox based on weapon data.
-func attack(id: int):
+	
+# Creates a hurtbox based on weapon data. No action cost.
+func freeAttack(id: int):
+	hover(id)
+	var hurtbox: Hurtbox = preload("res://scenes/DungeonParts/hurtbox.tscn").instantiate()
+	var lf = 0.1
+	var projectiles: Array = [
+	preload("res://scenes/Projectiles/Sprites/ice.tscn"),
+	preload("res://scenes/Projectiles/Sprites/fire.tscn"),
+	preload("res://scenes/Projectiles/Sprites/lightning.tscn"),
+	preload("res://scenes/Projectiles/Sprites/quake.tscn"),
+	preload("res://scenes/Projectiles/Sprites/wind.tscn"),
+	]
+	var pindex: int = -1
 	if id > 0:
 		var player:Player = get_parent()
 		var w: Weapon = WeaponList.weapons[id]
+		print(str(id))
+		print(str(WeaponList.held))
 		w.setFacing(player.facing)
+		EventBus.pause.emit()
+		aP.position = w.getOrigin() * 16
+		if w.getDamageType() == "slash":
+			if id != 11:
+				aP.slash(w.getDim())
+			else:
+				pindex = 4
+				lf = 0.5
+		elif w.getDamageType() == "pierce":
+			aP.pierce(w.getDim())
+		elif w.getDamageType() == 'frost':
+			pindex = 0
+		elif w.getDamageType() == 'fire':
+			pindex = 1
+		elif w.getDamageType() == 'shockwave':
+			lf = 1
+			pindex = 3
+		elif w.getDamageType() == 'shock':
+			pindex = 2
+			lf = 0.4
+		if w.getDamageType() == 'slash' or w.getDamageType() == 'pierce' or w.getDamageType() == 'blunt':
+			AudioManager.play_sound('Melee')
 		w.onAttack(player)
+		if id == 13:
+			await w.attackAttribute.effectDone
+		if w.getVelo() == Vector2(0,0):
+			for c in get_children():
+				if c is AreaOfEffect:
+					var e: AttackEffects = preload("res://scenes/GUIParts/effect.tscn").instantiate()
+					if pindex >= 0:
+						e.setSprite(projectiles[pindex].instantiate())
+					e.setLifespan(lf)
+					c.add_child(e)
+		else:
+			if pindex >= 0:
+				hurtbox.setSprite(projectiles[pindex].instantiate())
+		hurtbox.setup(w, dist)
+		hurtbox.setLifespan(lf)
+		add_child(hurtbox)
+	else:
+		EventBus.playerDoneAttacking.emit()
+	
+# Creates a hurtbox based on weapon data.
+func attack(id: int):
+	var hurtbox: Hurtbox = preload("res://scenes/DungeonParts/hurtbox.tscn").instantiate()
+	var lf = 0.1
+	var projectiles: Array = [
+	preload("res://scenes/Projectiles/Sprites/ice.tscn"),
+	preload("res://scenes/Projectiles/Sprites/fire.tscn"),
+	preload("res://scenes/Projectiles/Sprites/lightning.tscn"),
+	preload("res://scenes/Projectiles/Sprites/quake.tscn"),
+	preload("res://scenes/Projectiles/Sprites/wind.tscn"),
+	]
+	var pindex: int = -1
+	if id > 0:
+		var player:Player = get_parent()
+		var w: Weapon = WeaponList.weapons[id]
+		w.check()
+		w.setFacing(player.facing)
 		if player.actionsAvailable >= w.getCost():
+			print(w.getCost())
 			EventBus.pause.emit()
 			aP.position = w.getOrigin() * 16
 			if w.getDamageType() == "slash":
-				aP.slash(w.getDim())
+				if id != 11:
+					aP.slash(w.getDim())
+				else:
+					pindex = 4
+					lf = 0.5
 			elif w.getDamageType() == "pierce":
 				aP.pierce(w.getDim())
+			elif w.getDamageType() == 'frost':
+				pindex = 0
+			elif w.getDamageType() == 'fire':
+				pindex = 1
+			elif w.getDamageType() == 'shockwave':
+				lf = 1
+				pindex = 3
+			elif w.getDamageType() == 'shock':
+				pindex = 2
+				lf = 0.4
 			if w.getDamageType() == 'slash' or w.getDamageType() == 'pierce' or w.getDamageType() == 'blunt':
 				AudioManager.play_sound('Melee')
-			var hurtbox = preload("res://scenes/DungeonParts/hurtbox.tscn").instantiate()
+			w.onAttack(player)
+			if id == 13:
+				await w.attackAttribute.effectDone
+			if w.getVelo() == Vector2(0,0):
+				for c in get_children():
+					if c is AreaOfEffect:
+						var e: AttackEffects = preload("res://scenes/GUIParts/effect.tscn").instantiate()
+						if pindex >= 0:
+							e.setSprite(projectiles[pindex].instantiate())
+						e.setLifespan(lf)
+						c.add_child(e)
+			else:
+				if pindex >= 0:
+					hurtbox.setSprite(projectiles[pindex].instantiate())
 			hurtbox.setup(w, dist)
+			hurtbox.setLifespan(lf)
 			add_child(hurtbox)
 			EventBus.updateActions.emit(w.getCost() * -1, "attack")
 		else:
+			print(w.getCost())
 			print("Not Enough Actions")
 			EventBus.playerDoneAttacking.emit()
 	else:
 		EventBus.playerDoneAttacking.emit()
 
-# Activates a weapon's special function on a right click		
+# Athunder_gem_itemctivates a weapon's special function on a right click		
 func special(id: int):
 	var player = get_parent()
 	if id > 0:

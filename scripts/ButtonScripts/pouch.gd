@@ -16,14 +16,15 @@ var isHovering = false
 @onready var consumeables = $ConsumableMenu
 @onready var components = $ComponentPouch
 @onready var butts = $buttons
-@onready var souls = $SoulMenu
-@onready var sM = $SoulMenu
+@onready var souls: SoulMenu = $SoulMenu
+@onready var relics: RelicPouch = $"Relic Pouch"
 
 func _ready() -> void:
 	# Play the opening animation on load
 	goCord.visible = false
 	consumeables.visible = false
 	components.visible = false
+	relics.visible = false
 	butts.visible = false
 	souls.visible = false
 	timing.play("open")
@@ -57,7 +58,7 @@ func _on_area_2d_mouse_exited() -> void:
 	
 func close():
 	# Function that makes the two animated sprites playb their closing animations at the same time
-	sM.save()
+	souls.save()
 	guy.play("close")
 	pouch.play("close")
 	
@@ -81,13 +82,19 @@ func _on_arrow_2_pressed() -> void:
 	consumeables.update()
 	
 func _on_consumables_pressed() -> void:
+	souls.save()
 	consumeables.open()
 	components.close()
+	relics.close()
 	
 func _on_components_pressed() -> void:
+	souls.save()
 	consumeables.close()
 	components.open()
+	relics.close()
 
 func _on_relics_pressed() -> void:
+	souls.save()
 	consumeables.close()
 	components.close()
+	relics.open()

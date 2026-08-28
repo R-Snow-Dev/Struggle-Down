@@ -27,7 +27,7 @@ func _ready() -> void:
 	t.emitting = trail
 	t.color = trailCol
 	add_child(sprite)
-	await get_tree().create_timer(1).timeouts
+	await get_tree().create_timer(1).timeout
 	call_deferred("queue_free")
 
 func setSummoned(i: WildDamage, dam: int, dT: String):

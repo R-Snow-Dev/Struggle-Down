@@ -4,8 +4,8 @@ class_name BossData
 var size: int
 var bump: bool = false
 
-func _init(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCounted, s: int) -> void:
-	super(p,h,a,gR,d,f,b)
+func _init(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCounted, s: int, dr: Array = [], m: Dictionary = {}) -> void:
+	super(p,h,a,gR,d,f,b,dr,m)
 	size = s
 
 func getBump() -> bool:

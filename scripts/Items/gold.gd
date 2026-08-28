@@ -17,8 +17,13 @@ func _updateGold(amount:int):
 	# Function that changes how much the current number displayed is. Then playes a short animation.
 	# param - amount: An integer given when the updateAction signal is emitted. Its the amount the displayed number will change. Typically negative
 	
+	if amount != 0:
+		var goldIcon = preload("res://scenes/GUIParts/gold_icon.tscn").instantiate()
+		goldIcon.scale *= 0.2
+		EventBus.popup.emit(amount, goldIcon)
 	print("done Deal")
 	curDisplayed += int(amount) # Changes the current number displayed
+	Overseer.setGold(curDisplayed)
 	self.text = str(curDisplayed) # Updates the label's text
 	if amount != 0:
 		animationPlayer.play("Change Number") # Plays a sort "bounce" animation for emphasis

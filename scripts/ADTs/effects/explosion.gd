@@ -6,6 +6,7 @@ class_name Explosion
 
 func _ready() -> void:
 	visual.emitting = true
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(0.5).timeout
 	end.emit()
+	EventBus.playerDoneAttacking.emit()
 	queue_free()

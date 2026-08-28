@@ -1,12 +1,16 @@
-res://scripts/UI Shizz
+res://scripts/PlayerAttacks
+res://assets/Fonts
+res://assets
+res://scenes/DungeonParts
 res://scenes/GUIParts
+res://scripts/UI Shizz
+res://
+res://scripts/Entities
 res://scripts/ButtonScripts
 res://scripts
 C:/Users/Rogan/Documents/Game Projects/Struggle-Down/scripts/text docs
 res://scripts/Items/Components
-res://assets
 res://scenes/entities
-res://scripts/Entities
 res://scenes/Projectiles/Sprites
 res://scripts/Items
 res://scenes/Projectiles
@@ -16,7 +20,3 @@ res://scenes/Globals
 res://scripts/AttackingLogic
 res://scenes/Opps
 res://scripts/bosses
-res://scripts/ADTs/effects
-res://scenes/DungeonParts
-res://scripts/ADTs/attributes
-res://scripts/ADTs

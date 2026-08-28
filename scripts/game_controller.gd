@@ -31,11 +31,12 @@ func _on_death():
 func _new_level():
 	# Loads another dungeon upon loading a new level, after removing any children that may somehow still be under this node
 	
-	WeaponList.reset()
-	UpgradeList.reset()
-	
 	# Gets the current saved data
 	var data = SaveController.loadData()
+	
+	if UpgradeList.relicData['immaculate'] and UpgradeList.getNoHit():
+		SaveController.upgradeRandom()
+	
 	if self.get_child_count() > 0:
 		for i in self.get_children():
 			self.call_deferred("remove_child", i)
@@ -45,10 +46,16 @@ func _new_level():
 	if data["floor"] > 4:
 		SaveController.updateData("floor", 1)
 		SaveController.updateData("level", data["level"] + 1)
+		if UpgradeList.relicData['arcana']:
+			UpgradeList.addRandom()
 	else: # Otherwise, move onto the next floor
 		SaveController.updateData("floor", data["floor"] + 1)
 	call_deferred("add_child", dungeon)
 	await dungeon.ready
+	
+	WeaponList.reset()
+	UpgradeList.reset()
+	
 	UpgradeList.addFromSave()
 
 func _file_select():
@@ -85,8 +92,11 @@ func _go():
 		for i in self.get_children():
 			self.remove_child(i)
 	SaveController.updateData("inrun", true)
+	if UpgradeList.relicData['arcana']:
+			UpgradeList.addRandom()
 	var dungeon = preload("res://scenes/menus/dungeon.tscn").instantiate() # Loads a new, first level dungeon
 	add_child(dungeon)
+	UpgradeList.addFromSave()
 
 func _start():
 	# Loads another dungeon upon loading a new level, after removing any children that may somehow still under this node

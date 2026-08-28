@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://crxkirvtooatp"]
+
+[ext_resource type="Script" uid="uid://dce4aaaxkwpj3" path="res://scripts/PlayerAttacks/delayed_strike.gd" id="1_nuafr"]
+
+[node name="DelayedStrike" type="Node2D"]
+script = ExtResource("1_nuafr")

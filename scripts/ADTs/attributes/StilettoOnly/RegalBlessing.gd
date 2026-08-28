@@ -8,7 +8,7 @@ func _init() -> void:
 	
 	All enemies drop the maximum gold possible.
 	
-	Money power, and you will have all of it."
+	Money is power, and you will have all of it."
 
 func onPickup(target : Node):
 	UpgradeList.setMax(true)

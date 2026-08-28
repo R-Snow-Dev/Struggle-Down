@@ -30,4 +30,5 @@ func effect(target: Node) -> int:
 		w.setCost(1)
 	else:
 		w.setCost(0)
+	effectDone.emit()
 	return 0

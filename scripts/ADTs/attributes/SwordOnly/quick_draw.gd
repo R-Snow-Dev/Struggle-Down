@@ -11,5 +11,7 @@ func _init() -> void:
 func effect(target: Node) -> int:
 	var rng = RandomNumberGenerator.new()
 	if WeaponList.held == 1 and rng.randf() <= 0.05:
+		effectDone.emit()
 		return 0
+	effectDone.emit()
 	return 1

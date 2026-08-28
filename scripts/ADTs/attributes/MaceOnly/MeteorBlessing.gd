@@ -12,4 +12,5 @@ func effect(target: Node) -> int:
 	if WeaponList.held == 3:
 		var damage = WeaponList.weapons[3].getBaseDam() + WeaponList.damages["shockwave"]
 		EventBus.summon.emit(target, explosion, damage, "special")
+	effectDone.emit()
 	return 0

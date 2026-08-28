@@ -21,19 +21,28 @@ var ignore: bool = false
 var specialAttribute: Attribute
 var attackAttribute: Attribute
 var facing: Vector2i = Vector2i(0,-1)
+var tMod = 0
+var tAttribute1: Attribute
+var tAttribute2: Attribute
+var p: int
+var pd: Vector2i
+var po: Vector2
+var pdam: int
 
-func _init(n: String, d: String, b: int, c: int, o: Vector2, dim: Vector2i, v: Vector2, p: bool, sA:Attribute, aA:Attribute) -> void:
+func _init(n: String, d: String, b: int, c: int, o: Vector2, dim: Vector2i, v: Vector2, p: bool, sA:Attribute, aA:Attribute, t1:Attribute, t2:Attribute) -> void:
 	name = n
 	damageType = d
 	BaseDamage = b
 	curDamage = b
-	cost = c
-	origin = o
-	dimensions = dim
 	velocity = v
 	piercing = p
 	specialAttribute = sA
 	attackAttribute = aA
+	tAttribute1 = t1
+	tAttribute2 = t2
+	setCost(c)
+	setDim(dim)
+	setOrigin(o)
 
 func setFacing(v: Vector2i) -> void:
 	facing = v
@@ -43,6 +52,12 @@ func setIgnore(b:bool) -> void:
 
 func setAttribute(a: Attribute) -> void:
 	attribute = a
+	
+func setTMod(a: int) -> void:
+	tMod = a
+
+func getTMod() -> int:
+	return tMod
 
 func getFacing() -> Vector2i:
 	return facing
@@ -92,6 +107,10 @@ func addChance(effect: String, num: float) -> void:
 	else:
 		effectChances[effect] = num
 
+func setChance(effect: String, num: float) -> void:
+	if effectChances.find_key(effect):
+		effectChances[effect] += num
+
 func setDamageType(data: String) -> void:
 	damageType = data
 
@@ -112,11 +131,19 @@ func addExtraAttack(a: String) -> void:
 
 func setCost(data:int) -> void:
 	cost = data
+	p = data
+
+func setTCost(data: int) -> void:
+	cost = data
 
 func addCost(data: int) -> void:
 	cost += data
 
 func setOrigin(data: Vector2) -> void:
+	origin = data
+	po = data
+
+func setTOrigin(data: Vector2) -> void:
 	origin = data
 
 func setAtkAttribute(a: Attribute) -> void:
@@ -127,7 +154,11 @@ func setSpeAttribute(a: Attribute) -> void:
 
 func setDim(data: Vector2i) -> void:
 	dimensions = data
-	
+	pd = data
+
+func setTDim(data: Vector2i) -> void:
+	dimensions = data
+
 func setVelo(data: Vector2) -> void:
 	velocity = data
 	
@@ -137,9 +168,22 @@ func setPierce(data: bool) -> void:
 func sacrifice() -> void:
 	UpgradeList.addAttribute(attribute)
 
+func check() -> void:
+	setCost(p)
+	setDim(pd)
+	setOrigin(po)
+	
 func onSpecial(data) -> void:
+	if getTMod() == 1:
+		tAttribute1.special(data)
+	elif getTMod() == 2:
+		tAttribute2.special(data)
 	specialAttribute.special(data)
 
 func onAttack(data) -> void:
+	if getTMod() == 1:
+		tAttribute1.effect(data)
+	elif getTMod() == 2:
+		tAttribute2.effect(data)
 	attackAttribute.effect(data)
 	

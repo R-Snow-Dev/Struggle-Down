@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8u3s276eufsw"]
+
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_metxe"]
+
+[node name="IceWand" type="Sprite2D"]
+texture = ExtResource("1_metxe")
+region_enabled = true
+region_rect = Rect2(80, 128, 16, 16)

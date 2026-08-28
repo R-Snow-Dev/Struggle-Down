@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://blepj2ck6xhsv"]
+
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_2eskn"]
+[ext_resource type="Script" uid="uid://bafgekqok7ec0" path="res://scripts/UI Shizz/popups.gd" id="1_6nc67"]
+[ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="2_6nc67"]
+
+[node name="Popup" type="Node2D"]
+script = ExtResource("1_6nc67")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_2eskn")
+region_enabled = true
+region_rect = Rect2(144, 0, 16, 8)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
+modulate = Color(18.892157, 18.892157, 18.892157, 1)
+position = Vector2(4.4703484e-07, -2.9802322e-08)
+scale = Vector2(0.87500006, 0.75)
+texture = ExtResource("1_2eskn")
+region_enabled = true
+region_rect = Rect2(16, 16, 16, 8)
+
+[node name="Amount" type="Label" parent="."]
+offset_left = -5.9999995
+offset_top = -3.0
+offset_right = 50.0
+offset_bottom = 62.0
+scale = Vector2(0.1, 0.1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_6nc67")
+theme_override_font_sizes/font_size = 64
+text = "+2"
+
+[node name="Sprite" type="Node2D" parent="."]
+position = Vector2(3, 0)

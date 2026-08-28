@@ -1,0 +1,83 @@
+[gd_scene load_steps=6 format=3 uid="uid://na5l0fd5sli"]
+
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_14cx3"]
+[ext_resource type="Script" uid="uid://dg5uadyn2lmpc" path="res://scripts/UI Shizz/relic_data.gd" id="1_e52k0"]
+[ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="1_i0c28"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0c28"]
+atlas = ExtResource("1_14cx3")
+region = Rect2(0, 48, 31, 3)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e52k0"]
+atlas = ExtResource("1_14cx3")
+region = Rect2(30, 55, 2, 19)
+
+[node name="RelicData" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e52k0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = -112.0
+offset_top = -5.0
+offset_right = 1061.3333
+offset_bottom = 797.0
+scale = Vector2(0.15, 0.15)
+theme_override_constants/separation = 288
+
+[node name="Name" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_i0c28")
+theme_override_font_sizes/font_size = 128
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Relic" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Relic" type="Node2D" parent="VBoxContainer/Relic"]
+position = Vector2(633.3333, 9.666658)
+scale = Vector2(15, 15)
+
+[node name="Description" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_i0c28")
+theme_override_font_sizes/font_size = 104
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="banner" type="Node2D" parent="."]
+position = Vector2(229.00002, 342)
+rotation = 4.712389
+scale = Vector2(2.9563942, 9.41952)
+
+[node name="Sprite2D" type="Sprite2D" parent="banner"]
+position = Vector2(69.25, -16)
+scale = Vector2(3.141, 1)
+texture = SubResource("AtlasTexture_i0c28")
+
+[node name="Sprite2D2" type="Sprite2D" parent="banner"]
+position = Vector2(69.25, -37)
+scale = Vector2(3.141, 0.5)
+texture = SubResource("AtlasTexture_i0c28")
+
+[node name="Sprite2D3" type="Sprite2D" parent="banner"]
+position = Vector2(117.725, -25.880001)
+rotation = 3.1415927
+scale = Vector2(0.2147483, -1.0926422)
+texture = SubResource("AtlasTexture_e52k0")
+
+[node name="Sprite2D4" type="Sprite2D" parent="banner"]
+position = Vector2(23.925, -25.880001)
+rotation = 3.1415927
+scale = Vector2(0.2147483, -1.0926416)
+texture = SubResource("AtlasTexture_e52k0")

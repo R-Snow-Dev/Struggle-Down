@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://cblfoqa0i25yv"]
+
+[ext_resource type="Texture2D" uid="uid://c6b0enhgox83m" path="res://assets/Quake.png" id="1_1xp5j"]
+[ext_resource type="Texture2D" uid="uid://dratxjmfmwla4" path="res://assets/Wind.png" id="2_51ond"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_51ond"]
+atlas = ExtResource("1_1xp5j")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6qvv"]
+atlas = ExtResource("1_1xp5j")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxleb"]
+atlas = ExtResource("1_1xp5j")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hddj2"]
+atlas = ExtResource("2_51ond")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o6t3j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_51ond")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o6qvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxleb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hddj2")
+}],
+"loop": false,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="Quake" type="AnimatedSprite2D"]
+self_modulate = Color(1, 1, 1, 0.49803922)
+sprite_frames = SubResource("SpriteFrames_o6t3j")
+autoplay = "default"
+frame = 3
+frame_progress = 1.0

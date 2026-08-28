@@ -1,6 +1,8 @@
 extends RefCounted
 class_name Attribute
 
+signal effectDone
+
 var type: String
 var name: String
 var description: String
@@ -19,4 +21,5 @@ func special(target: Node) -> int:
 	return 0
 
 func effect(target: Node) -> int:
+	effectDone.emit()
 	return -1

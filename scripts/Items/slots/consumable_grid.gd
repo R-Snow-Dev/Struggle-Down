@@ -4,6 +4,7 @@ extends Node2D
 
 @onready var items = SaveController.itemList # Connects to the list of all item sprites
 @onready var max = items.size()
+@onready var scroller = $VSlider
 @onready var grid = [0,$ConsumableSlot,$ConsumableSlot2,$ConsumableSlot3,$ConsumableSlot4,
 			$ConsumableSlot5,$ConsumableSlot6,$ConsumableSlot7,$ConsumableSlot8,
 			$ConsumableSlot9,$ConsumableSlot10,$ConsumableSlot11,$ConsumableSlot12]
@@ -34,3 +35,11 @@ func _on_v_slider_value_changed(value: float) -> void:
 
 func _on_v_slider_mouse_entered() -> void:
 	AudioManager.play_sound('Hover')
+
+
+func _on_scroll_area_up() -> void:
+	scroller.value -= 1
+
+
+func _on_scroll_area_down() -> void:
+	scroller.value += 1

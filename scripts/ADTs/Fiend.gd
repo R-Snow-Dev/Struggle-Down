@@ -8,7 +8,6 @@ Super class for all Fiend data types
 # Variables
 var data: FiendData
 var effects: Array= []
-var modifiers: Dictionary = {}
 var states: Array
 var curState: String
 var rng = RandomNumberGenerator.new()
@@ -16,9 +15,8 @@ var delay: float = 0
 var pos: Vector2
 var dPop = preload("res://scenes/GUIParts/damagePopup.tscn")
 var paid = false
+var magic = false
 
-func _ready() -> void:
-	EventBus.summon.connect(summon)
 
 # "set" and "get" functions for the variables
 func setDelay(time:float) -> void:
@@ -39,8 +37,8 @@ func activateEffects(n: int):
 		if x.getEffectTime() == n:
 			x.activate(self)
 
-func setData(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCounted) -> void:
-	data = FiendData.new(p, h, a, gR, d, f, b)
+func setData(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCounted, dT: Array = [], m: Dictionary = {}) -> void:
+	data = FiendData.new(p, h, a, gR, d, f, b, dT, m)
 
 func setStates(s: Array) -> void:
 	states = s
@@ -81,9 +79,14 @@ func restoreActions():
 
 # Checks to see if the Fiend's hp is less than 1
 func isDead() -> bool:
+	var dt = getData().dropTable
 	if getData().getHealth() < 1:
 		for x:Attribute in UpgradeList.getByType("onKill"):
 			x.effect(self)
+		for x in range(0,UpgradeList.relicData['dropAttempts']):
+			if rng.randf() > 0.25:
+				if len(dt) > 0:
+					SaveController.addComponent(getData().dt[rng.randi_range(0, len(dt) - 1)])
 		return true
 	return false
 
@@ -95,23 +98,26 @@ func move(_grid: gameBoard, _target: Player) -> void:
 	pass
 
 func calc(num: int, type: String, i:bool):
-	if type == 'death' and !(modifiers.has(type)):
+	var ms = getData().modifiers
+	var total = num
+	total += WeaponList.damages[type]
+	if type == 'death' and !(ms.has(type)):
 		return 999
-	if modifiers.has(type) and !i:
-		return num * modifiers[type]
-	return num
+	if ms.has(type) and !i:
+		return total * ms[type]
+	return total
 
 func addEffects(w: Weapon):
 	var chances = w.getChances()
 	var dTypes = w.getExtraAttacks().duplicate()
 	dTypes.append(w.getDamageType())
 	for k in chances:
-		if rng.randf() <= w.getChance(k):
+		if rng.randf() <= w.getChance(k) + WeaponList.flatChance:
 			addEffect(WeaponList.effects[k])
 	for t in dTypes:
 		var target = WeaponList.inherentEffects[t]
 		for k in target:
-			if rng.randf() <= target[k]:
+			if rng.randf() <= target[k] + WeaponList.flatChance:
 				addEffect(WeaponList.effects[k])
 			
 func checkTemps( ) -> int:
@@ -121,7 +127,7 @@ func checkTemps( ) -> int:
 	for d in tempD:
 		total += calc(tempD[d], d, false)
 	for e in tempE:
-		if rng.randf() <= tempE[e]:
+		if rng.randf() <= tempE[e] + WeaponList.flatChance:
 			addEffect(WeaponList.effects[e])
 	return total
 
@@ -129,35 +135,51 @@ func calcWeaponEffect(e: WeaponEffect) -> int:
 	var total = 0
 	total += calc(e.getDam(), e.getType(), false)
 	if e.getEffect():
-		if rng.randf() <= e.getChance():
+		if rng.randf() <= e.getChance() + WeaponList.flatChance:
 			addEffect(WeaponList.effects[e.getEffect()])
+	if UpgradeList.relicData['goldMult']:
+		total *= 0.01 * Overseer.getGold()
+	if UpgradeList.relicData['spark'] and Overseer.getWrath():
+		total *= 2
 	return total
 
 func calcWild(w: WildDamage):
 	var total = 0
 	total += calc(w.getDam(), w.getType(), false)
 	if w.getEffect():
-		if rng.randf() <= w.getChance():
+		if rng.randf() <= w.getChance() + WeaponList.flatChance:
 			addEffect(WeaponList.effects[w.getEffect()])
 	return total
 
 func calcDamage(w: Weapon):
 	var total = calc(w.getAtkDam(), w.getDamageType(), w.getIgnore())
-	total += calc(WeaponList.damages[w.getDamageType()], w.getDamageType(), w.getIgnore())
 	for x in w.getExtraAttacks():
-		total += calc(WeaponList.damages[x], x, w.getIgnore())
-		print(w.getExtraAttacks())
+		total += calc(0, x, w.getIgnore())
 	for x:Attribute in UpgradeList.getByType("onHit"):
 		total += calc(x.effect(self), x.damageType, w.getIgnore())
 	total += checkTemps()
 	addEffects(w)
-	return total * (1 + (0.25 * WeaponList.enraged))
+	
+	for x in UpgradeList.getByType('hitMult'):
+		total *= x.effect(self)
+	
+	if WeaponList.held < 7:
+		total = total * (1 + (0.25 * WeaponList.enraged)) * UpgradeList.relicData['meleeMult']
+	else:
+		total = total * (1 + (0.25 * WeaponList.enraged)) * UpgradeList.relicData['magMult']
+	if UpgradeList.relicData['goldMult']:
+		total *= 0.01 * Overseer.getGold()
+	if UpgradeList.relicData['spark'] and Overseer.getWrath():
+		total *= 2
+	return total
 
 func onHit(area: Area2D) -> void:
 	# Function that either damages the player, or deals damage to itself depending
 	# on what it collides with
 	if area is Player:
 		EventBus.update_hp.emit(-getData().getDam())
+		for x: Attribute in UpgradeList.getByType("onAttacked"):
+			x.effect(self)
 	elif area is Hurtbox:
 		updateHealth(-calcDamage(area.getWeaponData()))
 	elif area is WeaponEffect:
@@ -178,10 +200,6 @@ func draw() -> void:
 	position.y =getData().getPos().y*16 - 4
 	self.z_index = (getData().getPos().y + 1)
 	
-func summon(target: Node, e: Node2D):
-	if target == self:
-		e.position = global_position
-		get_parent().add_child(e)
 		
 func reset():
 	pass

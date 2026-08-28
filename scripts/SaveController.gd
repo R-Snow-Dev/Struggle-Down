@@ -6,6 +6,8 @@ done through that path.
 
 extends Node
 
+var rng = RandomNumberGenerator.new()
+
 const effects = {"none": preload("res://scripts/Items/effects/none.gd"),
 				"heal": preload("res://scripts/Items/effects/Pots/heal.gd"),
 				"rage": preload("res://scripts/Items/effects/Pots/rage.gd"),
@@ -54,9 +56,10 @@ preload("res://scenes/Items/ConsumableSprites/Ritual/aSpool.tscn"), preload("res
 # Path to the chosen save file
 var path = "res://saveFiles/save1.json"
 # Dictionary of default data. Used to initialise savefiles
-var default_data = {"pActions": 2, "pHP": 4, "curHP": 4, "seed": 22, "weapon": 0, "level": 1, "floor": 5, "gold": 0, "inrun": true, 
-"inventory": [], "inInv": 0, "upgrades": [], "stored": 0, "components": {'0': {4:1,7:1}, '1': {4:1,6:1}, '2': {16:1,17:1}},
-'atk': 1, 'movement': 1, 'hearts': 2, 'soulFlame': 0, 'unlocked': {},}
+var default_data = {"pActions": 2, "pHP": 4, "curHP": 4, "seed": 22, "weapon": 0, 'tMod': 0, "level": 1, "floor": 1, "gold": 0, "inrun": true, 
+"inventory": [], "inInv": 0, "upgrades": [], "stored": 0, "components": {'0': {4:1}, '1': {4:1}, '2': {15:1}},
+'atk': 1, 'movement': 1, 'hearts': 2, 'soulFlame': 0, 'unlockedSlots': [false, false, false], 'unlockedRelics': [], 
+'relics': [false,false,false],}
 
 var tempComponents = []
 
@@ -194,7 +197,14 @@ func resetUps():
 	var data = loadData()
 	data["upgrades"] = []
 	save(data)
+
+func upgradeRandom():
+	var available = ['movement','hearts','atk']
+	rng.seed = getData('seed')
+	var chosen = available[randi_range(0, 2)]
+	updateData(chosen, getData(chosen) + 1)
 	
+
 func getData(id: String):
 	# Fetches and returns the current value of the desired ID stored in the savefile
 	var data = loadData()

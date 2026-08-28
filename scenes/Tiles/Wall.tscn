@@ -6,7 +6,7 @@
 load_path = "res://.godot/imported/Wall.png-002cd1d8eda8e10be68271b5bde28c8f.ctex"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p4pfm"]
-size = Vector2(16, 22)
+size = Vector2(12, 7)
 
 [node name="Wall" type="Sprite2D"]
 position = Vector2(0, -6)
@@ -17,5 +17,5 @@ script = ExtResource("2_37thq")
 collision_layer = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -5)
+position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_p4pfm")

@@ -29,4 +29,5 @@ func effect(target: Node) -> int:
 		beam.setType('special')
 		EventBus.throwEffect.emit(beam)
 		shine = false
+	effectDone.emit()
 	return 0

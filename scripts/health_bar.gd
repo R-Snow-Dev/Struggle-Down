@@ -28,17 +28,7 @@ func setHealthBar(tHP: int):
 		position.x = -290 - ((10*9) - (10*9))
 	# Create a shadowed version of the health bar below the main onw, so taht when hp is lost, you can see how much you lost
 	health_bar_faded.loadHearts(totalHP)
-	
-	
-func _update_hp(amount: int):
-	# Function that updates the heath bar upon damage or healing
-	chooseFX()
-	if amount + curHP <= 0:
-		curHP = 0
-	else:
-		curHP += amount
-	animation_player.play("shake")
-	
+	 	
 func chooseFX():
 	var n = rng.randi_range(1,3)
 	AudioManager.play_sound('Hit' + str(n))
@@ -55,7 +45,6 @@ func displayHP():
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	EventBus.update_hp.connect(_update_hp)
 	EventBus.update_total_hp.connect(updateTotalHP)
 
 
@@ -63,3 +52,13 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# Always render the updated healthbar
 	displayHP()
+
+
+func _on_gamecontroller_healthbar(amount: int) -> void:
+	# Function that updates the heath bar upon damage or healing
+	chooseFX()
+	if amount + curHP <= 0:
+		curHP = 0
+	else:
+		curHP += amount
+	animation_player.play("shake")

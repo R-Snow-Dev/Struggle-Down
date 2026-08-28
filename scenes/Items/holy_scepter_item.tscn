@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://hhsnjcfp2avr"]
+
+[ext_resource type="Texture2D" uid="uid://c3d1bcjvhrl6y" path="res://assets/sword1 (1).png" id="1_302vu"]
+
+[node name="IceWandItem" type="Sprite2D"]
+texture = ExtResource("1_302vu")
+region_enabled = true
+region_rect = Rect2(0, 288, 32, 32)

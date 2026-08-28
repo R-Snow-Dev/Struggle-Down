@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=4 uid="uid://dnvktlw5q0u8y"]
+[gd_scene load_steps=44 format=4 uid="uid://dnvktlw5q0u8y"]
 
 [ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_4ewcp"]
 [ext_resource type="Script" uid="uid://cninmbno6n67k" path="res://scripts/pouchCam.gd" id="1_n7cr7"]
@@ -13,8 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://brpc7q81wblmj" path="res://scenes/GUIParts/arrow_button.tscn" id="9_goeg2"]
 [ext_resource type="PackedScene" uid="uid://c0ud1sgcoexmu" path="res://scenes/GUIParts/component_pouch.tscn" id="9_hk3rr"]
 [ext_resource type="PackedScene" uid="uid://bke4cvplch77i" path="res://scenes/menus/crafting_menu.tscn" id="9_n7cr7"]
+[ext_resource type="PackedScene" uid="uid://b1velhlrhk8ht" path="res://scenes/GUIParts/relic_pouch.tscn" id="10_penaw"]
 [ext_resource type="Texture2D" uid="uid://c1vf6kkbpjt4" path="res://assets/Components-Materials.png" id="12_sadcm"]
 [ext_resource type="PackedScene" uid="uid://ck2xk3ryo7sk3" path="res://scenes/GUIParts/soul_menu.tscn" id="13_qq3mk"]
+[ext_resource type="Texture2D" uid="uid://b28wr671yd278" path="res://assets/Relics.png" id="14_qctwk"]
 
 [sub_resource type="Animation" id="Animation_bsktw"]
 length = 0.001
@@ -475,6 +477,9 @@ position = Vector2(0, -40)
 [node name="ComponentPouch" parent="BG/pouch" instance=ExtResource("9_hk3rr")]
 position = Vector2(0, -38)
 
+[node name="Relic Pouch" parent="BG/pouch" instance=ExtResource("10_penaw")]
+position = Vector2(0, -38)
+
 [node name="buttons" type="Node2D" parent="BG/pouch"]
 
 [node name="consumables" parent="BG/pouch/buttons" instance=ExtResource("8_bsktw")]
@@ -502,6 +507,12 @@ offset_left = -39.0
 offset_top = 46.0
 offset_right = -39.0
 offset_bottom = 46.0
+
+[node name="Sprite2D" type="Sprite2D" parent="BG/pouch/buttons/relics"]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("14_qctwk")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
 
 [node name="Outline" type="TileMapLayer" parent="BG"]
 tile_map_data = PackedByteArray("AADy//n/AAAAAAAAAAANAPn/AAACAAAAAAANAAYAAAACAAIAAADy/wYAAAAAAAIAAADy//r/AAAAAAEAAADy//v/AAAAAAEAAADy//z/AAAAAAEAAADy//3/AAAAAAEAAADy//7/AAAAAAEAAADy////AAAAAAEAAADy/wAAAAAAAAEAAADy/wEAAAAAAAEAAADy/wIAAAAAAAEAAADy/wMAAAAAAAEAAADy/wQAAAAAAAEAAADy/wUAAAAAAAEAAADz/wYAAAABAAIAAAD0/wYAAAABAAIAAAD1/wYAAAABAAIAAAD2/wYAAAABAAIAAAD3/wYAAAABAAIAAAD4/wYAAAABAAIAAAD5/wYAAAABAAIAAAD6/wYAAAABAAIAAAD7/wYAAAABAAIAAAD8/wYAAAABAAIAAAD9/wYAAAABAAIAAAD+/wYAAAABAAIAAAD//wYAAAABAAIAAAAAAAYAAAABAAIAAAABAAYAAAABAAIAAAACAAYAAAABAAIAAAADAAYAAAABAAIAAAAEAAYAAAABAAIAAAAFAAYAAAABAAIAAAAGAAYAAAABAAIAAAAHAAYAAAABAAIAAAAIAAYAAAABAAIAAAAJAAYAAAABAAIAAAAKAAYAAAABAAIAAAALAAYAAAABAAIAAAAMAAYAAAABAAIAAAANAPr/AAACAAEAAAANAPv/AAACAAEAAAANAPz/AAACAAEAAAANAP3/AAACAAEAAAANAP7/AAACAAEAAAANAP//AAACAAEAAAANAAAAAAACAAEAAAANAAEAAAACAAEAAAANAAIAAAACAAEAAAANAAMAAAACAAEAAAANAAQAAAACAAEAAAANAAUAAAACAAEAAADz//n/AAABAAAAAAD0//n/AAABAAAAAAD1//n/AAABAAAAAAD2//n/AAABAAAAAAD3//n/AAABAAAAAAD4//n/AAABAAAAAAD5//n/AAABAAAAAAD6//n/AAABAAAAAAD7//n/AAABAAAAAAD8//n/AAABAAAAAAD9//n/AAABAAAAAAD+//n/AAABAAAAAAD///n/AAABAAAAAAAAAPn/AAABAAAAAAABAPn/AAABAAAAAAACAPn/AAABAAAAAAADAPn/AAABAAAAAAAEAPn/AAABAAAAAAAFAPn/AAABAAAAAAAGAPn/AAABAAAAAAAHAPn/AAABAAAAAAAIAPn/AAABAAAAAAAJAPn/AAABAAAAAAAKAPn/AAABAAAAAAALAPn/AAABAAAAAAAMAPn/AAABAAAAAAA=")

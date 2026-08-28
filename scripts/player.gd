@@ -19,14 +19,23 @@ var actionsAvailable: int
 var effects: Array = []
 var inside: bool = false
 var rng = RandomNumberGenerator.new()
-var wildImmune = false
+var pop = preload("res://scenes/GUIParts/popup.tscn")
+var shielded = false
 @onready var popup = $Popup
 @onready var anim_player: AnimationPlayer = $CollisionShape2D/AnimatedSprite2D/animPlayer
 @onready var attack_origin: Node2D = $WeaponOrigin
 @onready var animated_sprite_2d: AnimatedSprite2D = $CollisionShape2D/AnimatedSprite2D
 @onready var data = SaveController.loadData()
+@onready var shield = $CollisionShape2D/Shield
 
-func getComponent(c: Components) -> void:
+var nullChance = 0
+
+func pickup(amount: int, sprite: Node2D) -> void:
+	var p: PickupPopup = pop.instantiate()
+	p.setup(amount, sprite)
+	getThing(p)
+
+func getThing(c: PickupPopup) -> void:
 	popup.setSprite(c)
 	popup.pop()
 
@@ -56,6 +65,7 @@ func broadcatDeath():
 	EventBus.on_death.emit()
 
 func _ready() -> void:
+	EventBus.popup.connect(pickup)
 	EventBus.updateActions.connect(_updateActions)
 	EventBus.bump.connect(bump)
 	EventBus.throwEffect.connect(_effect)
@@ -97,12 +107,21 @@ func _updateActions(a: int, type: String = "move"):
 	if type == "attack":
 		for x: Attribute in UpgradeList.getByType("onAttack"):
 			amount *= x.effect(self)
-	actionsAvailable += amount
-	EventBus.updateShoe.emit(amount)
+		actionsAvailable += amount
+		EventBus.updateShoe.emit(amount)
+	else:
+		if not rng.randf() < nullChance:
+			actionsAvailable += amount
+			EventBus.updateShoe.emit(amount)
+		
 
 func setActionsAvailable(actions: int):
 	# Function to artificially set the number of available actions for the player
+	var hpCur = SaveController.getData("curHP")
+	var hpTot = SaveController.getData("pHP")
 	actionsAvailable = actions
+	if UpgradeList.relicData['chalice'] and (hpCur <= (hpTot / 2.0)):
+		actionsAvailable += 1
 	EventBus.actionsReset.emit(actions)
 	prevPos = []
 
@@ -153,9 +172,14 @@ func chooseFSSound():
 
 func draw():
 	# code that converts the Vector2 position data into on-screen coordinates
+	var shield = $CollisionShape2D/Shield
 	position.x = pos.x*16
 	position.y = pos.y*16
 	self.z_index = (pos.y + 2)
+	if shielded:
+		shield.visible = true
+	else:
+		shield.visible = false
 	drawn.emit()
 	
 func _entity(e: BoardEntity):
@@ -176,7 +200,7 @@ func _on_area_entered(area: Area2D) -> void:
 	print("hello")
 	if area.get_parent() is Altar:
 		EventBus.updateAltar.emit()
-	if area is WildDamage and !wildImmune:
+	if area is WildDamage and not UpgradeList.relicData['angel']:
 		if area.getType() == 'death':
 			EventBus.update_hp.emit(-999)
 		else:

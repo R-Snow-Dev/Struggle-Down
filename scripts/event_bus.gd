@@ -220,3 +220,23 @@ signal removeComp(t: int)
 # Signal that calls a displyer entity to show the data from a given component
 @warning_ignore("unused_signal")
 signal displayComp(c: Components)
+
+# Signal that is called when a Relic Display slot is selected
+@warning_ignore("unused_signal")
+signal selectedRelic(id: int)
+
+# Signal that is called when a Relic Display slot is hovered
+@warning_ignore("unused_signal")
+signal relicHover(id: int)
+
+# Signal that is called when a Relic Display slot is no longer being hovered
+@warning_ignore("unused_signal")
+signal relicOff()
+
+# Signal that is called when a popup is to be displayed over the player
+@warning_ignore("unused_signal")
+signal popup(amount: int, sprite: Node2D)
+
+# Signal that is called when player runs out of actions
+@warning_ignore("unused_signal")
+signal over()
