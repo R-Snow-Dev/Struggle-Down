@@ -1,0 +1,289 @@
+[gd_scene load_steps=20 format=3 uid="uid://dfod2fn0h6pl2"]
+
+[ext_resource type="Texture2D" uid="uid://b5ongsj4n0qds" path="res://assets/Lightning.png" id="1_44nhi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fcyx"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kt3x8"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t86v0"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h23uy"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_irn4t"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_06vqa"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8h16s"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_es8ro"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o6t3j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0fcyx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kt3x8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t86v0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h23uy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_irn4t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_06vqa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8h16s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_es8ro")
+}],
+"loop": false,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_44nhi"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_04ijn"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r155y"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oq3nj"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j85tw"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gsuum"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4bxh"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojown"]
+atlas = ExtResource("1_44nhi")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jbpq4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_44nhi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_04ijn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r155y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oq3nj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j85tw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gsuum")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4bxh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojown")
+}],
+"loop": false,
+"name": &"default",
+"speed": 20.0
+}]
+
+[node name="Lightning" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_o6t3j")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
+position = Vector2(-1, 14.000002)
+rotation = 0.24570131
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0.72673416, 14.786789)
+rotation = -0.52036124
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(-0.6912918, 14.766251)
+rotation = 0.37096396
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0.8992157, 14.908463)
+rotation = -0.27762142
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(-0.8032837, 14.83606)
+rotation = 0.710345
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D/AnimatedSprite2D"]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_jbpq4")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0

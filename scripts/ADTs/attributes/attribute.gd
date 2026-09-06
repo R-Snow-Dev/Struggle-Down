@@ -23,3 +23,6 @@ func special(target: Node) -> int:
 func effect(target: Node) -> int:
 	effectDone.emit()
 	return -1
+
+func pressed() -> void:
+	pass

@@ -337,7 +337,7 @@ func genMapData(path: Array):
 				gridSize = Vector2(11,11)
 				objectList = loadObjects(gridSize, x)
 				type = 1
-			elif mag == 1 and x != endPos:
+			elif mag == 1 and x != endPos:	
 				if rng.randf() <= 0.75:
 					gridSize = Vector2(5,5)
 					objectList = preload("res://scripts/defaultFloors.gd").new().altarRoom
@@ -380,7 +380,7 @@ func genMapData(path: Array):
 			else:
 				startingItem.setup(firstItemCoords, rng.randi_range(1,13),0)
 			objectList = [startingItem]
-		
+
 		boards[x.x][x.y].append(preload("res://scripts/gameBoard.gd").new(gridSize.x, gridSize.y, player, objectList, map.doorMatrix[x.x + x.y*9], type)) # Appends the genrated board to the "boards" array, representing the floor map
 
 # Load the level from the map, and load the first room
@@ -440,6 +440,17 @@ func revealLadder():
 		d.position = Vector2(51, -452) + Vector2(-11.3 * endPos.x, 101.1 * endPos.y)
 		d.color = Color(0.6,0.6,0.6,1)
 		mS.add_child(d)	
+
+func revealSpecial():
+	for x in map.path:
+		var id = (x.x) + (x.y * 9)
+		var mag = map.magnitudes[id]
+		if mag == 1 and x != endPos:
+			discovered.append(x)
+			var d = dR.instantiate()
+			d.scale = Vector2(1.217, 10.87)
+			d.position = Vector2(51, -452) + Vector2(-11.3 * x.x, 101.1 * x.y)
+			mS.add_child(d)
 
 func setGrid(grid: Vector2):
 	# Function that allows you to change the desired grid dimentions 
@@ -531,7 +542,12 @@ func object_ded(obj: Object):
 	
 func reLock():
 	boards[mapPos.x][mapPos.y][0].lockDoors()
-	
+
+func convertToVector(num: int) -> Vector2:
+	var y = num % 9
+	var x = (num - y) / 9
+	return Vector2(x,y)
+
 func unLock():
 	boards[mapPos.x][mapPos.y][0].unlockDoors()
 		

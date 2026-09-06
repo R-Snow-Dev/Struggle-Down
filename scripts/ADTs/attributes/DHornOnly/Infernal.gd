@@ -1,9 +1,6 @@
 extends Attribute
 class_name Infernal
 
-var s = preload("res://scenes/Projectiles/Sprites/sample_anim.tscn").instantiate()
-var j = WeaponList.createNewAOE(s, Vector2(22,22), Vector2(0,0), 'fire', 0, 'burn', 1.0)
-
 func _init() -> void:
 	type = "onRoom"
 	name = "Infernal"
@@ -14,4 +11,6 @@ func _init() -> void:
 	None shall seal you."
 
 func effect(target : Node):
+	var s = preload("res://scenes/Projectiles/Sprites/sample_anim.tscn")
+	var j = WeaponList.createNewAOE(s.instantiate(), Vector2(22,22), Vector2(0,0), 'fire', 0, 'burn', 1.0)
 	EventBus.throwEffect.emit(j)

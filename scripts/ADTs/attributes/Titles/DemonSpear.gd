@@ -3,7 +3,7 @@ class_name DemonSpear
 var rng = RandomNumberGenerator.new()
 
 func effect(target: Node) -> int:
-	if Overseer.wrath:
+	if Overseer.wrath and rng.randf() <= 0.75:
 		WeaponList.weapons[4].setTCost(0)
 	return 0
 

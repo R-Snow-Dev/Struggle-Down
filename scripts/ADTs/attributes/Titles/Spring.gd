@@ -6,4 +6,7 @@ func effect(target: Node) -> int:
 	return 0
 
 func special(target: Node) -> int:
+	EventBus.pause.emit()
+	Overseer.getBoard().randTP()
+	EventBus.unpause.emit()
 	return 0

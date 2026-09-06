@@ -1,11 +1,8 @@
-[gd_scene load_steps=9 format=4 uid="uid://cpspajf4011k"]
+[gd_scene load_steps=8 format=4 uid="uid://cpspajf4011k"]
 
 [ext_resource type="Script" uid="uid://cf4nrithwt8ad" path="res://scripts/UI Shizz/u_display.gd" id="1_jxquf"]
 [ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="2_ur608"]
 [ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="3_allkc"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_na5p2"]
-size = Vector2(32, 32)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gncir"]
 texture = ExtResource("2_ur608")
@@ -209,12 +206,6 @@ scale = Vector2(0.25, 0.25)
 color = Color(1, 1, 1, 0)
 script = ExtResource("1_jxquf")
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(16, 16)
-shape = SubResource("RectangleShape2D_na5p2")
-
 [node name="deets" type="TileMapLayer" parent="."]
 visible = false
 z_index = 10
@@ -266,5 +257,13 @@ text = "BR"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+focus_mode = 0
+flat = true
+
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

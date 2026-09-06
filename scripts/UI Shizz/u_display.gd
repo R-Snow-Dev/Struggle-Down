@@ -14,9 +14,13 @@ func _ready() -> void:
 	abbrv.text = (a.name[0]+a.name[1]).to_upper()
 	dName.text = a.name
 	dDesc.text = a.description.strip_escapes()
-	
-func _on_area_2d_mouse_entered() -> void:
+
+func _on_button_pressed() -> void:
+	if not Overseer.control.paused:
+		a.pressed()
+
+func _on_button_mouse_entered() -> void:
 	details.visible = true
 
-func _on_area_2d_mouse_exited() -> void:
+func _on_button_mouse_exited() -> void:
 	details.visible = false

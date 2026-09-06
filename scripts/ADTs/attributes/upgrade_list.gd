@@ -20,7 +20,8 @@ Bless.new(), Luck.new(), Golden.new(), DivineProtection.new(), GrandBlessing.new
 Angel.new(), LakeBlessing.new(), BranchBlessing.new(), MoonBlessing.new(), Brand.new(), TrollBlessing.new(),
 MeteorBlessing.new(), HolyBlessing.new(), DemonBlessing.new(), NancyBlessing.new(), Kingsoul.new(), 
 Betrayer.new(), RegalBlessing.new(), NeptuneBlessing.new(), BlackCurse.new(), WrathBlessing.new(), RichterBlessing.new(),
-]
+TyrantBlessing.new(),ElderBlessing.new(), OlympusBlessing.new(), RefinedBlessing.new(),SpringBlessing.new(),ArtisanBlessing.new(),
+AstarothBlessing.new(),InfernalBlessing.new(), ProphetBlessing.new(),PetersBlessing.new()]
 
 var allAttributes: Array = []
 var byType: Dictionary = {"onHit" = [], "onDamaged" = [], "passive" = []
@@ -140,12 +141,11 @@ var titleUpgrades = {'Sword': [LakeBlessing.new(), BranchBlessing.new()],
 					'Stiletto': [Betrayer.new(), RegalBlessing.new()],
 					'Ice Wand': [NeptuneBlessing.new(), BlackCurse.new()],
 					'Quake Staff': [WrathBlessing.new(),RichterBlessing.new()],
-					'Unstable Wand': [Attribute.new(),Attribute.new()],
-					'Lightning Gem': [Attribute.new(),Attribute.new()],
-					'Wind Charm': [Attribute.new(),Attribute.new()],
-					'Demon Horn': [Attribute.new(),Attribute.new()],
-					'Holy Scepter': [Attribute.new(),Attribute.new()]}
-
+					'Unstable Wand': [TyrantBlessing.new(),ElderBlessing.new()],
+					'Thunder Gem': [OlympusBlessing.new(),RefinedBlessing.new()],
+					'Wind Charm': [SpringBlessing.new(),ArtisanBlessing.new()],
+					'Demon Horn': [AstarothBlessing.new(),InfernalBlessing.new()],
+					'Holy Scepter': [ProphetBlessing.new(),PetersBlessing.new()]}
 var maxDrops = false
 
 var noHit = true

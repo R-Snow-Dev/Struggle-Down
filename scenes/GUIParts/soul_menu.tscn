@@ -457,7 +457,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_du2mh")
 theme_override_font_sizes/font_size = 64
 text = "Left Click to Allocate Soul Flame
-Right Click to recover Soul Flame"
+Right Click to Recover Soul Flame"
 
 [node name="banner" type="Node2D" parent="Display/Explaination"]
 position = Vector2(-275, 312.5)

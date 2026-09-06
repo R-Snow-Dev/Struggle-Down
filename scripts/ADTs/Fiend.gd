@@ -47,7 +47,7 @@ func setCurState(s: String) -> void:
 	curState = s
 	
 func setPos(p: Vector2) -> void:
-	pos = p	
+	getData().setPos(p)
 	
 func getData() -> FiendData:
 	return data
@@ -62,8 +62,8 @@ func updateHealth(n: int) -> void:
 	getData().updateHealth(num)
 
 func getPos() -> Vector2:
-	return pos
-
+	return getData().getPos()
+	
 func getStates() -> Array:
 	return states
 	

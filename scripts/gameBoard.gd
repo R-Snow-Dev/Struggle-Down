@@ -14,6 +14,7 @@ class_name gameBoard
 
 
 # Variables that will be defined by the constructor
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var grid: Array
 var objects: Array
 var width: int
@@ -214,6 +215,28 @@ func wallInFront() -> bool:
 	else:
 		return true
 
+
+func shuffle() -> void:
+	EventBus.pause.emit()
+	var open = []
+	for x in range(0,len(grid)):
+		for y in range(0,len(grid[x])):
+			if len(grid[x][y]) == 0:
+				open.append(Vector2(y,x))
+			elif grid[x][y][0] is Fiend and grid[x][y][0] is not Boss:
+				open.append(Vector2(y,x))
+	for x in objects:
+		if x is Fiend and x is not Boss:
+			print(x.getPos())
+			var c = open.pop_at(rng.randi_range(0, len(open)-1))
+			x.setPos(c)
+			print(x)
+			print(x.getPos())
+			x.draw()
+	loadBoard()
+	EventBus.updateActions.emit(-1)
+	EventBus.unpause.emit()
+	
 func heal():
 	# Heals all enemies to full whenever entering the room
 	for x in objects:
@@ -233,7 +256,22 @@ func reset():
 				o.visible = true
 				objects.append(o)
 	loadGrid()
-		
+
+func teleport(pos: Vector2):
+	player.pos = pos
+	player.prevPos.push_front(player.pos)
+	EventBus.updateActions.emit(player.actionsAvailable * -1)
+	loadBoard()
+	
+
+func randTP() -> void:
+	var open = []
+	for x in range(0,len(grid)):
+		for y in range(0,len(grid[x])):
+			if len(grid[x][y]) == 0:
+				open.append(Vector2(y,x))
+	if len(open) > 0:
+		teleport(open[randi_range(0,len(open)-1)])
 
 func display():
 	# Parses through the 2D array representation and calls each object on the 

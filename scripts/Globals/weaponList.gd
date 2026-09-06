@@ -8,13 +8,13 @@ var weapons = [[],
 	Weapon.new("Spear","pierce",7,1,Vector2(0,1),Vector2i(1,3),Vector2(0,0),true, Attribute.new(), Attribute.new(), LSpear.new(), DemonSpear.new()),
 	Weapon.new("Halberd","slash",5,1,Vector2(0,1),Vector2i(3,1),Vector2(0,0),true, StanceChange.new(), Attribute.new(), NancyHalberd.new(), KingHalberd.new()),
 	Weapon.new("Stiletto","pierce",3,0,Vector2(0,1),Vector2i(1,1),Vector2(0,0),true, Attribute.new(), DexterityCheck.new(), BetrayStiletto.new(), RegalStiletto.new()),
-	Weapon.new("Ice Wand","frost",5,1,Vector2(0,1),Vector2i(1,1),Vector2(0,175),false, Attribute.new(), Attribute.new(), Attribute.new(), Attribute.new()), 
-	Weapon.new("Quake Staff","shockwave",1,1,Vector2(0,-25),Vector2i(50,50),Vector2(0,0),true, Attribute.new(), Attribute.new(), Attribute.new(), Attribute.new()),
-	Weapon.new("Unstable Wand","fire",3,2,Vector2(0,1),Vector2i(1,1),Vector2(0,175),false, Attribute.new(), Attribute.new(), Attribute.new(), Attribute.new()),
-	Weapon.new("Thunder Gem","shock",4,1,Vector2(0,1),Vector2i(1,11),Vector2(0,0),true, Attribute.new(), Attribute.new(), Attribute.new(), Attribute.new()),
-	Weapon.new("Wind Charm","slash",3,1,Vector2(0,-1),Vector2i(3,3),Vector2(0,0),true, Attribute.new(), Attribute.new(), Attribute.new(), Attribute.new()),
-	Weapon.new("Demon Horn","fire",2,1,Vector2(0,1),Vector2i(1,1),Vector2(0,0),true, Attribute.new(), PlaceFire.new(), Attribute.new(), Attribute.new()),
-	Weapon.new("Holy Scepter","holy",5,1,Vector2(0,1),Vector2i(0,0),Vector2(0,0),true, Attribute.new(), HandOfGod.new(), Attribute.new(), Attribute.new()),]
+	Weapon.new("Ice Wand","frost",5,1,Vector2(0,1),Vector2i(1,1),Vector2(0,175),false, Attribute.new(), Attribute.new(), Neptune.new(), BlackIce.new()), 
+	Weapon.new("Quake Staff","shockwave",1,1,Vector2(0,-25),Vector2i(50,50),Vector2(0,0),true, Attribute.new(), Attribute.new(), Wrath.new(), Richter.new()),
+	Weapon.new("Unstable Wand","fire",3,2,Vector2(0,1),Vector2i(1,1),Vector2(0,175),false, Attribute.new(), Attribute.new(), Tyrant.new(), Elder.new()),
+	Weapon.new("Thunder Gem","shock",4,1,Vector2(0,1),Vector2i(1,11),Vector2(0,0),true, Attribute.new(), Attribute.new(), Olympus.new(), Refined.new()),
+	Weapon.new("Wind Charm","slash",3,1,Vector2(0,-1),Vector2i(3,3),Vector2(0,0),true, Attribute.new(), Attribute.new(), Spring.new(), Artisan.new()),
+	Weapon.new("Demon Horn","fire",2,1,Vector2(0,1),Vector2i(1,1),Vector2(0,0),true, Attribute.new(), PlaceFire.new(), AstarothHorn.new(), InfernalHorn.new()),
+	Weapon.new("Holy Scepter","holy",5,1,Vector2(0,1),Vector2i(0,0),Vector2(0,0),true, Attribute.new(), HandOfGod.new(), Prophet.new(), Peter.new()),]
 
 var titles = [[],
 ['Sword','Sword of thge Lake','Seven Branched Sword'],
@@ -52,7 +52,8 @@ var enraged: int = 0
 var damages = {"slash": 0, "pierce": 0, "blunt": 0, "shockwave": 0,
 "frost": 0, "explosive": 0, "shock": 0, "fire": 0, "holy": 0, "death": 0}
 
-var effects = {"bleed": Bleed.new()}
+var effects = {"bleed": Bleed.new(),
+				'stun': Stun.new()}
 
 var held: int = 0
 
@@ -113,13 +114,13 @@ func reset() -> void:
 	Weapon.new("Spear","pierce",7,1,Vector2(0,1),Vector2i(1,3),Vector2(0,0),true, Attribute.new(), Attribute.new(), LSpear.new(), DemonSpear.new()),
 	Weapon.new("Halberd","slash",5,1,Vector2(0,1),Vector2i(3,1),Vector2(0,0),true, StanceChange.new(), Attribute.new(), NancyHalberd.new(), KingHalberd.new()),
 	Weapon.new("Stiletto","pierce",3,0,Vector2(0,1),Vector2i(1,1),Vector2(0,0),true, Attribute.new(), DexterityCheck.new(), BetrayStiletto.new(), RegalStiletto.new()),
-	Weapon.new("Ice Wand","frost",5,1,Vector2(0,1),Vector2i(1,1),Vector2(0,175),false, Attribute.new(), Attribute.new(), Attribute.new(), Attribute.new()), 
-	Weapon.new("Quake Staff","shockwave",1,1,Vector2(0,-25),Vector2i(50,50),Vector2(0,0),true, Attribute.new(), Attribute.new(), Attribute.new(), Attribute.new()),
-	Weapon.new("Unstable Wand","fire",3,2,Vector2(0,1),Vector2i(1,1),Vector2(0,175),false, Attribute.new(), Attribute.new(), Attribute.new(), Attribute.new()),
-	Weapon.new("Thunder Gem","shock",4,1,Vector2(0,1),Vector2i(1,11),Vector2(0,0),true, Attribute.new(), Attribute.new(), Attribute.new(), Attribute.new()),
-	Weapon.new("Wind Charm","slash",3,1,Vector2(0,-1),Vector2i(3,3),Vector2(0,0),true, Attribute.new(), Attribute.new(), Attribute.new(), Attribute.new()),
-	Weapon.new("Demon Horn","fire",2,1,Vector2(0,1),Vector2i(1,1),Vector2(0,0),true, Attribute.new(), PlaceFire.new(), Attribute.new(), Attribute.new()),
-	Weapon.new("Holy Scepter","holy",5,1,Vector2(0,1),Vector2i(0,0),Vector2(0,0),true, Attribute.new(), HandOfGod.new(), Attribute.new(), Attribute.new()),]
+	Weapon.new("Ice Wand","frost",5,1,Vector2(0,1),Vector2i(1,1),Vector2(0,175),false, Attribute.new(), Attribute.new(), Neptune.new(), BlackIce.new()), 
+	Weapon.new("Quake Staff","shockwave",1,1,Vector2(0,-25),Vector2i(50,50),Vector2(0,0),true, Attribute.new(), Attribute.new(), Wrath.new(), Richter.new()),
+	Weapon.new("Unstable Wand","fire",3,2,Vector2(0,1),Vector2i(1,1),Vector2(0,175),false, Attribute.new(), Attribute.new(), Tyrant.new(), Elder.new()),
+	Weapon.new("Thunder Gem","shock",4,1,Vector2(0,1),Vector2i(1,11),Vector2(0,0),true, Attribute.new(), Attribute.new(), Olympus.new(), Refined.new()),
+	Weapon.new("Wind Charm","slash",3,1,Vector2(0,-1),Vector2i(3,3),Vector2(0,0),true, Attribute.new(), Attribute.new(), Spring.new(), Artisan.new()),
+	Weapon.new("Demon Horn","fire",2,1,Vector2(0,1),Vector2i(1,1),Vector2(0,0),true, Attribute.new(), PlaceFire.new(), AstarothHorn.new(), InfernalHorn.new()),
+	Weapon.new("Holy Scepter","holy",5,1,Vector2(0,1),Vector2i(0,0),Vector2(0,0),true, Attribute.new(), HandOfGod.new(), Prophet.new(), Peter.new()),]
 
 	damages = {"none" : 0, "slash" : 0, "pierce" : 0, "blunt" : 0, "shockwave" : 0,
 	"frost" : 0, "explosive" : 0, "shock" : 0, "fire" : 0, "holy" : 0}

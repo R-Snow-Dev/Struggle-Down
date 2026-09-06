@@ -13,7 +13,7 @@ func _init() -> void:
 	Embody the myth."
 	
 func onPickup(target : Node):
-	var wand:Weapon = WeaponList.weapons[1]
+	var wand:Weapon = WeaponList.weapons[8]
 	wand.setSpeAttribute(self)
 
 

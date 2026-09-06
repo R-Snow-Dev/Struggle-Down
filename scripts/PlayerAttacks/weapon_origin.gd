@@ -221,7 +221,6 @@ func attack(id: int):
 	if id > 0:
 		var player:Player = get_parent()
 		var w: Weapon = WeaponList.weapons[id]
-		w.check()
 		w.setFacing(player.facing)
 		if player.actionsAvailable >= w.getCost():
 			print(w.getCost())
@@ -265,8 +264,10 @@ func attack(id: int):
 			hurtbox.setLifespan(lf)
 			add_child(hurtbox)
 			EventBus.updateActions.emit(w.getCost() * -1, "attack")
+			w.check()
 		else:
 			print(w.getCost())
+			w.check()
 			print("Not Enough Actions")
 			EventBus.playerDoneAttacking.emit()
 	else:

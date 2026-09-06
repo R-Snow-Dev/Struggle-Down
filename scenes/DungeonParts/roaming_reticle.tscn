@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://da62kpu5ge87h"]
 
-[ext_resource type="Script" uid="uid://bpspmukqcdp6p" path="res://scripts/PlayerAttacks/roaming_reticle.gd" id="1_f6b1u"]
+[ext_resource type="Script" uid="uid://bbxxufcqhvmus" path="res://scripts/PlayerAttacks/teleport.gd" id="1_f6b1u"]
 [ext_resource type="PackedScene" uid="uid://duxra6ae82h7x" path="res://scenes/GUIParts/AreaOfEffect.tscn" id="1_hcqdi"]
 
-[node name="RoamingReticle" type="Node2D"]
+[node name="Teleport" type="Node2D"]
 script = ExtResource("1_f6b1u")
 
 [node name="AreaOfEffect" parent="." instance=ExtResource("1_hcqdi")]

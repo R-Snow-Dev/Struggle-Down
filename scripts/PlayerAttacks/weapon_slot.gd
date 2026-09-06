@@ -81,10 +81,11 @@ func _process(_delta: float) -> void:
 				AudioManager.play_sound('Select')
 				if inAltar:
 					var w:Weapon = WeaponList.weapons[ID]
-					var a: Attribute = UpgradeList.titleUpgrades['Quake Staff'][0]
+					'''var a: Attribute = UpgradeList.titleUpgrades['Holy Scepter'][0]
 					EventBus.sac.emit(a)
 					EventBus.pause.emit()
-					'''if w.getTMod() > 0:
+					'''
+					if w.getTMod() > 0:
 						var a: Attribute = UpgradeList.titleUpgrades[w.getName()][w.getTMod()-1]
 						EventBus.sac.emit(a)
 						EventBus.pause.emit()
@@ -92,7 +93,7 @@ func _process(_delta: float) -> void:
 						var chosen = rng.randi_range(0,UpgradeList.upgradeTable[w.getName()].size()-1)
 						var a: Attribute = UpgradeList.upgradeTable[w.getName()][chosen]
 						EventBus.sac.emit(a)
-						EventBus.pause.emit()'''
+						EventBus.pause.emit
 					_swap_weapon(0)
 					ID = 0
 					sacText.stop()
@@ -101,7 +102,7 @@ func _process(_delta: float) -> void:
 					busy = true
 					var w: Weapon = WeaponList.weapons[ID]
 					EventBus.attack.emit(ID)
-			if Input.is_action_just_pressed("special_select"):
+			if Input.is_action_just_pressed("special_select") and Overseer.getController().player.actionsAvailable > 0:
 				AudioManager.play_sound('Select')
 				EventBus.spWeapon.emit(ID)
 
@@ -109,6 +110,7 @@ func _playerDoneAttacking():
 	EventBus.unpause.emit()
 	WeaponList.resetTempEffects()
 	WeaponList.resetTempDamage()
+	EventBus.updateAOE.emit(ID)
 	if mouseOn == false:
 		EventBus.updateAOE.emit(0)
 	busy = false
