@@ -19,7 +19,8 @@ preload("res://scenes/Items/unstable_wand.tscn"),
 preload("res://scenes/Items/thunder_gem.tscn"),
 preload("res://scenes/Items/wind_charm.tscn"),
 preload("res://scenes/Items/demon_horn.tscn"),
-preload("res://scenes/Items/holy_scepter.tscn"),] # An array storing every possible item that can be found on the board
+preload("res://scenes/Items/holy_scepter.tscn"),
+preload("res://scenes/Items/key.tscn")] # An array storing every possible item that can be found on the board
 
 var sprite: Node
 var pos: Vector2
@@ -56,8 +57,12 @@ func draw():
 # Code taht runs upon the player landing on the item object
 func _on_area_entered(_area: Area2D) -> void:
 	# Because the only items that spawn on the board currently are weapons, directly call the weapon slot to update what it displays
-	AudioManager.play_sound('GetWeapon')
-	WeaponList.weapons[itemId].setTMod(tMod)
-	EventBus.swap_weapon.emit(itemId)
+	if itemId < 14:
+		AudioManager.play_sound('GetWeapon')
+		WeaponList.weapons[itemId].setTMod(tMod)
+		EventBus.swap_weapon.emit(itemId)
+	else:
+		AudioManager.play_sound('GetWeapon')
+		Overseer.getController().addKey(Key.new(tMod))
 	# Delete this instace of an Item
 	EventBus.object_ded.emit(self)

@@ -9,4 +9,4 @@ func _init() -> void:
 	You deal 2 more piercing damage for all piercing attacks."
 
 func onPickup(target : Node):
-	WeaponList.damages["piercing"] += 2
+	WeaponList.damages["pierce"] += 2

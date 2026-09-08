@@ -4,7 +4,7 @@ class_name DelayedStrike
 var id: int = 0
 var sp: Node
 var lf: float = 0.1
-var size: Vector2 = Vector2(1,1)
+var size: Vector2 = Vector2(0.5,0.5)
 
 func setSize(s: Vector2) -> void:
 	size = s

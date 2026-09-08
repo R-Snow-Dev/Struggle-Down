@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://cugu5v5oumvau"]
 
-[ext_resource type="Script" path="res://scripts/floor.gd" id="1_mx5ah"]
+[ext_resource type="Script" uid="uid://bocvaavp8idks" path="res://scripts/floor.gd" id="1_mx5ah"]
 
 [node name="Floor" type="Node2D"]
+position = Vector2(-1, -1)
 script = ExtResource("1_mx5ah")

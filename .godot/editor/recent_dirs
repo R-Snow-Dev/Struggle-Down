@@ -1,9 +1,10 @@
+res://scripts/UI Shizz
 res://assets
+res://scripts/Behaviors
 res://scripts/PlayerAttacks
 res://assets/Fonts
 res://scenes/DungeonParts
 res://scenes/GUIParts
-res://scripts/UI Shizz
 res://
 res://scripts/Entities
 res://scripts/ButtonScripts
@@ -19,4 +20,3 @@ res://scripts/Globals
 res://scenes/Globals
 res://scripts/AttackingLogic
 res://scenes/Opps
-res://scripts/bosses

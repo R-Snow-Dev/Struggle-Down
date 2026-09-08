@@ -16,6 +16,7 @@ var path : Array # An array of Vector2s full of coordinates representing the opt
 var tPath : Array
 var doorMatrix : Array
 var magnitudes: Array = []
+var distData: Array = []
 
 
 func genPath(start: Vector2, end: Vector2, prevP: Vector2, diff: int, gridsize: int, p: Array):
@@ -158,7 +159,37 @@ func _ready() -> void:
 		doorMatrix.append([])
 		for j in range(0,81):
 			doorMatrix[i].append(0)
-			
+
+func iToV(c: int) -> Vector2:
+	return Vector2(c%9, (c - (c%9))/9)
+
+func vToI(v: Vector2) -> int:
+	return v.x + v.y*9
+
+func dists(path:Array, t: Vector2) -> Array:
+	var dist: Dictionary = {}
+	var prevs: Dictionary = {}
+	var Q:Array = []
+	for r in path:
+		Q.append(r)
+		dist[r] = 999
+		prevs[r] = null
+	dist[t] = 0
+	
+	while len(Q) > 0:
+		var p = Q[0]
+		for c in Q:
+			if dist[p] > dist[c]:
+				p = c
+		Q.remove_at(Q.find(p))
+		for x in range(0,81):
+			if doorMatrix[vToI(p)][x] > 0:
+				var a = dist[p] + 1
+				if a < dist[iToV(x)]:
+					dist[iToV(x)] = a
+					prevs[iToV(x)] = p
+	return [dist, prevs]
+		
 func gen_points(s: int):
 	
 	rng.set_seed(s)
@@ -203,7 +234,9 @@ func gen_points(s: int):
 			if y > 0:
 				mag += 1
 		magnitudes.append(mag)
-			
+	
+	distData = dists(path, startPos)
+	
 	
 
 func _on_death():

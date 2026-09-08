@@ -152,10 +152,11 @@ func object_ded(object: Object):
 	var index = findID(object, objects)
 	if index != -1:
 		objects.remove_at(index)
-		if type!=1 or fTurn:
+		if type==2 or fTurn and object is not Item:
 			tempDead.append(object)
 			object.reset()
 			object.visible = false
+			object.global_position = Vector2(10000,10000)
 		else:
 			object.call_deferred('queue_free')
 		loadGrid()

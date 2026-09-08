@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://ypk0drgkt1eg"]
+
+[ext_resource type="Texture2D" uid="uid://c2nb8an4xtroe" path="res://assets/Lock.png" id="1_tv7w0"]
+[ext_resource type="Script" uid="uid://bkpw27aohktg4" path="res://scripts/Interactable.gd" id="2_tv7w0"]
+[ext_resource type="Script" uid="uid://c3ja5whktnldt" path="res://scripts/Behaviors/keyed.gd" id="4_tv7w0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xoy1i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_tv7w0")
+}],
+"loop": false,
+"name": &"interact",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_tv7w0")
+}],
+"loop": false,
+"name": &"reset",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nmf4h"]
+radius = 7.0
+
+[node name="Lock" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_xoy1i")
+animation = &"reset"
+script = ExtResource("2_tv7w0")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 20
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_nmf4h")
+
+[node name="Behavior" type="Node2D" parent="."]
+script = ExtResource("4_tv7w0")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

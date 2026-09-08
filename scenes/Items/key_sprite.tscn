@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://el6dwrdrryjy"]
+
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_wosrk"]
+
+[node name="Key" type="Sprite2D"]
+position = Vector2(0, -1.5000002)
+scale = Vector2(1, 0.99999994)
+texture = ExtResource("1_wosrk")
+region_enabled = true
+region_rect = Rect2(66, 1, 1, 11)
+
+[node name="Sprite2D5" type="Sprite2D" parent="."]
+position = Vector2(1, 2.468751)
+scale = Vector2(3.0000002, 0.17613631)
+texture = ExtResource("1_wosrk")
+region_enabled = true
+region_rect = Rect2(66, 1, 1, 11)
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+position = Vector2(0, -3.4997501)
+scale = Vector2(3.0000002, 0.18186359)
+texture = ExtResource("1_wosrk")
+region_enabled = true
+region_rect = Rect2(66, 1, 1, 11)
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(0, -1.4999998)
+scale = Vector2(1, 0.75)
+texture = ExtResource("1_wosrk")
+region_enabled = true
+region_rect = Rect2(66, 1, 5, 4)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(0, 1.5000014)
+texture = ExtResource("1_wosrk")
+region_enabled = true
+region_rect = Rect2(118, 84, 3, 6)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -2)
+texture = ExtResource("1_wosrk")
+region_enabled = true
+region_rect = Rect2(103, 116, 3, 5)

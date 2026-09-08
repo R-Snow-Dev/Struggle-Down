@@ -35,7 +35,7 @@ func move(grid: gameBoard, target: Player) -> void:
 		getData().getBehavior().setMyself(self) # sets the target of the calculations to itself
 		getData().think(grid, target) # Performs the calcs
 		getData().getBehavior().getGrid().loadGrid() # Reloads the board grid
-		await get_tree().create_timer(getDelay()).timeout # Waits a 'lil bit
+		await EventBus.get_tree().create_timer(getDelay()).timeout # Waits a 'lil bit
 		playAnim("idle") # Reset the animation
 		if getData().getActions() > 0: # Check to see if there anre any more actions it can take
 			move(grid, target)

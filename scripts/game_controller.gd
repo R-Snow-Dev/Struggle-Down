@@ -51,11 +51,12 @@ func _new_level():
 	else: # Otherwise, move onto the next floor
 		SaveController.updateData("floor", data["floor"] + 1)
 	call_deferred("add_child", dungeon)
-	await dungeon.ready
+	await get_tree().process_frame
 	
 	WeaponList.reset()
 	UpgradeList.reset()
 	
+
 	UpgradeList.addFromSave()
 
 func _file_select():

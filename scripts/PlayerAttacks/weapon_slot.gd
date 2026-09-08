@@ -55,6 +55,7 @@ func _ready() -> void:
 	
 	
 	ID = data["weapon"]
+	WeaponList.held = ID
 	if ID > 0:
 		WeaponList.weapons[ID].setTMod(int(data['tMod']))
 	

@@ -9,6 +9,7 @@ class_name Interactable
 
 # Variables
 var pos: Vector2 
+var extra: int = 0
 @onready var behavior = $Behavior # Node that dictates what the ibject does when interacted with
 
 func setup(p: Vector2):

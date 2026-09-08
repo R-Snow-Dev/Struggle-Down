@@ -66,6 +66,7 @@ func getWeaponData() -> Weapon:
 
 
 func _on_area_entered(area: Area2D) -> void:
+	print('Weapon ', WeaponList.held)
 	if not weapon.getPiercing():
 		if WeaponList.held == 9 and area is not Hurtbox:
 			print('yep')
