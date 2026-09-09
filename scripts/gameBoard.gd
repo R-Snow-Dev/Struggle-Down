@@ -34,6 +34,8 @@ var button = -1
 var tempDead: Array = []
 var solved: bool = false
 var fTurn = false
+var eTracker = -1
+var returnActions: int = 0
 
 func findID(obj, list:Array):
 	# Helper function that replaces the "find" method for arrays
@@ -152,7 +154,7 @@ func object_ded(object: Object):
 	var index = findID(object, objects)
 	if index != -1:
 		objects.remove_at(index)
-		if type==2 or fTurn and object is not Item:
+		if (type==2 or fTurn) and object is not Item:
 			tempDead.append(object)
 			object.reset()
 			object.visible = false
@@ -284,31 +286,42 @@ func display():
 					e.draw()
 	EventBus.unpause.emit()
 
+func nextGuy() -> void:
+	eTracker += 1
+	if eTracker < len(objects):
+		if objects[eTracker] is Fiend:
+			var y = objects[eTracker]
+			EventBus.delay.emit(0.2)
+			await EventBus.delayEnd
+			loadBoard()
+			y.restoreActions()
+			y.move(self, player)
+			loadBoard()
+		else:
+			nextGuy()
+	else:
+		player.setActionsAvailable(returnActions)
+		EventBus.fiend_phase.emit()
+		fTurn = false
+		if type != 2:
+			clean()
+		for y in objects:
+			if y is Fiend or y is BossNew:
+				y.resetEffects()
+		EventBus.unpause.emit()
+		EventBus.playersTurnStart.emit()
+
 func fiendsTurn(pActions: float):
 	# This function calls all monsters to act after the player has used up all their actions. If there are no monsters on the 
 	# board, the player will emmidiatly regain their actions. If not, every monster will be called to take their turns, and only afterwards does the player
 	# regain the ability to take another action
 	fTurn = true
+	eTracker = -1
 	EventBus.pause.emit()
 	EventBus.over.emit()
 	WeaponList.enraged = 0
-	if objects.size() > 0:
-		for y in objects:
-			if y is Fiend or y is BossNew:
-				EventBus.delay.emit(0.2)
-				await EventBus.delayEnd
-				loadBoard()
-				y.restoreActions()
-				y.move(self, player)
-				loadBoard()
-				await EventBus.doneAttacking
-	player.setActionsAvailable(pActions)
-	EventBus.fiend_phase.emit()
-	fTurn = false
-	if type == 1:
-		clean()
-	EventBus.unpause.emit()
-	EventBus.playersTurnStart.emit()
+	returnActions = pActions
+	nextGuy()
 
 		
 func checkPush(obj: Pushable, dir: Vector2):

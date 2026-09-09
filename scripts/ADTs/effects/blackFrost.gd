@@ -2,7 +2,7 @@ extends Effect
 class_name BlackFrost
 
 func _init():
-	activeTime = 0
+	activeTime = -1
 	name = "Black Frost"
 
 func activate(target: Fiend):

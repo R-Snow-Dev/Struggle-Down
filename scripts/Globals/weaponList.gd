@@ -53,7 +53,11 @@ var damages = {"slash": 0, "pierce": 0, "blunt": 0, "shockwave": 0,
 "frost": 0, "explosive": 0, "shock": 0, "fire": 0, "holy": 0, "death": 0}
 
 var effects = {"bleed": Bleed.new(),
-				'stun': Stun.new()}
+				'slow': Slow.new(),
+				'stun': Stun.new(),
+				'burn': Burn.new(),
+				'blackfrost': BlackFrost.new(),
+				'exchain': ExChain.new()}
 
 var held: int = 0
 
@@ -135,7 +139,7 @@ func reset() -> void:
 		"shockwave": {},
 		"frost": {},
 		"explosive": {},
-		"shock": {},
+		"shock": {'stun': 0.05},
 		"fire": {},
 		"holy": {}
 	}

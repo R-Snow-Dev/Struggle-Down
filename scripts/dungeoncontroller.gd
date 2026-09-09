@@ -483,7 +483,7 @@ func genMapData(path: Array):
 					gridSize = Vector2(5,5)
 					objectList = preload("res://scripts/defaultFloors.gd").new().vault
 					var item = preload("res://scenes/Items/item.tscn").instantiate()
-					item.setup(Vector2(2,2), rng.randi_range(1,6), t)
+					item.setup(Vector2(2,2), rng.randi_range(1,13), t)
 					objectList.append(item)
 					type = 1
 			else:

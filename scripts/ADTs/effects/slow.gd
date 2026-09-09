@@ -1,10 +1,10 @@
 extends Effect
-class_name Stun
+class_name Slow
 
 func _init():
 	activeTime = 0
-	name = "Stun"
+	name = "Slow"
 
 func activate(target: Fiend):
-	target.getData().setActions(0)
+	target.getData().setActions(target.getData().getActions() - 1)
 	print("Stunning", target)

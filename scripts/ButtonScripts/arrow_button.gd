@@ -21,8 +21,14 @@ func _on_area_2d_mouse_entered() -> void:
 	hover.emit()
 	isHovering = true
 	s.position.y = -2
+	for c in get_children():
+		if c is Sprite2D:
+			c.position.y = -2
 
 func _on_area_2d_mouse_exited() -> void:
 	isHovering = false
 	off_hover.emit()
 	s.position.y = 0
+	for c in get_children():
+		if c is Sprite2D:
+			c.position.y = 0

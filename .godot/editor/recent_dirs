@@ -1,10 +1,10 @@
-res://scripts/UI Shizz
 res://assets
+res://scripts/UI Shizz
+res://scenes/GUIParts
+res://scenes/DungeonParts
 res://scripts/Behaviors
 res://scripts/PlayerAttacks
 res://assets/Fonts
-res://scenes/DungeonParts
-res://scenes/GUIParts
 res://
 res://scripts/Entities
 res://scripts/ButtonScripts

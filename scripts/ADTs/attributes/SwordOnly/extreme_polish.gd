@@ -2,7 +2,7 @@ extends Attribute
 class_name ExtremePolish
 
 var shine = false
-var beam: Lightbeam = preload("res://scenes/Projectiles/LightBeam.tscn").instantiate()
+
 
 func _init() -> void:
 	type = "active"
@@ -24,9 +24,12 @@ func special(target: Node) -> int:
 	return 0
 	
 func effect(target: Node) -> int:
+	var beam: Lightbeam = preload("res://scenes/Projectiles/LightBeam.tscn").instantiate()
 	if shine:
 		beam.setDam(0)
 		beam.setType('special')
+		beam.setEffect('stun')
+		beam.setChance(1.0)
 		EventBus.throwEffect.emit(beam)
 		shine = false
 	effectDone.emit()

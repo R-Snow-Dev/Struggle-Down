@@ -131,7 +131,7 @@ func _swap_weapon(id: int):
 		sprite = allWeapons[ID].instantiate()
 		sprite.position.x = 8
 		slot.add_child(sprite)
-		EventBus.updateAOE.emit(ID)
+		EventBus.updateAOE.emit(0)
 		weaponName.text = WeaponList.titles[ID][WeaponList.weapons[ID].getTMod()]
 	
 func _save_weapon():

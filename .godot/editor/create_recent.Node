@@ -1,8 +1,9 @@
-AnimationPlayer
+Sprite2D
 Label
+HBoxContainer
+AnimationPlayer
 Node2D
 TileMapLayer
-Sprite2D
 Button
 AnimatedSprite2D
 Polygon2D
@@ -11,4 +12,3 @@ Area2D
 Control
 VBoxContainer
 ColorRect
-BoxContainer

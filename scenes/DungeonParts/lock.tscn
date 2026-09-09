@@ -1,14 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://ypk0drgkt1eg"]
+[gd_scene load_steps=8 format=3 uid="uid://ypk0drgkt1eg"]
 
-[ext_resource type="Texture2D" uid="uid://c2nb8an4xtroe" path="res://assets/Lock.png" id="1_tv7w0"]
+[ext_resource type="Texture2D" uid="uid://dyv34in625jl4" path="res://assets/Tileset1 (1).png" id="1_ou7yn"]
 [ext_resource type="Script" uid="uid://bkpw27aohktg4" path="res://scripts/Interactable.gd" id="2_tv7w0"]
 [ext_resource type="Script" uid="uid://c3ja5whktnldt" path="res://scripts/Behaviors/keyed.gd" id="4_tv7w0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sewmv"]
+atlas = ExtResource("1_ou7yn")
+region = Rect2(48, 144, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ob3pe"]
+atlas = ExtResource("1_ou7yn")
+region = Rect2(48, 144, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xoy1i"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_tv7w0")
+"texture": SubResource("AtlasTexture_sewmv")
 }],
 "loop": false,
 "name": &"interact",
@@ -16,7 +24,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_tv7w0")
+"texture": SubResource("AtlasTexture_ob3pe")
 }],
 "loop": false,
 "name": &"reset",

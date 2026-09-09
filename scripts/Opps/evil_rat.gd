@@ -24,7 +24,7 @@ func _process(_delta: float) -> void:
 				EventBus.updateGold.emit(getData().getGoldRange().y)
 			else:
 				EventBus.updateGold.emit(rng.randi_range(getData().getGoldRange().x, getData().getGoldRange().y))
-		EventBus.doneAttacking.emit()
+		Overseer.getBoard().nextGuy()
 		EventBus.object_ded.emit(self)
 
 func move(grid: gameBoard, target: Player) -> void:
@@ -36,15 +36,14 @@ func move(grid: gameBoard, target: Player) -> void:
 		getData().think(grid, target) # Performs the calcs
 		getData().getBehavior().getGrid().loadGrid() # Reloads the board grid
 		await EventBus.get_tree().create_timer(getDelay()).timeout # Waits a 'lil bit
+		activateEffects(1)
 		playAnim("idle") # Reset the animation
 		if getData().getActions() > 0: # Check to see if there anre any more actions it can take
 			move(grid, target)
 		else:
-			EventBus.doneAttacking.emit() # Tell the board it is finished moving
-			activateEffects(1)
+			Overseer.getBoard().nextGuy() # Tell the board it is finished moving
 	else:
-		EventBus.doneAttacking.emit() # Tell the board it is finished moving
-		activateEffects(1)
+		Overseer.getBoard().nextGuy() # Tell the board it is finished moving
 		
 
 func doSpriteAnim(a: String):

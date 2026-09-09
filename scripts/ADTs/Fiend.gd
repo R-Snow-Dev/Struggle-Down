@@ -16,6 +16,7 @@ var pos: Vector2
 var dPop = preload("res://scenes/GUIParts/damagePopup.tscn")
 var paid = false
 var magic = false
+var bar: StatusBar = preload("res://scenes/DungeonParts/statusBar.tscn").instantiate()
 
 
 # "set" and "get" functions for the variables
@@ -28,6 +29,8 @@ func getDelay() -> float:
 func addEffect(e: Effect) -> void:
 	if e not in effects:
 		effects.append(e)
+		bar.add(e)
+		activateEffects(-1)
 
 func getEffects() -> Array:
 	return effects
@@ -37,8 +40,16 @@ func activateEffects(n: int):
 		if x.getEffectTime() == n:
 			x.activate(self)
 
+func resetEffects() -> void:
+	activateEffects(0)
+	effects = []
+	bar.reset()
+
 func setData(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b: RefCounted, dT: Array = [], m: Dictionary = {}) -> void:
 	data = FiendData.new(p, h, a, gR, d, f, b, dT, m)
+	bar.scale = Vector2(0.25,0.25)
+	add_child(bar)
+	
 
 func setStates(s: Array) -> void:
 	states = s

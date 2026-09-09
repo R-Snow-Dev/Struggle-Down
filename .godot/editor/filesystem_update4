@@ -1,20 +1,27 @@
-res://scripts/map.gd
-res://scenes/menus/dungeon.tscn
-res://scripts/dungeoncontroller.gd
-res://scripts/ADTs/attributes/IWandOnly/Finepoint.gd
-res://scripts/Behaviors/keyed.gd
-res://scripts/gameBoard.gd
-res://scenes/DungeonParts/delayed_strike.tscn
-res://scripts/PlayerAttacks/delayed_strike.gd
-res://scenes/menus/game.tscn
-res://scripts/game_controller.gd
+res://scenes/menus/pouch_menu.tscn
+res://scripts/ButtonScripts/arrow_button.gd
+res://scenes/GUIParts/soul_menu.tscn
+res://scenes/DungeonParts/control.tscn
+res://scripts/UI Shizz/status_marker.gd
+res://scenes/GUIParts/status_marker.tscn
+res://scripts/UI Shizz/starusBar.gd
+res://scripts/Globals/weaponList.gd
+res://scripts/ADTs/effects/slow.gd
+res://scripts/ADTs/attributes/UWandOnly/Detonate.gd
+res://scenes/DungeonParts/statusBar.tscn
 res://scripts/ADTs/Fiend.gd
-res://scenes/DungeonParts/lock.tscn
-res://scripts/PlayerAttacks/hurtbox.gd
+res://scripts/gameBoard.gd
 res://scripts/PlayerAttacks/weapon_slot.gd
-res://scenes/Items/key.tscn
-res://scenes/Items/key_sprite.tscn
-res://scripts/UI Shizz/keySlot.gd
-res://scenes/DungeonParts/floor.tscn
-res://scripts/Opps/evil_rat.gd
 res://scripts/slime.gd
+res://scripts/Opps/evil_rat.gd
+res://scenes/Opps/kingslime.tscn
+res://scripts/bosses/ks.gd
+res://scripts/ADTs/effects/burn.gd
+res://scripts/ADTs/effects/blackFrost.gd
+res://scripts/ADTs/effects/stun.gd
+res://scripts/dungeoncontroller.gd
+res://scenes/DungeonParts/lock.tscn
+res://scripts/ADTs/attributes/MaceOnly/GiantSlam.gd
+res://scenes/Projectiles/LightBeam.tscn
+res://scripts/ADTs/effects/lightbeam.gd
+res://scripts/ADTs/attributes/SwordOnly/extreme_polish.gd

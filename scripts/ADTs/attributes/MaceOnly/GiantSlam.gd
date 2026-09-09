@@ -4,6 +4,7 @@ class_name GiantSlam
 func _init() -> void:
 	type = "onHit"
 	name = "Giant's Hammer"
+	damageType = "none"
 	description = "You inherit the might of a giant. 
 
 Create a shockwave that deals 10% of your weapon's max damage when you hit an enemy."

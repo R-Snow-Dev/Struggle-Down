@@ -451,7 +451,7 @@ horizontal_alignment = 1
 offset_left = -2.0
 offset_top = 72.0
 offset_right = 925.0
-offset_bottom = 273.0
+offset_bottom = 209.5
 scale = Vector2(0.16, 0.16)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_du2mh")
@@ -464,7 +464,7 @@ position = Vector2(-275, 312.5)
 scale = Vector2(10.433641, 9.077291)
 
 [node name="Sprite2D" type="Sprite2D" parent="Display/Explaination/banner"]
-position = Vector2(69.25, -16)
+position = Vector2(69.48677, -17.90182)
 scale = Vector2(3.141, 1)
 texture = SubResource("AtlasTexture_4opsd")
 

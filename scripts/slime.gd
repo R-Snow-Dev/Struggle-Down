@@ -19,7 +19,7 @@ func _process(_delta: float) -> void:
 				EventBus.updateGold.emit(getData().getGoldRange().y)
 			else:
 				EventBus.updateGold.emit(rng.randi_range(getData().getGoldRange().x, getData().getGoldRange().y))
-		EventBus.doneAttacking.emit()
+		Overseer.getBoard().nextGuy()
 		EventBus.object_ded.emit(self)
 
 # Function taht plays an animation based on the given String
@@ -34,15 +34,13 @@ func move(grid: gameBoard, target: Player) -> void:
 		getData().think(grid, target) # Tells the AI class to perform it's operations
 		getData().getBehavior().getGrid().loadGrid() # Redraws the grid
 		await EventBus.get_tree().create_timer(getDelay()).timeout # Waits a lil bit
+		activateEffects(1)
 		if getData().getActions() > 0: # Checks to see if it has any actions left to perform
 			move(grid, target) # If so, do it again
 		else:
-			EventBus.doneAttacking.emit() # Otherwise, tell the board that ur done
-			activateEffects(1)
+			Overseer.getBoard().nextGuy() # Otherwise, tell the board that ur done
 	else:
-			EventBus.doneAttacking.emit() # Otherwise, tell the board that ur done
-			activateEffects(1)
-
+		Overseer.getBoard().nextGuy() # Otherwise, tell the board that ur done
 
 func chooseState() -> void:
 	pass

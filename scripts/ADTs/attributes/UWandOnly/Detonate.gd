@@ -6,7 +6,7 @@ func _init() -> void:
 	name = "Chain Detonantions"
 	description = "You inherit the madness of a infamous demolishionist. 
 
-Your explosions gain a 5% chance to cause hit targets to explode."
+Your explosions gain a 5% chance to cause hit targets to explode at the start of their next turn."
 	
 func onPickup(target : Node):
 	WeaponList.addIEffect("explosive", "exchain", 0.05)
