@@ -240,3 +240,9 @@ signal popup(amount: int, sprite: Node2D)
 # Signal that is called when player runs out of actions
 @warning_ignore("unused_signal")
 signal over()
+
+@warning_ignore("unused_signal")
+signal rotateV()
+
+@warning_ignore("unused_signal")
+signal rotateH()

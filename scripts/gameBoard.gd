@@ -36,6 +36,7 @@ var solved: bool = false
 var fTurn = false
 var eTracker = -1
 var returnActions: int = 0
+var rV: bool = false
 
 func findID(obj, list:Array):
 	# Helper function that replaces the "find" method for arrays
@@ -49,7 +50,23 @@ func lockDoors():
 	for n in range(0,4):
 		if doors[n] is Door and n+1 != firstDoor:
 			doors[n].relock()
-			
+
+func rotateRoomH() -> void:
+	if rV:
+		rV = false
+		for x in objects:
+			if x is Wall:
+				x._rotateH()
+	loadBoard()
+
+func rotateRoomV() -> void:
+	if !rV:
+		rV = true
+		for x in objects:
+			if x is Wall:
+				x._rotateV()
+	loadBoard()
+
 func unlockDoors():
 	# Unlock the doors
 	for n in range(0,4):
@@ -146,7 +163,7 @@ func forceUnlock():
 	solved = true
 	lockedDoors = false
 	unlockDoors()
-	
+
 
 func object_ded(object: Object):
 	# Delete an object from the board, unless it's a puzzle, 
@@ -288,7 +305,7 @@ func display():
 
 func nextGuy() -> void:
 	eTracker += 1
-	if eTracker < len(objects):
+	if eTracker < len(objects) and fTurn:
 		if objects[eTracker] is Fiend:
 			var y = objects[eTracker]
 			EventBus.delay.emit(0.2)
@@ -299,7 +316,7 @@ func nextGuy() -> void:
 			loadBoard()
 		else:
 			nextGuy()
-	else:
+	elif fTurn:
 		player.setActionsAvailable(returnActions)
 		EventBus.fiend_phase.emit()
 		fTurn = false

@@ -42,6 +42,7 @@ var possibleRelics: Array = []
 var componentBacklog = []
 var keys = 0
 var kQueue = []
+var rV: bool
 @onready var resIcon = $Node2D/Camera2D/PBranch
 @onready var healthBar = $Node2D/Camera2D/HealthBar
 @onready var node_2d: Node2D = $Node2D
@@ -58,16 +59,17 @@ func genKeys() -> void:
 		var possible: Array = []
 		for x in map.distData[0]:
 			if map.distData[0][x] <= k.y and map.distData[0][x] > 0:
-				possible.append(x)
+				if boards[x.x][x.y][0].type != 4:
+					possible.append(x)
 		var chosen = possible[rng.randi_range(0, len(possible)-1)]
 		var b = boards[chosen.x][chosen.y]
 		if len(b) > 0:
 			b = boards[chosen.x][chosen.y][0]
-			var loco: Vector2 = Vector2(0, 0)
+			var loco: Vector2 = Vector2(0, b.height/2 + 1)
 			var o = b.objects
 			if len(o) > 0:
 				for x in range(0,len(o)):
-					if o[x] is Fiend or o[x] is Wall or o[x] is Chest or o[x] is Item:
+					if o[x] is Fiend or o[x] is Wall or o[x] is Chest or o[x] is Item and b.type != 4:
 						loco = o[x].getPos()
 						b.objects.remove_at(x)
 						break
@@ -313,6 +315,33 @@ func loadObjects(grid: Vector2, mPos: Vector2):
 	
 	return objects
 
+func checkIso(target:Vector2) -> bool:
+	var legend = {Vector2(0,-1): 4,
+					Vector2(1,0): 3,
+					Vector2(0,1): 2,
+					Vector2(-1,0): 1}
+	var total = 0
+	var prev = map.distData[1][target]
+	var dir = target - prev
+	var door = legend[dir]
+	for x in map.path:
+		var asInt = x.x + x.y*9
+		var diff = x - prev
+		var cart = (diff.x * diff.x) + (diff.y * diff.y)
+		if door % 2 == 0:
+			if x.y == prev.y:
+				for y in map.doorMatrix[asInt]:
+					if y == door and map.magnitudes[asInt] > 1 and cart == 1:
+						total += 1
+		else:
+			if x.x == prev.x:
+				for y in map.doorMatrix[asInt]:
+					if y == door and map.magnitudes[asInt] > 2 and cart == 1:
+						total += 1
+	print(total, " ", map.magnitudes[target.x + target.y * 9], " ", target - startPos)
+	return total > 0
+	
+
 func loadLocked(grid: Vector2, mPos: Vector2):
 	# Function that genrates obstacles in a given room. Starts with walls, then fiends, then items
 	# param -  grid: A Vector2 containing the dimensions of the room where the obstacles will be generated
@@ -452,6 +481,12 @@ func genPushPuzzleSolo(gridsize: Vector2):
 		objects.append(chosenWall)
 	return objects
 
+func genRotating() -> void:
+	var objects = []
+	if rng.randf() > 0.5:
+		objects = preload("res://scripts/defaultFloors.gd").new().rotating1
+	else:
+		objects = preload("res://scripts/defaultFloors.gd").new().rotating2
 
 func genMapData(path: Array):
 	# Genrates the map data for each noew floor, including their dimensions, and the obstacles they have
@@ -471,6 +506,15 @@ func genMapData(path: Array):
 				gridSize = Vector2(11,11)
 				objectList = loadObjects(gridSize, x)
 				type = 1
+			elif mag == 4 and checkIso(x):
+				gridSize = Vector2(7,7)
+				type = 4
+				if rng.randf() > 0.5:
+					objectList = preload("res://scripts/defaultFloors.gd").new().rotating1
+					rV = true
+				else:
+					objectList = preload("res://scripts/defaultFloors.gd").new().rotating2
+					rV = false
 			elif mag == 1 and x != endPos:	
 				if rng.randf() <= 0.75:
 					gridSize = Vector2(5,5)
@@ -522,6 +566,7 @@ func genMapData(path: Array):
 			objectList = [startingItem]
 
 		boards[x.x][x.y].append(preload("res://scripts/gameBoard.gd").new(gridSize.x, gridSize.y, player, objectList, map.doorMatrix[x.x + x.y*9], type)) # Appends the genrated board to the "boards" array, representing the floor map
+		boards[x.x][x.y][0].rV = rV
 	genKeys()
 	
 # Load the level from the map, and load the first room
