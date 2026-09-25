@@ -8,5 +8,4 @@ func play():
 	
 func stop():
 	anim.play("RESET")
-
 			

@@ -97,6 +97,17 @@ func rollComponent(r: Vector2 = Vector2(1,data['level'])) -> Components:
 	rng.seed = data['seed']
 	return cGenerator.genComp(rng.randi_range(r.x,r.y))
 
+func unlockRelic(id: int) -> void:
+	var aGot = false
+	for x in range(0, len(data['unlockedRelics'])):
+		if int(data['unlockedRelics'][x]) == id:
+			aGot = true
+	if !aGot:
+		data['unlockedRelics'].append(id)
+		var rel: Relic =  preload("res://scenes/GUIParts/relic.tscn").instantiate()
+		rel.setId(id)
+		EventBus.popup.emit(1, rel)
+		
 func rollChest():
 	var roll = rng.randf()
 	if roll >= 0.995 and len(possibleRelics) > 0:
@@ -235,6 +246,8 @@ func loadObjects(grid: Vector2, mPos: Vector2):
 	# Coordinates on the floor that are available to spawn an object
 	var gridCoords = []
 	var DefaultFloors = preload("res://scripts/defaultFloors.gd").new()
+	
+	Overseer.setWrath(false)
 	
 	if mPos == endPos and data["floor"] == 5:
 		objects = setBossRoom()
@@ -452,33 +465,51 @@ func genPushPuzzleSolo(gridsize: Vector2):
 	var pushable = preload("res://scenes/DungeonParts/pushable.tscn").instantiate()
 	var start: Vector2
 	var e: Vector2
+	var objects = []
 	
 	roomGenerator.setSeed(s) # Standardize the randomization
 	
 	while coordinates.size() < 1: # Create the starting coordinates
 		start = Vector2(rng.randi_range(1, gridsize.x-2), rng.randi_range(1, gridsize.y-2))
+		if Vector2i(start) == Vector2i(gridSize/2):
+			start.x += 1
 		e = Vector2(rng.randi_range(1, gridsize.x-2), rng.randi_range(1, gridsize.y-2))
 		# Check to makee sure the endpoint is not on any door spawn areas,
 		# or the same as the starting point
 		while e == Vector2(0, gridsize.y-1 / 2) or e == Vector2(gridsize.x-1, gridsize.y-1 / 2) or e == Vector2(gridsize.x-1 / 2, 0) or e == Vector2(gridsize.x-1/2, gridsize.y-1) or e == start:
 			e = Vector2(rng.randi_range(0, gridsize.x-1), rng.randi_range(0, gridsize.y-1))
+		if Vector2i(e) == Vector2i(gridSize/2):
+			e.x -= 1
 		# Use these points to generate wall coordinates using the
 		# PushPuzzleSolo class
 		roomGenerator.setStart(start)
 		roomGenerator.setEnd(e)
-		coordinates = roomGenerator.genWalls()
+		if rng.randf() >= 1.0:
+			coordinates = roomGenerator.genWalls()
+		else:
+			coordinates = roomGenerator.genWalls(true)
+			var wrath: WrathCounter = preload("res://scenes/DungeonParts/wrath_counter.tscn").instantiate()
+			wrath.setup(Vector2i(gridsize/2))
+			if len(objects) < 1:
+				wrath.count = (wrath.pos.x + wrath.pos.y) + len(roomGenerator.path) + 7
+				objects.append(wrath)
+			
 	
 	# Add every object to the board's "objects" array	
-	var objects = []
 	button.setup(e)
 	pushable.setup(start)
 	objects.append(button)
 	print("The Button is an Interactable: ", button is Interactable)
 	objects.append(pushable)
 	for x in coordinates:
-		var chosenWall = wall.instantiate()
-		chosenWall.setup(x)
-		objects.append(chosenWall)
+		var w = false
+		for o in objects:
+			if o.pos == x:
+				w = true
+		if !w:
+			var chosenWall = wall.instantiate()
+			chosenWall.setup(x)
+			objects.append(chosenWall)
 	return objects
 
 func genRotating() -> void:
@@ -494,6 +525,7 @@ func genMapData(path: Array):
 	
 	
 	# Repeat this for every room in the map
+	UpgradeList.addFromSave()
 	for x in path:
 		# List of fiends is initialised
 		var type = 1
@@ -538,15 +570,24 @@ func genMapData(path: Array):
 				else:
 					if rng.randf() > 0.5 and map.distData[0][x] < 5:
 						if rng.randf() > 0.5:
+							type = 2
 							gridSize = Vector2(rng.randi_range(7,11), rng.randi_range(7,11))
 							objectList = genPushPuzzleSolo(gridSize)
-							type = 2
+							for o in objectList:
+								if o is WrathCounter:
+									type = 5
 						else:
-							var data = PushPuzzleMulti.new(rng)
+							type = 2
+							var data = PushPuzzleMulti.new(rng, rng.randf()<= 1.0)
 							gridSize = data.gridSize + Vector2(2,2)
 							objectList = data.getObj()
+							if data.wrathed:
+								var wrath: WrathCounter = preload("res://scenes/DungeonParts/wrath_counter.tscn").instantiate()
+								wrath.setup(Vector2i(gridSize/2))
+								wrath.count = (wrath.pos.x + wrath.pos.y) + len(data.finalPath) +7
+								objectList.append(wrath)
+								type = 5
 							print("Path: ", data.finalPath, " Coordinates: ", x)
-							type = 2
 					else:
 						gridSize = Vector2(rng.randi_range(3,11), rng.randi_range(3,11))
 						objectList = loadLocked(gridSize, x)
@@ -720,7 +761,7 @@ func onActionUpdate(_num: int, _type:String) -> void:
 		a.check(self)
 
 func delay(time: float):
-	await get_tree().create_timer(time).timeout
+	await EventBus.get_tree().create_timer(time).timeout
 	EventBus.delayEnd.emit()
 	
 func object_ded(obj: Object):
@@ -768,7 +809,7 @@ func _changeRooms(changePos: Vector2, newPos: int):
 	# Param - newPos: A String recieved from the signal that will be translated into a new starting position for the player in the new room
 	
 	EventBus.pause.emit()
-	
+	await get_tree().process_frame
 	# Changes the map position by the changePos Vector2
 	
 	EventBus.killEntities.emit()
@@ -804,11 +845,10 @@ func _changeRooms(changePos: Vector2, newPos: int):
 	if boards[mapPos.x][mapPos.y][0].type != 1:
 		boards[mapPos.x][mapPos.y][0].reset()
 	boards[mapPos.x][mapPos.y][0].heal()
-	await get_tree().process_frame
-	await get_tree().create_timer(0.2).timeout
+	Overseer.wrath = false
 	EventBus.unpause.emit()
 	
-	
+
 func _process(_delta: float) -> void:
 	# Executes code every frame
 	# If the player is alive, play the game

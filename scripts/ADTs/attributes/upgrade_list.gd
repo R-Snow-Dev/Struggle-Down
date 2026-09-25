@@ -32,7 +32,7 @@ var relics = [WWScabbard.new(), AMap.new(), FKnife.new(), MinorArcana.new(), DTa
 			GStandard.new(), IDepiction.new(), LChalice.new(), AStatuette.new(), CImmaculate.new(), SGrace.new(),
 			AWishbone.new(), FPesilence.new(), RSpark.new(), PStarter.new(), USymbol.new(), Libra.new()]
 
-var relicIdByLevel = [[0,3],[4,6,7,9],[10,11,12,13,14,16,17,18]]
+var relicIdByLevel = [[0,3],[4,6,7],[10,11,12,13,16,17]]
 
 var upgradeTable = {
 	"Sword":[SwordMastery.new(), SwordMastery.new(), SwordMastery.new(), SwordMastery.new(), SwordMastery.new(), SwordMastery.new(),

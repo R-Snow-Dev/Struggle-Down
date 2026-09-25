@@ -1,0 +1,14 @@
+res://scenes/Opps/evil_rat.tscn
+res://scripts/dungeoncontroller.gd
+res://scripts/Opps/demon.gd
+res://scenes/Opps/demon.tscn
+res://scripts/Entities/wrath_counter.gd
+res://scripts/Behaviors/demon_behavior.gd
+res://scripts/ADTs/Fiend.gd
+res://scenes/menus/dungeon.tscn
+res://scripts/game_controller.gd
+res://scenes/menus/game.tscn
+res://scripts/ADTs/attributes/upgrade_list.gd
+res://scenes/Opps/slime.tscn
+res://scripts/UI Shizz/starusBar.gd
+res://scripts/SaveController.gd

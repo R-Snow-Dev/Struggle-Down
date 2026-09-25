@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=4 uid="uid://dkqh251ixbss2"]
+[gd_scene load_steps=55 format=4 uid="uid://dkqh251ixbss2"]
 
 [ext_resource type="Script" uid="uid://crf0iaimv3j33" path="res://scripts/dungeon.gd" id="1_ba8p3"]
 [ext_resource type="Script" uid="uid://dqhwkgc4c44u5" path="res://scripts/dungeoncontroller.gd" id="2_imoik"]
@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://el6dwrdrryjy" path="res://scenes/Items/key_sprite.tscn" id="22_4jl35"]
 [ext_resource type="PackedScene" uid="uid://bkjrmdwf0bgjt" path="res://scenes/GUIParts/pause_menu.tscn" id="22_f27gv"]
 [ext_resource type="Script" uid="uid://r20bhd83mf2o" path="res://scripts/UI Shizz/keySlot.gd" id="22_il8om"]
+[ext_resource type="Script" uid="uid://b3esp48ff28bn" path="res://scripts/UI Shizz/filter.gd" id="24_iv1t8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5iqrf"]
 texture = ExtResource("4_48e0x")
@@ -151,22 +152,6 @@ texture = ExtResource("4_48e0x")
 [sub_resource type="TileSet" id="TileSet_531it"]
 sources/0 = SubResource("TileSetAtlasSource_cyf1o")
 
-[sub_resource type="Animation" id="Animation_il8om"]
-resource_name = "shake"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Gamecontroller/Node2D/Camera2D/Keys/keyAmount:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-228.86414, 1939.919), Vector2(-221.56006, 1939.919)]
-}
-
 [sub_resource type="Animation" id="Animation_iv1t8"]
 length = 0.001
 tracks/0/type = "value"
@@ -192,6 +177,22 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-80.34555, -0.0018235445)]
+}
+
+[sub_resource type="Animation" id="Animation_il8om"]
+resource_name = "shake"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gamecontroller/Node2D/Camera2D/Keys/keyAmount:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-228.86414, 1939.919), Vector2(-221.56006, 1939.919)]
 }
 
 [sub_resource type="Animation" id="Animation_3y2xd"]
@@ -882,6 +883,17 @@ texture = SubResource("AtlasTexture_4jl35")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 scale = Vector2(1.5, 1.5)
 transform = Transform2D(1.5, 0, 0, 1.5, 0, 0)
+
+[node name="Filter" type="Sprite2D" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(384, 216.33334)
+scale = Vector2(49, 28.041668)
+texture = ExtResource("4_48e0x")
+region_enabled = true
+region_rect = Rect2(16, 16, 16, 16)
+script = ExtResource("24_iv1t8")
+default = Color(0, 0, 0, 0)
+filter1 = Color(1, 0, 0, 0.29411766)
 
 [node name="UpgradeContainer" type="HFlowContainer" parent="CanvasLayer"]
 z_index = 1000

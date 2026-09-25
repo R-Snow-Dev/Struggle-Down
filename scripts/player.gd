@@ -104,7 +104,13 @@ func bump():
 
 func _updateActions(a: int, type: String = "move"):
 	var amount = a
-	if type == "attack":
+	if a < 0 and Overseer.wrath:
+		if type == "attack":
+			for x: Attribute in UpgradeList.getByType("onAttack"):
+				amount *= x.effect(self)
+		actionsAvailable = 0
+		EventBus.updateShoe.emit(-actionsAvailable)
+	elif type == "attack":
 		for x: Attribute in UpgradeList.getByType("onAttack"):
 			amount *= x.effect(self)
 		actionsAvailable += amount

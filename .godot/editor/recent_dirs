@@ -1,12 +1,13 @@
-res://scripts/Behaviors
+res://scripts/Opps
 res://assets
 res://scripts/UI Shizz
-res://scenes/GUIParts
+res://scripts/Entities
 res://scenes/DungeonParts
+res://scripts/Behaviors
+res://scenes/GUIParts
 res://scripts/PlayerAttacks
 res://assets/Fonts
 res://
-res://scripts/Entities
 res://scripts/ButtonScripts
 res://scripts
 C:/Users/Rogan/Documents/Game Projects/Struggle-Down/scripts/text docs
@@ -19,4 +20,3 @@ res://scenes/Items/ConsumableSprites
 res://scripts/Globals
 res://scenes/Globals
 res://scripts/AttackingLogic
-res://scenes/Opps

@@ -94,8 +94,10 @@ func genPath(start: Vector2, end: Vector2, prevP: Vector2, diff: int, gridsize: 
 
 # Using the "path" array from the genPath() function, decide where walls should
 # be placed around the room to make appropriate obstacles
-func genWalls():
+func genWalls(wrath: bool = false):
 	var untouchables = []
+	if wrath:
+		untouchables.append(gridSize/2)
 	path = go()	
 	if path.size() > 1:
 		print(path, "\n")
@@ -141,7 +143,7 @@ func checkImpossible(p: Array, uTouch: Array):
 				cDir = directions[n + 1]
 	return uTouch
 
-# Generates random walls coordinates in spots that won't make the puzzle impossibel
+# Generates random walls coordinates in spots that won't make the puzzle impossible
 func genMore(untouchables: Array, gridsize: Vector2):
 	for n in range(0, gridsize.x * gridsize.y):
 		if rng.randf() > 0.5:

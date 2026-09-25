@@ -13,12 +13,14 @@ var startPos: Vector2
 var endPos: Vector2
 var avoidables = []
 var finalPath = []
+var wrathed: bool
 
-func _init(r: RandomNumberGenerator) -> void:
+func _init(r: RandomNumberGenerator, w: bool) -> void:
 	rng = r
 	numE = rng.randi_range(2,4)
 	gridSize = Vector2(3+numE, 3+numE)
-	genWalls()
+	wrathed = w
+	genWalls(wrathed)
 	placeExtras()
 	try()
 	adjust()
@@ -31,7 +33,9 @@ func isAdjacent(cPos: Vector2) -> bool:
 				return true
 	return false
 	
-func genWalls() -> void:
+func genWalls(wrathed: bool = false) -> void:
+	if wrathed:
+		avoidables.append(gridSize/2)
 	for x in numE * 2:
 		var pos
 		var toggle = true

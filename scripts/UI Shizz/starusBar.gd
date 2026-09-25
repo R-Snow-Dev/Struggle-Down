@@ -22,5 +22,5 @@ func add(s: Effect) -> void:
 		
 func reset() -> void:
 	markers = {}
-	for c in box.get_children():
-		box.remove_child(c)
+	for c in $HBoxContainer.get_children():
+		$HBoxContainer.remove_child(c)

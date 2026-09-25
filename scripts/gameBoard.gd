@@ -38,6 +38,8 @@ var eTracker = -1
 var returnActions: int = 0
 var rV: bool = false
 
+var needsUnpause = false
+
 func findID(obj, list:Array):
 	# Helper function that replaces the "find" method for arrays
 	for n in range(0, list.size()):
@@ -48,7 +50,7 @@ func findID(obj, list:Array):
 func lockDoors():
 	# Lock the doors
 	for n in range(0,4):
-		if doors[n] is Door and n+1 != firstDoor:
+		if doors[n] is Door and (n+1 != firstDoor or type == 5):
 			doors[n].relock()
 
 func rotateRoomH() -> void:
@@ -300,13 +302,18 @@ func display():
 		for x in y:
 			for e in x:
 				if e is Object:
+					if e is WrathCounter:
+						if solved:
+							e.locked =true
+						print("Drawn Wrath: ", e.locked, " ",solved)
 					e.draw()
-	EventBus.unpause.emit()
 
 func nextGuy() -> void:
 	eTracker += 1
 	if eTracker < len(objects) and fTurn:
 		if objects[eTracker] is Fiend:
+			needsUnpause = true
+			EventBus.pause.emit()
 			var y = objects[eTracker]
 			EventBus.delay.emit(0.2)
 			await EventBus.delayEnd
@@ -325,7 +332,9 @@ func nextGuy() -> void:
 		for y in objects:
 			if y is Fiend or y is BossNew:
 				y.resetEffects()
-		EventBus.unpause.emit()
+		if needsUnpause:
+			EventBus.unpause.emit()
+			needsUnpause = false
 		EventBus.playersTurnStart.emit()
 
 func fiendsTurn(pActions: float):
@@ -334,7 +343,6 @@ func fiendsTurn(pActions: float):
 	# regain the ability to take another action
 	fTurn = true
 	eTracker = -1
-	EventBus.pause.emit()
 	EventBus.over.emit()
 	WeaponList.enraged = 0
 	returnActions = pActions
@@ -347,7 +355,11 @@ func checkPush(obj: Pushable, dir: Vector2):
 	if dir.x == 0:
 		if obj.pos.y > 0 and obj.pos.y < height-1:
 			var thang = grid[obj.pos.y + dir.y][obj.pos.x + dir.x]
-			if thang.size() < 2:
+			for o in range(0,len(thang)):
+				if thang[o] is Item:
+					thang.remove_at(o)
+						
+			if thang.size() < 2 :
 				if thang.size() < 1:
 					return true
 				elif thang[0] is Interactable:
@@ -357,6 +369,9 @@ func checkPush(obj: Pushable, dir: Vector2):
 	elif dir.y == 0:
 		if obj.pos.x > 0 and obj.pos.x < width-1:
 			var thang = grid[obj.pos.y + dir.y][obj.pos.x + dir.x]
+			for o in range(0,len(thang)):
+				if thang[o] is Item:
+					thang.remove_at(o)
 			if thang.size() < 2:
 				if thang.size() < 1:
 					return true
@@ -408,7 +423,6 @@ func checkInputs():
 							u.effect(player)
 						player.moveUp()
 						# relaods the board once movement is complete
-						EventBus.pause.emit()
 						loadBoard()
 					elif grid[player.pos.y-1][player.pos.x][0] is Pushable:
 						if checkPush(grid[player.pos.y-1][player.pos.x][0], Vector2(0,-1)):
@@ -418,7 +432,6 @@ func checkInputs():
 								u.effect(player)
 							player.moveUp()
 							# relaods the board once movement is complete
-							EventBus.pause.emit()
 							loadBoard()
 					elif checkPassable(grid[player.pos.y-1][player.pos.x][0]):
 						EventBus.updateActions.emit(-1, "move")
@@ -426,12 +439,12 @@ func checkInputs():
 							u.effect(player)
 						player.moveUp()
 						# relaods the board once movement is complete
-						EventBus.pause.emit()
 						loadBoard()
 			elif door == true: # If the player is in a doorway at the top of the map
 				if not lockedDoors:
 					solved = true
 				EventBus.changeRooms.emit(Vector2(0,1), 3) # change rooms upwards
+				EventBus.pause.emit()
 				
 			
 	# If down is pressed, and you have the available resources to do it, move down
@@ -446,7 +459,6 @@ func checkInputs():
 							u.effect(player)
 						player.moveDown()
 						# relaods the board once movement is complete
-						EventBus.pause.emit()
 						loadBoard()
 					elif grid[player.pos.y+1][player.pos.x][0] is Pushable:
 						if checkPush(grid[player.pos.y+1][player.pos.x][0], Vector2(0, 1)):
@@ -456,7 +468,6 @@ func checkInputs():
 								u.effect(player)
 							player.moveDown()
 							# relaods the board once movement is complete
-							EventBus.pause.emit()
 							loadBoard()
 					elif checkPassable(grid[player.pos.y+1][player.pos.x][0]):
 						EventBus.updateActions.emit(-1, "move")
@@ -464,13 +475,12 @@ func checkInputs():
 							u.effect(player)
 						player.moveDown()
 						# relaods the board once movement is complete
-						EventBus.pause.emit()
 						loadBoard()
 			elif door == true: # If the player is in a doorway at the bottom of the map
 				if not lockedDoors:
 					solved = true
 				EventBus.changeRooms.emit(Vector2(0,-1), 1)# change rooms downwards
-		
+				EventBus.pause.emit()
 	
 	# etc...
 	if Input.is_action_just_pressed("move_left"):
@@ -485,7 +495,6 @@ func checkInputs():
 							u.effect(player)
 						player.moveLeft()
 						# relaods the board once movement is complete
-						EventBus.pause.emit()
 						loadBoard()
 					elif grid[player.pos.y][player.pos.x-1][0] is Pushable:
 						print("That guy is pretty Pushable!")
@@ -496,7 +505,6 @@ func checkInputs():
 								u.effect(player)
 							player.moveLeft()
 							# relaods the board once movement is complete
-							EventBus.pause.emit()
 							loadBoard()
 					elif checkPassable(grid[player.pos.y][player.pos.x-1][0]):
 						EventBus.updateActions.emit(-1, "move")
@@ -504,13 +512,12 @@ func checkInputs():
 							u.effect(player)
 						player.moveLeft()
 						# relaods the board once movement is complete
-						EventBus.pause.emit()
 						loadBoard()
 			elif door == true: # If the player is in a doorway at the left of the map
 				if not lockedDoors:
 					solved = true
 				EventBus.changeRooms.emit(Vector2(-1,0), 2)# change rooms to the left
-			
+				EventBus.pause.emit()
 	
 	# etc...
 	if Input.is_action_just_pressed("move_right"):
@@ -524,7 +531,6 @@ func checkInputs():
 							u.effect(player)
 						player.moveRight()
 						# relaods the board once movement is complete
-						EventBus.pause.emit()
 						loadBoard()
 					elif grid[player.pos.y][player.pos.x+1][0] is Pushable:
 						if checkPush(grid[player.pos.y][player.pos.x+1][0], Vector2(1,0)):
@@ -534,7 +540,6 @@ func checkInputs():
 								u.effect(player)
 							player.moveRight()
 							# relaods the board once movement is complete
-							EventBus.pause.emit()
 							loadBoard()
 					elif checkPassable(grid[player.pos.y][player.pos.x+1][0]):
 						EventBus.updateActions.emit(-1, "move")
@@ -542,12 +547,12 @@ func checkInputs():
 							u.effect(player)
 						player.moveRight()
 						# relaods the board once movement is complete
-						EventBus.pause.emit()
 						loadBoard()
 			elif door == true: # If the player is in a doorway at the right of the map
 				if not lockedDoors:
 					solved = true
 				EventBus.changeRooms.emit(Vector2(1,0), 4)# change rooms to the right
+				EventBus.pause.emit()
 				
 
 	

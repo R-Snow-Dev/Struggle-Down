@@ -57,8 +57,6 @@ func _new_level():
 	UpgradeList.reset()
 	
 
-	UpgradeList.addFromSave()
-
 func _file_select():
 	# Opens the file selection menu upon selecting it from the main menu
 	if self.get_child_count() > 0:
@@ -96,8 +94,7 @@ func _go():
 	if UpgradeList.relicData['arcana']:
 			UpgradeList.addRandom()
 	var dungeon = preload("res://scenes/menus/dungeon.tscn").instantiate() # Loads a new, first level dungeon
-	add_child(dungeon)
-	UpgradeList.addFromSave()
+	add_child(dungeon)	
 
 func _start():
 	# Loads another dungeon upon loading a new level, after removing any children that may somehow still under this node
@@ -112,4 +109,3 @@ func _start():
 		add_child(dungeon)
 	else:
 		loadPouch() # If the player exited in the pouch, take them to the pouch instead
-	UpgradeList.addFromSave()
