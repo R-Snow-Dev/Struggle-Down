@@ -32,6 +32,7 @@ var titles = [[],
 ['Holy Scepter', 'Holy Scepter of the Prophet', "Peter's Holy Scepter"]]
 
 var inherentEffects = {
+	"none": {},
 	"slash": {},
 	"pierce": {},
 	"blunt": {},
@@ -40,7 +41,9 @@ var inherentEffects = {
 	"explosive": {},
 	"shock": {'stun': 0.05},
 	"fire": {},
-	"holy": {}
+	"holy": {},
+	"death":{},
+	"special": {}
 }
 
 var mult = 0.75
@@ -49,8 +52,9 @@ var flatChance = 0
 
 var enraged: int = 0
 
-var damages = {"slash": 0, "pierce": 0, "blunt": 0, "shockwave": 0,
-"frost": 0, "explosive": 0, "shock": 0, "fire": 0, "holy": 0, "death": 0}
+var damages = {"none": 0,"slash": 0, "pierce": 0, "blunt": 0, "shockwave": 0,
+"frost": 0, "explosive": 0, "shock": 0, "fire": 0, "holy": 0, "death": 0,
+'special': 0}
 
 var effects = {"bleed": Bleed.new(),
 				'slow': Slow.new(),
@@ -126,23 +130,26 @@ func reset() -> void:
 	Weapon.new("Demon Horn","fire",2,1,Vector2(0,1),Vector2i(1,1),Vector2(0,0),true, Attribute.new(), PlaceFire.new(), AstarothHorn.new(), InfernalHorn.new()),
 	Weapon.new("Holy Scepter","holy",5,1,Vector2(0,1),Vector2i(0,0),Vector2(0,0),true, Attribute.new(), HandOfGod.new(), Prophet.new(), Peter.new()),]
 
-	damages = {"none" : 0, "slash" : 0, "pierce" : 0, "blunt" : 0, "shockwave" : 0,
-	"frost" : 0, "explosive" : 0, "shock" : 0, "fire" : 0, "holy" : 0}
+	damages = {"none": 0,"slash": 0, "pierce": 0, "blunt": 0, "shockwave": 0,
+"frost": 0, "explosive": 0, "shock": 0, "fire": 0, "holy": 0, "death": 0,
+'special': 0}
 	
 	held = 0
 	
 	inherentEffects = {
-		"none": {},
-		"slash": {},
-		"pierce": {},
-		"blunt": {},
-		"shockwave": {},
-		"frost": {},
-		"explosive": {},
-		"shock": {'stun': 0.05},
-		"fire": {},
-		"holy": {}
-	}
+	"none": {},
+	"slash": {},
+	"pierce": {},
+	"blunt": {},
+	"shockwave": {},
+	"frost": {},
+	"explosive": {},
+	"shock": {'stun': 0.05},
+	"fire": {},
+	"holy": {},
+	"death":{},
+	"special": {}
+}
 	
 	tempEffects = {}
 	

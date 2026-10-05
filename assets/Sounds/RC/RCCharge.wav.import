@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://13gaiyn2vmmm"
-path="res://.godot/imported/footstep2.wav-ce3f083710cc690094804cd1e7516f91.sample"
+path="res://.godot/imported/RCCharge.wav-27a53391be86e30f0b4c3b077bad1c97.sample"
 
 [deps]
 
-source_file="res://assets/Sounds/Footsteps/footstep2.wav"
-dest_files=["res://.godot/imported/footstep2.wav-ce3f083710cc690094804cd1e7516f91.sample"]
+source_file="res://assets/Sounds/RC/RCCharge.wav"
+dest_files=["res://.godot/imported/RCCharge.wav-27a53391be86e30f0b4c3b077bad1c97.sample"]
 
 [params]
 

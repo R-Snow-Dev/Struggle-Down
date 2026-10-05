@@ -36,6 +36,28 @@ var kSlime = [wall.instantiate().setup(Vector2(0,0)), wall.instantiate().setup(V
 , wall.instantiate().setup(Vector2(8,10)), wall.instantiate().setup(Vector2(8,9)), wall.instantiate().setup(Vector2(8,8)), wall.instantiate().setup(Vector2(8,7))
 , wall.instantiate().setup(Vector2(7,10)), wall.instantiate().setup(Vector2(7,9)), wall.instantiate().setup(Vector2(7,8))]
 
+var rChamp = [preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(0,0)), preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(1,0)),
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(0,1)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(1,1)),
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(2,0)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(3,0)),
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(0,2)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(0,3)),
+
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(10,0)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(9,0)),
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(10,1)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(9,1)),
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(8,0)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(7,0)),
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(10,2)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(10,3)),
+
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(0,10)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(1,10)),
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(0,9)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(1,9)),
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(2,10)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(3,10)),
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(0,8)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(0,7)),
+
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(10,10)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(9,10)),
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(10,9)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(9,9)),
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(8,10)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(7,10)),
+preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(10,8)),preload("res://scenes/Tiles/Void.tscn").instantiate().setup(Vector2(10,7)),
+ 
+wall.instantiate().setup(Vector2(3,3)),wall.instantiate().setup(Vector2(7,3)),wall.instantiate().setup(Vector2(3,7)),wall.instantiate().setup(Vector2(7,7))]
+
 var altarRoom = [preload("res://scenes/Tiles/altar.tscn").instantiate().setup(Vector2(2,2)), preload("res://scenes/Tiles/barrier.tscn").instantiate().setup(Vector2(1,1)),
 preload("res://scenes/Tiles/barrier.tscn").instantiate().setup(Vector2(3,3)), preload("res://scenes/Tiles/barrier.tscn").instantiate().setup(Vector2(1,3)),
 preload("res://scenes/Tiles/barrier.tscn").instantiate().setup(Vector2(3,1))]

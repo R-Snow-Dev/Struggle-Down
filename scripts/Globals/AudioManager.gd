@@ -33,6 +33,19 @@ func _ready() -> void:
 	create_sound('GetWeapon', preload("res://assets/Sounds/Environment/getWeapon.wav"))
 	create_sound('Pause', preload("res://assets/Sounds/Environment/pause.wav"))
 	create_sound('Unpause', preload("res://assets/Sounds/Environment/unpause.wav"))
+	create_sound('Lightning', preload("res://assets/Sounds/AtkSFX/lightning.wav"))
+	create_sound('Thunder', preload("res://assets/Sounds/AtkSFX/thunder.wav"))
+	create_sound('RCCharge', preload("res://assets/Sounds/RC/RCCharge.wav"))
+	create_sound('RCPrep', preload("res://assets/Sounds/RC/prepare.wav"))
+	create_sound('Summon', preload("res://assets/Sounds/RC/Summon.wav"))
+	create_sound('Flame', preload("res://assets/Sounds/AtkSFX/flame.wav"))
+	create_sound('Ice', preload("res://assets/Sounds/AtkSFX/icey.wav"))
+	create_sound('Wind', preload("res://assets/Sounds/AtkSFX/Wind3.wav"))
+	create_sound('Shake1', preload("res://assets/Sounds/AtkSFX/shake1.wav"))
+	create_sound('Shake2', preload("res://assets/Sounds/AtkSFX/shake3.wav"))
+	create_sound('Smite', preload("res://assets/Sounds/AtkSFX/smite1.wav"))
+	create_sound('Place', preload("res://assets/Sounds/AtkSFX/Place.wav"))
+	create_sound('Unstable', preload("res://assets/Sounds/AtkSFX/unstable.wav"))
 	
 ## Method creates sounds and adds them to the corresponding dictionary
 func create_sound(name: String, stream: AudioStream, bus: String = "SFX") -> void:

@@ -19,9 +19,9 @@ func setBossData(p: Vector2, h: int, a: int, gR: Vector2, d: int, f: Vector2, b:
 func positionToPos():
 	var size = getData().getSize()
 	# Converts on-screen position to internal position
-	var newP = position - Vector2(size*4,size*4 - 4)
+	var newP = Vector2i(position) - Vector2i(size*4,size*4 - 4)
 	newP = newP / 16
-	getData().setPos(newP)
+	getData().setPos(Vector2i(newP))
 	draw()
 
 func onHit(area: Area2D) -> void:

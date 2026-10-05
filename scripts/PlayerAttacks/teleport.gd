@@ -38,6 +38,7 @@ func _process(delta: float) -> void:
 		dS.setSize(size)
 		dS.global_position = global_position
 		dS.position.y -= 8
+		AudioManager.play_sound('Place')
 		Overseer.control.add_child(dS)
 		p.effectDone.emit()
 		call_deferred("queue_free")

@@ -164,7 +164,7 @@ var lifeLimit = 24
 
 var angel = 0
 
-var relicData = {"decoys": 1,
+var relicData = {"set": 2,
 				"swords": false,
 				"dropAttempts": 1,
 				'arcana': false,
@@ -256,7 +256,7 @@ func reset():
 	chargeable = false
 	lifesteal = 0
 	angel = 0
-	relicData = {"decoys": 1,
+	relicData = {"set": 2,
 				"swords": false,
 				"dropAttempts": 1,
 				'arcana': false,

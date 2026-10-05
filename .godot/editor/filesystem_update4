@@ -1,14 +1,21 @@
-res://scenes/Opps/evil_rat.tscn
-res://scripts/dungeoncontroller.gd
-res://scripts/Opps/demon.gd
-res://scenes/Opps/demon.tscn
-res://scripts/Entities/wrath_counter.gd
-res://scripts/Behaviors/demon_behavior.gd
-res://scripts/ADTs/Fiend.gd
+res://scenes/GUIParts/LongButton.tscn
+res://scenes/GUIParts/ClearScreen.tscn
+res://scenes/GUIParts/added.tscn
+res://scripts/UI Shizz/added.gd
+res://scripts/UI Shizz/clear_screen.gd
 res://scenes/menus/dungeon.tscn
-res://scripts/game_controller.gd
+res://scripts/dungeoncontroller.gd
+res://scripts/bosses/rat_champion.gd
+res://scripts/bosses/ks.gd
+res://scenes/GUIParts/soul_flame.tscn
 res://scenes/menus/game.tscn
-res://scripts/ADTs/attributes/upgrade_list.gd
-res://scenes/Opps/slime.tscn
-res://scripts/UI Shizz/starusBar.gd
-res://scripts/SaveController.gd
+res://scripts/Globals/weaponList.gd
+res://scripts/ADTs/attributes/SwordOnly/lake_blessing.gd
+res://scripts/ADTs/attributes/Titles/BranchSword.gd
+res://scripts/ADTs/attributes/QStaffOnly/Foreshock.gd
+res://scripts/map.gd
+res://scenes/Tiles/Void.tscn
+res://scripts/gameBoard.gd
+res://scripts/Globals/overseer.gd
+res://scenes/Opps/rat_champion.tscn
+res://scenes/Opps/kingslime.tscn

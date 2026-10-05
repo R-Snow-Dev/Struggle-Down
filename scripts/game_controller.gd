@@ -42,8 +42,9 @@ func _new_level():
 			self.call_deferred("remove_child", i)
 	var dungeon = preload("res://scenes/menus/dungeon.tscn").instantiate() # Once again, this case it will just be a basic dungeon again
 	
-	# If you beat floor 5, move on to the next level, and reset your floors to 1
-	if data["floor"] > 4:
+	# If you beat floor 3, move on to the next level, and reset your floors to 1
+	
+	if data["floor"] > UpgradeList.relicData['set']:
 		SaveController.updateData("floor", 1)
 		SaveController.updateData("level", data["level"] + 1)
 		if UpgradeList.relicData['arcana']:

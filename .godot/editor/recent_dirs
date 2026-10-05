@@ -1,22 +1,22 @@
-res://scripts/Opps
-res://assets
+res://scenes/GUIParts
 res://scripts/UI Shizz
+res://scripts/SpriteScripts
+res://scripts
+res://scripts/BossAttacks/RatChamp
+res://scripts/bosses
+res://scenes/Opps
+res://assets
+res://scripts/Opps
 res://scripts/Entities
 res://scenes/DungeonParts
 res://scripts/Behaviors
-res://scenes/GUIParts
 res://scripts/PlayerAttacks
 res://assets/Fonts
 res://
 res://scripts/ButtonScripts
-res://scripts
 C:/Users/Rogan/Documents/Game Projects/Struggle-Down/scripts/text docs
 res://scripts/Items/Components
 res://scenes/entities
 res://scenes/Projectiles/Sprites
 res://scripts/Items
 res://scenes/Projectiles
-res://scenes/Items/ConsumableSprites
-res://scripts/Globals
-res://scenes/Globals
-res://scripts/AttackingLogic

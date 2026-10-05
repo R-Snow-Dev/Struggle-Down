@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bwrtxyvx64bbo"]
+[gd_scene load_steps=4 format=3 uid="uid://bwrtxyvx64bbo"]
 
 [ext_resource type="Texture2D" uid="uid://bou8j0bf51ckn" path="res://assets/Fire&Ice.png" id="1_rr3gb"]
+[ext_resource type="Script" uid="uid://bmwipgxi6jeli" path="res://scripts/SpriteScripts/ice.gd" id="2_17xg0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_17xg0"]
 atlas = ExtResource("1_rr3gb")
@@ -10,3 +11,4 @@ region = Rect2(0, 0, 16, 16)
 position = Vector2(0, 3)
 rotation = 3.1415927
 texture = SubResource("AtlasTexture_17xg0")
+script = ExtResource("2_17xg0")

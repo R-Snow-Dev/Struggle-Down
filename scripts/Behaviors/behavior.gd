@@ -18,7 +18,7 @@ func getSign(num: int):
 	return num/abs(num)
 	
 func checkPassable(obj) -> bool:
-	if obj is Item or obj is Interactable or obj is Ladder or obj is Door:
+	if obj is Item or obj is Interactable or obj is Ladder or obj is Door or obj is Array:
 		return true
 	return false
 

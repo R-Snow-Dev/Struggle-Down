@@ -43,6 +43,7 @@ var componentBacklog = []
 var keys = 0
 var kQueue = []
 var rV: bool
+var sF = 0
 @onready var resIcon = $Node2D/Camera2D/PBranch
 @onready var healthBar = $Node2D/Camera2D/HealthBar
 @onready var node_2d: Node2D = $Node2D
@@ -50,6 +51,7 @@ var rV: bool
 @onready var mS = $Node2D/Camera2D/mapSpace
 @onready var pT = $Node2D/Camera2D/mapSpace/playerTracker
 @onready var keySlot = $Node2D/Camera2D/Keys
+@onready var clear: ClearScreen = $"../CanvasLayer/Control"
 
 signal healthbar(amount: int)
 
@@ -69,11 +71,13 @@ func genKeys() -> void:
 			var o = b.objects
 			if len(o) > 0:
 				for x in range(0,len(o)):
-					if o[x] is Fiend or o[x] is Wall or o[x] is Chest or o[x] is Item and b.type != 4:
+					if o[x] is Fiend or o[x] is Wall or o[x] is Chest and b.type != 4:
 						loco = o[x].getPos()
 						b.objects.remove_at(x)
 						break
 			var chosenItem = preload("res://scenes/Items/item.tscn").instantiate()
+			print("Key in: ",Vector2(chosen.x, chosen.y))
+			print("Key at: ", loco, '\n')
 			chosenItem.setup(loco, 14, k.x) # Gives the items their rerspective coordinates and IDs
 			b.objects.append(chosenItem) # Adds the items to the list of objects
 				
@@ -106,6 +110,7 @@ func unlockRelic(id: int) -> void:
 		data['unlockedRelics'].append(id)
 		var rel: Relic =  preload("res://scenes/GUIParts/relic.tscn").instantiate()
 		rel.setId(id)
+		clear.addAdded(rel)
 		EventBus.popup.emit(1, rel)
 		
 func rollChest():
@@ -135,6 +140,15 @@ func _create_slime(p: Vector2):
 	slime.setData(p, 5, 1, Vector2(0,0), 1, Vector2(0,1), behavior) # Adds all relevant information to the newly spawned fiend
 	toBeSummoned.append(slime)
 
+func createRat(p: Vector2):
+	# Function that handles the creation of slime summons from the Slime King by storing
+	# The slimes into the toBeSummoned array, which are then summoned after the fiends end their turn
+	# @param p - The position of the to be summoned slime
+	var rat: Fiend = preload("res://scenes/Opps/evil_rat.tscn").instantiate()
+	var behavior = RatBehavior.new()
+	rat.setData(p, 10, 2, Vector2(0,0), 1, Vector2(0,1), behavior) # Adds all relevant information to the newly spawned fiend
+	toBeSummoned.append(rat)
+
 func _create_stairs(p: Vector2):
 	# Function that handles teh creation of a new staircase, typically after a boss dies
 	# @param p - the location on the board that the stairs will spawn
@@ -144,12 +158,28 @@ func _create_stairs(p: Vector2):
 	drawBoard()
 
 func setBossRoom() -> Array:
-	var DefaultFloors = preload("res://scripts/defaultFloors.gd").new()
-	var objects = DefaultFloors.kSlime.duplicate()
-	var ks = preload("res://scenes/Opps/kingslime.tscn").instantiate()
-	ks.setBossData(Vector2(5,5), 100, 1, Vector2(10,15), 1, Vector2(0,0), KSBehavior.new(), 2)
-	objects.append(ks)
-	return objects
+	if false:
+		var DefaultFloors = preload("res://scripts/defaultFloors.gd").new()
+		var objects = DefaultFloors.kSlime.duplicate()
+		var ks = preload("res://scenes/Opps/kingslime.tscn").instantiate()
+		ks.setBossData(Vector2(5,5), 100, 1, Vector2(10,15), 1, Vector2(0,0), KSBehavior.new(), 2)
+		objects.append(ks)
+		return objects
+	else:
+		var DefaultFloors = preload("res://scripts/defaultFloors.gd").new()
+		var objects = DefaultFloors.rChamp.duplicate()
+		var rat: Fiend = preload("res://scenes/Opps/evil_rat.tscn").instantiate()
+		var behavior = RatBehavior.new()
+		rat.setData(Vector2(6,5), 10, 2, Vector2(0,0), 1, Vector2(0,1), behavior) # Adds all relevant information to the newly spawned fiend
+		objects.append(rat)
+		var rat2: Fiend = preload("res://scenes/Opps/evil_rat.tscn").instantiate()
+		var behavior2 = RatBehavior.new()
+		rat2.setData(Vector2(4,5), 10, 2, Vector2(0,0), 1, Vector2(0,1), behavior2) # Adds all relevant information to the newly spawned fiend
+		objects.append(rat2)
+		var champ: RatChamp = preload("res://scenes/Opps/rat_champion.tscn").instantiate()
+		champ.setBossData(Vector2(5,5), 75, 1, Vector2(10,15), 1, Vector2(0,-1), RCBehavior.new(), 0)
+		objects.append(champ)
+		return objects
 
 func drawBoard():
 	# Function that checks to see if a dungeon floor is already rendered, 
@@ -249,7 +279,7 @@ func loadObjects(grid: Vector2, mPos: Vector2):
 	
 	Overseer.setWrath(false)
 	
-	if mPos == endPos and data["floor"] == 5:
+	if mPos == endPos and data["floor"] == UpgradeList.relicData['set'] +1:
 		objects = setBossRoom()
 	
 	# Adds all open tiles that are not door tiles gridCoords
@@ -335,8 +365,10 @@ func checkIso(target:Vector2) -> bool:
 					Vector2(-1,0): 1}
 	var total = 0
 	var prev = map.distData[1][target]
-	var dir = target - prev
-	var door = legend[dir]
+	var door = 1
+	if prev:
+		var dir = target - prev
+		door = legend[dir]
 	for x in map.path:
 		var asInt = x.x + x.y*9
 		var diff = x - prev
@@ -472,6 +504,7 @@ func genPushPuzzleSolo(gridsize: Vector2):
 	while coordinates.size() < 1: # Create the starting coordinates
 		start = Vector2(rng.randi_range(1, gridsize.x-2), rng.randi_range(1, gridsize.y-2))
 		if Vector2i(start) == Vector2i(gridSize/2):
+			print('yucky')
 			start.x += 1
 		e = Vector2(rng.randi_range(1, gridsize.x-2), rng.randi_range(1, gridsize.y-2))
 		# Check to makee sure the endpoint is not on any door spawn areas,
@@ -534,7 +567,7 @@ func genMapData(path: Array):
 		var mag = map.magnitudes[id]
 		# Checks to see if the floor being generated is the starting floor or not
 		if x != map.startPos: # If it isn't randomly generate unique data for the floor
-			if x == endPos and data["floor"] == 5:
+			if x == endPos and data["floor"] == UpgradeList.relicData['set'] + 1:
 				gridSize = Vector2(11,11)
 				objectList = loadObjects(gridSize, x)
 				type = 1
@@ -923,6 +956,7 @@ func _to_title():
 	
 func _new_level():
 	SaveController.updateData('unlockedRelics', data['unlockedRelics'])
+	SaveController.updateData('soulFlame', SaveController.getData('soulFlame') + sF)
 	for x in componentBacklog:
 		SaveController.addComponent(x)
 	for x in boards:

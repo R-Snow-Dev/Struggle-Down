@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://dx3fxxev5eoim"]
+
+[ext_resource type="FontFile" uid="uid://canno1v1nq545" path="res://assets/Fonts/charybdis.regular.ttf" id="1_m8aw4"]
+[ext_resource type="Script" uid="uid://by578bt3bqkjg" path="res://scripts/UI Shizz/clear_screen.gd" id="1_souei"]
+[ext_resource type="PackedScene" uid="uid://b58l8aepcyyxg" path="res://scenes/GUIParts/LongButton.tscn" id="2_wuuoh"]
+
+[node name="Control" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_souei")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.29803923, 0.29803923, 0.29803923, 0.8509804)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 404.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_direction = 2
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_m8aw4")
+theme_override_font_sizes/font_size = 98
+text = "Boss Cleared!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="YouGot" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_m8aw4")
+theme_override_font_sizes/font_size = 48
+text = "Items Recieved:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LongButton" parent="CenterContainer/VBoxContainer/CenterContainer" instance=ExtResource("2_wuuoh")]
+layout_mode = 2
+text = "Next"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/CenterContainer/LongButton" to="." method="_on_long_button_pressed"]

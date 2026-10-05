@@ -40,6 +40,15 @@ func getGrid() -> Array:
 func getController() -> DungeonController:
 	return control
 
+func checkValid(v: Vector2) -> bool:
+	var maxs = Vector2(board.width, board.height)
+	if v.x < 0 or v.x >= maxs.x or v.y < 0 or v.y >= maxs.y:
+		return false
+	if board.grid[v.x][v.y] is Array:
+		if len(board.grid[v.x][v.y]) < 1:
+			return true
+	return board.checkPassable(board.grid[v.x][v.y][0])
+	
 func getObj() -> Array:
 	return objects
 

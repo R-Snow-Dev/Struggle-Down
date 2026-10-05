@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cxdhrkg3y2txh"]
+[gd_scene load_steps=10 format=3 uid="uid://cxdhrkg3y2txh"]
 
 [ext_resource type="Texture2D" uid="uid://dratxjmfmwla4" path="res://assets/Wind.png" id="1_p2vd1"]
+[ext_resource type="Script" uid="uid://b17x65ai7of7b" path="res://scripts/SpriteScripts/wind.gd" id="2_fak3v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fak3v"]
 atlas = ExtResource("1_p2vd1")
@@ -57,3 +58,4 @@ sprite_frames = SubResource("SpriteFrames_o6t3j")
 autoplay = "default"
 frame = 5
 frame_progress = 1.0
+script = ExtResource("2_fak3v")

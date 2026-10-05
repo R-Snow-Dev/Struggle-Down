@@ -13,7 +13,7 @@ func warn() -> void:
 			if !g.grid[x][y]:
 				if rng.randf() > 0.75:
 					positions.append(Vector2(x,y))
-					EventBus.warn.emit((Vector2(x,y) - pos) + Vector2(0,-0.75), (Vector2(x,y) - pos) - Vector2(1,0))
+					EventBus.warn.emit(Vector2(x,y), Vector2(x,y))
 	
 func attack():
 	for v in positions:

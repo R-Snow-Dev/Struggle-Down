@@ -9,4 +9,4 @@ func _init() -> void:
 	Your weapon triggers every time you enter an undiscovered room."
 
 func effect(target : Node):
-	target.player.attack_origin.freeAttack(WeaponList.held)
+	target.attack_origin.freeAttack(WeaponList.held)

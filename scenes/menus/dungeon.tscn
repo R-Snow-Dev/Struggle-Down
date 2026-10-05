@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=4 uid="uid://dkqh251ixbss2"]
+[gd_scene load_steps=56 format=4 uid="uid://dkqh251ixbss2"]
 
 [ext_resource type="Script" uid="uid://crf0iaimv3j33" path="res://scripts/dungeon.gd" id="1_ba8p3"]
 [ext_resource type="Script" uid="uid://dqhwkgc4c44u5" path="res://scripts/dungeoncontroller.gd" id="2_imoik"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://bkjrmdwf0bgjt" path="res://scenes/GUIParts/pause_menu.tscn" id="22_f27gv"]
 [ext_resource type="Script" uid="uid://r20bhd83mf2o" path="res://scripts/UI Shizz/keySlot.gd" id="22_il8om"]
 [ext_resource type="Script" uid="uid://b3esp48ff28bn" path="res://scripts/UI Shizz/filter.gd" id="24_iv1t8"]
+[ext_resource type="PackedScene" uid="uid://dx3fxxev5eoim" path="res://scenes/GUIParts/ClearScreen.tscn" id="28_3y2xd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5iqrf"]
 texture = ExtResource("4_48e0x")
@@ -897,7 +898,7 @@ filter1 = Color(1, 0, 0, 0.29411766)
 
 [node name="UpgradeContainer" type="HFlowContainer" parent="CanvasLayer"]
 z_index = 1000
-offset_left = 245.33334
+offset_left = 226.66667
 offset_top = 368.0
 offset_right = 522.6666
 offset_bottom = 400.0
@@ -916,6 +917,9 @@ offset_left = -167.99992
 offset_top = -65.33333
 offset_right = -167.99994
 offset_bottom = -65.33331
+
+[node name="Control" parent="CanvasLayer" instance=ExtResource("28_3y2xd")]
+scale = Vector2(0.66666776, 0.6666767)
 
 [connection signal="healthbar" from="Gamecontroller" to="Gamecontroller/Node2D/Camera2D/HealthBar" method="_on_gamecontroller_healthbar"]
 [connection signal="mouse_entered" from="Gamecontroller/Node2D/Camera2D/WeaponSlot/Area2D" to="Gamecontroller/Node2D/Camera2D/WeaponSlot" method="_on_area_2d_mouse_entered"]

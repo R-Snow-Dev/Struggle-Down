@@ -4,17 +4,19 @@ class_name KingSlide
 func warn() -> void:
 	var m = atckr
 	var f = m.getData().getFacing()
-	if f.x == 0:
-		if f.y > 0:
-			EventBus.warn.emit(Vector2(1,1), Vector2(-1, 10.25 - m.getPos().y))
-		else:
-			EventBus.warn.emit(Vector2(1,-1), Vector2(-1, -1-m.getPos().y))
+	EventBus.warn.emit(atckr.getPos(), getWall(f))
+	
+	
+func getWall(v: Vector2) -> Vector2:
+	if v == Vector2(0,1):
+		return Vector2(atckr.getPos().x + 1, 10)
+	elif v == Vector2(0,-1):
+		return Vector2(atckr.getPos().x+1, 0)
+	elif v == Vector2(1,0):
+		return Vector2(10, atckr.getPos().y +1)
 	else:
-		if f.x > 0:
-			EventBus.warn.emit(Vector2(1,1), Vector2(10 - m.getPos().x, -1))
-		else:
-			EventBus.warn.emit(Vector2(-1,1), Vector2(-1-m.getPos().x, -1))
-
+		return Vector2(0, atckr.getPos().y+1)
+		
 func attack():
 	var targ = Overseer.closestLOS(atckr.getPos(), atckr.getData().getFacing(), Vector2(0, 1), "fiend")
 	var valuesMiss = [[atckr.getPos().x,atckr.getPos().y],[9, 9],[0,0]]

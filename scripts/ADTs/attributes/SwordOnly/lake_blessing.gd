@@ -13,7 +13,7 @@ May the light of the old knights guide you."
 func check(target: DungeonController):
 	var sword:Weapon = WeaponList.weapons[1]
 	if target.pHP == target.pHPTot:
-		sword.setVelo(Vector2(0,1))
+		sword.setVelo(Vector2(0,100))
 		sword.setPierce(false)
 	else:
 		sword.setVelo(Vector2(0,0))

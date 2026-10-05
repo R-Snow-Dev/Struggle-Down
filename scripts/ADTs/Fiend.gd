@@ -200,6 +200,8 @@ func onHit(area: Area2D) -> void:
 	elif area is EatBox:
 		getData().updateHealth(-999)
 		EventBus.healSK.emit()
+	elif area is RatBox or SpearBox:
+		getData().updateHealth(-10)
 	for x in UpgradeList.getByType("active"):
 		if x is Brand:
 			x.store(area)

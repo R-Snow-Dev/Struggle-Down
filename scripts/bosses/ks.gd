@@ -14,6 +14,8 @@ func _ready() -> void:
 	EventBus.healSK.connect(heal)
 
 func _process(_delta: float) -> void:
+	var c: ClearScreen = Overseer.getController().clear
+	c.reset()
 	pos = getData().getPos()
 	if isDead():
 		if !paid:
@@ -23,7 +25,9 @@ func _process(_delta: float) -> void:
 			else:
 				EventBus.updateGold.emit(rng.randi_range(getData().getGoldRange().x, getData().getGoldRange().y))
 		Overseer.getBoard().nextGuy()
-		EventBus.create_stairs.emit(Vector2(5,5))
+		Overseer.getController().unlockRelic(1)
+		c.addAdded(preload("res://scenes/GUIParts/soul_flame.tscn").instantiate())
+		c.on()
 		EventBus.object_ded.emit(self)
 
 
@@ -86,3 +90,4 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	onHit(area)
 	aParticles.emitting = false
 	crash()
+	

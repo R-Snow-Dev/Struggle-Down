@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://scnqvv0pw4ea"]
+
+[ext_resource type="Texture2D" uid="uid://b3o3rfwml8bqe" path="res://assets/torchflame.png" id="1_oocdi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5u5gh"]
+atlas = ExtResource("1_oocdi")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oocdi"]
+atlas = ExtResource("1_oocdi")
+region = Rect2(48, 0, 16, 16)
+
+[node name="SoulFlame" type="Node2D"]
+
+[node name="soulflame2" type="Sprite2D" parent="."]
+position = Vector2(-1.0000153, -8)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_5u5gh")
+
+[node name="soulflame3" type="Sprite2D" parent="."]
+position = Vector2(-1.0000153, -6)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_5u5gh")
+
+[node name="soulflame4" type="Sprite2D" parent="."]
+position = Vector2(-2.8181915, -6)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_5u5gh")
+
+[node name="soulflame5" type="Sprite2D" parent="."]
+position = Vector2(-2.8181915, -8)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_5u5gh")
+
+[node name="soulflame" type="Sprite2D" parent="."]
+self_modulate = Color(18.892157, 18.892157, 18.892157, 1)
+position = Vector2(-1.9090958, -7.000001)
+scale = Vector2(1.9971408, 1.9971408)
+texture = SubResource("AtlasTexture_5u5gh")
+
+[node name="soulflame6" type="Sprite2D" parent="."]
+position = Vector2(-0.090927124, 0)
+texture = SubResource("AtlasTexture_oocdi")

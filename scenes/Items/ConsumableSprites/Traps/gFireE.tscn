@@ -1,6 +1,7 @@
-[gd_scene load_steps=21 format=3 uid="uid://dwte8l30bgvkm"]
+[gd_scene load_steps=22 format=3 uid="uid://dwte8l30bgvkm"]
 
 [ext_resource type="Texture2D" uid="uid://c1fglmqhxv2g0" path="res://assets/Traps.png" id="1_xrdkm"]
+[ext_resource type="Script" uid="uid://nakpa2ahwrbp" path="res://scripts/SpriteScripts/g_fire_e.gd" id="2_knkwr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_knkwr"]
 atlas = ExtResource("1_xrdkm")
@@ -141,3 +142,4 @@ position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_fr6yy")
 autoplay = "default"
 frame_progress = 0.58461344
+script = ExtResource("2_knkwr")

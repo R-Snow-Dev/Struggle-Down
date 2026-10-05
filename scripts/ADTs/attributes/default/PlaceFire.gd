@@ -13,5 +13,6 @@ func effect(target: Node) -> int:
 	trap.setup(s, 5, 'fire', 'none', 0)
 	if test():
 		EventBus.throwEntity.emit(trap)
+		AudioManager.play_sound('Flame')
 	effectDone.emit()
 	return 0

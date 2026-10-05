@@ -8,4 +8,4 @@ func _init() -> void:
 	Floors will be bigger."
 
 func onPickup(target : Node):
-	UpgradeList.setRData('decoys', 4)
+	UpgradeList.setRData('set', 4)

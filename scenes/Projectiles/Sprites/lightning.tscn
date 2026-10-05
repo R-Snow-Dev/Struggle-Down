@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://8sfeppjo1n6w"]
+[gd_scene load_steps=12 format=3 uid="uid://8sfeppjo1n6w"]
 
 [ext_resource type="Texture2D" uid="uid://b5ongsj4n0qds" path="res://assets/Lightning.png" id="1_iw76y"]
+[ext_resource type="Script" uid="uid://bsbeq7cdbjwph" path="res://scripts/SpriteScripts/lightning.gd" id="2_0fcyx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0fcyx"]
 atlas = ExtResource("1_iw76y")
@@ -71,3 +72,6 @@ sprite_frames = SubResource("SpriteFrames_o6t3j")
 autoplay = "default"
 frame = 7
 frame_progress = 1.0
+script = ExtResource("2_0fcyx")
+
+[connection signal="frame_changed" from="." to="." method="_on_frame_changed"]

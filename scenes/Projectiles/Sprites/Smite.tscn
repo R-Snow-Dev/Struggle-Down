@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://blty5kke1jxnv"]
+[gd_scene load_steps=11 format=3 uid="uid://blty5kke1jxnv"]
 
 [ext_resource type="Texture2D" uid="uid://cndivdm6bomif" path="res://assets/Smite.png" id="1_fk0jg"]
+[ext_resource type="Script" uid="uid://bmq4nv7pc26yu" path="res://scripts/SpriteScripts/smite.gd" id="2_m6cc3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m6cc3"]
 atlas = ExtResource("1_fk0jg")
@@ -64,3 +65,4 @@ sprite_frames = SubResource("SpriteFrames_o6t3j")
 autoplay = "default"
 frame = 6
 frame_progress = 1.0
+script = ExtResource("2_m6cc3")

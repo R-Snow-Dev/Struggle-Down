@@ -15,13 +15,16 @@ func setBounds(p1: Vector2, p2:Vector2):
 	# Sets the location and size of the warning zone based on a starting and end point
 	# @param p1 - the first point of the warning zone in Vector2 format
 	# @param p2 - the second point of the warning zone in Vector2 format
-	var stretch = (p2-p1)
-	var yS = Vector2(p1.y, p2.y)
-	stretch *= 16
-	self.z_index = findMinY(yS)
-	position = p1 * 16
-	scale = stretch
 	
+	await EventBus.get_tree().process_frame
+	var stretch = abs(p1-p2) + Vector2(1,1)
+	global_position = ((p1)+(p2))/2 * 16
+	scale = stretch
+	self.z_index = 0
+
+
+
+
 func findMinY(yS: Vector2):
 	# Helper function that finds the smaller of two values on a Vector2
 	# @param yS - the Vector2 containing two values

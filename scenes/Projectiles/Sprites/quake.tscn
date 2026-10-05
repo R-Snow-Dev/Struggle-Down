@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://cblfoqa0i25yv"]
+[gd_scene load_steps=9 format=3 uid="uid://cblfoqa0i25yv"]
 
 [ext_resource type="Texture2D" uid="uid://c6b0enhgox83m" path="res://assets/Quake.png" id="1_1xp5j"]
 [ext_resource type="Texture2D" uid="uid://dratxjmfmwla4" path="res://assets/Wind.png" id="2_51ond"]
+[ext_resource type="Script" uid="uid://bvfvf7ni5snj5" path="res://scripts/SpriteScripts/quake.gd" id="3_o6qvv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_51ond"]
 atlas = ExtResource("1_1xp5j")
@@ -45,3 +46,6 @@ sprite_frames = SubResource("SpriteFrames_o6t3j")
 autoplay = "default"
 frame = 3
 frame_progress = 1.0
+script = ExtResource("3_o6qvv")
+
+[connection signal="frame_changed" from="." to="." method="_on_frame_changed"]

@@ -206,8 +206,9 @@ func gen_points(s: int):
 	# Adding the starting point to the final pathe array
 	path =[Vector2(startPos.x, startPos.y)]
 	tPath = [Vector2(startPos.x, startPos.y)]
-	# Generates decoy pathways between two other fake end points
-	for i in range(0,UpgradeList.relicData['decoys']):
+	# Generates decoy pathways between two other fake end pointd
+	
+	for i in range(0,UpgradeList.relicData['set']-1):
 		var ranPos = Vector2(rng.randi_range(0,mapSize-1), rng.randi_range(0,mapSize-1))
 		path = genPath(startPos, ranPos, startPos,  (abs((ranPos-startPos).x) + abs((ranPos-startPos).y)) + 1, 9, path)
 	# Generates the real pathway between the start and exit point

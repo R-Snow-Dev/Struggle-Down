@@ -5,7 +5,7 @@ var landingSpot: Vector2i = Vector2i(5,5)
 
 func warn() -> void:
 	landingSpot = Vector2i(randi_range(4,5), randi_range(4,5))
-	EventBus.warn.emit(Vector2((landingSpot.x - atckr.getData().getPos().x) - 2, (landingSpot.y - atckr.getData().getPos().y) - 1.75), Vector2((landingSpot.x - atckr.getData().getPos().x) + 2, (landingSpot.y - atckr.getData().getPos().y) + 2))
+	EventBus.warn.emit(landingSpot - Vector2i(1,1), landingSpot + Vector2i(2,2))
 	
 
 func attack():

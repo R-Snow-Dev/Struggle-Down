@@ -151,11 +151,12 @@ func loadGrid():
 	if objects != []:
 		for f in objects:
 			if f is BossNew:
-				var s = f.getData().getSize()
-				for i in range(0,s):
-					for j in range(0,s):
-						grid[f.pos.y + i][f.pos.x + j].append(barriers.instantiate())
-				grid[f.pos.y][f.pos.x].append(f)
+				if f.getData().getSize() > 0:
+					var s = f.getData().getSize()
+					for i in range(0,s):
+						for j in range(0,s):
+							grid[f.getPos().y + i][f.getPos().x + j].append(barriers.instantiate())
+				grid[f.getPos().y][f.getPos().x].append(f)
 			else:
 				grid[f.pos.y][f.pos.x].append(f)
 	
@@ -362,7 +363,7 @@ func checkPush(obj: Pushable, dir: Vector2):
 			if thang.size() < 2 :
 				if thang.size() < 1:
 					return true
-				elif thang[0] is Interactable:
+				elif thang[0] is Interactable or thang[0] is Item:
 					return true
 				else:
 					return false

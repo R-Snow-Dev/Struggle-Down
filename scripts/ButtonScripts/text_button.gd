@@ -10,6 +10,11 @@ var text: String = 'Test'
 @onready var l = $Visuals/Label
 @onready var v = $Visuals
 
+@export var t: String = 'test'
+
+func _ready() -> void:
+	l.text = t
+
 func setText(s: String) -> void:
 	l.text = s
 	
